@@ -6,6 +6,12 @@
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet">
+  <script>
+    (function(){
+      var saved = localStorage.getItem("tema");
+      document.documentElement.setAttribute("data-theme", saved === "dark" ? "dark" : "light");
+    })();
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
   <style>
@@ -42,8 +48,8 @@
       flex-shrink:0;
     }
     .kategori:checked{
-      background:#007AFF;
-      border-color:#007AFF;
+      background:#C1552F;
+      border-color:#C1552F;
     }
     .kategori:checked::after{
       content:"";
@@ -93,7 +99,7 @@
       width:26px;
       height:3px;
       border-radius:999px;
-      background:#007AFF;
+      background:#C1552F;
       transition:all .22s ease;
     }
     .spinner {
@@ -110,13 +116,77 @@
         transform:rotate(360deg);
       }
     }
+
+    html[data-theme="light"]{
+      --bg:#FBF8F4;
+      --card:#FFFFFF;
+      --tint:#F3EEE6;
+      --text:#2B2420;
+      --sub:#8F8378;
+      --line:#EDE7DE;
+      --accent:#C1552F;
+      --accent-tint:#FBEAE2;
+      --switch-off:#E4DACD;
+    }
+    html[data-theme="dark"]{
+      --bg:#211C18;
+      --card:#2C2620;
+      --tint:#382F27;
+      --text:#F2ECE4;
+      --sub:#A99C8C;
+      --line:#443B32;
+      --accent:#E38156;
+      --accent-tint:#3A2A22;
+      --switch-off:#4A4038;
+    }
+
+    body{
+      background:var(--bg) !important;
+      color:var(--text) !important;
+      transition:background .2s, color .2s;
+    }
+    .bg-gray-50{ background:var(--bg) !important; }
+    .bg-white{ background:var(--card) !important; }
+    .bg-gray-100{ background:var(--tint) !important; }
+    .bg-gray-300{ background:var(--switch-off) !important; }
+    .bg-blue-50{ background:var(--accent-tint) !important; }
+    .border-gray-100,.border-gray-200,.border-gray-300{ border-color:var(--line) !important; }
+    .border-blue-100{ border-color:var(--accent-tint) !important; }
+    .text-gray-400,.text-gray-500,.text-gray-600{ color:var(--sub) !important; }
+    .text-gray-700,.text-gray-800,.text-gray-900{ color:var(--text) !important; }
+    .text-blue-600{ color:var(--accent) !important; }
+    .text-\[\#C1552F\]{ color:var(--accent) !important; }
+    .bg-\[\#C1552F\]{ background:var(--accent) !important; }
+    .border-\[\#C1552F\]{ border-color:var(--accent) !important; }
+    .bg-\[\#D1D1D6\]{ background:var(--switch-off) !important; }
+    .border-\[\#C7C7CC\]{ border-color:var(--switch-off) !important; }
+    nav{ background:var(--card) !important; border-color:var(--line) !important; }
+    input, select{ background:var(--card) !important; color:var(--text) !important; border-color:var(--line) !important; }
+    ::placeholder{ color:var(--sub) !important; opacity:1; }
+
+    #themeToggle{
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      border:0.5px solid var(--line);
+      background:var(--card);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      flex-shrink:0;
+    }
+    #themeToggle .material-symbols-rounded{
+      font-size:18px;
+      color:var(--sub);
+    }
   </style>
 </head>
 <body class="bg-gray-50 text-lg">
   <div id="app-scroll">
 
   <div id="p-home" class="p-6">
-    <div class="mb-6">
+    <div class="mb-6 flex items-center justify-between">
 
   <h1 class="text-2xl font-bold mb-0 text-gray-800 flex items-center gap-2">
   <span class="material-symbols-rounded text-[29px]">
@@ -124,6 +194,10 @@
 </span>
    Beranda
 </h1>
+
+  <div id="themeToggle" onclick="toggleTema()">
+    <span id="themeIcon" class="material-symbols-rounded">dark_mode</span>
+  </div>
 
   </div>
     <div class="grid grid-cols-1 gap-4 mb-8">
@@ -460,7 +534,7 @@ id="btnUnduh"
 onclick="downloadCSV()"
 class="mt-4 w-full h-[52px] bg-white border border-gray-200 rounded-2xl flex items-center justify-center gap-2 text-gray-900 text-[18px] font-semibold transition-colors duration-150 active:bg-gray-100 shadow-[0_2px_8px_rgba(15,23,42,0.05)]">
 
-<span class="material-symbols-rounded text-[#007AFF] text-[22px]">
+<span class="material-symbols-rounded text-[#C1552F] text-[22px]">
 download
 </span>
 
@@ -469,7 +543,7 @@ Unduh Data
 </button>
 <div class="mt-5 rounded-2xl bg-blue-50 border border-blue-100 px-4 py-3">
 
-  <div class="flex items-center gap-2 text-[#007AFF] font-semibold text-[13px]">
+  <div class="flex items-center gap-2 text-[#C1552F] font-semibold text-[13px]">
     <span class="material-symbols-rounded text-[18px]">
       info
     </span>
@@ -546,7 +620,7 @@ class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justi
 
       <div
         onclick="batalPIN()"
-        class="flex-1 flex items-center justify-center text-[#007AFF] text-[17px] font-medium cursor-pointer active:bg-gray-100">
+        class="flex-1 flex items-center justify-center text-[#C1552F] text-[17px] font-medium cursor-pointer active:bg-gray-100">
         Batal
       </div>
 
@@ -647,7 +721,20 @@ let pinPercobaan = 0;
 let halamanSebelumnya = "home";
 let modeRentang = false;
 
+    function toggleTema(){
+      const html = document.documentElement;
+      const now = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      html.setAttribute("data-theme", now);
+      localStorage.setItem("tema", now);
+      document.getElementById("themeIcon").textContent = now === "dark" ? "light_mode" : "dark_mode";
+    }
+
     window.onload = () => {
+
+      if(document.documentElement.getAttribute("data-theme") === "dark"){
+        document.getElementById("themeIcon").textContent = "light_mode";
+      }
+
       nav("home");
       fetch(`${APPS_SCRIPT_URL}?action=getData`)
         .then(res => res.json())
@@ -734,14 +821,14 @@ let modeRentang = false;
     btn.classList.remove("nav-inactive");
     btn.classList.add("nav-active");
 
-    btn.style.color="#007AFF";
+    btn.style.color="var(--accent)";
 
 }else{
 
     btn.classList.remove("nav-active");
     btn.classList.add("nav-inactive");
 
-    btn.style.color="#111827";
+    btn.style.color="var(--sub)";
 
 }
 
@@ -1105,7 +1192,7 @@ function showToast(text, durasi = 1800){
 
   if(isi==""){
 
-    btn.classList.remove("text-[#007AFF]");
+    btn.classList.remove("text-[#C1552F]");
     btn.classList.add("text-gray-400");
 
     btn.style.pointerEvents = "none";
@@ -1113,7 +1200,7 @@ function showToast(text, durasi = 1800){
   }else{
 
     btn.classList.remove("text-gray-400");
-    btn.classList.add("text-[#007AFF]");
+    btn.classList.add("text-[#C1552F]");
 
     btn.style.pointerEvents = "auto";
 
@@ -1159,7 +1246,7 @@ function mulaiLoadingPIN(){
   const btn = document.getElementById("btnPIN");
 
   btn.textContent = "Memeriksa...";
-  btn.classList.remove("text-[#007AFF]");
+  btn.classList.remove("text-[#C1552F]");
   btn.classList.add("text-gray-400");
 
   btn.style.pointerEvents = "none";
@@ -1260,12 +1347,12 @@ function cekPIN(){
     datasets:[{
       data:Object.values(desil),
       backgroundColor: [
-  "#5B6770", // Desil 1
-  "#F26D7D", // Desil 2
-  "#FF9E4D", // Desil 3
-  "#FFD54F", // Desil 4
-  "#87C67C", // Desil 5
-  "#5BA7E7"  // Desil 6-10
+  "#C1552F", // Desil 1
+  "#D9A25C", // Desil 2
+  "#A8987F", // Desil 3
+  "#8F8378", // Desil 4
+  "#6E5B4B", // Desil 5
+  "#D9CBB8"  // Desil 6-10
 ]
     }]
   },
@@ -1273,7 +1360,10 @@ function cekPIN(){
     responsive:true,
     plugins:{
       legend:{
-        position:"bottom"
+        position:"bottom",
+        labels:{
+          color:"#8F8378"
+        }
       },
       tooltip:{
         titleFont:{
@@ -1311,8 +1401,8 @@ new Chart(document.getElementById("chartStatusAnak"),{
   data:Object.values(status),
 
   backgroundColor:[
-    "#87C67C",
-    "#F26D7D"
+    "#7C9A5C",
+    "#C1552F"
   ],
 
   borderColor:"#FFFFFF",
@@ -1325,7 +1415,10 @@ new Chart(document.getElementById("chartStatusAnak"),{
     responsive:true,
     plugins:{
       legend:{
-        position:"bottom"
+        position:"bottom",
+        labels:{
+          color:"#8F8378"
+        }
       },
 
       tooltip:{
@@ -1375,7 +1468,7 @@ async function downloadCSV(){
   btn.disabled = true;
 
   btn.innerHTML = `
-    <span class="material-symbols-rounded animate-spin text-[#007AFF]">
+    <span class="material-symbols-rounded animate-spin text-[#C1552F]">
       autorenew
     </span>
     Mengunduh...
@@ -1658,7 +1751,7 @@ async function downloadCSV(){
     btn.disabled = false;
 
     btn.innerHTML = `
-      <span class="material-symbols-rounded text-[#007AFF] text-[22px]">
+      <span class="material-symbols-rounded text-[#C1552F] text-[22px]">
         download
       </span>
       Unduh Data
@@ -1682,8 +1775,8 @@ function toggleRentang(){
     sw.classList.remove("bg-[#D1D1D6]");
 sw.classList.remove("border-[#C7C7CC]");
 
-sw.classList.add("bg-[#007AFF]");
-sw.classList.add("border-[#007AFF]");
+sw.classList.add("bg-[#C1552F]");
+sw.classList.add("border-[#C1552F]");
 
 bulat.style.transform = "translateX(16px)";
 
@@ -1694,8 +1787,8 @@ bulat.style.transform = "translateX(16px)";
 
   }else{
 
-    sw.classList.remove("bg-[#007AFF]");
-sw.classList.remove("border-[#007AFF]");
+    sw.classList.remove("bg-[#C1552F]");
+sw.classList.remove("border-[#C1552F]");
 
 sw.classList.add("bg-[#D1D1D6]");
 sw.classList.add("border-[#C7C7CC]");
