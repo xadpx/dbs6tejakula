@@ -555,7 +555,7 @@ class="w-24 min-w-[96px] h-9 rounded-xl border border-gray-300 px-2 text-sm">
   
 <button
 id="btnUnduh"
-onclick="downloadCSV()"
+onclick="bukaPINUnduh()"
 class="mt-4 w-full h-[46px] bg-white border border-gray-200 rounded-2xl flex items-center justify-center gap-2 text-gray-900 text-sm font-semibold transition-colors duration-150 active:bg-gray-100 shadow-[0_2px_8px_rgba(15,23,42,0.05)]">
 
 <span class="material-symbols-rounded text-[#FF7A45] text-[19px]">
@@ -734,10 +734,9 @@ z-[9999]">
     // (Deploy > New deployment > Web app > Execute as: Me > Who has access: Anyone)
     // Pastikan pakai URL yang berakhiran /exec, BUKAN /dev
     // ======================================================
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzB3PhnlUnkVllW3-5Cw1SczKxKFYtswsqBQiQNCn8VeqEXoKUwtjZYbd-3dJ_O5HQt/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbytfJNEPN1DxXzp_783e6-DINdSxFoP91C8j3auzg8o8pHBKI63rDKcD_rxCtW5HSAC/exec";
 
     let d = [];
-let downloadUnlocked = false;
 let pinPercobaan = 0;
 let halamanSebelumnya = "home";
 let modeRentang = false;
@@ -746,9 +745,6 @@ let modeRentang = false;
       const el = document.getElementById('lastUpdated');
       if(!el) return;
 
-      // Jika Apps Script sudah mengirim "lastUpdated", pakai itu.
-      // Kalau belum ada (script belum diupdate), fallback ke tanggal perangkat
-      // dan beri tanda "*" supaya jelas ini bukan waktu edit sheet yang sebenarnya.
       let tgl, perkiraan;
       if(tanggalDariServer){
         tgl = new Date(tanggalDariServer);
@@ -826,11 +822,6 @@ function nav(p){
     halamanSebelumnya=p;
   }
 
-  if(p=="download" && !downloadUnlocked){
-    bukaPIN();
-    return;
-  }
-
   const halaman = ["p-home","p-siswa","p-download"];
   const sedangTampil = halaman.find(id => !document.getElementById(id).classList.contains("hidden"));
   const target = document.getElementById("p-"+p);
@@ -897,7 +888,6 @@ function filterSiswa() {
 
   const q = document.getElementById("srch").value.trim().toLowerCase();
 
-  // Kosongkan hasil jika input kosong -> tampilkan hint awal
   if (q === "") {
     document.getElementById("list-siswa").innerHTML = `
       <div class="flex flex-col items-center justify-center text-center pt-14 px-6">
@@ -909,7 +899,6 @@ function filterSiswa() {
     return;
   }
 
-  // Minimal 3 karakter -> beri tahu berapa huruf lagi
   if (q.length < 3) {
     const sisa = 3 - q.length;
     document.getElementById("list-siswa").innerHTML = `
@@ -923,7 +912,6 @@ function filterSiswa() {
 
   const kata = q.split(/\s+/);
 
-  // Filter
   let hasil = d.filter(r => {
     
     const nama = String(r[1]).toLowerCase();
@@ -1277,8 +1265,9 @@ function showToast(text, durasi = 1800){
 
 }
 
-function bukaPIN(){
+function bukaPINUnduh(){
 
+  // Buka PIN modal saat klik tombol Unduh Data
   document.getElementById("pinModal").classList.remove("hidden");
 
   document.getElementById("pinInput").value="";
@@ -1309,6 +1298,8 @@ function batalPIN(){
 
   pinPercobaan=0;
 
+  nav(halamanSebelumnya);
+
 }
 function mulaiLoadingPIN(){
 
@@ -1338,16 +1329,14 @@ function cekPIN(){
 
   mulaiLoadingPIN();
 
-  fetch(`${APPS_SCRIPT_URL}?action=getKodeUnduh`)
+  fetch(`${APPS_SCRIPT_URL}?action=validatePin&pin=${encodeURIComponent(pin)}`)
     .then(res => res.json())
     .then(json => {
-      const kode = json.kode || "";
+      const valid = json.valid === true;
 
       selesaiLoadingPIN();
 
-      if(pin===kode){
-
-        downloadUnlocked = true;
+      if(valid){
 
         pinPercobaan = 0;
 
@@ -1355,6 +1344,8 @@ function cekPIN(){
         setNavDisabled(false);
 
         nav("download");
+        
+        setTimeout(() => downloadCSV(), 200);
 
       }else{
 
@@ -1375,8 +1366,11 @@ function cekPIN(){
           document.getElementById("pinModal").classList.add("hidden");
           setNavDisabled(false);
 
-        }
+          showToast("Terlalu banyak percobaan. Coba lagi nanti.", 3000);
+          
+          nav(halamanSebelumnya);
 
+        }
       }
     })
     .catch(err => {
