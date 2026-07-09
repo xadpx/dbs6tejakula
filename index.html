@@ -1592,7 +1592,7 @@ for(let R = range.s.r + 1; R <= range.e.r; R++){
   });
 }
 
-// Styling header: bold, teks putih, latar biru, rata tengah, ada border
+// Styling header: bold, teks putih, latar biru, rata tengah, ada border tegas
 for(let C = range.s.c; C <= range.e.c; C++){
   const cellRef = XLSX.utils.encode_cell({ r: 0, c: C });
   if(!ws[cellRef]) continue;
@@ -1601,10 +1601,10 @@ for(let C = range.s.c; C <= range.e.c; C++){
     fill: { fgColor: { rgb: "FF007AFF" } },
     alignment: { horizontal: "center", vertical: "center" },
     border: {
-      top: { style: "thin", color: { rgb: "FF999999" } },
-      bottom: { style: "thin", color: { rgb: "FF999999" } },
-      left: { style: "thin", color: { rgb: "FF999999" } },
-      right: { style: "thin", color: { rgb: "FF999999" } }
+      top: { style: "medium", color: { rgb: "FF333333" } },
+      bottom: { style: "medium", color: { rgb: "FF333333" } },
+      left: { style: "medium", color: { rgb: "FF333333" } },
+      right: { style: "medium", color: { rgb: "FF333333" } }
     }
   };
 }
@@ -1616,12 +1616,12 @@ for(let R = range.s.r + 1; R <= range.e.r; R++){
     if(!ws[cellRef]) continue;
     ws[cellRef].s = {
       border: {
-        top: { style: "thin", color: { rgb: "FFDDDDDD" } },
-        bottom: { style: "thin", color: { rgb: "FFDDDDDD" } },
-        left: { style: "thin", color: { rgb: "FFDDDDDD" } },
-        right: { style: "thin", color: { rgb: "FFDDDDDD" } }
+        top: { style: "thin", color: { rgb: "FF666666" } },
+        bottom: { style: "thin", color: { rgb: "FF666666" } },
+        left: { style: "thin", color: { rgb: "FF666666" } },
+        right: { style: "thin", color: { rgb: "FF666666" } }
       },
-      fill: (R % 2 === 0) ? { fgColor: { rgb: "FFF5F9FF" } } : undefined,
+      fill: (R % 2 === 0) ? { fgColor: { rgb: "FFDCEBFF" } } : undefined,
       alignment: { vertical: "center" }
     };
   }
