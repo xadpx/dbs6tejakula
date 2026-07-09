@@ -160,14 +160,13 @@
    Beranda
 </h1>
 
-  <p class="text-[13px] font-medium text-gray-600 flex items-center gap-1.5 mt-1 ml-[2px]">
+  <p class="text-[10px] font-medium text-gray-600 flex items-center gap-1.5 mt-1 ml-[2px]">
     SD Negeri 6 Tejakula
-    <span id="iconWaktu" class="material-symbols-rounded text-[16px]">wb_sunny</span>
-  </p>
+      </p>
 
   </div>
 
-  <p id="lastUpdated" class="text-[10px] text-gray-400 text-right leading-tight whitespace-nowrap mt-1 shrink-0"></p>
+ 
 
   </div>
     <div class="grid grid-cols-1 gap-3 mb-6">
@@ -326,6 +325,8 @@ Salin
   <p class="m-0">SD Negeri 6 Tejakula</p>
 
   <p class="m-0">© 2026 Ari Darma Putra</p>
+
+   <p id="lastUpdated" class="text-[10px] text-gray-400 leading-tight whitespace-nowrap m-0 mt-1 shrink-0"></p>
 
 </div>
 </div>
@@ -774,20 +775,11 @@ let modeRentang = false;
       const mm = String(tgl.getMonth()+1).padStart(2,'0');
       const yyyy = tgl.getFullYear();
 
-      el.innerHTML = `Terakhir diperbarui<br> ${dd}/${mm}/${yyyy}${perkiraan ? ' *' : ''}`;
+      el.innerHTML = `Diperbarui<br> ${dd}/${mm}/${yyyy}${perkiraan ? ' *' : ''}`;
     }
 
     window.onload = () => {
-      terapkanIkonWaktu();
-      nav("home");
-      fetch(`${APPS_SCRIPT_URL}?action=getData`)
-        .then(res => res.json())
-        .then(json => {
-          if (json.error) {
-            showToast("Gagal memuat data: " + json.error, 3000);
-            return;
-          }
-          const data = json.data;
+                const data = json.data;
           d = data.slice(1).filter(r => r[1] && r[1].trim() !== "");
 
           ["tot","laki","perempuan"].forEach(id=>{
