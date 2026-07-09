@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
   <style>
     html {
       overflow-x: hidden;
@@ -1353,12 +1353,11 @@ function setNavDisabled(disabled){
 
 }
 
-function downloadCSV(){
+async function downloadCSV(){
 
   const btn = document.getElementById("btnUnduh");
 
   let kelas = document.getElementById("kelasDownload").value;
-  
 
   let semua = document.getElementById("semuaData").checked;
 
@@ -1382,277 +1381,291 @@ function downloadCSV(){
     Mengunduh...
   `;
 
-setTimeout(() => {
+  // beri jeda sedikit supaya spinner sempat tampil
+  await new Promise(r => setTimeout(r, 150));
 
-  let data = [...d];
+  try{
 
-// MODE RENTANG
-if(modeRentang){
+    let data = [...d];
 
-  const awal = parseInt(
-    document.getElementById("kelasAwal").value.replace("Kelas ","")
-  );
+    // MODE RENTANG
+    if(modeRentang){
 
-  const akhir = parseInt(
-    document.getElementById("kelasAkhir").value.replace("Kelas ","")
-  );
+      const awal = parseInt(
+        document.getElementById("kelasAwal").value.replace("Kelas ","")
+      );
 
-  data = data.filter(r=>{
+      const akhir = parseInt(
+        document.getElementById("kelasAkhir").value.replace("Kelas ","")
+      );
 
-    const no = parseInt(
-      String(r[2]).replace("Kelas","").trim()
-    );
+      data = data.filter(r=>{
 
-    return no >= awal && no <= akhir;
+        const no = parseInt(
+          String(r[2]).replace("Kelas","").trim()
+        );
 
-  });
+        return no >= awal && no <= akhir;
 
-}
+      });
 
-// MODE DROPDOWN
-else if(kelas!="SEMUA"){
+    }
+    // MODE DROPDOWN
+    else if(kelas!="SEMUA"){
 
-  data = data.filter(r=>
-    String(r[2]).trim()==kelas
-  );
+      data = data.filter(r=>
+        String(r[2]).trim()==kelas
+      );
 
-}
+    }
 
-  let hasil = [];
+    let hasil = [];
+
     if(semua){
 
-const header = [
-"NO","Nama","Kelas","NIPD","Jenis Kelamin","NISN",
-"Tempat Lahir","Tanggal Lahir","NIK","Alamat","HP",
-"Nama Ayah","NIK Ayah",
-"Nama Ibu","NIK Ibu",
-"Kesejahteraan","Status Anak","Umur"
-];
+      const header = [
+        "NO","Nama","Kelas","NIPD","Jenis Kelamin","NISN",
+        "Tempat Lahir","Tanggal Lahir","NIK","Alamat","HP",
+        "Nama Ayah","NIK Ayah",
+        "Nama Ibu","NIK Ibu",
+        "Kesejahteraan","Status Anak","Umur"
+      ];
 
-hasil = [header];
+      hasil = [header];
 
-data.forEach((r,i)=>{
+      data.forEach((r,i)=>{
 
-  hasil.push([
-    i+1,                          // NO
-    r[1],                         // Nama
-    r[2],                         // Kelas
-    r[3],                         // NIPD
-    r[4],                         // Jenis Kelamin
-    r[5],                         // NISN
-    r[6],                         // Tempat Lahir
-    r[7],                         // Tanggal Lahir
-    r[8],                         // NIK
-    r[9],                         // Alamat
-    r[10],                        // HP
-    r[11],                        // Nama Ayah
-    r[16],                        // NIK Ayah
-    r[12],                        // Nama Ibu
-    r[17],                        // NIK Ibu
-    r[13],                        // Kesejahteraan
-    r[14],                        // Status Anak
-    String(r[15]).replace(/\s*thn$/i,"") // Umur
-  ]);
+        hasil.push([
+          i+1,                          // NO
+          r[1],                         // Nama
+          r[2],                         // Kelas
+          r[3],                         // NIPD
+          r[4],                         // Jenis Kelamin
+          r[5],                         // NISN
+          r[6],                         // Tempat Lahir
+          r[7],                         // Tanggal Lahir
+          r[8],                         // NIK
+          r[9],                         // Alamat
+          r[10],                        // HP
+          r[11],                        // Nama Ayah
+          r[16],                        // NIK Ayah
+          r[12],                        // Nama Ibu
+          r[17],                        // NIK Ibu
+          r[13],                        // Kesejahteraan
+          r[14],                        // Status Anak
+          String(r[15]).replace(/\s*thn$/i,"") // Umur
+        ]);
 
-});
+      });
 
-}else{
+    }else{
 
-let kolom=[0,1,2,4];
+      let kolom=[0,1,2,4];
 
-let judul=["NO","Nama","Kelas","Jenis Kelamin"];
+      let judul=["NO","Nama","Kelas","Jenis Kelamin"];
 
-const map = {
-  "NIPD":[3,"NIPD"],
-  "NISN":[5,"NISN"],
-  "NIK":[8,"NIK"],
-  "TGLLAHIR":[7,"Tanggal Lahir"],
-  "ALAMAT":[9,"Alamat"],
-  "KES":[13,"Kesejahteraan"],
-  "STATUS":[14,"Status Anak"],
-  "UMUR":[15,"Umur"]
-};
+      const map = {
+        "NIPD":[3,"NIPD"],
+        "NISN":[5,"NISN"],
+        "NIK":[8,"NIK"],
+        "TGLLAHIR":[7,"Tanggal Lahir"],
+        "ALAMAT":[9,"Alamat"],
+        "KES":[13,"Kesejahteraan"],
+        "STATUS":[14,"Status Anak"],
+        "UMUR":[15,"Umur"]
+      };
 
-// Urutan tetap sesuai tampilan dashboard
-  const urutan = [
-  "NIPD",
-  "NISN",
-  "NIK",
-  "TGLLAHIR",
-  "ALAMAT",
-  "ORTU",
-  "KES",
-  "STATUS",
-  "UMUR"
-];
+      // Urutan tetap sesuai tampilan dashboard
+      const urutan = [
+        "NIPD",
+        "NISN",
+        "NIK",
+        "TGLLAHIR",
+        "ALAMAT",
+        "ORTU",
+        "KES",
+        "STATUS",
+        "UMUR"
+      ];
 
-urutan.forEach(x=>{
+      urutan.forEach(x=>{
 
-  if(!pilih.includes(x)) return;
+        if(!pilih.includes(x)) return;
 
-  if(x==="ORTU"){
+        if(x==="ORTU"){
 
-    kolom.push(11,16,12,17);
+          kolom.push(11,16,12,17);
 
-    judul.push(
-      "Nama Ayah",
+          judul.push(
+            "Nama Ayah",
+            "NIK Ayah",
+            "Nama Ibu",
+            "NIK Ibu"
+          );
+
+        }else if(x==="TGLLAHIR"){
+
+          kolom.push(6,7);
+
+          judul.push(
+            "Tempat Lahir",
+            "Tanggal Lahir"
+          );
+
+        }else{
+
+          kolom.push(map[x][0]);
+          judul.push(map[x][1]);
+
+        }
+
+      });
+
+      hasil.push(judul);
+
+      data.forEach((r,index)=>{
+
+        let row=[];
+
+        kolom.forEach(i=>{
+
+          let nilai = r[i];
+
+          if(i===15){
+            nilai = String(nilai).replace(/\s*thn$/i,"");
+          }
+
+          row.push(nilai);
+
+        });
+
+        row[0]=index+1;
+
+        hasil.push(row);
+
+      });
+
+    }
+
+    // Kolom yang harus dipaksa jadi teks (supaya NIK/NISN dsb tidak berubah
+    // jadi notasi ilmiah / kehilangan angka 0 di depan)
+    const textHeader = [
+      "NIPD",
+      "NISN",
+      "NIK",
       "NIK Ayah",
-      "Nama Ibu",
-      "NIK Ibu"
-    );
+      "NIK Ibu",
+      "HP"
+    ];
 
-  }else if(x==="TGLLAHIR"){
+    const header = hasil[0];
+    const textCols = new Set();
+    header.forEach((h,i)=>{
+      if(textHeader.includes(h)) textCols.add(i);
+    });
 
-  kolom.push(6,7);
+    // Nama file
+    let namaFile;
 
-  judul.push(
-    "Tempat Lahir",
-    "Tanggal Lahir"
-  );
+    if(modeRentang){
 
-}else{
+      const awal = document.getElementById("kelasAwal").value;
+      const akhir = document.getElementById("kelasAkhir").value;
 
-  kolom.push(map[x][0]);
-  judul.push(map[x][1]);
+      namaFile = `${pilih.length ? pilih.join("_") : "Semua_Data"}_${awal}-${akhir}.xlsx`;
 
-}
+    }else{
 
-});
+      namaFile = (semua ? "Semua_Data" : pilih.join("_")) + "_" + kelas + ".xlsx";
 
-hasil.push(judul);
-
-data.forEach((r,index)=>{
-
-  let row=[];
-
-  kolom.forEach(i=>{
-
-    let nilai = r[i];
-
-    if(i===15){
-      nilai = String(nilai).replace(/\s*thn$/i,"");
     }
 
-    row.push(nilai);
+    // ===== BUAT WORKBOOK DENGAN EXCELJS =====
+    const wb = new ExcelJS.Workbook();
+    const ws = wb.addWorksheet("Data Siswa");
 
-  });
+    const thinGrey = { style: "thin", color: { argb: "FF666666" } };
+    const mediumDark = { style: "medium", color: { argb: "FF333333" } };
 
-  row[0]=index+1;
+    // Tambah baris header
+    const headerRow = ws.addRow(header);
+    headerRow.eachCell((cell, colNumber) => {
+      cell.font = { bold: true, color: { argb: "FFFFFFFF" } };
+      cell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FF007AFF" } };
+      cell.alignment = { horizontal: "center", vertical: "middle" };
+      cell.border = { top: mediumDark, bottom: mediumDark, left: mediumDark, right: mediumDark };
+    });
 
-  hasil.push(row);
+    // Tambah baris data
+    for (let r = 1; r < hasil.length; r++) {
+      const row = ws.addRow(hasil[r]);
 
-});
+      row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+        const colIdx = colNumber - 1;
 
-}
-const textHeader = [
-  "NIPD",
-  "NISN",
-  "NIK",
-  "NIK Ayah",
-  "NIK Ibu",
-  "HP"
-];
+        // Paksa kolom tertentu jadi teks
+        if (textCols.has(colIdx)) {
+          cell.value = cell.value === null || cell.value === undefined ? "" : String(cell.value);
+          cell.numFmt = "@";
+        }
 
-const textCols = [];
+        cell.border = { top: thinGrey, bottom: thinGrey, left: thinGrey, right: thinGrey };
+        cell.alignment = { vertical: "middle" };
 
-hasil[0].forEach((h,i)=>{
-  if(textHeader.includes(h)){
-    textCols.push(i);
+        // Warna selang-seling
+        if (r % 2 === 0) {
+          cell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FFDCEBFF" } };
+        }
+      });
+    }
+
+    // Aktifkan filter dropdown di header
+    const lastCol = ws.getColumn(header.length).letter;
+    ws.autoFilter = `A1:${lastCol}1`;
+
+    // Lebar kolom otomatis
+    ws.columns.forEach((col, i) => {
+      let maxLen = 10;
+      hasil.forEach(row => {
+        const len = String(row[i] ?? "").length;
+        if (len > maxLen) maxLen = len;
+      });
+      col.width = Math.min(maxLen + 2, 40);
+    });
+
+    // Tulis ke buffer lalu trigger download via Blob
+    const buffer = await wb.xlsx.writeBuffer();
+    const blob = new Blob([buffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    });
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = namaFile;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+
+  }catch(err){
+
+    console.error(err);
+    showToast("Gagal membuat file Excel", 3000);
+
+  }finally{
+
+    btn.disabled = false;
+
+    btn.innerHTML = `
+      <span class="material-symbols-rounded text-[#007AFF] text-[22px]">
+        download
+      </span>
+      Unduh Data
+    `;
+
   }
-});
 
-let namaFile;
-
-if(modeRentang){
-
-  const awal = document.getElementById("kelasAwal").value;
-  const akhir = document.getElementById("kelasAkhir").value;
-
-  namaFile = `${pilih.length ? pilih.join("_") : "Semua_Data"}_${awal}-${akhir}.xlsx`;
-
-}else{
-
-  namaFile = (semua ? "Semua_Data" : pilih.join("_")) + "_" + kelas + ".xlsx";
-
-}
-
-const ws = XLSX.utils.aoa_to_sheet(hasil);
-
-// Paksa kolom tertentu (NIK, NISN, dll) tetap jadi teks,
-// supaya angka panjang tidak berubah jadi notasi ilmiah / kehilangan angka 0 di depan
-const range = XLSX.utils.decode_range(ws['!ref']);
-for(let R = range.s.r + 1; R <= range.e.r; R++){
-  textCols.forEach(C => {
-    const cellRef = XLSX.utils.encode_cell({ r: R, c: C });
-    const cell = ws[cellRef];
-    if(cell){
-      cell.t = 's';
-      cell.v = String(cell.v ?? '');
-    }
-  });
-}
-
-// Styling header: bold, teks putih, latar biru, rata tengah, ada border tegas
-for(let C = range.s.c; C <= range.e.c; C++){
-  const cellRef = XLSX.utils.encode_cell({ r: 0, c: C });
-  if(!ws[cellRef]) continue;
-  ws[cellRef].s = {
-    font: { bold: true, color: { rgb: "FFFFFFFF" } },
-    fill: { fgColor: { rgb: "FF007AFF" } },
-    alignment: { horizontal: "center", vertical: "center" },
-    border: {
-      top: { style: "medium", color: { rgb: "FF333333" } },
-      bottom: { style: "medium", color: { rgb: "FF333333" } },
-      left: { style: "medium", color: { rgb: "FF333333" } },
-      right: { style: "medium", color: { rgb: "FF333333" } }
-    }
-  };
-}
-
-// Border + warna selang-seling untuk baris data, biar tampak seperti tabel
-for(let R = range.s.r + 1; R <= range.e.r; R++){
-  for(let C = range.s.c; C <= range.e.c; C++){
-    const cellRef = XLSX.utils.encode_cell({ r: R, c: C });
-    if(!ws[cellRef]) continue;
-    ws[cellRef].s = {
-      border: {
-        top: { style: "thin", color: { rgb: "FF666666" } },
-        bottom: { style: "thin", color: { rgb: "FF666666" } },
-        left: { style: "thin", color: { rgb: "FF666666" } },
-        right: { style: "thin", color: { rgb: "FF666666" } }
-      },
-      fill: (R % 2 === 0) ? { fgColor: { rgb: "FFDCEBFF" } } : undefined,
-      alignment: { vertical: "center" }
-    };
-  }
-}
-
-// Aktifkan filter dropdown di header, biar terasa seperti tabel Excel beneran
-ws['!autofilter'] = { ref: ws['!ref'] };
-
-// Lebar kolom otomatis biar rapi
-ws['!cols'] = hasil[0].map((_, i) => {
-  const maxLen = hasil.reduce((max, row) => {
-    const len = String(row[i] ?? '').length;
-    return len > max ? len : max;
-  }, 10);
-  return { wch: Math.min(maxLen + 2, 40) };
-});
-
-const wb = XLSX.utils.book_new();
-XLSX.utils.book_append_sheet(wb, ws, "Data Siswa");
-
-XLSX.writeFile(wb, namaFile);
-
-btn.disabled = false;
-
-btn.innerHTML = `
-<span class="material-symbols-rounded text-[#007AFF] text-[22px]">
-download
-</span>
-Unduh Data
-`;
-}, 150);
 }
 function toggleRentang(){
 
