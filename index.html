@@ -7,6 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
   <style>
     html {
       overflow-x: hidden;
@@ -478,16 +479,8 @@ Unduh Data
   <div class="mt-2 text-[12px] leading-5 text-gray-600">
 
     <div>
-      1. Apapun kategori yang dipilih, hasil unduhan akan selalu menyertakan kolom:
+      Apapun kategori yang dipilih, hasil unduhan akan selalu menyertakan kolom:
       <b>No • Nama • Kelas • Jenis Kelamin</b>.
-    </div>
-
-    <div
-      onclick="bukaPanduanCSV()"
-      class="mt-3 text-[#007AFF] font-medium cursor-pointer active:opacity-70">
-
-      2. Hasil unduh tidak rapi? Klik ini!
-
     </div>
 
   </div>
@@ -571,54 +564,6 @@ class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justi
   </div>
 
 </div>
-<div id="modalCSV"
-class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-6">
-
-  <div class="relative bg-white w-[90%] max-w-sm rounded-2xl shadow-xl">
-
-    <button
-      onclick="tutupPanduanCSV()"
-      class="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition">
-
-      <span class="material-symbols-rounded">
-        close
-      </span>
-
-    </button>
-
-    <div class="px-5 py-6">
-
-      <div class="text-[18px] font-semibold text-center mb-5">
-        Panduan
-      </div>
-
-      <div class="text-[14px] leading-7 text-gray-700">
-
-        Merapikan hasil unduh di Excel:
-
-        <ol class="list-decimal ml-5 mt-3 space-y-1">
-
-          <li>Pilih kolom <b>A</b>, tekan <b> Ctrl+A</b> </li>
-
-          <li>Buka menu <b>Data</b>.</li>
-
-          <li>Pilih <b>Text to Columns</b>.</li>
-
-          <li>Pilih <b>Delimited</b>, lalu klik <b>Next</b>.</li>
-
-          <li>Centang <b>Comma (,)</b>.</li>
-
-          <li>Klik <b>Finish</b>.</li>
-
-        </ol>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
   <nav class="fixed
 bottom-0
 left-0
@@ -694,7 +639,7 @@ z-[9999]">
     // (Deploy > New deployment > Web app > Execute as: Me > Who has access: Anyone)
     // Pastikan pakai URL yang berakhiran /exec, BUKAN /dev
     // ======================================================
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzjwyamoxlwbPhyW0QOqmI6WoJSbDGMQBCf-U-4Ju5HhJ2x2jIzcEdBO6eAW3Mo1k68/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/GANTI_DENGAN_ID_DEPLOYMENT_ANDA/exec";
 
     let d = [];
 let downloadUnlocked = false;
@@ -1616,44 +1561,6 @@ hasil[0].forEach((h,i)=>{
   }
 });
 
-hasil = hasil.map((r,idx)=>{
-
-  if(idx===0) return r;
-
-  return r.map((v,i)=>{
-
-    if(textCols.includes(i)){
-      return '="' + String(v ?? '') + '"';
-    }
-
-    return v;
-
-  });
-
-});
-let csv = hasil
-  .map(r =>
-    r.map(v => {
-      v = String(v ?? "");
-
-      if (v.startsWith('="') && v.endsWith('"')) {
-        return v;
-      }
-
-      return '"' + v.replace(/"/g, '""') + '"';
-    }).join(",")
-  )
-  .join("\n");
-
-let blob = new Blob([csv], {
-  type: "text/csv;charset=utf-8;"
-});
-
-let url = URL.createObjectURL(blob);
-
-let a = document.createElement("a");
-
-a.href = url;
 let namaFile;
 
 if(modeRentang){
@@ -1661,18 +1568,44 @@ if(modeRentang){
   const awal = document.getElementById("kelasAwal").value;
   const akhir = document.getElementById("kelasAkhir").value;
 
-  namaFile = `${pilih.length ? pilih.join("_") : "Semua_Data"}_${awal}-${akhir}.csv`;
+  namaFile = `${pilih.length ? pilih.join("_") : "Semua_Data"}_${awal}-${akhir}.xlsx`;
 
 }else{
 
-  namaFile = (semua ? "Semua_Data" : pilih.join("_")) + "_" + kelas + ".csv";
+  namaFile = (semua ? "Semua_Data" : pilih.join("_")) + "_" + kelas + ".xlsx";
 
 }
-a.download = namaFile;
 
-a.click();
+const ws = XLSX.utils.aoa_to_sheet(hasil);
 
-URL.revokeObjectURL(url);
+// Paksa kolom tertentu (NIK, NISN, dll) tetap jadi teks,
+// supaya angka panjang tidak berubah jadi notasi ilmiah / kehilangan angka 0 di depan
+const range = XLSX.utils.decode_range(ws['!ref']);
+for(let R = range.s.r + 1; R <= range.e.r; R++){
+  textCols.forEach(C => {
+    const cellRef = XLSX.utils.encode_cell({ r: R, c: C });
+    const cell = ws[cellRef];
+    if(cell){
+      cell.t = 's';
+      cell.v = String(cell.v ?? '');
+    }
+  });
+}
+
+// Lebar kolom otomatis biar rapi
+ws['!cols'] = hasil[0].map((_, i) => {
+  const maxLen = hasil.reduce((max, row) => {
+    const len = String(row[i] ?? '').length;
+    return len > max ? len : max;
+  }, 10);
+  return { wch: Math.min(maxLen + 2, 40) };
+});
+
+const wb = XLSX.utils.book_new();
+XLSX.utils.book_append_sheet(wb, ws, "Data Siswa");
+
+XLSX.writeFile(wb, namaFile);
+
 btn.disabled = false;
 
 btn.innerHTML = `
@@ -1743,23 +1676,6 @@ function updateKelasAkhir(){
     `;
 
   }
-
-}
-function bukaPanduanCSV(){
-
-  document.getElementById("modalCSV")
-    .classList.remove("hidden");
-
-  setNavDisabled(true);
-
-}
-
-function tutupPanduanCSV(){
-
-  document.getElementById("modalCSV")
-    .classList.add("hidden");
-
-  setNavDisabled(false);
 
 }
 function tekanEnterPIN(e){
