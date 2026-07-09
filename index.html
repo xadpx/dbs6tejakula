@@ -221,7 +221,14 @@ Salin
   Kesejahteraan Siswa
 </h2>
 
-    <canvas id="chartKesejahteraan"></canvas>
+    <div class="relative">
+      <canvas id="chartKesejahteraan"></canvas>
+      <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+        <span id="totalKesejahteraanNum" class="text-2xl font-bold text-gray-900">0</span>
+        <span class="text-xs text-gray-500">Siswa</span>
+      </div>
+    </div>
+    <div id="legendKesejahteraan" class="mt-4 grid grid-cols-2 gap-2"></div>
   </div>
 
   <div class="bg-white p-6 rounded-[28px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
@@ -232,7 +239,14 @@ Salin
   Status Anak
 </h2>
 
-    <canvas id="chartStatusAnak"></canvas>
+    <div class="relative">
+      <canvas id="chartStatusAnak"></canvas>
+      <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+        <span id="totalStatusAnakNum" class="text-2xl font-bold text-gray-900">0</span>
+        <span class="text-xs text-gray-500">Siswa</span>
+      </div>
+    </div>
+    <div id="legendStatusAnak" class="mt-4 grid grid-cols-2 gap-2"></div>
   </div>
 <div class="mt-6 mb-4 text-center text-[10px] text-gray-400">
 
@@ -639,7 +653,7 @@ z-[9999]">
     // (Deploy > New deployment > Web app > Execute as: Me > Who has access: Anyone)
     // Pastikan pakai URL yang berakhiran /exec, BUKAN /dev
     // ======================================================
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyKUBwExCFQ_gWRPEa5chrjKn2WYLGUyPav5kT7rB9dmv3rNrITx5zNLlIK7CIGFOde/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/GANTI_DENGAN_ID_DEPLOYMENT_ANDA/exec";
 
     let d = [];
 let downloadUnlocked = false;
@@ -1230,7 +1244,30 @@ function cekPIN(){
     });
 
 }
-    function buatChart(){
+    function buatLegend(containerId, labels, values, colors){
+
+  const total = values.reduce((a,b)=>a+b, 0);
+  const el = document.getElementById(containerId);
+
+  el.innerHTML = labels.map((l,i)=>{
+
+    const val = values[i];
+    const pct = total ? Math.round((val/total)*100) : 0;
+
+    return `
+      <div class="flex items-center gap-2 bg-gray-50 rounded-xl px-3 py-2">
+        <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:${colors[i]}"></span>
+        <span class="text-[12px] text-gray-600 flex-1 truncate">${l}</span>
+        <span class="text-[12px] font-semibold text-gray-900">${val}</span>
+        <span class="text-[10px] text-gray-400">${pct}%</span>
+      </div>
+    `;
+
+  }).join('');
+
+}
+
+function buatChart(){
 
   // ===== KESEJAHTERAAN =====
 
@@ -1253,27 +1290,39 @@ function cekPIN(){
 
 });
 
-  new Chart(document.getElementById("chartKesejahteraan"),{
-  type:"pie",
-  data:{
-    labels:Object.keys(desil),
-    datasets:[{
-      data:Object.values(desil),
-      backgroundColor: [
+  const warnaKesejahteraan = [
   "#5B6770", // Desil 1
   "#F26D7D", // Desil 2
   "#FF9E4D", // Desil 3
   "#FFD54F", // Desil 4
   "#87C67C", // Desil 5
   "#5BA7E7"  // Desil 6-10
-]
+];
+
+  const labelKesejahteraan = Object.keys(desil);
+  const nilaiKesejahteraan = Object.values(desil);
+
+  document.getElementById('totalKesejahteraanNum').innerText =
+    nilaiKesejahteraan.reduce((a,b)=>a+b,0);
+
+  new Chart(document.getElementById("chartKesejahteraan"),{
+  type:"doughnut",
+  data:{
+    labels:labelKesejahteraan,
+    datasets:[{
+      data:nilaiKesejahteraan,
+      backgroundColor: warnaKesejahteraan,
+      borderColor:"#FFFFFF",
+      borderWidth:3,
+      hoverOffset:6
     }]
   },
   options:{
     responsive:true,
+    cutout:"68%",
     plugins:{
       legend:{
-        position:"bottom"
+        display:false
       },
       tooltip:{
         titleFont:{
@@ -1286,6 +1335,8 @@ function cekPIN(){
     }
   }
 }); // <-- PENUTUP new Chart()
+
+  buatLegend('legendKesejahteraan', labelKesejahteraan, nilaiKesejahteraan, warnaKesejahteraan);
 
   // ===== STATUS ANAK =====
 
@@ -1301,31 +1352,36 @@ function cekPIN(){
 
   });
 
+  const warnaStatusAnak = ["#87C67C","#F26D7D"];
+  const labelStatusAnak = Object.keys(status);
+  const nilaiStatusAnak = Object.values(status);
+
+  document.getElementById('totalStatusAnakNum').innerText =
+    nilaiStatusAnak.reduce((a,b)=>a+b,0);
+
 new Chart(document.getElementById("chartStatusAnak"),{
 
-  type:"pie",
+  type:"doughnut",
 
   data:{
-    labels:Object.keys(status),
+    labels:labelStatusAnak,
     datasets:[{
-  data:Object.values(status),
+  data:nilaiStatusAnak,
 
-  backgroundColor:[
-    "#87C67C",
-    "#F26D7D"
-  ],
+  backgroundColor:warnaStatusAnak,
 
   borderColor:"#FFFFFF",
-  borderWidth:2,
-  hoverBorderWidth:2
+  borderWidth:3,
+  hoverOffset:6
 }]
   },
 
   options:{
     responsive:true,
+    cutout:"68%",
     plugins:{
       legend:{
-        position:"bottom"
+        display:false
       },
 
       tooltip:{
@@ -1336,6 +1392,9 @@ new Chart(document.getElementById("chartStatusAnak"),{
   }
 
 });
+
+  buatLegend('legendStatusAnak', labelStatusAnak, nilaiStatusAnak, warnaStatusAnak);
+
 }
 function setNavDisabled(disabled){
 
