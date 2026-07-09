@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style/dist/xlsx.bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
   <style>
     html {
       overflow-x: hidden;
@@ -1597,14 +1597,14 @@ for(let C = range.s.c; C <= range.e.c; C++){
   const cellRef = XLSX.utils.encode_cell({ r: 0, c: C });
   if(!ws[cellRef]) continue;
   ws[cellRef].s = {
-    font: { bold: true, color: { rgb: "FFFFFF" } },
-    fill: { fgColor: { rgb: "007AFF" } },
+    font: { bold: true, color: { rgb: "FFFFFFFF" } },
+    fill: { fgColor: { rgb: "FF007AFF" } },
     alignment: { horizontal: "center", vertical: "center" },
     border: {
-      top: { style: "thin", color: { rgb: "999999" } },
-      bottom: { style: "thin", color: { rgb: "999999" } },
-      left: { style: "thin", color: { rgb: "999999" } },
-      right: { style: "thin", color: { rgb: "999999" } }
+      top: { style: "thin", color: { rgb: "FF999999" } },
+      bottom: { style: "thin", color: { rgb: "FF999999" } },
+      left: { style: "thin", color: { rgb: "FF999999" } },
+      right: { style: "thin", color: { rgb: "FF999999" } }
     }
   };
 }
@@ -1616,12 +1616,12 @@ for(let R = range.s.r + 1; R <= range.e.r; R++){
     if(!ws[cellRef]) continue;
     ws[cellRef].s = {
       border: {
-        top: { style: "thin", color: { rgb: "DDDDDD" } },
-        bottom: { style: "thin", color: { rgb: "DDDDDD" } },
-        left: { style: "thin", color: { rgb: "DDDDDD" } },
-        right: { style: "thin", color: { rgb: "DDDDDD" } }
+        top: { style: "thin", color: { rgb: "FFDDDDDD" } },
+        bottom: { style: "thin", color: { rgb: "FFDDDDDD" } },
+        left: { style: "thin", color: { rgb: "FFDDDDDD" } },
+        right: { style: "thin", color: { rgb: "FFDDDDDD" } }
       },
-      fill: (R % 2 === 0) ? { fgColor: { rgb: "F5F9FF" } } : undefined,
+      fill: (R % 2 === 0) ? { fgColor: { rgb: "FFF5F9FF" } } : undefined,
       alignment: { vertical: "center" }
     };
   }
