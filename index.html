@@ -779,17 +779,52 @@ let modeRentang = false;
     }
 
     window.onload = () => {
-                const data = json.data;
-          d = data.slice(1).filter(r => r[1] && r[1].trim() !== "");
+  nav("home");
 
-          ["tot","laki","perempuan"].forEach(id=>{
-            document.getElementById(id).classList.remove("skeleton");
-          });
-          terapkanTanggalUpdate(json.lastUpdated);
+  fetch(`${APPS_SCRIPT_URL}?action=getData`)
+    .then(res => res.json())
+    .then(json => {
+      if (json.error) {
+        showToast("Gagal memuat data: " + json.error, 3000);
+        return;
+      }
 
-          document.getElementById('tot').innerText = d.length;
-          document.getElementById('laki').innerText = d.filter(r => r[4] && r[4].toUpperCase().includes('L')).length;
-          document.getElementById('perempuan').innerText = d.filter(r => r[4] && r[4].toUpperCase().includes('P')).length;
+      const data = json.data;
+      d = data.slice(1).filter(r => r[1] && r[1].trim() !== "");
+
+      ["tot", "laki", "perempuan"].forEach(id => {
+        document.getElementById(id).classList.remove("skeleton");
+      });
+
+      terapkanTanggalUpdate(json.lastUpdated);
+
+      document.getElementById('tot').innerText = d.length;
+      document.getElementById('laki').innerText =
+        d.filter(r => r[4] && r[4].toUpperCase().includes('L')).length;
+      document.getElementById('perempuan').innerText =
+        d.filter(r => r[4] && r[4].toUpperCase().includes('P')).length;
+
+      const classes = [...new Set(d.map(r => r[2]))].filter(c => c).sort();
+      document.getElementById('tabel-body').innerHTML = classes.map(k => {
+        const list = d.filter(r => r[2] == k);
+        const L = list.filter(r => r[4] && r[4].toUpperCase().includes('L')).length;
+        const P = list.filter(r => r[4] && r[4].toUpperCase().includes('P')).length;
+        return `
+<tr class="border-b border-gray-200">
+  <td class="p-3 text-left text-gray-700">${k}</td>
+  <td class="font-medium text-gray-600">${L}</td>
+  <td class="font-medium text-gray-600">${P}</td>
+  <td class="font-semibold">${L + P}</td>
+</tr>`;
+      }).join('');
+
+      buatChart();
+    })
+    .catch(err => {
+      console.error(err);
+      showToast("Tidak bisa terhubung ke server data", 3000);
+    });
+};;
 
           const classes = [...new Set(d.map(r => r[2]))].filter(c => c).sort();
           document.getElementById('tabel-body').innerHTML = classes.map(k => {
