@@ -774,7 +774,7 @@ let modeRentang = false;
       const mm = String(tgl.getMonth()+1).padStart(2,'0');
       const yyyy = tgl.getFullYear();
 
-      el.innerHTML = `Terakhir diperbarui<br>tgl ${dd}/${mm}/${yyyy}${perkiraan ? ' *' : ''}`;
+      el.innerHTML = `Terakhir diperbarui<br> ${dd}/${mm}/${yyyy}${perkiraan ? ' *' : ''}`;
     }
 
     window.onload = () => {
