@@ -737,24 +737,6 @@ let pinPercobaan = 0;
 let halamanSebelumnya = "home";
 let modeRentang = false;
 
-    function terapkanIkonWaktu(){
-      const jam = new Date().getHours();
-      const el = document.getElementById('iconWaktu');
-      if(!el) return;
-      let icon, warna;
-      if(jam >= 4 && jam < 11){
-        icon = "wb_twilight"; warna = "#FFB25E";
-      }else if(jam >= 11 && jam < 15){
-        icon = "wb_sunny"; warna = "#FF9A45";
-      }else if(jam >= 15 && jam < 18){
-        icon = "wb_twilight"; warna = "#FF7A45";
-      }else{
-        icon = "bedtime"; warna = "#8B8FA3";
-      }
-      el.textContent = icon;
-      el.style.color = warna;
-    }
-
     function terapkanTanggalUpdate(tanggalDariServer){
       const el = document.getElementById('lastUpdated');
       if(!el) return;
@@ -824,43 +806,9 @@ let modeRentang = false;
       console.error(err);
       showToast("Tidak bisa terhubung ke server data", 3000);
     });
-};;
+};
 
-          const classes = [...new Set(d.map(r => r[2]))].filter(c => c).sort();
-          document.getElementById('tabel-body').innerHTML = classes.map(k => {
-            const list = d.filter(r => r[2] == k);
-            const L = list.filter(r => r[4] && r[4].toUpperCase().includes('L')).length;
-            const P = list.filter(r => r[4] && r[4].toUpperCase().includes('P')).length;
-            return `
-<tr class="border-b border-gray-200">
-
-  <td class="p-3 text-left text-gray-700">
-  ${k}
-</td>
-
-  <td class="font-medium text-gray-600">
-    ${L}
-  </td>
-
-  <td class="font-medium text-gray-600">
-    ${P}
-  </td>
-
-  <td class="font-semibold">
-    ${L+P}
-  </td>
-
-</tr>`;
-          }).join('');
-          buatChart();
-        })
-        .catch(err => {
-          console.error(err);
-          showToast("Tidak bisa terhubung ke server data", 3000);
-        });
-    };
-
-    function nav(p){
+function nav(p){
 
   if(
     !document.getElementById("modal").classList.contains("hidden") ||
