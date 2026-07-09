@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
-    <style>
+  <style>
     html {
       overflow-x: hidden;
       width: 100%;
@@ -143,22 +143,13 @@
         transform:rotate(360deg);
       }
     }
-      #p-siswa.hidden {
-  pointer-events: none !important;
-}
-
-#p-download.hidden {
-  pointer-events: none !important;
-}
   </style>
 </head>
 <body class="bg-gray-50 text-base">
   <div id="app-scroll">
 
   <div id="p-home" class="p-5">
-  <div class="mb-5 flex items-start justify-between gap-3">
-
-  <div>
+  <div class="mb-5">
 
   <h1 class="text-xl font-bold mb-0 text-gray-800 flex items-center gap-2">
   <span class="material-symbols-rounded text-[22px]">
@@ -167,17 +158,13 @@
    Beranda
 </h1>
 
-  <p class="text-[10px] font-medium text-gray-600 flex items-center gap-1.5 mt-1 ml-[2px]">
+  <p class="text-[13px] font-medium text-gray-600 mt-1 ml-[2px]">
     SD Negeri 6 Tejakula
-      </p>
-
-  </div>
-
- 
+  </p>
 
   </div>
     <div class="grid grid-cols-1 gap-3 mb-6">
-      <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+      <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)] relative">
         <p class="text-xs font-semibold text-gray-600 mb-1 flex items-center gap-1">
   <span class="material-symbols-rounded text-[15px]">
     school
@@ -188,6 +175,7 @@
 class="skeleton text-[21px] font-bold tracking-tight tabular-nums text-gray-900 inline-block min-w-[48px] leading-6">
 0
 </p>
+        <span id="lastUpdated" class="absolute bottom-3 right-4 text-[10px] text-gray-400"></span>
       </div>
       <div class="grid grid-cols-2 gap-3">
         <div class="bg-white p-5 rounded-[24px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
@@ -329,9 +317,9 @@ Salin
   </div>
 <div class="mt-5 mb-3 text-center text-[10px] text-gray-400">
 
-    <p class="m-0">© 2026 Ari Darma Putra</p>
+  <p class="m-0">SD Negeri 6 Tejakula</p>
 
-   <p id="lastUpdated" class="text-[10px] text-gray-400 leading-tight whitespace-nowrap m-0 mt-1 shrink-0"></p>
+  <p class="m-0">© 2026 Ari Darma Putra</p>
 
 </div>
 </div>
@@ -555,7 +543,7 @@ class="w-24 min-w-[96px] h-9 rounded-xl border border-gray-300 px-2 text-sm">
   
 <button
 id="btnUnduh"
-onclick="bukaPINUnduh()"
+onclick="downloadCSV()"
 class="mt-4 w-full h-[46px] bg-white border border-gray-200 rounded-2xl flex items-center justify-center gap-2 text-gray-900 text-sm font-semibold transition-colors duration-150 active:bg-gray-100 shadow-[0_2px_8px_rgba(15,23,42,0.05)]">
 
 <span class="material-symbols-rounded text-[#FF7A45] text-[19px]">
@@ -734,9 +722,10 @@ z-[9999]">
     // (Deploy > New deployment > Web app > Execute as: Me > Who has access: Anyone)
     // Pastikan pakai URL yang berakhiran /exec, BUKAN /dev
     // ======================================================
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbytfJNEPN1DxXzp_783e6-DINdSxFoP91C8j3auzg8o8pHBKI63rDKcD_rxCtW5HSAC/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzB3PhnlUnkVllW3-5Cw1SczKxKFYtswsqBQiQNCn8VeqEXoKUwtjZYbd-3dJ_O5HQt/exec";
 
     let d = [];
+let downloadUnlocked = false;
 let pinPercobaan = 0;
 let halamanSebelumnya = "home";
 let modeRentang = false;
@@ -745,6 +734,9 @@ let modeRentang = false;
       const el = document.getElementById('lastUpdated');
       if(!el) return;
 
+      // Jika Apps Script sudah mengirim "lastUpdated", pakai itu.
+      // Kalau belum ada (script belum diupdate), fallback ke tanggal perangkat
+      // dan beri tanda "*" supaya jelas ini bukan waktu edit sheet yang sebenarnya.
       let tgl, perkiraan;
       if(tanggalDariServer){
         tgl = new Date(tanggalDariServer);
@@ -758,58 +750,65 @@ let modeRentang = false;
       const mm = String(tgl.getMonth()+1).padStart(2,'0');
       const yyyy = tgl.getFullYear();
 
-      el.innerHTML = `Diperbarui<br> ${dd}/${mm}/${yyyy}${perkiraan ? ' *' : ''}`;
+      el.innerText = `Diperbarui ${dd}/${mm}/${yyyy}${perkiraan ? ' *' : ''}`;
     }
 
     window.onload = () => {
-  nav("home");
+      nav("home");
+      fetch(`${APPS_SCRIPT_URL}?action=getData`)
+        .then(res => res.json())
+        .then(json => {
+          if (json.error) {
+            showToast("Gagal memuat data: " + json.error, 3000);
+            return;
+          }
+          const data = json.data;
+          d = data.slice(1).filter(r => r[1] && r[1].trim() !== "");
 
-  fetch(`${APPS_SCRIPT_URL}?action=getData`)
-    .then(res => res.json())
-    .then(json => {
-      if (json.error) {
-        showToast("Gagal memuat data: " + json.error, 3000);
-        return;
-      }
+          ["tot","laki","perempuan"].forEach(id=>{
+            document.getElementById(id).classList.remove("skeleton");
+          });
+          terapkanTanggalUpdate(json.lastUpdated);
 
-      const data = json.data;
-      d = data.slice(1).filter(r => r[1] && r[1].trim() !== "");
+          document.getElementById('tot').innerText = d.length;
+          document.getElementById('laki').innerText = d.filter(r => r[4] && r[4].toUpperCase().includes('L')).length;
+          document.getElementById('perempuan').innerText = d.filter(r => r[4] && r[4].toUpperCase().includes('P')).length;
 
-      ["tot", "laki", "perempuan"].forEach(id => {
-        document.getElementById(id).classList.remove("skeleton");
-      });
-
-      terapkanTanggalUpdate(json.lastUpdated);
-
-      document.getElementById('tot').innerText = d.length;
-      document.getElementById('laki').innerText =
-        d.filter(r => r[4] && r[4].toUpperCase().includes('L')).length;
-      document.getElementById('perempuan').innerText =
-        d.filter(r => r[4] && r[4].toUpperCase().includes('P')).length;
-
-      const classes = [...new Set(d.map(r => r[2]))].filter(c => c).sort();
-      document.getElementById('tabel-body').innerHTML = classes.map(k => {
-        const list = d.filter(r => r[2] == k);
-        const L = list.filter(r => r[4] && r[4].toUpperCase().includes('L')).length;
-        const P = list.filter(r => r[4] && r[4].toUpperCase().includes('P')).length;
-        return `
+          const classes = [...new Set(d.map(r => r[2]))].filter(c => c).sort();
+          document.getElementById('tabel-body').innerHTML = classes.map(k => {
+            const list = d.filter(r => r[2] == k);
+            const L = list.filter(r => r[4] && r[4].toUpperCase().includes('L')).length;
+            const P = list.filter(r => r[4] && r[4].toUpperCase().includes('P')).length;
+            return `
 <tr class="border-b border-gray-200">
-  <td class="p-3 text-left text-gray-700">${k}</td>
-  <td class="font-medium text-gray-600">${L}</td>
-  <td class="font-medium text-gray-600">${P}</td>
-  <td class="font-semibold">${L + P}</td>
+
+  <td class="p-3 text-left text-gray-700">
+  ${k}
+</td>
+
+  <td class="font-medium text-gray-600">
+    ${L}
+  </td>
+
+  <td class="font-medium text-gray-600">
+    ${P}
+  </td>
+
+  <td class="font-semibold">
+    ${L+P}
+  </td>
+
 </tr>`;
-      }).join('');
+          }).join('');
+          buatChart();
+        })
+        .catch(err => {
+          console.error(err);
+          showToast("Tidak bisa terhubung ke server data", 3000);
+        });
+    };
 
-      buatChart();
-    })
-    .catch(err => {
-      console.error(err);
-      showToast("Tidak bisa terhubung ke server data", 3000);
-    });
-};
-
-function nav(p){
+    function nav(p){
 
   if(
     !document.getElementById("modal").classList.contains("hidden") ||
@@ -820,6 +819,11 @@ function nav(p){
 
   if(p!="download"){
     halamanSebelumnya=p;
+  }
+
+  if(p=="download" && !downloadUnlocked){
+    bukaPIN();
+    return;
   }
 
   const halaman = ["p-home","p-siswa","p-download"];
@@ -888,6 +892,7 @@ function filterSiswa() {
 
   const q = document.getElementById("srch").value.trim().toLowerCase();
 
+  // Kosongkan hasil jika input kosong -> tampilkan hint awal
   if (q === "") {
     document.getElementById("list-siswa").innerHTML = `
       <div class="flex flex-col items-center justify-center text-center pt-14 px-6">
@@ -899,6 +904,7 @@ function filterSiswa() {
     return;
   }
 
+  // Minimal 3 karakter -> beri tahu berapa huruf lagi
   if (q.length < 3) {
     const sisa = 3 - q.length;
     document.getElementById("list-siswa").innerHTML = `
@@ -912,6 +918,7 @@ function filterSiswa() {
 
   const kata = q.split(/\s+/);
 
+  // Filter
   let hasil = d.filter(r => {
     
     const nama = String(r[1]).toLowerCase();
@@ -1017,6 +1024,24 @@ ${i < hasil.length - 1
 `;
 }
 
+function formatTanggalLahir(v){
+
+  if(v === null || v === undefined || v === "") return v;
+
+  const s = String(v);
+
+  // Deteksi format ISO seperti "2016-01-29T16:00:00.000Z" atau "2016-01-29"
+  const match = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+
+  if(match){
+    const [, yyyy, mm, dd] = match;
+    return `${dd}/${mm}/${yyyy}`;
+  }
+
+  return s;
+
+}
+
 function showDetailByNIK(nik){
 
   const r = d.find(item => item[8] == nik);
@@ -1083,7 +1108,7 @@ function showDetailByNIK(nik){
   <span class="material-symbols-rounded text-[17px] text-gray-500 shrink-0">calendar_month</span>
   <div>
     <span class="font-semibold text-gray-800">Tanggal Lahir:</span>
-    <span class="text-gray-600"> ${r[7]}</span>
+    <span class="text-gray-600"> ${formatTanggalLahir(r[7])}</span>
   </div>
 </div>
 
@@ -1265,9 +1290,8 @@ function showToast(text, durasi = 1800){
 
 }
 
-function bukaPINUnduh(){
+function bukaPIN(){
 
-  // Buka PIN modal saat klik tombol Unduh Data
   document.getElementById("pinModal").classList.remove("hidden");
 
   document.getElementById("pinInput").value="";
@@ -1298,8 +1322,6 @@ function batalPIN(){
 
   pinPercobaan=0;
 
-  nav(halamanSebelumnya);
-
 }
 function mulaiLoadingPIN(){
 
@@ -1329,14 +1351,16 @@ function cekPIN(){
 
   mulaiLoadingPIN();
 
-  fetch(`${APPS_SCRIPT_URL}?action=validatePin&pin=${encodeURIComponent(pin)}`)
+  fetch(`${APPS_SCRIPT_URL}?action=getKodeUnduh`)
     .then(res => res.json())
     .then(json => {
-      const valid = json.valid === true;
+      const kode = json.kode || "";
 
       selesaiLoadingPIN();
 
-      if(valid){
+      if(pin===kode){
+
+        downloadUnlocked = true;
 
         pinPercobaan = 0;
 
@@ -1344,8 +1368,6 @@ function cekPIN(){
         setNavDisabled(false);
 
         nav("download");
-        
-        setTimeout(() => downloadCSV(), 200);
 
       }else{
 
@@ -1366,11 +1388,8 @@ function cekPIN(){
           document.getElementById("pinModal").classList.add("hidden");
           setNavDisabled(false);
 
-          showToast("Terlalu banyak percobaan. Coba lagi nanti.", 3000);
-          
-          nav(halamanSebelumnya);
-
         }
+
       }
     })
     .catch(err => {
@@ -1391,8 +1410,8 @@ function cekPIN(){
     return `
       <div class="flex items-center gap-2 bg-gray-50 rounded-xl px-3 py-2">
         <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:${colors[i]}"></span>
-        <span class="text-[13px] text-gray-600 flex-1 truncate">${l}</span>
-        <span class="text-[13px] font-semibold text-gray-900">${val}</span>
+        <span class="text-[11px] text-gray-600 flex-1 truncate">${l}</span>
+        <span class="text-[11px] font-semibold text-gray-900">${val}</span>
       </div>
     `;
 
@@ -1639,7 +1658,7 @@ data.forEach((r,i)=>{
     r[4],                         // Jenis Kelamin
     r[5],                         // NISN
     r[6],                         // Tempat Lahir
-    r[7],                         // Tanggal Lahir
+    formatTanggalLahir(r[7]),     // Tanggal Lahir
     r[8],                         // NIK
     r[9],                         // Alamat
     r[10],                        // HP
@@ -1729,6 +1748,10 @@ data.forEach((r,index)=>{
 
     if(i===15){
       nilai = String(nilai).replace(/\s*thn$/i,"");
+    }
+
+    if(i===7){
+      nilai = formatTanggalLahir(nilai);
     }
 
     row.push(nilai);
