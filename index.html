@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style/dist/xlsx.bundle.js"></script>
   <style>
     html {
       overflow-x: hidden;
@@ -639,7 +639,7 @@ z-[9999]">
     // (Deploy > New deployment > Web app > Execute as: Me > Who has access: Anyone)
     // Pastikan pakai URL yang berakhiran /exec, BUKAN /dev
     // ======================================================
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzjwyamoxlwbPhyW0QOqmI6WoJSbDGMQBCf-U-4Ju5HhJ2x2jIzcEdBO6eAW3Mo1k68/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyKUBwExCFQ_gWRPEa5chrjKn2WYLGUyPav5kT7rB9dmv3rNrITx5zNLlIK7CIGFOde/exec";
 
     let d = [];
 let downloadUnlocked = false;
@@ -1591,6 +1591,44 @@ for(let R = range.s.r + 1; R <= range.e.r; R++){
     }
   });
 }
+
+// Styling header: bold, teks putih, latar biru, rata tengah, ada border
+for(let C = range.s.c; C <= range.e.c; C++){
+  const cellRef = XLSX.utils.encode_cell({ r: 0, c: C });
+  if(!ws[cellRef]) continue;
+  ws[cellRef].s = {
+    font: { bold: true, color: { rgb: "FFFFFF" } },
+    fill: { fgColor: { rgb: "007AFF" } },
+    alignment: { horizontal: "center", vertical: "center" },
+    border: {
+      top: { style: "thin", color: { rgb: "999999" } },
+      bottom: { style: "thin", color: { rgb: "999999" } },
+      left: { style: "thin", color: { rgb: "999999" } },
+      right: { style: "thin", color: { rgb: "999999" } }
+    }
+  };
+}
+
+// Border + warna selang-seling untuk baris data, biar tampak seperti tabel
+for(let R = range.s.r + 1; R <= range.e.r; R++){
+  for(let C = range.s.c; C <= range.e.c; C++){
+    const cellRef = XLSX.utils.encode_cell({ r: R, c: C });
+    if(!ws[cellRef]) continue;
+    ws[cellRef].s = {
+      border: {
+        top: { style: "thin", color: { rgb: "DDDDDD" } },
+        bottom: { style: "thin", color: { rgb: "DDDDDD" } },
+        left: { style: "thin", color: { rgb: "DDDDDD" } },
+        right: { style: "thin", color: { rgb: "DDDDDD" } }
+      },
+      fill: (R % 2 === 0) ? { fgColor: { rgb: "F5F9FF" } } : undefined,
+      alignment: { vertical: "center" }
+    };
+  }
+}
+
+// Aktifkan filter dropdown di header, biar terasa seperti tabel Excel beneran
+ws['!autofilter'] = { ref: ws['!ref'] };
 
 // Lebar kolom otomatis biar rapi
 ws['!cols'] = hasil[0].map((_, i) => {
