@@ -17,7 +17,7 @@
     body {
       margin: 0;
       padding: 0;
-      padding-bottom: 110px;
+      padding-bottom: 80px;
       overflow-x: hidden;
       width: 100%;
       max-width: 100vw;
@@ -34,8 +34,8 @@
     .kategori{
       appearance:none;
       -webkit-appearance:none;
-      width:20px;
-      height:20px;
+      width:18px;
+      height:18px;
       border:2px solid #8E8E93;
       border-radius:6px;
       background:#fff;
@@ -53,11 +53,11 @@
       position:absolute;
       left:50%;
       top:50%;
-      width:10px;
-      height:7px;
+      width:9px;
+      height:6px;
       transform:translate(-50%,-73%) rotate(-45deg);
-      border-left:2.4px solid #fff;
-      border-bottom:2.4px solid #fff;
+      border-left:2px solid #fff;
+      border-bottom:2px solid #fff;
     }
     #p-siswa{
       overflow-x:hidden;
@@ -90,8 +90,8 @@
       position:relative;
     }
     .nav-icon-wrap{
-      width:46px;
-      height:46px;
+      width:38px;
+      height:38px;
       display:flex;
       align-items:center;
       justify-content:center;
@@ -118,56 +118,56 @@
     }
   </style>
 </head>
-<body class="bg-gray-50 text-lg">
+<body class="bg-gray-50 text-base">
   <div id="app-scroll">
 
-  <div id="p-home" class="p-6">
-    <div class="mb-6">
+  <div id="p-home" class="p-5">
+    <div class="mb-5">
 
-  <h1 class="text-2xl font-bold mb-0 text-gray-800 flex items-center gap-2">
-  <span class="material-symbols-rounded text-[29px]">
+  <h1 class="text-xl font-bold mb-0 text-gray-800 flex items-center gap-2">
+  <span class="material-symbols-rounded text-[22px]">
   home
 </span>
    Beranda
 </h1>
 
   </div>
-    <div class="grid grid-cols-1 gap-4 mb-8">
-      <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
-        <p class="text-sm font-semibold text-gray-600 mb-1 flex items-center gap-1">
-  <span class="material-symbols-rounded text-[18px]">
+    <div class="grid grid-cols-1 gap-3 mb-6">
+      <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+        <p class="text-xs font-semibold text-gray-600 mb-1 flex items-center gap-1">
+  <span class="material-symbols-rounded text-[15px]">
     school
   </span>
   TOTAL SISWA
 </p>
         <p id="tot"
-class="text-[27px] font-bold tracking-tight tabular-nums text-gray-900">
+class="text-[21px] font-bold tracking-tight tabular-nums text-gray-900">
 0
 </p>
       </div>
-      <div class="grid grid-cols-2 gap-4">
-        <div class="bg-white p-6 rounded-[28px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
-          <p class="text-sm font-semibold text-gray-600 mb-1 flex items-center gap-1">
+      <div class="grid grid-cols-2 gap-3">
+        <div class="bg-white p-5 rounded-[24px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+          <p class="text-xs font-semibold text-gray-600 mb-1 flex items-center gap-1">
     LAKI-LAKI
 </p>
-          <p id="laki" class="text-[27px] font-bold tracking-tight tabular-nums text-gray-900">
+          <p id="laki" class="text-[21px] font-bold tracking-tight tabular-nums text-gray-900">
 0
         </div>
-        <div class="bg-white p-6 rounded-[28px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
-          <p class="text-sm font-semibold text-gray-600 mb-1 flex items-center gap-1">
+        <div class="bg-white p-5 rounded-[24px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+          <p class="text-xs font-semibold text-gray-600 mb-1 flex items-center gap-1">
     PEREMPUAN
 </p>
-          <p id="perempuan" class="text-[27px] font-bold tracking-tight tabular-nums text-gray-900">
+          <p id="perempuan" class="text-[21px] font-bold tracking-tight tabular-nums text-gray-900">
 0
         </div>
       </div>
     </div>
-    <div class="bg-white p-6 rounded-[28px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+    <div class="bg-white p-5 rounded-[24px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
 
-  <div class="flex justify-between items-center mb-4">
+  <div class="flex justify-between items-center mb-3">
 
-   <h2 class="font-bold text-lg text-gray-800 flex items-center gap-2">
-  <span class="material-symbols-rounded text-[22px]">
+   <h2 class="font-bold text-base text-gray-800 flex items-center gap-2">
+  <span class="material-symbols-rounded text-[18px]">
     groups
   </span>
   Data per Kelas
@@ -180,11 +180,11 @@ class="flex items-center gap-1 cursor-pointer text-gray-400 hover:text-blue-600 
 
 <span
 id="copyRekapIcon"
-class="material-symbols-rounded text-lg">
+class="material-symbols-rounded text-base">
 content_copy
 </span>
 
-<span class="text-xs font-medium">
+<span class="text-[11px] font-medium">
 Salin
 </span>
 
@@ -192,23 +192,23 @@ Salin
 
   </div>
 
-  <table class="w-full text-base">
+  <table class="w-full text-sm">
         <thead>
   <tr class="bg-gray-100 text-gray-900">
 
-    <th class="px-5 py-4 text-left font-semibold rounded-l-xl">
+    <th class="px-4 py-3 text-left font-semibold rounded-l-xl">
       Rombel
     </th>
 
-    <th class="px-5 py-4 font-semibold">
+    <th class="px-4 py-3 font-semibold">
       L
     </th>
 
-    <th class="px-5 py-4 font-semibold">
+    <th class="px-4 py-3 font-semibold">
       P
     </th>
 
-    <th class="px-5 py-4 font-semibold rounded-r-xl">
+    <th class="px-4 py-3 font-semibold rounded-r-xl">
       Jumlah
     </th>
 
@@ -217,11 +217,11 @@ Salin
         <tbody id="tabel-body" class="text-center text-gray-700"></tbody>
       </table>
     </div>
-    <div class="grid md:grid-cols-2 gap-5 mt-6">
+    <div class="grid md:grid-cols-2 gap-4 mt-5">
 
-  <div class="bg-white p-6 rounded-[28px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
-    <h2 class="font-bold text-lg mb-4 flex items-center gap-2">
-  <span class="material-symbols-rounded text-[24px]">
+  <div class="bg-white p-5 rounded-[24px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+    <h2 class="font-bold text-base mb-3 flex items-center gap-2">
+  <span class="material-symbols-rounded text-[19px]">
     volunteer_activism
   </span>
   Kesejahteraan Siswa
@@ -230,16 +230,16 @@ Salin
     <div class="relative">
       <canvas id="chartKesejahteraan"></canvas>
       <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-        <span id="totalKesejahteraanNum" class="text-2xl font-bold text-gray-900">0</span>
-        <span class="text-xs text-gray-500">Siswa</span>
+        <span id="totalKesejahteraanNum" class="text-lg font-bold text-gray-900">0</span>
+        <span class="text-[11px] text-gray-500">Siswa</span>
       </div>
     </div>
-    <div id="legendKesejahteraan" class="mt-4 grid grid-cols-2 gap-2"></div>
+    <div id="legendKesejahteraan" class="mt-3 grid grid-cols-2 gap-2"></div>
   </div>
 
-  <div class="bg-white p-6 rounded-[28px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
-    <h2 class="font-bold text-lg mb-4 flex items-center gap-2">
-  <span class="material-symbols-rounded text-[24px]">
+  <div class="bg-white p-5 rounded-[24px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+    <h2 class="font-bold text-base mb-3 flex items-center gap-2">
+  <span class="material-symbols-rounded text-[19px]">
     family_restroom
   </span>
   Status Anak
@@ -248,13 +248,13 @@ Salin
     <div class="relative">
       <canvas id="chartStatusAnak"></canvas>
       <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-        <span id="totalStatusAnakNum" class="text-2xl font-bold text-gray-900">0</span>
-        <span class="text-xs text-gray-500">Siswa</span>
+        <span id="totalStatusAnakNum" class="text-lg font-bold text-gray-900">0</span>
+        <span class="text-[11px] text-gray-500">Siswa</span>
       </div>
     </div>
-    <div id="legendStatusAnak" class="mt-4 grid grid-cols-2 gap-2"></div>
+    <div id="legendStatusAnak" class="mt-3 grid grid-cols-2 gap-2"></div>
   </div>
-<div class="mt-6 mb-4 text-center text-[10px] text-gray-400">
+<div class="mt-5 mb-3 text-center text-[10px] text-gray-400">
 
   <p class="m-0">SD Negeri 6 Tejakula</p>
 
@@ -265,21 +265,21 @@ Salin
 </div>
 <div id="p-siswa" class="hidden fixed inset-0 bg-gray-50 z-10 overflow-x-hidden w-full max-w-[100vw]">
 
-  <div class="h-full w-full max-w-full flex flex-col pt-6 pb-[64px] overflow-x-hidden">
+  <div class="h-full w-full max-w-full flex flex-col pt-5 pb-[56px] overflow-x-hidden">
 
     <!-- HEADER -->
-    <div class="shrink-0 bg-gray-50 px-6">
+    <div class="shrink-0 bg-gray-50 px-5">
 
-      <h1 class="text-2xl font-bold text-gray-800 flex items-center gap-2 mb-6">
-        <span class="material-symbols-rounded text-[30px]">
+      <h1 class="text-xl font-bold text-gray-800 flex items-center gap-2 mb-5">
+        <span class="material-symbols-rounded text-[23px]">
           person_search
         </span>
         Data Siswa
       </h1>
 
-      <div class="relative mb-4">
+      <div class="relative mb-3">
 
-        <span class="material-symbols-rounded absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[23px]">
+        <span class="material-symbols-rounded absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[19px]">
           search
         </span>
 
@@ -288,14 +288,14 @@ Salin
           id="srch"
           onkeyup="filterSiswa()"
           placeholder="Cari Nama/NIK/NISN"
-          class="w-full h-[50px] pl-[48px] pr-4 bg-white rounded-full border border-gray-100 shadow-[0_4px_16px_rgba(15,23,42,0.06)] text-[17px] outline-none">
+          class="w-full h-[44px] pl-[42px] pr-4 bg-white rounded-full border border-gray-100 shadow-[0_4px_16px_rgba(15,23,42,0.06)] text-sm outline-none">
 
       </div>
 
     </div>
 
     <!-- LIST -->
-    <div id="list-siswa" class="flex-1 overflow-y-auto overflow-x-hidden px-6 pb-6 max-w-full">
+    <div id="list-siswa" class="flex-1 overflow-y-auto overflow-x-hidden px-5 pb-5 max-w-full">
     </div>
 
   </div>
@@ -304,23 +304,23 @@ Salin
 
   </div>
 
-  <div id="p-download" class="hidden p-6">
-  <h1 class="text-2xl font-bold text-gray-800 flex items-center gap-2 mb-6">
-  <span class="material-symbols-rounded text-[30px]">
+  <div id="p-download" class="hidden p-5">
+  <h1 class="text-xl font-bold text-gray-800 flex items-center gap-2 mb-5">
+  <span class="material-symbols-rounded text-[23px]">
     download_for_offline
   </span>
   Unduh Data
 </h1>
 
-  <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+  <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
 
-<label class="font-semibold">Pilih Kelas</label>
+<label class="font-semibold text-sm">Pilih Kelas</label>
 
 <div id="areaDropdown">
 
   <select
 id="kelasDownload"
-class="w-full mt-2 h-11 pl-4 pr-10 rounded-xl bg-white border border-gray-200 shadow-[0_4px_10px_rgba(15,23,42,0.06)] text-[16px] outline-none">
+class="w-full mt-2 h-10 pl-4 pr-10 rounded-xl bg-white border border-gray-200 shadow-[0_4px_10px_rgba(15,23,42,0.06)] text-sm outline-none">
 
     <option value="SEMUA">Semua Kelas</option>
     <option value="Kelas 1">Kelas 1</option>
@@ -334,12 +334,12 @@ class="w-full mt-2 h-11 pl-4 pr-10 rounded-xl bg-white border border-gray-200 sh
 
 </div>
 
-<div class="flex items-center gap-3 mt-5 mb-4">
+<div class="flex items-center gap-3 mt-4 mb-3">
 
   <div
   id="switchRentang"
   onclick="toggleRentang()"
-  class="relative w-[38px] h-[22px]
+  class="relative w-[36px] h-[20px]
          rounded-full
          bg-[#D1D1D6]
          border border-[#C7C7CC]
@@ -350,7 +350,7 @@ class="w-full mt-2 h-11 pl-4 pr-10 rounded-xl bg-white border border-gray-200 sh
   <div
     id="switchBulat"
     class="absolute top-[1px] left-[1px]
-           w-[18px] h-[18px]
+           w-[16px] h-[16px]
            rounded-full
            bg-white
            shadow-[0_1px_3px_rgba(0,0,0,0.28)]
@@ -359,15 +359,15 @@ class="w-full mt-2 h-11 pl-4 pr-10 rounded-xl bg-white border border-gray-200 sh
 
 </div>
 
-  <span class="text-[16px]">
+  <span class="text-sm">
     Rentang Kelas
   </span>
 
 </div>
 
-<div id="areaRentang" class="hidden mt-2 mb-5">
+<div id="areaRentang" class="hidden mt-2 mb-4">
 
-  <div class="flex items-center gap-2 text-[15px]">
+  <div class="flex items-center gap-2 text-[13px]">
 
     <span class="text-gray-600">
       Dari
@@ -376,7 +376,7 @@ class="w-full mt-2 h-11 pl-4 pr-10 rounded-xl bg-white border border-gray-200 sh
     <select
 id="kelasAwal"
 onchange="updateKelasAkhir()"
-class="w-24 min-w-[96px] h-10 rounded-xl border border-gray-300 px-2 text-[16px]">
+class="w-24 min-w-[96px] h-9 rounded-xl border border-gray-300 px-2 text-sm">
 
       <option value="Kelas 1">Kelas 1</option>
       <option value="Kelas 2">Kelas 2</option>
@@ -392,7 +392,7 @@ class="w-24 min-w-[96px] h-10 rounded-xl border border-gray-300 px-2 text-[16px]
 
     <select
 id="kelasAkhir"
-class="w-24 min-w-[96px] h-10 rounded-xl border border-gray-300 px-2 text-[16px]">
+class="w-24 min-w-[96px] h-9 rounded-xl border border-gray-300 px-2 text-sm">
 
       <option value="Kelas 2">Kelas 2</option>
       <option value="Kelas 3">Kelas 3</option>
@@ -405,59 +405,59 @@ class="w-24 min-w-[96px] h-10 rounded-xl border border-gray-300 px-2 text-[16px]
   </div>
 
 </div>
-<div class="grid grid-cols-2 gap-x-4 gap-y-3">
+<div class="grid grid-cols-2 gap-x-4 gap-y-2">
 
   <!-- BARIS 1 -->
-  <label class="flex items-center gap-3 whitespace-nowrap">
+  <label class="flex items-center gap-2.5 whitespace-nowrap">
     <input class="kategori" type="checkbox" value="NIPD">
-    <span class="text-[15px]">NIPD</span>
+    <span class="text-[13px]">NIPD</span>
   </label>
 
-  <label class="flex items-center gap-3 whitespace-nowrap">
+  <label class="flex items-center gap-2.5 whitespace-nowrap">
     <input class="kategori" type="checkbox" value="ORTU">
-    <span class="text-[15px]">Data Ortu</span>
+    <span class="text-[13px]">Data Ortu</span>
   </label>
 
   <!-- BARIS 2 -->
-  <label class="flex items-center gap-3 whitespace-nowrap">
+  <label class="flex items-center gap-2.5 whitespace-nowrap">
     <input class="kategori" type="checkbox" value="NISN">
-    <span class="text-[15px]">NISN</span>
+    <span class="text-[13px]">NISN</span>
   </label>
 
-  <label class="flex items-center gap-3 whitespace-nowrap">
+  <label class="flex items-center gap-2.5 whitespace-nowrap">
     <input class="kategori" type="checkbox" value="KES">
-    <span class="text-[15px]">Kesejahteraan</span>
+    <span class="text-[13px]">Kesejahteraan</span>
   </label>
 
   <!-- BARIS 3 -->
-  <label class="flex items-center gap-3 whitespace-nowrap">
+  <label class="flex items-center gap-2.5 whitespace-nowrap">
     <input class="kategori" type="checkbox" value="NIK">
-    <span class="text-[15px]">NIK</span>
+    <span class="text-[13px]">NIK</span>
   </label>
 
-  <label class="flex items-center gap-3 whitespace-nowrap">
+  <label class="flex items-center gap-2.5 whitespace-nowrap">
     <input class="kategori" type="checkbox" value="STATUS">
-    <span class="text-[15px]">Status Anak</span>
+    <span class="text-[13px]">Status Anak</span>
   </label>
 
   <!-- BARIS 4 -->
-  <label class="flex items-center gap-3 whitespace-nowrap">
+  <label class="flex items-center gap-2.5 whitespace-nowrap">
     <input class="kategori" type="checkbox" value="TGLLAHIR">
-<span class="text-[15px]">Tanggal Lahir</span>
+<span class="text-[13px]">Tanggal Lahir</span>
       </label>
 
-  <label class="flex items-center gap-3 whitespace-nowrap">
+  <label class="flex items-center gap-2.5 whitespace-nowrap">
     <input class="kategori" type="checkbox" value="UMUR">
-    <span class="text-[15px]">Umur</span>
+    <span class="text-[13px]">Umur</span>
   </label>
 
-  <label class="flex items-center gap-3 whitespace-nowrap">
+  <label class="flex items-center gap-2.5 whitespace-nowrap">
   <input class="kategori" type="checkbox" value="ALAMAT">
-  <span class="text-[15px]">Alamat</span>
+  <span class="text-[13px]">Alamat</span>
 </label>
 
   <!-- BARIS 5 -->
-<label class="flex items-center gap-3 whitespace-nowrap">
+<label class="flex items-center gap-2.5 whitespace-nowrap">
 
   <input
     id="semuaData"
@@ -465,7 +465,7 @@ class="w-24 min-w-[96px] h-10 rounded-xl border border-gray-300 px-2 text-[16px]
   type="checkbox"
   onchange="toggleSemuaData()">
 
-  <span class="text-[15px] font-semibold">
+  <span class="text-[13px] font-semibold">
     Semua Data
   </span>
 
@@ -478,25 +478,25 @@ class="w-24 min-w-[96px] h-10 rounded-xl border border-gray-300 px-2 text-[16px]
 <button
 id="btnUnduh"
 onclick="downloadCSV()"
-class="mt-4 w-full h-[52px] bg-white border border-gray-200 rounded-2xl flex items-center justify-center gap-2 text-gray-900 text-[18px] font-semibold transition-colors duration-150 active:bg-gray-100 shadow-[0_2px_8px_rgba(15,23,42,0.05)]">
+class="mt-4 w-full h-[46px] bg-white border border-gray-200 rounded-2xl flex items-center justify-center gap-2 text-gray-900 text-sm font-semibold transition-colors duration-150 active:bg-gray-100 shadow-[0_2px_8px_rgba(15,23,42,0.05)]">
 
-<span class="material-symbols-rounded text-[#FF7A45] text-[22px]">
+<span class="material-symbols-rounded text-[#FF7A45] text-[19px]">
 download
 </span>
 
 Unduh Data
 
 </button>
-<div class="mt-5 rounded-2xl bg-orange-50 border border-orange-100 px-4 py-3">
+<div class="mt-4 rounded-2xl bg-orange-50 border border-orange-100 px-4 py-3">
 
-  <div class="flex items-center gap-2 text-[#FF7A45] font-semibold text-[13px]">
-    <span class="material-symbols-rounded text-[18px]">
+  <div class="flex items-center gap-2 text-[#FF7A45] font-semibold text-[12px]">
+    <span class="material-symbols-rounded text-base">
       info
     </span>
     Informasi
   </div>
 
-  <div class="mt-2 text-[12px] leading-5 text-gray-600">
+  <div class="mt-2 text-[11px] leading-5 text-gray-600">
 
     <div>
       Apapun kategori yang dipilih, hasil unduhan akan selalu menyertakan kolom:
@@ -514,23 +514,23 @@ Unduh Data
 onclick="if(event.target===this) closeModal()"
 class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-start z-50"
 style="padding:24px; padding-top:38px;">
-    <div class="relative bg-white w-[93%] max-w-sm px-5 py-7 rounded-lg border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+    <div class="relative bg-white w-[93%] max-w-sm px-5 py-6 rounded-lg border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
       <button
   onclick="closeModal()"
-  class="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition">
+  class="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition">
 
-  <span class="material-symbols-rounded">
+  <span class="material-symbols-rounded text-[20px]">
     close
   </span>
 
 </button>
-      <h2 class="font-bold border-b border-gray-100 pb-3 mb-4 text-lg flex items-center gap-2 text-gray-800">
-  <span class="material-symbols-rounded text-[24px] text-gray-500">
+      <h2 class="font-bold border-b border-gray-100 pb-3 mb-3 text-base flex items-center gap-2 text-gray-800">
+  <span class="material-symbols-rounded text-[20px] text-gray-500">
   description
 </span>
   DETAIL SISWA
 </h2>
-      <div id="detail-content" class="text-base space-y-2 text-gray-600"></div>
+      <div id="detail-content" class="text-sm space-y-2 text-gray-600"></div>
 
     </div>
   </div>
@@ -538,11 +538,11 @@ style="padding:24px; padding-top:38px;">
 <div id="pinModal"
 class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-6">
 
-  <div class="bg-white w-[84%] max-w-[310px] rounded-2xl overflow-hidden shadow-xl">
+  <div class="bg-white w-[84%] max-w-[300px] rounded-2xl overflow-hidden shadow-xl">
 
     <div class="px-5 pt-5 pb-4">
 
-      <div class="text-[17px] text-center font-medium text-gray-900 mb-4">
+      <div class="text-sm text-center font-medium text-gray-900 mb-3">
         Masukkan Kode Unduh
       </div>
 
@@ -552,21 +552,21 @@ class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justi
         placeholder="Kode Unduh"
         oninput="cekIsiPIN()"
         onkeydown="tekanEnterPIN(event)"
-        class="w-full h-10 px-5 rounded-xl border border-gray-300 text-[17px] outline-none">
+        class="w-full h-9 px-4 rounded-xl border border-gray-300 text-sm outline-none">
 
       <div
         id="pinError"
-        class="hidden text-center text-red-500 text-sm mt-3">
+        class="hidden text-center text-red-500 text-xs mt-2">
         Kode salah
       </div>
 
     </div>
 
-    <div class="border-t border-gray-300 flex h-12">
+    <div class="border-t border-gray-300 flex h-11">
 
       <div
         onclick="batalPIN()"
-        class="flex-1 flex items-center justify-center text-[#FF7A45] text-[17px] font-medium cursor-pointer active:bg-gray-100">
+        class="flex-1 flex items-center justify-center text-[#FF7A45] text-sm font-medium cursor-pointer active:bg-gray-100">
         Batal
       </div>
 
@@ -575,7 +575,7 @@ class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justi
       <div
         id="btnPIN"
         onclick="cekPIN()"
-        class="flex-1 flex items-center justify-center text-gray-400 text-[17px] font-semibold cursor-pointer">
+        class="flex-1 flex items-center justify-center text-gray-400 text-sm font-semibold cursor-pointer">
         OK
       </div>
 
@@ -585,14 +585,14 @@ class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justi
 
 </div>
   <nav class="fixed
-bottom-4
+bottom-3
 left-4
 right-4
 bg-white
 rounded-full
 shadow-[0_10px_30px_rgba(0,0,0,0.12)]
 flex justify-around items-center
-h-[70px]
+h-[54px]
 px-3
 z-50">
 <button
@@ -601,7 +601,7 @@ onclick="nav('home')"
 class="nav-inactive flex items-center justify-center transition-colors duration-150">
 
 <span class="nav-icon-wrap">
-<span class="material-symbols-rounded nav-icon text-[26px]">
+<span class="material-symbols-rounded nav-icon text-[21px]">
 home
 </span>
 </span>
@@ -614,7 +614,7 @@ onclick="nav('siswa')"
 class="nav-inactive flex items-center justify-center transition-colors duration-150">
 
 <span class="nav-icon-wrap">
-<span class="material-symbols-rounded nav-icon text-[26px]">
+<span class="material-symbols-rounded nav-icon text-[21px]">
 school
 </span>
 </span>
@@ -627,7 +627,7 @@ onclick="nav('download')"
 class="nav-inactive flex items-center justify-center transition-colors duration-150">
 
 <span class="nav-icon-wrap">
-<span class="material-symbols-rounded nav-icon text-[26px]">
+<span class="material-symbols-rounded nav-icon text-[21px]">
 download_for_offline
 </span>
 </span>
@@ -635,12 +635,12 @@ download_for_offline
 </button>
 </nav>
   <div id="toast"
-class="fixed bottom-24 left-1/2 -translate-x-1/2
+class="fixed bottom-20 left-1/2 -translate-x-1/2
 bg-gray-900 text-white
-px-5 py-3
+px-4 py-2.5
 rounded-xl
 shadow-xl
-text-sm
+text-xs
 opacity-0
 pointer-events-none
 transition-all duration-300
@@ -685,7 +685,7 @@ let modeRentang = false;
             return `
 <tr class="border-b border-gray-200">
 
-  <td class="p-4 text-left text-gray-700">
+  <td class="p-3 text-left text-gray-700">
   ${k}
 </td>
 
@@ -841,11 +841,11 @@ return `
 
 <div
 onclick="showDetailByNIK('${r[8]}')"
-class="flex items-center px-4 py-3 cursor-pointer active:bg-gray-100 transition">
+class="flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-100 transition">
 
-  <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 ${belumLengkap ? 'opacity-40' : ''}">
+  <div class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 ${belumLengkap ? 'opacity-40' : ''}">
 
-    <span class="material-symbols-rounded text-[15px] text-gray-400"
+    <span class="material-symbols-rounded text-[13px] text-gray-400"
       style="font-variation-settings:'FILL' 1,'wght' 300,'GRAD' 0,'opsz' 24;">
       account_circle
     </span>
@@ -854,11 +854,11 @@ class="flex items-center px-4 py-3 cursor-pointer active:bg-gray-100 transition"
 
   <div class="ml-3 flex-1 min-w-0">
 
-    <div class="text-[15px] font-semibold text-gray-900 truncate">
+    <div class="text-[13px] font-semibold text-gray-900 truncate">
       ${r[1]}
     </div>
 
-    <div class="text-[12px] text-gray-500 mt-0.5">
+    <div class="text-[11px] text-gray-500 mt-0.5">
       ${r[2]}
     </div>
 
@@ -867,7 +867,7 @@ class="flex items-center px-4 py-3 cursor-pointer active:bg-gray-100 transition"
 </div>
 
 ${i < hasil.length - 1
-  ? '<div class="ml-[56px] border-b border-gray-200"></div>'
+  ? '<div class="ml-[52px] border-b border-gray-200"></div>'
   : ''}
 
 `;
@@ -885,18 +885,18 @@ function showDetailByNIK(nik){
 
   document.getElementById('detail-content').innerHTML = `
 
-<div class="space-y-4 text-[16px]">
+<div class="space-y-3 text-[13px]">
 
 <div class="flex items-start gap-2">
-  <span class="material-symbols-rounded text-[20px] text-gray-500 mt-[2px] shrink-0">account_circle</span>
-  <div class="flex-1 leading-6">
+  <span class="material-symbols-rounded text-[17px] text-gray-500 mt-[2px] shrink-0">account_circle</span>
+  <div class="flex-1 leading-5">
     <span class="font-semibold text-gray-800">Nama:</span>
     <span class="text-gray-600"> ${r[1]}</span>
   </div>
 </div>
 
 <div class="flex items-center gap-2">
-  <span class="material-symbols-rounded text-[20px] text-gray-500 shrink-0">school</span>
+  <span class="material-symbols-rounded text-[17px] text-gray-500 shrink-0">school</span>
   <div>
     <span class="font-semibold text-gray-800">Kelas:</span>
     <span class="text-gray-600"> ${r[2]}</span>
@@ -904,7 +904,7 @@ function showDetailByNIK(nik){
 </div>
 
 <div class="flex items-center gap-2">
-  <span class="material-symbols-rounded text-[20px] text-gray-500 shrink-0">badge</span>
+  <span class="material-symbols-rounded text-[17px] text-gray-500 shrink-0">badge</span>
   <div>
     <span class="font-semibold text-gray-800">NISN:</span>
     <span class="text-gray-600"> ${r[5]}</span>
@@ -912,7 +912,7 @@ function showDetailByNIK(nik){
 </div>
 
 <div class="flex items-center gap-2">
-  <span class="material-symbols-rounded text-[20px] text-gray-500 shrink-0">contact_page</span>
+  <span class="material-symbols-rounded text-[17px] text-gray-500 shrink-0">contact_page</span>
 
   <div class="flex items-center gap-2">
 
@@ -923,7 +923,7 @@ function showDetailByNIK(nik){
 
     <span
       id="copyNikIcon"
-      class="material-symbols-rounded text-[17px] text-gray-400 cursor-pointer hover:text-blue-600 transition"
+      class="material-symbols-rounded text-[15px] text-gray-400 cursor-pointer hover:text-blue-600 transition"
       onclick="event.stopPropagation(); salinNIK('${r[8]}')">
       content_copy
     </span>
@@ -933,7 +933,7 @@ function showDetailByNIK(nik){
 </div>
 
 <div class="flex items-center gap-2">
-  <span class="material-symbols-rounded text-[20px] text-gray-500 shrink-0">location_on</span>
+  <span class="material-symbols-rounded text-[17px] text-gray-500 shrink-0">location_on</span>
   <div>
     <span class="font-semibold text-gray-800">Tempat Lahir:</span>
     <span class="text-gray-600"> ${r[6]}</span>
@@ -941,7 +941,7 @@ function showDetailByNIK(nik){
 </div>
 
 <div class="flex items-center gap-2">
-  <span class="material-symbols-rounded text-[20px] text-gray-500 shrink-0">calendar_month</span>
+  <span class="material-symbols-rounded text-[17px] text-gray-500 shrink-0">calendar_month</span>
   <div>
     <span class="font-semibold text-gray-800">Tanggal Lahir:</span>
     <span class="text-gray-600"> ${r[7]}</span>
@@ -949,23 +949,23 @@ function showDetailByNIK(nik){
 </div>
 
 <div class="flex items-start gap-2">
-  <span class="material-symbols-rounded text-[20px] text-gray-500 mt-[2px] shrink-0">man</span>
-  <div class="flex-1 leading-6">
+  <span class="material-symbols-rounded text-[17px] text-gray-500 mt-[2px] shrink-0">man</span>
+  <div class="flex-1 leading-5">
     <span class="font-semibold text-gray-800">Ayah:</span>
     <span class="text-gray-600"> ${r[11]}</span>
   </div>
 </div>
 
 <div class="flex items-start gap-2">
-  <span class="material-symbols-rounded text-[20px] text-gray-500 mt-[2px] shrink-0">woman</span>
-  <div class="flex-1 leading-6">
+  <span class="material-symbols-rounded text-[17px] text-gray-500 mt-[2px] shrink-0">woman</span>
+  <div class="flex-1 leading-5">
     <span class="font-semibold text-gray-800">Ibu:</span>
     <span class="text-gray-600"> ${r[12]}</span>
   </div>
 </div>
 
 <div class="flex items-center gap-2">
-  <span class="material-symbols-rounded text-[20px] text-gray-500 shrink-0">volunteer_activism</span>
+  <span class="material-symbols-rounded text-[17px] text-gray-500 shrink-0">volunteer_activism</span>
   <div>
     <span class="font-semibold text-gray-800">Kesejahteraan:</span>
     <span class="text-gray-600"> ${r[13]}</span>
@@ -973,7 +973,7 @@ function showDetailByNIK(nik){
 </div>
 
 <div class="flex items-center gap-2">
-  <span class="material-symbols-rounded text-[20px] text-gray-500 shrink-0">family_restroom</span>
+  <span class="material-symbols-rounded text-[17px] text-gray-500 shrink-0">family_restroom</span>
   <div>
     <span class="font-semibold text-gray-800">Status Anak:</span>
     <span class="text-gray-600"> ${r[14]}</span>
@@ -1237,20 +1237,17 @@ function cekPIN(){
 }
     function buatLegend(containerId, labels, values, colors){
 
-  const total = values.reduce((a,b)=>a+b, 0);
   const el = document.getElementById(containerId);
 
   el.innerHTML = labels.map((l,i)=>{
 
     const val = values[i];
-    const pct = total ? Math.round((val/total)*100) : 0;
 
     return `
       <div class="flex items-center gap-2 bg-gray-50 rounded-xl px-3 py-2">
         <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:${colors[i]}"></span>
-        <span class="text-[12px] text-gray-600 flex-1 truncate">${l}</span>
-        <span class="text-[12px] font-semibold text-gray-900">${val}</span>
-        <span class="text-[10px] text-gray-400">${pct}%</span>
+        <span class="text-[11px] text-gray-600 flex-1 truncate">${l}</span>
+        <span class="text-[11px] font-semibold text-gray-900">${val}</span>
       </div>
     `;
 
@@ -1317,10 +1314,10 @@ function buatChart(){
       },
       tooltip:{
         titleFont:{
-          size:16
+          size:14
         },
         bodyFont:{
-          size:14
+          size:12
         }
       }
     }
@@ -1376,8 +1373,8 @@ new Chart(document.getElementById("chartStatusAnak"),{
       },
 
       tooltip:{
-        titleFont:{ size:16 },
-        bodyFont:{ size:14 }
+        titleFont:{ size:14 },
+        bodyFont:{ size:12 }
       }
     }
   }
@@ -1697,7 +1694,7 @@ XLSX.writeFile(wb, namaFile);
 btn.disabled = false;
 
 btn.innerHTML = `
-<span class="material-symbols-rounded text-[#FF7A45] text-[22px]">
+<span class="material-symbols-rounded text-[#FF7A45] text-[19px]">
 download
 </span>
 Unduh Data
