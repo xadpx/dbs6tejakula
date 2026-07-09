@@ -1042,8 +1042,6 @@ function showDetailByNIK(nik){
 
   const r = d.find(item => item[8] == nik);
   if (!r) return;
-console.log("RAW:", r[7]);
-alert("RAW: " + r[7]); // sementara saja, biar kelihatan tanpa buka console
   document.getElementById('detail-content').innerHTML = `
 
 <div class="space-y-3 text-[13px]">
