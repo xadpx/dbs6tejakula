@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    html {
+      overflow-x: hidden;
+      width: 100%;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      padding-bottom: 96px;
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100vw;
+      touch-action: pan-y;
+    }
+    #app-scroll, #p-home, #p-siswa, #p-download {
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
+      box-sizing: border-box;
+    }
+    .kategori{
+      appearance:none;
+      -webkit-appearance:none;
+      width:20px;
+      height:20px;
+      border:2px solid #8E8E93;
+      border-radius:6px;
+      background:#fff;
+      cursor:pointer;
+      transition:.15s;
+      position:relative;
+      flex-shrink:0;
+    }
+    .kategori:checked{
+      background:#007AFF;
+      border-color:#007AFF;
+    }
+    .kategori:checked::after{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:50%;
+      width:10px;
+      height:7px;
+      transform:translate(-50%,-73%) rotate(-45deg);
+      border-left:2.4px solid #fff;
+      border-bottom:2.4px solid #fff;
+    }
+    #p-siswa{
+      overflow-x:hidden;
+    }
+    select{
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-image: none;
+    }
+    select::-ms-expand{
+      display:none;
+    }
+    .nav-icon{
+      font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+      transition: .2s;
+    }
+    .nav-active .nav-icon{
+      font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+    }
+    nav{
+      position:relative;
+    }
+    #navIndicator{
+      position:absolute;
+      top:0;
+      left:0;
+      width:26px;
+      height:3px;
+      border-radius:999px;
+      background:#007AFF;
+      transition:all .22s ease;
+    }
+    .spinner {
+      width:18px;
+      height:18px;
+      border:2px solid rgba(255,255,255,.35);
+      border-top-color:#fff;
+      border-radius:50%;
+      animation:spin .8s linear infinite;
+      margin:auto;
+    }
+    @keyframes spin{
+      to{
+        transform:rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-lg">
+  <div id="app-scroll">
+
+  <div id="p-home" class="p-6">
+    <div class="mb-6">
+
+  <h1 class="text-2xl font-bold mb-0 text-gray-800 flex items-center gap-2">
+  <span class="material-symbols-rounded text-[29px]">
+  home
+</span>
+   Beranda
+</h1>
+
+  </div>
+    <div class="grid grid-cols-1 gap-4 mb-8">
+      <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+        <p class="text-sm font-semibold text-gray-600 mb-1 flex items-center gap-1">
+  <span class="material-symbols-rounded text-[18px]">
+    school
+  </span>
+  TOTAL SISWA
+</p>
+        <p id="tot"
+class="text-[27px] font-bold tracking-tight tabular-nums text-gray-900">
+0
+</p>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="bg-white p-6 rounded-[28px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+          <p class="text-sm font-semibold text-gray-600 mb-1 flex items-center gap-1">
+    LAKI-LAKI
+</p>
+          <p id="laki" class="text-[27px] font-bold tracking-tight tabular-nums text-gray-900">
+0
+        </div>
+        <div class="bg-white p-6 rounded-[28px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+          <p class="text-sm font-semibold text-gray-600 mb-1 flex items-center gap-1">
+    PEREMPUAN
+</p>
+          <p id="perempuan" class="text-[27px] font-bold tracking-tight tabular-nums text-gray-900">
+0
+        </div>
+      </div>
+    </div>
+    <div class="bg-white p-6 rounded-[28px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+
+  <div class="flex justify-between items-center mb-4">
+
+   <h2 class="font-bold text-lg text-gray-800 flex items-center gap-2">
+  <span class="material-symbols-rounded text-[22px]">
+    groups
+  </span>
+  Data per Kelas
+</h2>
+
+    <div
+id="btnCopyRekap"
+onclick="copyRekap()"
+class="flex items-center gap-1 cursor-pointer text-gray-400 hover:text-blue-600 transition">
+
+<span
+id="copyRekapIcon"
+class="material-symbols-rounded text-lg">
+content_copy
+</span>
+
+<span class="text-xs font-medium">
+Salin
+</span>
+
+</div>
+
+  </div>
+
+  <table class="w-full text-base">
+        <thead>
+  <tr class="bg-gray-100 text-gray-900">
+
+    <th class="px-5 py-4 text-left font-semibold rounded-l-xl">
+      Rombel
+    </th>
+
+    <th class="px-5 py-4 font-semibold">
+      L
+    </th>
+
+    <th class="px-5 py-4 font-semibold">
+      P
+    </th>
+
+    <th class="px-5 py-4 font-semibold rounded-r-xl">
+      Jumlah
+    </th>
+
+  </tr>
+</thead>
+        <tbody id="tabel-body" class="text-center text-gray-700"></tbody>
+      </table>
+    </div>
+    <div class="grid md:grid-cols-2 gap-5 mt-6">
+
+  <div class="bg-white p-6 rounded-[28px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+    <h2 class="font-bold text-lg mb-4 flex items-center gap-2">
+  <span class="material-symbols-rounded text-[24px]">
+    volunteer_activism
+  </span>
+  Kesejahteraan Siswa
+</h2>
+
+    <canvas id="chartKesejahteraan"></canvas>
+  </div>
+
+  <div class="bg-white p-6 rounded-[28px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+    <h2 class="font-bold text-lg mb-4 flex items-center gap-2">
+  <span class="material-symbols-rounded text-[24px]">
+    family_restroom
+  </span>
+  Status Anak
+</h2>
+
+    <canvas id="chartStatusAnak"></canvas>
+  </div>
+<div class="mt-6 mb-4 text-center text-[10px] text-gray-400">
+
+  <p class="m-0">SD Negeri 6 Tejakula</p>
+
+  <p class="m-0">© 2026 Ari Darma Putra</p>
+
+</div>
+</div>
+</div>
+<div id="p-siswa" class="hidden fixed inset-0 bg-gray-50 z-10 overflow-x-hidden w-full max-w-[100vw]">
+
+  <div class="h-full w-full max-w-full flex flex-col pt-6 pb-[64px] overflow-x-hidden">
+
+    <!-- HEADER -->
+    <div class="shrink-0 bg-gray-50 px-6">
+
+      <h1 class="text-2xl font-bold text-gray-800 flex items-center gap-2 mb-6">
+        <span class="material-symbols-rounded text-[30px]">
+          person_search
+        </span>
+        Data Siswa
+      </h1>
+
+      <div class="relative mb-4">
+
+        <span class="material-symbols-rounded absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[23px]">
+          search
+        </span>
+
+        <input
+          type="text"
+          id="srch"
+          onkeyup="filterSiswa()"
+          placeholder="Cari Nama/NIK/NISN"
+          class="w-full h-[50px] pl-[48px] pr-4 bg-white rounded-full border border-gray-100 shadow-[0_4px_16px_rgba(15,23,42,0.06)] text-[17px] outline-none">
+
+      </div>
+
+    </div>
+
+    <!-- LIST -->
+    <div id="list-siswa" class="flex-1 overflow-y-auto overflow-x-hidden px-6 pb-6 max-w-full">
+    </div>
+
+  </div>
+
+</div>
+
+  </div>
+
+  <div id="p-download" class="hidden p-6">
+  <h1 class="text-2xl font-bold text-gray-800 flex items-center gap-2 mb-6">
+  <span class="material-symbols-rounded text-[30px]">
+    download_for_offline
+  </span>
+  Unduh Data
+</h1>
+
+  <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+
+<label class="font-semibold">Pilih Kelas</label>
+
+<div id="areaDropdown">
+
+  <select
+id="kelasDownload"
+class="w-full mt-2 h-11 pl-4 pr-10 rounded-xl bg-white border border-gray-200 shadow-[0_4px_10px_rgba(15,23,42,0.06)] text-[16px] outline-none">
+
+    <option value="SEMUA">Semua Kelas</option>
+    <option value="Kelas 1">Kelas 1</option>
+    <option value="Kelas 2">Kelas 2</option>
+    <option value="Kelas 3">Kelas 3</option>
+    <option value="Kelas 4">Kelas 4</option>
+    <option value="Kelas 5">Kelas 5</option>
+    <option value="Kelas 6">Kelas 6</option>
+
+  </select>
+
+</div>
+
+<div class="flex items-center gap-3 mt-5 mb-4">
+
+  <div
+  id="switchRentang"
+  onclick="toggleRentang()"
+  class="relative w-[38px] h-[22px]
+         rounded-full
+         bg-[#D1D1D6]
+         border border-[#C7C7CC]
+         shadow-[inset_0_1px_2px_rgba(0,0,0,0.08)]
+         transition-all duration-200
+         cursor-pointer">
+
+  <div
+    id="switchBulat"
+    class="absolute top-[1px] left-[1px]
+           w-[18px] h-[18px]
+           rounded-full
+           bg-white
+           shadow-[0_1px_3px_rgba(0,0,0,0.28)]
+           transition-all duration-200">
+  </div>
+
+</div>
+
+  <span class="text-[16px]">
+    Rentang Kelas
+  </span>
+
+</div>
+
+<div id="areaRentang" class="hidden mt-2 mb-5">
+
+  <div class="flex items-center gap-2 text-[15px]">
+
+    <span class="text-gray-600">
+      Dari
+    </span>
+
+    <select
+id="kelasAwal"
+onchange="updateKelasAkhir()"
+class="w-24 min-w-[96px] h-10 rounded-xl border border-gray-300 px-2 text-[16px]">
+
+      <option value="Kelas 1">Kelas 1</option>
+      <option value="Kelas 2">Kelas 2</option>
+      <option value="Kelas 3">Kelas 3</option>
+      <option value="Kelas 4">Kelas 4</option>
+      <option value="Kelas 5">Kelas 5</option>
+
+    </select>
+
+    <span class="text-gray-600">
+      sampai
+    </span>
+
+    <select
+id="kelasAkhir"
+class="w-24 min-w-[96px] h-10 rounded-xl border border-gray-300 px-2 text-[16px]">
+
+      <option value="Kelas 2">Kelas 2</option>
+      <option value="Kelas 3">Kelas 3</option>
+      <option value="Kelas 4">Kelas 4</option>
+      <option value="Kelas 5">Kelas 5</option>
+      <option value="Kelas 6">Kelas 6</option>
+
+    </select>
+
+  </div>
+
+</div>
+<div class="grid grid-cols-2 gap-x-4 gap-y-3">
+
+  <!-- BARIS 1 -->
+  <label class="flex items-center gap-3 whitespace-nowrap">
+    <input class="kategori" type="checkbox" value="NIPD">
+    <span class="text-[15px]">NIPD</span>
+  </label>
+
+  <label class="flex items-center gap-3 whitespace-nowrap">
+    <input class="kategori" type="checkbox" value="ORTU">
+    <span class="text-[15px]">Data Ortu</span>
+  </label>
+
+  <!-- BARIS 2 -->
+  <label class="flex items-center gap-3 whitespace-nowrap">
+    <input class="kategori" type="checkbox" value="NISN">
+    <span class="text-[15px]">NISN</span>
+  </label>
+
+  <label class="flex items-center gap-3 whitespace-nowrap">
+    <input class="kategori" type="checkbox" value="KES">
+    <span class="text-[15px]">Kesejahteraan</span>
+  </label>
+
+  <!-- BARIS 3 -->
+  <label class="flex items-center gap-3 whitespace-nowrap">
+    <input class="kategori" type="checkbox" value="NIK">
+    <span class="text-[15px]">NIK</span>
+  </label>
+
+  <label class="flex items-center gap-3 whitespace-nowrap">
+    <input class="kategori" type="checkbox" value="STATUS">
+    <span class="text-[15px]">Status Anak</span>
+  </label>
+
+  <!-- BARIS 4 -->
+  <label class="flex items-center gap-3 whitespace-nowrap">
+    <input class="kategori" type="checkbox" value="TGLLAHIR">
+<span class="text-[15px]">Tanggal Lahir</span>
+      </label>
+
+  <label class="flex items-center gap-3 whitespace-nowrap">
+    <input class="kategori" type="checkbox" value="UMUR">
+    <span class="text-[15px]">Umur</span>
+  </label>
+
+  <label class="flex items-center gap-3 whitespace-nowrap">
+  <input class="kategori" type="checkbox" value="ALAMAT">
+  <span class="text-[15px]">Alamat</span>
+</label>
+
+  <!-- BARIS 5 -->
+<label class="flex items-center gap-3 whitespace-nowrap">
+
+  <input
+    id="semuaData"
+  class="kategori"
+  type="checkbox"
+  onchange="toggleSemuaData()">
+
+  <span class="text-[15px] font-semibold">
+    Semua Data
+  </span>
+
+</label>
+
+<div></div>
+
+</div>
+  
+<button
+id="btnUnduh"
+onclick="downloadCSV()"
+class="mt-4 w-full h-[52px] bg-white border border-gray-200 rounded-2xl flex items-center justify-center gap-2 text-gray-900 text-[18px] font-semibold transition-colors duration-150 active:bg-gray-100 shadow-[0_2px_8px_rgba(15,23,42,0.05)]">
+
+<span class="material-symbols-rounded text-[#007AFF] text-[22px]">
+download
+</span>
+
+Unduh Data
+
+</button>
+<div class="mt-5 rounded-2xl bg-blue-50 border border-blue-100 px-4 py-3">
+
+  <div class="flex items-center gap-2 text-[#007AFF] font-semibold text-[13px]">
+    <span class="material-symbols-rounded text-[18px]">
+      info
+    </span>
+    Informasi
+  </div>
+
+  <div class="mt-2 text-[12px] leading-5 text-gray-600">
+
+    <div>
+      1. Apapun kategori yang dipilih, hasil unduhan akan selalu menyertakan kolom:
+      <b>No • Nama • Kelas • Jenis Kelamin</b>.
+    </div>
+
+    <div
+      onclick="bukaPanduanCSV()"
+      class="mt-3 text-[#007AFF] font-medium cursor-pointer active:opacity-70">
+
+      2. Hasil unduh tidak rapi? Klik ini!
+
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+</div>
+
+  <div id="modal"
+onclick="if(event.target===this) closeModal()"
+class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-start z-50"
+style="padding:24px; padding-top:38px;">
+    <div class="relative bg-white w-[93%] max-w-sm px-5 py-7 rounded-lg border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+      <button
+  onclick="closeModal()"
+  class="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition">
+
+  <span class="material-symbols-rounded">
+    close
+  </span>
+
+</button>
+      <h2 class="font-bold border-b border-gray-100 pb-3 mb-4 text-lg flex items-center gap-2 text-gray-800">
+  <span class="material-symbols-rounded text-[24px] text-gray-500">
+  description
+</span>
+  DETAIL SISWA
+</h2>
+      <div id="detail-content" class="text-base space-y-2 text-gray-600"></div>
+
+    </div>
+  </div>
+<!-- MODAL PIN -->
+<div id="pinModal"
+class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-6">
+
+  <div class="bg-white w-[84%] max-w-[310px] rounded-2xl overflow-hidden shadow-xl">
+
+    <div class="px-5 pt-5 pb-4">
+
+      <div class="text-[17px] text-center font-medium text-gray-900 mb-4">
+        Masukkan Kode Unduh
+      </div>
+
+      <input
+        id="pinInput"
+        type="password"
+        placeholder="Kode Unduh"
+        oninput="cekIsiPIN()"
+        onkeydown="tekanEnterPIN(event)"
+        class="w-full h-10 px-5 rounded-xl border border-gray-300 text-[17px] outline-none">
+
+      <div
+        id="pinError"
+        class="hidden text-center text-red-500 text-sm mt-3">
+        Kode salah
+      </div>
+
+    </div>
+
+    <div class="border-t border-gray-300 flex h-12">
+
+      <div
+        onclick="batalPIN()"
+        class="flex-1 flex items-center justify-center text-[#007AFF] text-[17px] font-medium cursor-pointer active:bg-gray-100">
+        Batal
+      </div>
+
+      <div class="w-px bg-gray-300"></div>
+
+      <div
+        id="btnPIN"
+        onclick="cekPIN()"
+        class="flex-1 flex items-center justify-center text-gray-400 text-[17px] font-semibold cursor-pointer">
+        OK
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+<div id="modalCSV"
+class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-6">
+
+  <div class="relative bg-white w-[90%] max-w-sm rounded-2xl shadow-xl">
+
+    <button
+      onclick="tutupPanduanCSV()"
+      class="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition">
+
+      <span class="material-symbols-rounded">
+        close
+      </span>
+
+    </button>
+
+    <div class="px-5 py-6">
+
+      <div class="text-[18px] font-semibold text-center mb-5">
+        Panduan
+      </div>
+
+      <div class="text-[14px] leading-7 text-gray-700">
+
+        Merapikan hasil unduh di Excel:
+
+        <ol class="list-decimal ml-5 mt-3 space-y-1">
+
+          <li>Pilih kolom <b>A</b>, tekan <b> Ctrl+A</b> </li>
+
+          <li>Buka menu <b>Data</b>.</li>
+
+          <li>Pilih <b>Text to Columns</b>.</li>
+
+          <li>Pilih <b>Delimited</b>, lalu klik <b>Next</b>.</li>
+
+          <li>Centang <b>Comma (,)</b>.</li>
+
+          <li>Klik <b>Finish</b>.</li>
+
+        </ol>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+  <nav class="fixed
+bottom-0
+left-0
+w-full
+bg-white
+border-t border-gray-200
+flex justify-around items-center
+h-[64px]
+z-50">
+<div id="navIndicator"></div>
+<button
+id="nav-home"
+onclick="nav('home')"
+class="nav-inactive flex flex-col items-center justify-center transition-colors duration-150">
+
+<span class="material-symbols-rounded nav-icon text-[30px] mt-4">
+home
+</span>
+
+<div class="text-[12px] font-semibold">
+Beranda
+</div>
+
+</button>
+
+<button
+id="nav-siswa"
+onclick="nav('siswa')"
+class="nav-inactive flex flex-col items-center justify-center transition-colors duration-150">
+
+<span class="material-symbols-rounded nav-icon text-[30px] mt-4">
+school
+</span>
+
+<div class="text-[12px] font-semibold">
+Siswa
+</div>
+
+</button>
+
+<button
+id="nav-download"
+onclick="nav('download')"
+class="nav-inactive flex flex-col items-center justify-center transition-colors duration-150">
+
+<span class="material-symbols-rounded nav-icon text-[30px] mt-4">
+download_for_offline
+</span>
+
+<div class="text-[12px] font-semibold">
+Unduh
+</div>
+
+</button>
+</nav>
+  <div id="toast"
+class="fixed bottom-24 left-1/2 -translate-x-1/2
+bg-gray-900 text-white
+px-5 py-3
+rounded-xl
+shadow-xl
+text-sm
+opacity-0
+pointer-events-none
+transition-all duration-300
+z-[9999]">
+</div>
+
+  <script>
+
+    // ======================================================
+    // GANTI URL DI BAWAH INI dengan URL Web App Apps Script Anda
+    // (Deploy > New deployment > Web app > Execute as: Me > Who has access: Anyone)
+    // Pastikan pakai URL yang berakhiran /exec, BUKAN /dev
+    // ======================================================
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/GANTI_DENGAN_ID_DEPLOYMENT_ANDA/exec";
+
+    let d = [];
+let downloadUnlocked = false;
+let pinPercobaan = 0;
+let halamanSebelumnya = "home";
+let modeRentang = false;
+
+    window.onload = () => {
+      nav("home");
+      fetch(`${APPS_SCRIPT_URL}?action=getData`)
+        .then(res => res.json())
+        .then(json => {
+          if (json.error) {
+            showToast("Gagal memuat data: " + json.error, 3000);
+            return;
+          }
+          const data = json.data;
+          d = data.slice(1).filter(r => r[1] && r[1].trim() !== "");
+          document.getElementById('tot').innerText = d.length;
+          document.getElementById('laki').innerText = d.filter(r => r[4] && r[4].toUpperCase().includes('L')).length;
+          document.getElementById('perempuan').innerText = d.filter(r => r[4] && r[4].toUpperCase().includes('P')).length;
+
+          const classes = [...new Set(d.map(r => r[2]))].filter(c => c).sort();
+          document.getElementById('tabel-body').innerHTML = classes.map(k => {
+            const list = d.filter(r => r[2] == k);
+            const L = list.filter(r => r[4] && r[4].toUpperCase().includes('L')).length;
+            const P = list.filter(r => r[4] && r[4].toUpperCase().includes('P')).length;
+            return `
+<tr class="border-b border-gray-200">
+
+  <td class="p-4 text-left text-gray-700">
+  ${k}
+</td>
+
+  <td class="font-medium text-gray-600">
+    ${L}
+  </td>
+
+  <td class="font-medium text-gray-600">
+    ${P}
+  </td>
+
+  <td class="font-semibold">
+    ${L+P}
+  </td>
+
+</tr>`;
+          }).join('');
+          buatChart();
+        })
+        .catch(err => {
+          console.error(err);
+          showToast("Tidak bisa terhubung ke server data", 3000);
+        });
+    };
+
+    function nav(p){
+
+  if(
+    !document.getElementById("modal").classList.contains("hidden") ||
+    !document.getElementById("pinModal").classList.contains("hidden")
+  ){
+    return;
+  }
+
+  if(p!="download"){
+    halamanSebelumnya=p;
+  }
+
+  if(p=="download" && !downloadUnlocked){
+    bukaPIN();
+    return;
+  }
+
+  ["p-home","p-siswa","p-download"].forEach(id=>{
+    document.getElementById(id).classList.add("hidden");
+  });
+
+  document.getElementById("p-"+p).classList.remove("hidden");
+  if(p==="siswa"){
+  document.getElementById("p-siswa").style.display="block";
+}else{
+  document.getElementById("p-siswa").style.display="none";
+}
+
+  ["home","siswa","download"].forEach(id=>{
+
+    const btn=document.getElementById("nav-"+id);
+
+    if(id===p){
+
+    btn.classList.remove("nav-inactive");
+    btn.classList.add("nav-active");
+
+    btn.style.color="#007AFF";
+
+}else{
+
+    btn.classList.remove("nav-active");
+    btn.classList.add("nav-inactive");
+
+    btn.style.color="#111827";
+
+}
+
+  });
+  const aktif = document.getElementById("nav-" + p);
+const indicator = document.getElementById("navIndicator");
+const label = aktif.querySelector("div");
+
+// Panjang garis mengikuti panjang tulisan
+indicator.style.width = label.offsetWidth + "px";
+
+// Geser ke tengah tulisan
+indicator.style.left =
+  (aktif.offsetLeft + (aktif.offsetWidth - label.offsetWidth) / 2) + "px";
+
+}
+
+function filterSiswa() {
+
+  const q = document.getElementById("srch").value.trim().toLowerCase();
+
+  // Kosongkan hasil jika input kosong
+  if (q === "") {
+    document.getElementById("list-siswa").innerHTML = "";
+    return;
+  }
+
+  // Minimal 3 karakter
+  if (q.length < 3) {
+    document.getElementById("list-siswa").innerHTML = "";
+    return;
+  }
+
+  const kata = q.split(/\s+/);
+
+  // Filter
+  let hasil = d.filter(r => {
+    
+    const nama = String(r[1]).toLowerCase();
+const nisn = String(r[5]).toLowerCase();
+const nik  = String(r[8]).toLowerCase();
+
+const kataNama = nama.split(/\s+/);
+
+return kata.every(k =>
+
+  kataNama.some(n => n.startsWith(k)) ||
+
+  nisn.startsWith(k) ||
+
+  nik.startsWith(k)
+
+);
+
+  });
+
+  hasil.sort((a, b) => {
+
+  const namaA = String(a[1]).toLowerCase();
+  const namaB = String(b[1]).toLowerCase();
+
+  const kataA = namaA.split(/\s+/);
+  const kataB = namaB.split(/\s+/);
+
+  const idxA = kataA.findIndex(k => k.startsWith(q));
+  const idxB = kataB.findIndex(k => k.startsWith(q));
+
+  if (idxA !== idxB) return idxA - idxB;
+
+  if (idxA >= 0) {
+    const cmp = kataA[idxA].localeCompare(kataB[idxB], "id", {
+      sensitivity: "base"
+    });
+
+    if (cmp !== 0) return cmp;
+  }
+
+  return namaA.localeCompare(namaB, "id", {
+    sensitivity: "base"
+  });
+
+});
+  document.getElementById("list-siswa").innerHTML = `
+
+<div class="bg-white rounded-3xl overflow-hidden border border-gray-100">
+
+${hasil.map((r,i)=>{
+
+const belumLengkap = r.some(v => !String(v).trim());
+
+return `
+
+<div
+onclick="showDetailByNIK('${r[8]}')"
+class="flex items-center px-4 py-3 cursor-pointer active:bg-gray-100 transition">
+
+  <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 ${belumLengkap ? 'opacity-40' : ''}">
+
+    <span class="material-symbols-rounded text-[15px] text-gray-400"
+      style="font-variation-settings:'FILL' 1,'wght' 300,'GRAD' 0,'opsz' 24;">
+      account_circle
+    </span>
+
+  </div>
+
+  <div class="ml-3 flex-1 min-w-0">
+
+    <div class="text-[15px] font-semibold text-gray-900 truncate">
+      ${r[1]}
+    </div>
+
+    <div class="text-[12px] text-gray-500 mt-0.5">
+      ${r[2]}
+    </div>
+
+  </div>
+
+</div>
+
+${i < hasil.length - 1
+  ? '<div class="ml-[56px] border-b border-gray-200"></div>'
+  : ''}
+
+`;
+}).join("")}
+
+</div>
+
+`;
+}
+
+function showDetailByNIK(nik){
+
+  const r = d.find(item => item[8] == nik);
+  if (!r) return;
+
+  document.getElementById('detail-content').innerHTML = `
+
+<div class="space-y-4 text-[16px]">
+
+<div class="flex items-start gap-2">
+  <span class="material-symbols-rounded text-[20px] text-gray-500 mt-[2px] shrink-0">account_circle</span>
+  <div class="flex-1 leading-6">
+    <span class="font-semibold text-gray-800">Nama:</span>
+    <span class="text-gray-600"> ${r[1]}</span>
+  </div>
+</div>
+
+<div class="flex items-center gap-2">
+  <span class="material-symbols-rounded text-[20px] text-gray-500 shrink-0">school</span>
+  <div>
+    <span class="font-semibold text-gray-800">Kelas:</span>
+    <span class="text-gray-600"> ${r[2]}</span>
+  </div>
+</div>
+
+<div class="flex items-center gap-2">
+  <span class="material-symbols-rounded text-[20px] text-gray-500 shrink-0">badge</span>
+  <div>
+    <span class="font-semibold text-gray-800">NISN:</span>
+    <span class="text-gray-600"> ${r[5]}</span>
+  </div>
+</div>
+
+<div class="flex items-center gap-2">
+  <span class="material-symbols-rounded text-[20px] text-gray-500 shrink-0">contact_page</span>
+
+  <div class="flex items-center gap-2">
+
+    <span>
+      <span class="font-semibold text-gray-800">NIK:</span>
+      <span class="text-gray-600"> ${r[8]}</span>
+    </span>
+
+    <span
+      id="copyNikIcon"
+      class="material-symbols-rounded text-[17px] text-gray-400 cursor-pointer hover:text-blue-600 transition"
+      onclick="event.stopPropagation(); salinNIK('${r[8]}')">
+      content_copy
+    </span>
+
+  </div>
+
+</div>
+
+<div class="flex items-center gap-2">
+  <span class="material-symbols-rounded text-[20px] text-gray-500 shrink-0">location_on</span>
+  <div>
+    <span class="font-semibold text-gray-800">Tempat Lahir:</span>
+    <span class="text-gray-600"> ${r[6]}</span>
+  </div>
+</div>
+
+<div class="flex items-center gap-2">
+  <span class="material-symbols-rounded text-[20px] text-gray-500 shrink-0">calendar_month</span>
+  <div>
+    <span class="font-semibold text-gray-800">Tanggal Lahir:</span>
+    <span class="text-gray-600"> ${r[7]}</span>
+  </div>
+</div>
+
+<div class="flex items-start gap-2">
+  <span class="material-symbols-rounded text-[20px] text-gray-500 mt-[2px] shrink-0">man</span>
+  <div class="flex-1 leading-6">
+    <span class="font-semibold text-gray-800">Ayah:</span>
+    <span class="text-gray-600"> ${r[11]}</span>
+  </div>
+</div>
+
+<div class="flex items-start gap-2">
+  <span class="material-symbols-rounded text-[20px] text-gray-500 mt-[2px] shrink-0">woman</span>
+  <div class="flex-1 leading-6">
+    <span class="font-semibold text-gray-800">Ibu:</span>
+    <span class="text-gray-600"> ${r[12]}</span>
+  </div>
+</div>
+
+<div class="flex items-center gap-2">
+  <span class="material-symbols-rounded text-[20px] text-gray-500 shrink-0">volunteer_activism</span>
+  <div>
+    <span class="font-semibold text-gray-800">Kesejahteraan:</span>
+    <span class="text-gray-600"> ${r[13]}</span>
+  </div>
+</div>
+
+<div class="flex items-center gap-2">
+  <span class="material-symbols-rounded text-[20px] text-gray-500 shrink-0">family_restroom</span>
+  <div>
+    <span class="font-semibold text-gray-800">Status Anak:</span>
+    <span class="text-gray-600"> ${r[14]}</span>
+  </div>
+</div>
+
+</div>
+
+`;
+  document.getElementById('modal').classList.remove('hidden');
+  setNavDisabled(true);
+
+}
+    
+    async function salinNIK(nik){
+
+  try{
+
+    await navigator.clipboard.writeText(nik);
+
+    const icon = document.getElementById("copyNikIcon");
+
+    if(icon){
+
+      icon.textContent = "check";
+      icon.classList.remove("text-gray-400");
+      icon.classList.add("text-green-600");
+
+      setTimeout(function(){
+
+        icon.textContent = "content_copy";
+        icon.classList.remove("text-green-600");
+        icon.classList.add("text-gray-400");
+
+      },1000);
+
+    }
+
+    const notif = document.createElement("div");
+
+    notif.textContent = "NIK disalin";
+
+    notif.className =
+      "fixed top-5 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs px-3 py-1.5 rounded-full shadow-lg z-[9999] opacity-90";
+
+    document.body.appendChild(notif);
+
+    setTimeout(function(){
+      notif.remove();
+    },1000);
+
+  }catch(err){
+
+    console.error(err);
+
+  }
+
+}
+
+    function closeModal() {
+      document.getElementById('modal').classList.add('hidden');
+      document.getElementById('srch').value = '';
+      document.getElementById('list-siswa').innerHTML = '';
+
+      setNavDisabled(false);
+    }
+    async function copyRekap(){
+
+  let text = "REKAP DATA PER KELAS\n\n";
+
+  document.querySelectorAll("#tabel-body tr").forEach(tr=>{
+
+    let td = tr.querySelectorAll("td");
+
+    text += `${td[0].innerText} : ${td[1].innerText} L | ${td[2].innerText} P | ${td[3].innerText} Siswa\n`;
+
+  });
+
+  try{
+
+    await navigator.clipboard.writeText(text);
+
+    const icon = document.getElementById("copyRekapIcon");
+
+    if(icon){
+
+      icon.textContent = "check";
+      icon.classList.remove("text-gray-400");
+      icon.classList.add("text-green-600");
+
+      setTimeout(function(){
+
+        icon.textContent = "content_copy";
+        icon.classList.remove("text-green-600");
+        icon.classList.add("text-gray-400");
+
+      },1000);
+
+    }
+
+    showToast("Rekap disalin");
+
+  }catch(err){
+
+    console.error(err);
+
+  }
+
+}
+function showToast(text, durasi = 1800){
+
+  const toast = document.getElementById("toast");
+
+  if(!toast) return;
+
+  toast.textContent = text;
+
+  toast.classList.remove("opacity-0");
+  toast.classList.add("opacity-100");
+
+  setTimeout(function(){
+
+    toast.classList.remove("opacity-100");
+    toast.classList.add("opacity-0");
+
+  }, durasi);
+
+}
+    function cekIsiPIN(){
+
+  const isi = document.getElementById("pinInput").value.trim();
+  document.getElementById("pinError").classList.add("hidden");
+  const btn = document.getElementById("btnPIN");
+
+  if(isi==""){
+
+    btn.classList.remove("text-[#007AFF]");
+    btn.classList.add("text-gray-400");
+
+    btn.style.pointerEvents = "none";
+
+  }else{
+
+    btn.classList.remove("text-gray-400");
+    btn.classList.add("text-[#007AFF]");
+
+    btn.style.pointerEvents = "auto";
+
+  }
+
+}
+
+function bukaPIN(){
+
+  document.getElementById("pinModal").classList.remove("hidden");
+
+  document.getElementById("pinInput").value="";
+
+  document.getElementById("pinError").classList.add("hidden");
+  setNavDisabled(true);
+
+  cekIsiPIN();
+
+  setTimeout(function(){
+
+    document.getElementById("pinInput").focus();
+
+  },100);
+
+}
+
+function batalPIN(){
+
+  selesaiLoadingPIN();
+
+  document.getElementById("pinInput").value="";
+
+  document.getElementById("pinError").classList.add("hidden");
+
+  document.getElementById("pinModal").classList.add("hidden");
+  setNavDisabled(false);
+
+  pinPercobaan=0;
+
+}
+function mulaiLoadingPIN(){
+
+  const btn = document.getElementById("btnPIN");
+
+  btn.textContent = "Memeriksa...";
+  btn.classList.remove("text-[#007AFF]");
+  btn.classList.add("text-gray-400");
+
+  btn.style.pointerEvents = "none";
+
+}
+
+function selesaiLoadingPIN(){
+
+  const btn = document.getElementById("btnPIN");
+
+  btn.textContent = "OK";
+
+  cekIsiPIN();
+
+}
+
+function cekPIN(){
+
+  let pin = document.getElementById("pinInput").value;
+
+  mulaiLoadingPIN();
+
+  fetch(`${APPS_SCRIPT_URL}?action=getKodeUnduh`)
+    .then(res => res.json())
+    .then(json => {
+      const kode = json.kode || "";
+
+      selesaiLoadingPIN();
+
+      if(pin===kode){
+
+        downloadUnlocked = true;
+
+        pinPercobaan = 0;
+
+        document.getElementById("pinModal").classList.add("hidden");
+        setNavDisabled(false);
+
+        nav("download");
+
+      }else{
+
+        pinPercobaan++;
+
+        document.getElementById("pinInput").value="";
+
+        cekIsiPIN();
+
+        document.getElementById("pinError").classList.remove("hidden");
+
+        document.getElementById("pinInput").focus();
+
+        if(pinPercobaan>=3){
+
+          pinPercobaan=0;
+
+          document.getElementById("pinModal").classList.add("hidden");
+          setNavDisabled(false);
+
+        }
+
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      selesaiLoadingPIN();
+      showToast("Gagal memeriksa kode, coba lagi", 3000);
+    });
+
+}
+    function buatChart(){
+
+  // ===== KESEJAHTERAAN =====
+
+  let desil = {
+  "Desil 1":0,
+  "Desil 2":0,
+  "Desil 3":0,
+  "Desil 4":0,
+  "Desil 5":0,
+  "Desil 6-10":0
+};
+
+  d.forEach(r=>{
+
+  let x = String(r[13]).trim();
+
+  if(desil.hasOwnProperty(x)){
+    desil[x]++;
+  }
+
+});
+
+  new Chart(document.getElementById("chartKesejahteraan"),{
+  type:"pie",
+  data:{
+    labels:Object.keys(desil),
+    datasets:[{
+      data:Object.values(desil),
+      backgroundColor: [
+  "#5B6770", // Desil 1
+  "#F26D7D", // Desil 2
+  "#FF9E4D", // Desil 3
+  "#FFD54F", // Desil 4
+  "#87C67C", // Desil 5
+  "#5BA7E7"  // Desil 6-10
+]
+    }]
+  },
+  options:{
+    responsive:true,
+    plugins:{
+      legend:{
+        position:"bottom"
+      },
+      tooltip:{
+        titleFont:{
+          size:16
+        },
+        bodyFont:{
+          size:14
+        }
+      }
+    }
+  }
+}); // <-- PENUTUP new Chart()
+
+  // ===== STATUS ANAK =====
+
+  let status={};
+
+  d.forEach(r=>{
+
+    let s=String(r[14]).trim();
+
+    if(s=="") s="Tidak Ada";
+
+    status[s]=(status[s]||0)+1;
+
+  });
+
+new Chart(document.getElementById("chartStatusAnak"),{
+
+  type:"pie",
+
+  data:{
+    labels:Object.keys(status),
+    datasets:[{
+  data:Object.values(status),
+
+  backgroundColor:[
+    "#87C67C",
+    "#F26D7D"
+  ],
+
+  borderColor:"#FFFFFF",
+  borderWidth:2,
+  hoverBorderWidth:2
+}]
+  },
+
+  options:{
+    responsive:true,
+    plugins:{
+      legend:{
+        position:"bottom"
+      },
+
+      tooltip:{
+        titleFont:{ size:16 },
+        bodyFont:{ size:14 }
+      }
+    }
+  }
+
+});
+}
+function setNavDisabled(disabled){
+
+  const nav = document.querySelector("nav");
+
+  if(disabled){
+
+    nav.classList.add("opacity-40");
+
+  }else{
+
+    nav.classList.remove("opacity-40");
+
+  }
+
+}
+
+function downloadCSV(){
+
+  const btn = document.getElementById("btnUnduh");
+
+  let kelas = document.getElementById("kelasDownload").value;
+  
+
+  let semua = document.getElementById("semuaData").checked;
+
+  let pilih = [];
+
+  document.querySelectorAll(".kategori").forEach(c=>{
+    if(c.checked) pilih.push(c.value);
+  });
+
+  if(!semua && pilih.length==0){
+    showToast("Pilih minimal satu kategori", 3000);
+    return;
+  }
+
+  btn.disabled = true;
+
+  btn.innerHTML = `
+    <span class="material-symbols-rounded animate-spin text-[#007AFF]">
+      autorenew
+    </span>
+    Mengunduh...
+  `;
+
+setTimeout(() => {
+
+  let data = [...d];
+
+// MODE RENTANG
+if(modeRentang){
+
+  const awal = parseInt(
+    document.getElementById("kelasAwal").value.replace("Kelas ","")
+  );
+
+  const akhir = parseInt(
+    document.getElementById("kelasAkhir").value.replace("Kelas ","")
+  );
+
+  data = data.filter(r=>{
+
+    const no = parseInt(
+      String(r[2]).replace("Kelas","").trim()
+    );
+
+    return no >= awal && no <= akhir;
+
+  });
+
+}
+
+// MODE DROPDOWN
+else if(kelas!="SEMUA"){
+
+  data = data.filter(r=>
+    String(r[2]).trim()==kelas
+  );
+
+}
+
+  let hasil = [];
+    if(semua){
+
+const header = [
+"NO","Nama","Kelas","NIPD","Jenis Kelamin","NISN",
+"Tempat Lahir","Tanggal Lahir","NIK","Alamat","HP",
+"Nama Ayah","NIK Ayah",
+"Nama Ibu","NIK Ibu",
+"Kesejahteraan","Status Anak","Umur"
+];
+
+hasil = [header];
+
+data.forEach((r,i)=>{
+
+  hasil.push([
+    i+1,                          // NO
+    r[1],                         // Nama
+    r[2],                         // Kelas
+    r[3],                         // NIPD
+    r[4],                         // Jenis Kelamin
+    r[5],                         // NISN
+    r[6],                         // Tempat Lahir
+    r[7],                         // Tanggal Lahir
+    r[8],                         // NIK
+    r[9],                         // Alamat
+    r[10],                        // HP
+    r[11],                        // Nama Ayah
+    r[16],                        // NIK Ayah
+    r[12],                        // Nama Ibu
+    r[17],                        // NIK Ibu
+    r[13],                        // Kesejahteraan
+    r[14],                        // Status Anak
+    String(r[15]).replace(/\s*thn$/i,"") // Umur
+  ]);
+
+});
+
+}else{
+
+let kolom=[0,1,2,4];
+
+let judul=["NO","Nama","Kelas","Jenis Kelamin"];
+
+const map = {
+  "NIPD":[3,"NIPD"],
+  "NISN":[5,"NISN"],
+  "NIK":[8,"NIK"],
+  "TGLLAHIR":[7,"Tanggal Lahir"],
+  "ALAMAT":[9,"Alamat"],
+  "KES":[13,"Kesejahteraan"],
+  "STATUS":[14,"Status Anak"],
+  "UMUR":[15,"Umur"]
+};
+
+// Urutan tetap sesuai tampilan dashboard
+  const urutan = [
+  "NIPD",
+  "NISN",
+  "NIK",
+  "TGLLAHIR",
+  "ALAMAT",
+  "ORTU",
+  "KES",
+  "STATUS",
+  "UMUR"
+];
+
+urutan.forEach(x=>{
+
+  if(!pilih.includes(x)) return;
+
+  if(x==="ORTU"){
+
+    kolom.push(11,16,12,17);
+
+    judul.push(
+      "Nama Ayah",
+      "NIK Ayah",
+      "Nama Ibu",
+      "NIK Ibu"
+    );
+
+  }else if(x==="TGLLAHIR"){
+
+  kolom.push(6,7);
+
+  judul.push(
+    "Tempat Lahir",
+    "Tanggal Lahir"
+  );
+
+}else{
+
+  kolom.push(map[x][0]);
+  judul.push(map[x][1]);
+
+}
+
+});
+
+hasil.push(judul);
+
+data.forEach((r,index)=>{
+
+  let row=[];
+
+  kolom.forEach(i=>{
+
+    let nilai = r[i];
+
+    if(i===15){
+      nilai = String(nilai).replace(/\s*thn$/i,"");
+    }
+
+    row.push(nilai);
+
+  });
+
+  row[0]=index+1;
+
+  hasil.push(row);
+
+});
+
+}
+const textHeader = [
+  "NIPD",
+  "NISN",
+  "NIK",
+  "NIK Ayah",
+  "NIK Ibu",
+  "HP"
+];
+
+const textCols = [];
+
+hasil[0].forEach((h,i)=>{
+  if(textHeader.includes(h)){
+    textCols.push(i);
+  }
+});
+
+hasil = hasil.map((r,idx)=>{
+
+  if(idx===0) return r;
+
+  return r.map((v,i)=>{
+
+    if(textCols.includes(i)){
+      return '="' + String(v ?? '') + '"';
+    }
+
+    return v;
+
+  });
+
+});
+let csv = hasil
+  .map(r =>
+    r.map(v => {
+      v = String(v ?? "");
+
+      if (v.startsWith('="') && v.endsWith('"')) {
+        return v;
+      }
+
+      return '"' + v.replace(/"/g, '""') + '"';
+    }).join(",")
+  )
+  .join("\n");
+
+let blob = new Blob([csv], {
+  type: "text/csv;charset=utf-8;"
+});
+
+let url = URL.createObjectURL(blob);
+
+let a = document.createElement("a");
+
+a.href = url;
+let namaFile;
+
+if(modeRentang){
+
+  const awal = document.getElementById("kelasAwal").value;
+  const akhir = document.getElementById("kelasAkhir").value;
+
+  namaFile = `${pilih.length ? pilih.join("_") : "Semua_Data"}_${awal}-${akhir}.csv`;
+
+}else{
+
+  namaFile = (semua ? "Semua_Data" : pilih.join("_")) + "_" + kelas + ".csv";
+
+}
+a.download = namaFile;
+
+a.click();
+
+URL.revokeObjectURL(url);
+btn.disabled = false;
+
+btn.innerHTML = `
+<span class="material-symbols-rounded text-[#007AFF] text-[22px]">
+download
+</span>
+Unduh Data
+`;
+}, 150);
+}
+function toggleRentang(){
+
+  modeRentang = !modeRentang;
+
+  const sw = document.getElementById("switchRentang");
+  const bulat = document.getElementById("switchBulat");
+
+  const dropdown = document.getElementById("areaDropdown");
+  const rentang = document.getElementById("areaRentang");
+
+  if(modeRentang){
+
+    sw.classList.remove("bg-[#D1D1D6]");
+sw.classList.remove("border-[#C7C7CC]");
+
+sw.classList.add("bg-[#007AFF]");
+sw.classList.add("border-[#007AFF]");
+
+bulat.style.transform = "translateX(16px)";
+
+    dropdown.classList.add("hidden");
+    rentang.classList.remove("hidden");
+
+    updateKelasAkhir();
+
+  }else{
+
+    sw.classList.remove("bg-[#007AFF]");
+sw.classList.remove("border-[#007AFF]");
+
+sw.classList.add("bg-[#D1D1D6]");
+sw.classList.add("border-[#C7C7CC]");
+
+bulat.style.transform = "translateX(0)";
+
+    dropdown.classList.remove("hidden");
+    rentang.classList.add("hidden");
+
+  }
+
+}
+function updateKelasAkhir(){
+
+  const awal = parseInt(
+    document.getElementById("kelasAwal").value.replace("Kelas ","")
+  );
+
+  const akhir = document.getElementById("kelasAkhir");
+
+  akhir.innerHTML = "";
+
+  for(let i = awal + 1; i <= 6; i++){
+
+    akhir.innerHTML += `
+      <option value="Kelas ${i}">
+        Kelas ${i}
+      </option>
+    `;
+
+  }
+
+}
+function bukaPanduanCSV(){
+
+  document.getElementById("modalCSV")
+    .classList.remove("hidden");
+
+  setNavDisabled(true);
+
+}
+
+function tutupPanduanCSV(){
+
+  document.getElementById("modalCSV")
+    .classList.add("hidden");
+
+  setNavDisabled(false);
+
+}
+function tekanEnterPIN(e){
+
+  if(e.key==="Enter"){
+
+    e.preventDefault();
+
+    cekPIN();
+
+  }
+
+}
+function toggleSemuaData(){
+
+  const semua = document.getElementById("semuaData").checked;
+
+  document.querySelectorAll(".kategori").forEach(c=>{
+
+    if(c.id==="semuaData") return;
+
+    c.disabled = semua;
+
+    if(semua){
+
+      c.parentElement.classList.add("opacity-50");
+
+    }else{
+
+      c.parentElement.classList.remove("opacity-50");
+
+    }
+
+  });
+
+}
+
+// Cegah pinch-zoom pakai 2 jari
+document.addEventListener('touchstart', function(e){
+  if(e.touches.length > 1){
+    e.preventDefault();
+  }
+}, { passive: false });
+
+document.addEventListener('touchmove', function(e){
+  if(e.touches.length > 1){
+    e.preventDefault();
+  }
+}, { passive: false });
+
+// Cegah double-tap zoom
+let lastTouchEnd = 0;
+document.addEventListener('touchend', function(e){
+  const now = Date.now();
+  if(now - lastTouchEnd <= 300){
+    e.preventDefault();
+  }
+  lastTouchEnd = now;
+}, false);
+
+// Cegah gesture pinch khusus Safari/iOS
+document.addEventListener('gesturestart', function(e){
+  e.preventDefault();
+});
+document.addEventListener('gesturechange', function(e){
+  e.preventDefault();
+});
+document.addEventListener('gestureend', function(e){
+  e.preventDefault();
+});
+
+// Paksa reset zoom/pan browser ke posisi normal
+function resetZoomPaksa(){
+  const vp = document.querySelector('meta[name="viewport"]');
+  if(!vp) return;
+  vp.setAttribute('content', 'width=device-width, initial-scale=1.0001, maximum-scale=1, user-scalable=no');
+  setTimeout(function(){
+    vp.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no');
+  }, 50);
+}
+
+// Panggil tiap kali selesai sentuh layar
+document.addEventListener('touchend', function(){
+  setTimeout(resetZoomPaksa, 60);
+}, false);
+
+// Panggil juga begitu halaman pertama kali dibuka
+window.addEventListener('load', resetZoomPaksa);
+  </script>
+</body>
+</html>
