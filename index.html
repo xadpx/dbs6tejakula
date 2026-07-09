@@ -734,7 +734,7 @@ z-[9999]">
     // (Deploy > New deployment > Web app > Execute as: Me > Who has access: Anyone)
     // Pastikan pakai URL yang berakhiran /exec, BUKAN /dev
     // ======================================================
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbytfJNEPN1DxXzp_783e6-DINdSxFoP91C8j3auzg8o8pHBKI63rDKcD_rxCtW5HSAC/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzB3PhnlUnkVllW3-5Cw1SczKxKFYtswsqBQiQNCn8VeqEXoKUwtjZYbd-3dJ_O5HQt/exec";
 
     let d = [];
 let pinPercobaan = 0;
@@ -759,6 +759,34 @@ let modeRentang = false;
       const yyyy = tgl.getFullYear();
 
       el.innerHTML = `Diperbarui<br> ${dd}/${mm}/${yyyy}${perkiraan ? ' *' : ''}`;
+    }
+
+    function formatTanggalUntukTampilan(value){
+      if(value === null || value === undefined || value === "") return "-";
+
+      const teks = String(value).trim();
+      if(!teks) return "-";
+
+      let tanggal;
+
+      if(/^\d{4}-\d{2}-\d{2}/.test(teks)){
+        const [y, m, d] = teks.split(/[-T :]/);
+        tanggal = new Date(Number(y), Number(m) - 1, Number(d));
+      } else if(/^\d{2}\/\d{2}\/\d{4}/.test(teks)){
+        const [d, m, y] = teks.split('/');
+        tanggal = new Date(Number(y), Number(m) - 1, Number(d));
+      } else {
+        tanggal = new Date(teks);
+      }
+
+      if(!isNaN(tanggal?.getTime?.())){
+        const dd = String(tanggal.getDate()).padStart(2, '0');
+        const mm = String(tanggal.getMonth() + 1).padStart(2, '0');
+        const yyyy = tanggal.getFullYear();
+        return `${dd}/${mm}/${yyyy}`;
+      }
+
+      return teks;
     }
 
     window.onload = () => {
@@ -1083,7 +1111,7 @@ function showDetailByNIK(nik){
   <span class="material-symbols-rounded text-[17px] text-gray-500 shrink-0">calendar_month</span>
   <div>
     <span class="font-semibold text-gray-800">Tanggal Lahir:</span>
-    <span class="text-gray-600"> ${r[7]}</span>
+    <span class="text-gray-600"> ${formatTanggalUntukTampilan(r[7])}</span>
   </div>
 </div>
 
