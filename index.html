@@ -664,20 +664,24 @@ class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justi
 <div id="modalKategori"
 onclick="if(event.target===this) closeModalKategori()"
 class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-6">
-  <div class="relative bg-white w-[93%] max-w-sm max-h-[80vh] overflow-y-auto px-5 py-6 rounded-lg border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+  <div class="relative bg-white w-[93%] max-w-sm max-h-[75vh] rounded-lg border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)] flex flex-col overflow-hidden">
     <button
       onclick="closeModalKategori()"
-      class="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition">
+      class="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition z-10">
       <span class="material-symbols-rounded text-[20px]">close</span>
     </button>
-    <h2 id="judulKategori" class="font-bold border-b border-gray-100 pb-3 mb-3 text-base flex items-center gap-2 text-gray-800">
-      <span class="material-symbols-rounded text-[20px] text-gray-500">groups</span>
-      <span></span>
-    </h2>
-    <div id="list-kategori" class="text-sm text-gray-700"></div>
+    <div class="shrink-0 px-5 pt-5 pb-3 border-b border-gray-100 pr-10">
+      <h2 class="font-bold text-sm flex items-center gap-2 text-gray-800">
+        <span class="material-symbols-rounded text-[18px] text-gray-500 shrink-0">groups</span>
+        <span id="judulKategoriText" class="truncate"></span>
+      </h2>
+    </div>
+    <div id="list-kategori"
+      class="flex-1 overflow-y-auto px-5 py-3 text-sm text-gray-700"
+      style="overscroll-behavior: contain; -webkit-overflow-scrolling: touch;">
+    </div>
   </div>
-</div>
-  <nav class="fixed
+</div>  <nav class="fixed
 bottom-3
 left-4
 right-4
@@ -1610,7 +1614,7 @@ function tampilkanSiswaKategori(kolom, label){
 
   hasil.sort((a,b) => String(a[1]).localeCompare(String(b[1]), "id", {sensitivity:"base"}));
 
-  document.querySelector("#judulKategori span").innerText = `${label} (${hasil.length} siswa)`;
+  document.getElementById("judulKategoriText").innerText = `${label} (${hasil.length} siswa)`;
 
   if(hasil.length === 0){
     document.getElementById("list-kategori").innerHTML = `
