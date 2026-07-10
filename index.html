@@ -2135,6 +2135,25 @@ let swipeIdxTarget = -1;
 function halamanAktifSaatIni(){
   return urutanHalamanSwipe.find(id => !document.getElementById("p-"+id).classList.contains("hidden"));
 }
+function updateNavAktif(p){
+  ["home","siswa","download"].forEach(id=>{
+    const btn=document.getElementById("nav-"+id);
+    const iconWrap = btn.querySelector(".nav-icon-wrap");
+    const label = btn.querySelector(".nav-label");
+    if(id===p){
+      btn.classList.remove("nav-inactive");
+      btn.classList.add("nav-active");
+      iconWrap.style.color="#FFFFFF";
+      label.style.color="#FF7A45";
+    }else{
+      btn.classList.remove("nav-active");
+      btn.classList.add("nav-inactive");
+      iconWrap.style.color="#9CA3AF";
+      label.style.color="#9CA3AF";
+    }
+  });
+}
+
 function selesaikanSwipeKeHalaman(p){
 
   if(p !== "download"){
@@ -2154,25 +2173,9 @@ function selesaikanSwipeKeHalaman(p){
   target.classList.remove("hidden");
   target.style.display = (p==="siswa") ? "block" : "";
 
-  ["home","siswa","download"].forEach(id=>{
-    const btn=document.getElementById("nav-"+id);
-    const iconWrap = btn.querySelector(".nav-icon-wrap");
-    const label = btn.querySelector(".nav-label");
-    if(id===p){
-      btn.classList.remove("nav-inactive");
-      btn.classList.add("nav-active");
-      iconWrap.style.color="#FFFFFF";
-      label.style.color="#FF7A45";
-    }else{
-      btn.classList.remove("nav-active");
-      btn.classList.add("nav-inactive");
-      iconWrap.style.color="#9CA3AF";
-      label.style.color="#9CA3AF";
-    }
-  });
+  updateNavAktif(p);
 
 }
-
 function modalSedangTerbuka(){
   return (
     !document.getElementById("modal").classList.contains("hidden") ||
@@ -2308,6 +2311,8 @@ document.addEventListener("touchend", function(e){
 
   if(lolos){
 
+    updateNavAktif(urutanHalamanSwipe[swipeIdxTarget]);
+
     swipeCurrentEl.style.transform = `translateX(${swipeArah === -1 ? -lebar : lebar}px)`;
     swipeTargetEl.style.transform = `translateX(0px)`;
 
@@ -2320,7 +2325,6 @@ document.addEventListener("touchend", function(e){
     }, 260);
 
   }else{
-
     swipeCurrentEl.style.transform = `translateX(0px)`;
     swipeTargetEl.style.transform = `translateX(${swipeArah === -1 ? lebar : -lebar}px)`;
 
