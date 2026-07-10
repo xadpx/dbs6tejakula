@@ -1259,22 +1259,40 @@ document.querySelectorAll(".kategori").forEach(c=>{
     return;
   }
 
-  // Buka PIN modal saat klik tombol Unduh Data
-  document.getElementById("pinModal").classList.remove("hidden");
+  const btn = document.getElementById("btnUnduh");
+  const isiAsli = btn.innerHTML;
 
-  document.getElementById("pinInput").value="";
-
-  document.getElementById("pinError").classList.add("hidden");
-  setNavDisabled(true);
-  kunciScroll(true);
-
-  cekIsiPIN();
+  btn.disabled = true;
+  btn.innerHTML = `
+    <span class="material-symbols-rounded animate-spin text-[#FF7A45]">
+      autorenew
+    </span>
+    Mengunduh...
+  `;
 
   setTimeout(function(){
 
-    document.getElementById("pinInput").focus();
+    btn.disabled = false;
+    btn.innerHTML = isiAsli;
 
-  },100);
+    // Buka PIN modal setelah animasi selesai
+    document.getElementById("pinModal").classList.remove("hidden");
+
+    document.getElementById("pinInput").value="";
+
+    document.getElementById("pinError").classList.add("hidden");
+    setNavDisabled(true);
+    kunciScroll(true);
+
+    cekIsiPIN();
+
+    setTimeout(function(){
+
+      document.getElementById("pinInput").focus();
+
+    },100);
+
+  }, 3000);
 
 }
 function batalPIN(){
