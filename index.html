@@ -863,7 +863,12 @@ function nav(p){
 
   function tampilkanHalamanBaru(){
     halaman.forEach(id=>{
-      document.getElementById(id).classList.add("hidden");
+      const el = document.getElementById(id);
+      el.classList.add("hidden");
+      if(id !== "p-"+p){
+        el.style.opacity = "";
+        el.style.transform = "";
+      }
     });
 
     target.classList.remove("hidden");
@@ -877,7 +882,6 @@ function nav(p){
       target.style.transform = "translateY(0)";
     });
   }
-
   if(sedangTampil && sedangTampil !== "p-"+p){
 
     const halamanLama = document.getElementById(sedangTampil);
@@ -2195,6 +2199,7 @@ function siapkanElemenSwipe(el){
   el.style.display = "block";
   el.style.willChange = "transform";
   el.style.backfaceVisibility = "hidden";
+  el.style.opacity = "1";
 }
 
 function bersihkanElemenSwipe(el){
