@@ -1612,8 +1612,7 @@ function tampilkanSiswaKategori(kolom, label){
     document.getElementById("list-kategori").innerHTML = `
       <div class="bg-gray-50 rounded-2xl overflow-hidden">
         ${hasil.map((r,i) => `
-          <div onclick="closeModalKategori(); showDetailByNIK('${r[8]}')"
-            class="flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-200 transition ${i < hasil.length-1 ? 'border-b border-gray-200' : ''}">
+          <div class="flex items-center px-4 py-2.5 ${i < hasil.length-1 ? 'border-b border-gray-200' : ''}">
             <div class="flex-1 min-w-0">
               <div class="text-[13px] font-semibold text-gray-900 truncate">${r[1]}</div>
               <div class="text-[11px] text-gray-600 mt-0.5">${r[2]}</div>
