@@ -2187,10 +2187,12 @@ function siapkanElemenSwipe(el){
   el.style.left = "0";
   el.style.width = "100%";
   el.style.height = "100%";
-  el.style.overflowY = "auto";
+  el.style.overflowY = "hidden";
   el.style.zIndex = "40";
   el.style.transition = "none";
   el.style.display = "block";
+  el.style.willChange = "transform";
+  el.style.backfaceVisibility = "hidden";
 }
 
 function bersihkanElemenSwipe(el){
@@ -2204,6 +2206,8 @@ function bersihkanElemenSwipe(el){
   el.style.transition = "";
   el.style.transform = "";
   el.style.display = "";
+  el.style.willChange = "";
+  el.style.backfaceVisibility = "";
 }
 
 document.addEventListener("touchstart", function(e){
@@ -2310,7 +2314,7 @@ document.addEventListener("touchend", function(e){
     setTimeout(function(){
       bersihkanElemenSwipe(swipeCurrentEl);
       bersihkanElemenSwipe(swipeTargetEl);
-      nav(urutanHalamanSwipe[swipeIdxTarget]);
+      selesaikanSwipeKeHalaman(urutanHalamanSwipe[swipeIdxTarget]);
       swipeLockedAxis = null;
       swipeIdxTarget = -1;
     }, 260);
@@ -2331,7 +2335,6 @@ document.addEventListener("touchend", function(e){
   }
 
 }, {passive:true});
-  </script>
   </script>
 </body>
 </html>
