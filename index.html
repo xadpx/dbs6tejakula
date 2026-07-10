@@ -122,10 +122,7 @@
       0%{ background-position: 100% 50%; }
       100%{ background-position: 0 50%; }
     }
-    #p-home, #p-siswa, #p-download{
-      transition: opacity .18s ease, transform .18s ease;
-    }
-    .nav-active .nav-icon-wrap{
+        .nav-active .nav-icon-wrap{
       background:#FF7A45;
       box-shadow:0 6px 14px rgba(255,122,69,0.4);
     }
@@ -2137,6 +2134,43 @@ let swipeIdxTarget = -1;
 
 function halamanAktifSaatIni(){
   return urutanHalamanSwipe.find(id => !document.getElementById("p-"+id).classList.contains("hidden"));
+}
+function selesaikanSwipeKeHalaman(p){
+
+  if(p !== "download"){
+    halamanSebelumnya = p;
+  }
+
+  const halaman = ["p-home","p-siswa","p-download"];
+  halaman.forEach(id=>{
+    const el = document.getElementById(id);
+    el.classList.add("hidden");
+    el.style.opacity = "";
+    el.style.transform = "";
+    el.style.display = "";
+  });
+
+  const target = document.getElementById("p-"+p);
+  target.classList.remove("hidden");
+  target.style.display = (p==="siswa") ? "block" : "";
+
+  ["home","siswa","download"].forEach(id=>{
+    const btn=document.getElementById("nav-"+id);
+    const iconWrap = btn.querySelector(".nav-icon-wrap");
+    const label = btn.querySelector(".nav-label");
+    if(id===p){
+      btn.classList.remove("nav-inactive");
+      btn.classList.add("nav-active");
+      iconWrap.style.color="#FFFFFF";
+      label.style.color="#FF7A45";
+    }else{
+      btn.classList.remove("nav-active");
+      btn.classList.add("nav-inactive");
+      iconWrap.style.color="#9CA3AF";
+      label.style.color="#9CA3AF";
+    }
+  });
+
 }
 
 function modalSedangTerbuka(){
