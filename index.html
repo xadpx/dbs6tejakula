@@ -883,19 +883,6 @@ function nav(p){
       target.style.transform = "translateY(0)";
     });
   }
-    });
-
-    target.classList.remove("hidden");
-    target.style.display = (p==="siswa") ? "block" : "";
-
-    target.style.opacity = "0";
-    target.style.transform = "translateY(6px)";
-
-    requestAnimationFrame(()=>{
-      target.style.opacity = "1";
-      target.style.transform = "translateY(0)";
-    });
-  }
   if(sedangTampil && sedangTampil !== "p-"+p){
 
     const halamanLama = document.getElementById(sedangTampil);
