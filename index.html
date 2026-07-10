@@ -1497,12 +1497,6 @@ function buatChart(){
   options:{
     responsive:true,
     cutout:"68%",
-    onClick:(evt, elements)=>{
-      if(elements.length>0){
-        const idx = elements[0].index;
-        tampilkanSiswaKategori(13, labelKesejahteraan[idx]);
-      }
-    },
     plugins:{
       legend:{
         display:false
@@ -1564,12 +1558,6 @@ new Chart(document.getElementById("chartStatusAnak"),{
   options:{
     responsive:true,
     cutout:"68%",
-    onClick:(evt, elements)=>{
-      if(elements.length>0){
-        const idx = elements[0].index;
-        tampilkanSiswaKategori(14, labelStatusAnak[idx]);
-      }
-    },
     plugins:{
       legend:{
         display:false
