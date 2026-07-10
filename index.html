@@ -2123,7 +2123,12 @@ function jalankanTransisiNav(pTarget){
 
   const pSekarang = halamanAktifSaatIni();
 
-  if(pSekarang === pTarget || sedangTransisiNav) return;
+  if(pSekarang === pTarget){
+    updateNavAktif(pTarget);
+    return;
+  }
+
+  if(sedangTransisiNav) return;
 
   sedangTransisiNav = true;
 
