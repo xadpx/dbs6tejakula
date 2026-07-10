@@ -1309,6 +1309,19 @@ function showToast(text, durasi = 1800){
 
 function bukaPINUnduh(){
 
+  // Cek dulu apakah kategori sudah dipilih, sebelum minta kode unduh
+  const semua = document.getElementById("semuaData").checked;
+  let pilih = [];
+
+  document.querySelectorAll(".kategori").forEach(c=>{
+    if(c.checked) pilih.push(c.value);
+  });
+
+  if(!semua && pilih.length==0){
+    showToast("Pilih minimal satu kategori", 3000);
+    return;
+  }
+
   // Buka PIN modal saat klik tombol Unduh Data
   document.getElementById("pinModal").classList.remove("hidden");
 
@@ -1327,7 +1340,6 @@ function bukaPINUnduh(){
   },100);
 
 }
-
 function batalPIN(){
 
   selesaiLoadingPIN();
@@ -2030,6 +2042,7 @@ function toggleSemuaData(){
 
     if(semua){
 
+      c.checked = false;
       c.parentElement.classList.add("opacity-50");
 
     }else{
