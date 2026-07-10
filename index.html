@@ -861,6 +861,30 @@ function nav(p){
   jalankanTransisiNav(p);
 
 }
+    function hitungSkorKedekatan(kataNama, kataQuery){
+
+  for(let i = 0; i <= kataNama.length - kataQuery.length; i++){
+
+    let cocokBerurutan = true;
+
+    for(let j = 0; j < kataQuery.length; j++){
+      if(!kataNama[i+j].startsWith(kataQuery[j])){
+        cocokBerurutan = false;
+        break;
+      }
+    }
+
+    if(cocokBerurutan){
+      return { berurutan: true, posisi: i };
+    }
+
+  }
+
+  const posisiPertama = kataNama.findIndex(n => n.startsWith(kataQuery[0]));
+
+  return { berurutan: false, posisi: posisiPertama === -1 ? 999 : posisiPertama };
+
+}
 function filterSiswa() {
 
   const q = document.getElementById("srch").value.trim().toLowerCase();
@@ -909,32 +933,27 @@ return kata.every(k =>
 
   });
 
-  hasil.sort((a, b) => {
+hasil.sort((a, b) => {
 
-  const namaA = String(a[1]).toLowerCase();
-  const namaB = String(b[1]).toLowerCase();
+    const kataA = String(a[1]).toLowerCase().split(/\s+/);
+    const kataB = String(b[1]).toLowerCase().split(/\s+/);
 
-  const kataA = namaA.split(/\s+/);
-  const kataB = namaB.split(/\s+/);
+    const skorA = hitungSkorKedekatan(kataA, kata);
+    const skorB = hitungSkorKedekatan(kataB, kata);
 
-  const idxA = kataA.findIndex(k => k.startsWith(q));
-  const idxB = kataB.findIndex(k => k.startsWith(q));
+    if (skorA.berurutan !== skorB.berurutan) {
+      return skorA.berurutan ? -1 : 1;
+    }
 
-  if (idxA !== idxB) return idxA - idxB;
+    if (skorA.posisi !== skorB.posisi) {
+      return skorA.posisi - skorB.posisi;
+    }
 
-  if (idxA >= 0) {
-    const cmp = kataA[idxA].localeCompare(kataB[idxB], "id", {
+    return String(a[1]).localeCompare(String(b[1]), "id", {
       sensitivity: "base"
     });
 
-    if (cmp !== 0) return cmp;
-  }
-
-  return namaA.localeCompare(namaB, "id", {
-    sensitivity: "base"
   });
-
-});
   if(hasil.length === 0){
     document.getElementById("list-siswa").innerHTML = `
       <div class="flex flex-col items-center justify-center text-center pt-14 px-6">
