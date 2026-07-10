@@ -1471,9 +1471,9 @@ function buatChart(){
 });
 
   const warnaKesejahteraan = [
-  "#9B9B9B", // Desil 1
-  "#B8B8B8", // Desil 2
-  "#D4D4D4", // Desil 3
+  "#D4D4D4", // Desil 1 → abu paling muda
+  "#B8B8B8", // Desil 2 → abu tengah
+  "#9B9B9B", // Desil 3 → abu paling gelap
   "#FFBB94", // Desil 4
   "#FF9A6C", // Desil 5
   "#FF7A45"  // Desil 6-10
@@ -1497,6 +1497,7 @@ function buatChart(){
       backgroundColor: warnaKesejahteraan,
       borderColor:"#FFFFFF",
       borderWidth:3,
+      borderRadius:8,
       hoverOffset:6
     }]
   },
@@ -1557,6 +1558,7 @@ new Chart(document.getElementById("chartStatusAnak"),{
 
   borderColor:"#FFFFFF",
   borderWidth:3,
+  borderRadius:8,
   hoverOffset:6
 }]
   },
