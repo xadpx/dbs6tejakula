@@ -1667,6 +1667,7 @@ function downloadCSV(){
   let pilih = [];
 
   document.querySelectorAll(".kategori").forEach(c=>{
+    if(c.id==="semuaData") return;
     if(c.checked) pilih.push(c.value);
   });
 
@@ -1867,19 +1868,20 @@ hasil[0].forEach((h,i)=>{
 
 let namaFile;
 
+const labelKategori = semua ? "Semua_Data" : (pilih.length ? pilih.join("_") : "Semua_Data");
+
 if(modeRentang){
 
   const awal = document.getElementById("kelasAwal").value;
   const akhir = document.getElementById("kelasAkhir").value;
 
-  namaFile = `${pilih.length ? pilih.join("_") : "Semua_Data"}_${awal}-${akhir}.xlsx`;
+  namaFile = `${labelKategori}_${awal}-${akhir}.xlsx`;
 
 }else{
 
-  namaFile = (semua ? "Semua_Data" : pilih.join("_")) + "_" + kelas + ".xlsx";
+  namaFile = `${labelKategori}_${kelas}.xlsx`;
 
 }
-
 const ws = XLSX.utils.aoa_to_sheet(hasil);
 
 // Paksa kolom tertentu (NIK, NISN, dll) tetap jadi teks,
@@ -2034,12 +2036,26 @@ function tekanEnterPIN(e){
 function toggleSemuaData(){
 
   const semua = document.getElementById("semuaData").checked;
-  let pilih = [];
 
   document.querySelectorAll(".kategori").forEach(c=>{
+
     if(c.id==="semuaData") return;
-    if(c.checked) pilih.push(c.value);
+
+    c.disabled = semua;
+
+    if(semua){
+
+      c.checked = false;
+      c.parentElement.classList.add("opacity-50");
+
+    }else{
+
+      c.parentElement.classList.remove("opacity-50");
+
+    }
+
   });
+
 }
 
 // Cegah pinch-zoom pakai 2 jari
