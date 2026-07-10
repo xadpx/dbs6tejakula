@@ -2120,27 +2120,20 @@ window.addEventListener('load', resetZoomPaksa);
     document.body.style.touchAction = "pan-y";
   }
 }
-function kunciScroll(kunci){
-  if(kunci){
-    document.documentElement.style.overflow = "hidden";
-    document.documentElement.style.touchAction = "none";
-    document.body.style.overflow = "hidden";
-    document.body.style.touchAction = "none";
-  }else{
-    document.documentElement.style.overflow = "";
-    document.documentElement.style.touchAction = "";
-    document.body.style.overflow = "";
-    document.body.style.touchAction = "pan-y";
-  }
-}
 
 // ======================================================
-// GESTUR SWIPE ANTAR-HALAMAN (Beranda / Siswa / Unduh)
+// GESTUR SWIPE ANTAR-HALAMAN DENGAN EFEK MENGIKUTI JARI
 // ======================================================
 const urutanHalamanSwipe = ["home", "siswa", "download"];
 let swipeStartX = 0;
 let swipeStartY = 0;
 let swipeAktif = false;
+let swipeLockedAxis = null;
+let swipeCurrentEl = null;
+let swipeTargetEl = null;
+let swipeArah = 0;
+let swipeIdxSekarang = 0;
+let swipeIdxTarget = -1;
 
 function halamanAktifSaatIni(){
   return urutanHalamanSwipe.find(id => !document.getElementById("p-"+id).classList.contains("hidden"));
@@ -2154,6 +2147,31 @@ function modalSedangTerbuka(){
   );
 }
 
+function siapkanElemenSwipe(el){
+  el.style.position = "fixed";
+  el.style.top = "0";
+  el.style.left = "0";
+  el.style.width = "100%";
+  el.style.height = "100%";
+  el.style.overflowY = "auto";
+  el.style.zIndex = "40";
+  el.style.transition = "none";
+  el.style.display = "block";
+}
+
+function bersihkanElemenSwipe(el){
+  el.style.position = "";
+  el.style.top = "";
+  el.style.left = "";
+  el.style.width = "";
+  el.style.height = "";
+  el.style.overflowY = "";
+  el.style.zIndex = "";
+  el.style.transition = "";
+  el.style.transform = "";
+  el.style.display = "";
+}
+
 document.addEventListener("touchstart", function(e){
 
   if(modalSedangTerbuka()){
@@ -2163,7 +2181,6 @@ document.addEventListener("touchstart", function(e){
 
   const target = e.target;
 
-  // Jangan mulai swipe kalau jari mulai dari elemen yang butuh gestur horizontal sendiri
   if(
     target.closest("#srch") ||
     target.closest("select") ||
@@ -2177,35 +2194,106 @@ document.addEventListener("touchstart", function(e){
   swipeStartX = e.touches[0].clientX;
   swipeStartY = e.touches[0].clientY;
   swipeAktif = true;
+  swipeLockedAxis = null;
+  swipeCurrentEl = null;
+  swipeTargetEl = null;
+  swipeArah = 0;
+  swipeIdxTarget = -1;
 
 }, {passive:true});
+
+document.addEventListener("touchmove", function(e){
+
+  if(!swipeAktif) return;
+
+  const x = e.touches[0].clientX;
+  const y = e.touches[0].clientY;
+  const dx = x - swipeStartX;
+  const dy = y - swipeStartY;
+
+  if(!swipeLockedAxis){
+    if(Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+    swipeLockedAxis = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
+
+    if(swipeLockedAxis === "x"){
+      const halamanSekarang = halamanAktifSaatIni();
+      swipeIdxSekarang = urutanHalamanSwipe.indexOf(halamanSekarang);
+      swipeArah = dx < 0 ? -1 : 1;
+      swipeIdxTarget = swipeIdxSekarang + (swipeArah === -1 ? 1 : -1);
+
+      if(swipeIdxTarget < 0 || swipeIdxTarget >= urutanHalamanSwipe.length){
+        swipeIdxTarget = -1;
+        return;
+      }
+
+      swipeCurrentEl = document.getElementById("p-" + urutanHalamanSwipe[swipeIdxSekarang]);
+      swipeTargetEl = document.getElementById("p-" + urutanHalamanSwipe[swipeIdxTarget]);
+
+      siapkanElemenSwipe(swipeCurrentEl);
+      siapkanElemenSwipe(swipeTargetEl);
+      swipeTargetEl.classList.remove("hidden");
+
+      swipeTargetEl.style.transform = `translateX(${swipeArah === -1 ? 100 : -100}%)`;
+    }
+  }
+
+  if(swipeLockedAxis === "y") return;
+  if(swipeIdxTarget === -1) return;
+
+  e.preventDefault();
+
+  const lebar = window.innerWidth;
+  let geser = Math.max(-lebar, Math.min(lebar, dx));
+
+  swipeCurrentEl.style.transform = `translateX(${geser}px)`;
+  swipeTargetEl.style.transform = `translateX(${geser + (swipeArah === -1 ? lebar : -lebar)}px)`;
+
+}, {passive:false});
 
 document.addEventListener("touchend", function(e){
 
   if(!swipeAktif) return;
   swipeAktif = false;
 
-  if(modalSedangTerbuka()) return;
+  if(swipeLockedAxis !== "x" || swipeIdxTarget === -1){
+    swipeLockedAxis = null;
+    return;
+  }
 
   const endX = e.changedTouches[0].clientX;
-  const endY = e.changedTouches[0].clientY;
+  const dx = endX - swipeStartX;
+  const lebar = window.innerWidth;
+  const lolos = Math.abs(dx) > lebar * 0.28;
 
-  const deltaX = endX - swipeStartX;
-  const deltaY = endY - swipeStartY;
+  swipeCurrentEl.style.transition = "transform .25s ease";
+  swipeTargetEl.style.transition = "transform .25s ease";
 
-  // Swipe harus dominan horizontal & cukup jauh, biar tidak bentrok dengan scroll biasa
-  if(Math.abs(deltaX) < 60) return;
-  if(Math.abs(deltaX) < Math.abs(deltaY) * 1.5) return;
+  if(lolos){
 
-  const halamanSekarang = halamanAktifSaatIni();
-  const idxSekarang = urutanHalamanSwipe.indexOf(halamanSekarang);
+    swipeCurrentEl.style.transform = `translateX(${swipeArah === -1 ? -lebar : lebar}px)`;
+    swipeTargetEl.style.transform = `translateX(0px)`;
 
-  if(deltaX < 0 && idxSekarang < urutanHalamanSwipe.length - 1){
-    // geser ke kiri → halaman berikutnya
-    nav(urutanHalamanSwipe[idxSekarang + 1]);
-  }else if(deltaX > 0 && idxSekarang > 0){
-    // geser ke kanan → halaman sebelumnya
-    nav(urutanHalamanSwipe[idxSekarang - 1]);
+    setTimeout(function(){
+      bersihkanElemenSwipe(swipeCurrentEl);
+      bersihkanElemenSwipe(swipeTargetEl);
+      nav(urutanHalamanSwipe[swipeIdxTarget]);
+      swipeLockedAxis = null;
+      swipeIdxTarget = -1;
+    }, 260);
+
+  }else{
+
+    swipeCurrentEl.style.transform = `translateX(0px)`;
+    swipeTargetEl.style.transform = `translateX(${swipeArah === -1 ? lebar : -lebar}px)`;
+
+    setTimeout(function(){
+      bersihkanElemenSwipe(swipeCurrentEl);
+      bersihkanElemenSwipe(swipeTargetEl);
+      swipeTargetEl.classList.add("hidden");
+      swipeLockedAxis = null;
+      swipeIdxTarget = -1;
+    }, 260);
+
   }
 
 }, {passive:true});
