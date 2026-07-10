@@ -1164,7 +1164,9 @@ function showDetailByNIK(nik){
 `;
   document.getElementById('modal').classList.remove('hidden');
   setNavDisabled(true);
+  kunciScroll(true);
 
+}
 }
     
     async function salinNIK(nik){
@@ -1218,6 +1220,7 @@ function showDetailByNIK(nik){
       document.getElementById('list-siswa').innerHTML = '';
 
       setNavDisabled(false);
+      kunciScroll(false);
     }
     async function copyRekap(){
 
@@ -1307,6 +1310,8 @@ function showToast(text, durasi = 1800){
 
 function bukaPINUnduh(){
 
+  function bukaPINUnduh(){
+
   // Buka PIN modal saat klik tombol Unduh Data
   document.getElementById("pinModal").classList.remove("hidden");
 
@@ -1314,6 +1319,7 @@ function bukaPINUnduh(){
 
   document.getElementById("pinError").classList.add("hidden");
   setNavDisabled(true);
+  kunciScroll(true);
 
   cekIsiPIN();
 
@@ -1335,6 +1341,7 @@ function batalPIN(){
 
   document.getElementById("pinModal").classList.add("hidden");
   setNavDisabled(false);
+  kunciScroll(false);
 
   pinPercobaan=0;
 
@@ -1382,6 +1389,7 @@ function cekPIN(){
 
         document.getElementById("pinModal").classList.add("hidden");
         setNavDisabled(false);
+        kunciScroll(false);
 
         nav("download");
         
@@ -1405,6 +1413,7 @@ function cekPIN(){
 
           document.getElementById("pinModal").classList.add("hidden");
           setNavDisabled(false);
+          kunciScroll(false);
 
           showToast("Terlalu banyak percobaan. Coba lagi nanti.", 3000);
           
@@ -1625,12 +1634,16 @@ function tampilkanSiswaKategori(kolom, label){
 
   document.getElementById('modalKategori').classList.remove('hidden');
   setNavDisabled(true);
+  kunciScroll(true);
+
+}
 
 }
 
 function closeModalKategori(){
   document.getElementById('modalKategori').classList.add('hidden');
   setNavDisabled(false);
+  kunciScroll(false);
 }
 function downloadCSV(){
 
@@ -2083,6 +2096,15 @@ document.addEventListener('touchend', function(){
 
 // Panggil juga begitu halaman pertama kali dibuka
 window.addEventListener('load', resetZoomPaksa);
+    function kunciScroll(kunci){
+  if(kunci){
+    document.body.style.overflow = "hidden";
+    document.body.style.touchAction = "none";
+  }else{
+    document.body.style.overflow = "";
+    document.body.style.touchAction = "pan-y";
+  }
+}
   </script>
 </body>
 </html>
