@@ -2120,6 +2120,19 @@ window.addEventListener('load', resetZoomPaksa);
     document.body.style.touchAction = "pan-y";
   }
 }
+function kunciScroll(kunci){
+  if(kunci){
+    document.documentElement.style.overflow = "hidden";
+    document.documentElement.style.touchAction = "none";
+    document.body.style.overflow = "hidden";
+    document.body.style.touchAction = "none";
+  }else{
+    document.documentElement.style.overflow = "";
+    document.documentElement.style.touchAction = "";
+    document.body.style.overflow = "";
+    document.body.style.touchAction = "pan-y";
+  }
+}
 
 // ======================================================
 // GESTUR SWIPE ANTAR-HALAMAN (Beranda / Siswa / Unduh)
