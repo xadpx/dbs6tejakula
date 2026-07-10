@@ -1313,12 +1313,13 @@ function bukaPINUnduh(){
   const semua = document.getElementById("semuaData").checked;
   let pilih = [];
 
-  document.querySelectorAll(".kategori").forEach(c=>{
-    if(c.checked) pilih.push(c.value);
-  });
+document.querySelectorAll(".kategori").forEach(c=>{
+  if(c.id==="semuaData") return;
+  if(c.checked) pilih.push(c.value);
+});
 
   if(!semua && pilih.length==0){
-    showToast("Pilih minimal satu kategori", 3000);
+    showToast("Pilih minimal satu kategori", 5000);
     return;
   }
 
@@ -2033,26 +2034,12 @@ function tekanEnterPIN(e){
 function toggleSemuaData(){
 
   const semua = document.getElementById("semuaData").checked;
+  let pilih = [];
 
   document.querySelectorAll(".kategori").forEach(c=>{
-
     if(c.id==="semuaData") return;
-
-    c.disabled = semua;
-
-    if(semua){
-
-      c.checked = false;
-      c.parentElement.classList.add("opacity-50");
-
-    }else{
-
-      c.parentElement.classList.remove("opacity-50");
-
-    }
-
+    if(c.checked) pilih.push(c.value);
   });
-
 }
 
 // Cegah pinch-zoom pakai 2 jari
