@@ -2120,6 +2120,83 @@ window.addEventListener('load', resetZoomPaksa);
     document.body.style.touchAction = "pan-y";
   }
 }
+
+// ======================================================
+// GESTUR SWIPE ANTAR-HALAMAN (Beranda / Siswa / Unduh)
+// ======================================================
+const urutanHalamanSwipe = ["home", "siswa", "download"];
+let swipeStartX = 0;
+let swipeStartY = 0;
+let swipeAktif = false;
+
+function halamanAktifSaatIni(){
+  return urutanHalamanSwipe.find(id => !document.getElementById("p-"+id).classList.contains("hidden"));
+}
+
+function modalSedangTerbuka(){
+  return (
+    !document.getElementById("modal").classList.contains("hidden") ||
+    !document.getElementById("pinModal").classList.contains("hidden") ||
+    !document.getElementById("modalKategori").classList.contains("hidden")
+  );
+}
+
+document.addEventListener("touchstart", function(e){
+
+  if(modalSedangTerbuka()){
+    swipeAktif = false;
+    return;
+  }
+
+  const target = e.target;
+
+  // Jangan mulai swipe kalau jari mulai dari elemen yang butuh gestur horizontal sendiri
+  if(
+    target.closest("#srch") ||
+    target.closest("select") ||
+    target.closest("#switchRentang") ||
+    target.closest(".kategori")
+  ){
+    swipeAktif = false;
+    return;
+  }
+
+  swipeStartX = e.touches[0].clientX;
+  swipeStartY = e.touches[0].clientY;
+  swipeAktif = true;
+
+}, {passive:true});
+
+document.addEventListener("touchend", function(e){
+
+  if(!swipeAktif) return;
+  swipeAktif = false;
+
+  if(modalSedangTerbuka()) return;
+
+  const endX = e.changedTouches[0].clientX;
+  const endY = e.changedTouches[0].clientY;
+
+  const deltaX = endX - swipeStartX;
+  const deltaY = endY - swipeStartY;
+
+  // Swipe harus dominan horizontal & cukup jauh, biar tidak bentrok dengan scroll biasa
+  if(Math.abs(deltaX) < 60) return;
+  if(Math.abs(deltaX) < Math.abs(deltaY) * 1.5) return;
+
+  const halamanSekarang = halamanAktifSaatIni();
+  const idxSekarang = urutanHalamanSwipe.indexOf(halamanSekarang);
+
+  if(deltaX < 0 && idxSekarang < urutanHalamanSwipe.length - 1){
+    // geser ke kiri → halaman berikutnya
+    nav(urutanHalamanSwipe[idxSekarang + 1]);
+  }else if(deltaX > 0 && idxSekarang > 0){
+    // geser ke kanan → halaman sebelumnya
+    nav(urutanHalamanSwipe[idxSekarang - 1]);
+  }
+
+}, {passive:true});
+  </script>
   </script>
 </body>
 </html>
