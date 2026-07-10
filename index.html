@@ -52,7 +52,8 @@
         transform: translateX(-50%) !important;
       }
       nav{
-        max-width: 430px !important;
+        max-width: 398px !important;
+        width: calc(100% - 32px) !important;
         left: 50% !important;
         transform: translateX(-50%) !important;
         right: auto !important;
@@ -60,6 +61,9 @@
       #modal, #pinModal, #modalKategori{
         max-width: 430px;
         margin: 0 auto;
+      }
+      #app-scroll .grid.md\:grid-cols-2{
+        grid-template-columns: 1fr !important;
       }
     }
     #app-scroll, #p-home, #p-siswa, #p-download {
