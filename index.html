@@ -2295,8 +2295,11 @@ function bersihkanElemenSwipe(el){
   el.style.display = "";
   el.style.willChange = "";
   el.style.backfaceVisibility = "";
-}
 
+  // Paksa browser menggambar ulang elemen ini,
+  // supaya tidak ada layer GPU basi yang bikin tampilan kosong
+  void el.offsetHeight;
+}
 document.addEventListener("touchstart", function(e){
 
   if(modalSedangTerbuka()){
