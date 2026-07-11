@@ -1613,7 +1613,6 @@ function buatChart(){
         boxHeight: 8,
         usePointStyle: true,
         callbacks:{
-      }
           label: function(context){
             const total = context.dataset.data.reduce((a,b) => a+b, 0);
             const nilai = context.parsed;
@@ -1685,7 +1684,6 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
         boxHeight: 8,
         usePointStyle: true,
         callbacks:{
-      }
           label: function(context){
             const total = context.dataset.data.reduce((a,b) => a+b, 0);
             const nilai = context.parsed;
