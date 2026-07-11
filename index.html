@@ -1520,7 +1520,7 @@ function buatChart(){
   document.getElementById('skelKesejahteraan').classList.add('hidden');
   document.getElementById('chartKesejahteraan').classList.remove('hidden');
 
-  new Chart(document.getElementById("chartKesejahteraan"),{
+  window.chartKesejahteraanInstance = new Chart(document.getElementById("chartKesejahteraan"),{
   type:"doughnut",
   data:{
     labels:labelKesejahteraan,
@@ -1577,7 +1577,7 @@ function buatChart(){
   document.getElementById('skelStatusAnak').classList.add('hidden');
   document.getElementById('chartStatusAnak').classList.remove('hidden');
 
-new Chart(document.getElementById("chartStatusAnak"),{
+window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusAnak"),{
 
   type:"doughnut",
 
@@ -1614,6 +1614,19 @@ new Chart(document.getElementById("chartStatusAnak"),{
 
   buatLegend('legendStatusAnak', labelStatusAnak, nilaiStatusAnak, warnaStatusAnak, 14);
 
+}
+    function unduhKesejahteraanGambar(){
+  const desil = { "Desil 1":0,"Desil 2":0,"Desil 3":0,"Desil 4":0,"Desil 5":0,"Desil 6-10":0 };
+  d.forEach(r=>{ let x = String(r[13]).trim(); if(desil.hasOwnProperty(x)) desil[x]++; });
+  const warna = ["#D4D4D4","#B8B8B8","#9B9B9B","#FFBB94","#FF9A6C","#FF7A45"];
+  unduhChartSebagaiGambar("btnUnduhKesejahteraan", window.chartKesejahteraanInstance, "Kesejahteraan Siswa", Object.keys(desil), Object.values(desil), warna, "Siswa", "Kesejahteraan_Siswa.jpg");
+}
+
+function unduhStatusAnakGambar(){
+  let status = {};
+  d.forEach(r=>{ let s = String(r[14]).trim(); if(s=="") s="Tidak Ada"; status[s]=(status[s]||0)+1; });
+  const warna = ["#FF7A45","#9B9B9B"];
+  unduhChartSebagaiGambar("btnUnduhStatusAnak", window.chartStatusAnakInstance, "Status Anak", Object.keys(status), Object.values(status), warna, "Siswa", "Status_Anak.jpg");
 }
 function setNavDisabled(disabled){
 
