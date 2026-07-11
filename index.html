@@ -902,8 +902,6 @@ let modeRentang = false;
         document.getElementById(id + "Spin").classList.add("hidden");
       });
 
-      terapkanTanggalUpdate(json.lastUpdated);
-
       const totalSiswa = d.length;
       const totalLaki = d.filter(r => r[4] && r[4].toUpperCase().includes('L')).length;
       const totalPerempuan = d.filter(r => r[4] && r[4].toUpperCase().includes('P')).length;
@@ -935,8 +933,19 @@ let modeRentang = false;
       console.error(err);
       showToast("Tidak bisa terhubung ke server data", 3000);
     });
-};
 
+  // Dipanggil terpisah, tidak menghalangi tampilan data siswa di atas
+  fetch(`${APPS_SCRIPT_URL}?action=getLastUpdated`)
+    .then(res => res.json())
+    .then(json => {
+      if (!json.error) {
+        terapkanTanggalUpdate(json.lastUpdated);
+      }
+    })
+    .catch(err => {
+      console.error("Gagal ambil tanggal update:", err);
+    });
+};
 function nav(p){
 
   if(
