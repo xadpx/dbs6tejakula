@@ -72,14 +72,16 @@
     }
       .neu-mini-pill{
       background:#eef2f7;
-      border-radius:9999px;
+      border-radius:10px;
       padding:6px 12px;
       box-shadow:
         -3px -3px 7px rgba(255,255,255,.85),
          3px  3px 7px rgba(163,177,198,.3);
       transition:.15s;
+        
     }
-    .neu-mini-pill:active{
+    .neu-mini-pill:active,
+    .neu-mini-pill.pressed{
       box-shadow:
         inset 2px 2px 5px rgba(163,177,198,.35),
         inset -2px -2px 5px rgba(255,255,255,.7);
@@ -2808,6 +2810,20 @@ function animasikanAngkaDanRing(idAngka, idRing, idPersenText, nilaiAkhir, total
   return text;
 
 }
+    (function(){
+  const btn = document.getElementById('btnCopyRekap');
+  if(!btn) return;
+
+  function tekan(){ btn.classList.add('pressed'); }
+  function lepas(){ btn.classList.remove('pressed'); }
+
+  btn.addEventListener('touchstart', tekan, {passive:true});
+  btn.addEventListener('touchend', lepas, {passive:true});
+  btn.addEventListener('touchcancel', lepas, {passive:true});
+  btn.addEventListener('mousedown', tekan);
+  btn.addEventListener('mouseup', lepas);
+  btn.addEventListener('mouseleave', lepas);
+})();
     
   </script>
 </body>
