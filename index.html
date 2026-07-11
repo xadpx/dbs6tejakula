@@ -1591,7 +1591,11 @@ function buatChart(){
           size:12,
           family: "'Plus Jakarta Sans', sans-serif"
         },
-        callbacks:{
+        boxWidth: 8,
+        boxHeight: 8,
+        usePointStyle: true,
+        callbacks:{...}
+      }
           label: function(context){
             const total = context.dataset.data.reduce((a,b) => a+b, 0);
             const nilai = context.parsed;
@@ -1659,7 +1663,11 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
       tooltip:{
         titleFont:{ size:14, family: "'Plus Jakarta Sans', sans-serif", weight: '600' },
         bodyFont:{ size:12, family: "'Plus Jakarta Sans', sans-serif" },
-        callbacks:{
+        boxWidth: 8,
+        boxHeight: 8,
+        usePointStyle: true,
+        callbacks:{...}
+      }
           label: function(context){
             const total = context.dataset.data.reduce((a,b) => a+b, 0);
             const nilai = context.parsed;
