@@ -1709,6 +1709,8 @@ function setNavDisabled(disabled){
     // Legend, 2 kolom
     const yMulaiLegend = paddingAtas + ukuranGambarChart + jarakSetelahChart;
 
+    ctx.textBaseline = "middle";
+
     labels.forEach((label, i) => {
 
       const kolom = i % 2;
