@@ -902,14 +902,8 @@ let modeRentang = false;
       const totalPerempuan = d.filter(r => r[4] && r[4].toUpperCase().includes('P')).length;
 
       animasikanAngka('tot', totalSiswa, 900);
-      animasikanAngka('laki', totalLaki, 900, function(){
-        const persen = totalSiswa > 0 ? Math.round((totalLaki / totalSiswa) * 100) : 0;
-        document.getElementById('persenLaki').textContent = persen + '%';
-      });
-      animasikanAngka('perempuan', totalPerempuan, 900, function(){
-        const persen = totalSiswa > 0 ? Math.round((totalPerempuan / totalSiswa) * 100) : 0;
-        document.getElementById('persenPerempuan').textContent = persen + '%';
-      });
+      animasikanAngkaDanRing('laki', 'ringLaki', 'persenLaki', totalLaki, totalSiswa, 900);
+      animasikanAngkaDanRing('perempuan', 'ringPerempuan', 'persenPerempuan', totalPerempuan, totalSiswa, 900);
 
       const classes = [...new Set(d.map(r => r[2]))].filter(c => c).sort();
       document.getElementById('tabel-body').innerHTML = classes.map(k => {
@@ -2649,6 +2643,36 @@ document.addEventListener("touchend", function(e){
       requestAnimationFrame(langkah);
     }else if(callbackSelesai){
       callbackSelesai();
+    }
+  }
+
+  requestAnimationFrame(langkah);
+}
+    const KELILING_RING = 94.2;
+
+function animasikanAngkaDanRing(idAngka, idRing, idPersenText, nilaiAkhir, totalAkhir, durasi){
+  const elAngka = document.getElementById(idAngka);
+  const elRing = document.getElementById(idRing);
+  const elPersen = document.getElementById(idPersenText);
+  if(!elAngka || !elRing || !elPersen) return;
+
+  const mulai = performance.now();
+  const persenAkhir = totalAkhir > 0 ? Math.round((nilaiAkhir / totalAkhir) * 100) : 0;
+
+  function langkah(sekarang){
+    const progres = Math.min((sekarang - mulai) / durasi, 1);
+    const eased = 1 - Math.pow(1 - progres, 3);
+
+    const nilaiSekarang = Math.round(eased * nilaiAkhir);
+    const persenSekarang = Math.round(eased * persenAkhir);
+    const offset = KELILING_RING - (eased * persenAkhir / 100) * KELILING_RING;
+
+    elAngka.textContent = nilaiSekarang;
+    elPersen.textContent = persenSekarang + '%';
+    elRing.setAttribute('stroke-dashoffset', offset);
+
+    if(progres < 1){
+      requestAnimationFrame(langkah);
     }
   }
 
