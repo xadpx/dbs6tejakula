@@ -2209,41 +2209,54 @@ function jalankanTransisiNav(pTarget){
   }
 
   if(sedangTransisiNav) return;
+  if(!pSekarang) return;
 
   sedangTransisiNav = true;
 
-  const idxSekarang = urutanHalamanSwipe.indexOf(pSekarang);
-  const idxTarget = urutanHalamanSwipe.indexOf(pTarget);
-  const arah = idxTarget > idxSekarang ? -1 : 1;
+  try {
 
-  const currentEl = document.getElementById("p-" + pSekarang);
-  const targetEl = document.getElementById("p-" + pTarget);
+    const idxSekarang = urutanHalamanSwipe.indexOf(pSekarang);
+    const idxTarget = urutanHalamanSwipe.indexOf(pTarget);
+    const arah = idxTarget > idxSekarang ? -1 : 1;
 
-  siapkanElemenSwipe(currentEl);
-  siapkanElemenSwipe(targetEl);
-  targetEl.classList.remove("hidden");
+    const currentEl = document.getElementById("p-" + pSekarang);
+    const targetEl = document.getElementById("p-" + pTarget);
 
-  const lebar = window.innerWidth;
-  targetEl.style.transform = `translateX(${arah === -1 ? lebar : -lebar}px)`;
+    if(!currentEl || !targetEl){
+      sedangTransisiNav = false;
+      return;
+    }
 
-  updateNavAktif(pTarget);
+    siapkanElemenSwipe(currentEl);
+    siapkanElemenSwipe(targetEl);
+    targetEl.classList.remove("hidden");
 
-  requestAnimationFrame(()=>{
+    const lebar = window.innerWidth;
+    targetEl.style.transform = `translateX(${arah === -1 ? lebar : -lebar}px)`;
+
+    updateNavAktif(pTarget);
+
     requestAnimationFrame(()=>{
-      currentEl.style.transition = "transform .28s ease";
-      targetEl.style.transition = "transform .28s ease";
+      requestAnimationFrame(()=>{
+        currentEl.style.transition = "transform .28s ease";
+        targetEl.style.transition = "transform .28s ease";
 
-      currentEl.style.transform = `translateX(${arah === -1 ? -lebar : lebar}px)`;
-      targetEl.style.transform = `translateX(0px)`;
+        currentEl.style.transform = `translateX(${arah === -1 ? -lebar : lebar}px)`;
+        targetEl.style.transform = `translateX(0px)`;
+      });
     });
-  });
 
-  setTimeout(function(){
-    bersihkanElemenSwipe(currentEl);
-    bersihkanElemenSwipe(targetEl);
-    selesaikanSwipeKeHalaman(pTarget);
+    setTimeout(function(){
+      bersihkanElemenSwipe(currentEl);
+      bersihkanElemenSwipe(targetEl);
+      selesaikanSwipeKeHalaman(pTarget);
+      sedangTransisiNav = false;
+    }, 300);
+
+  } catch(err) {
+    console.error("Error saat transisi nav:", err);
     sedangTransisiNav = false;
-  }, 300);
+  }
 
 }
 function modalSedangTerbuka(){
