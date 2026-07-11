@@ -221,15 +221,15 @@ class="skeleton text-[21px] font-bold tracking-tight tabular-nums text-gray-900 
           <p class="text-xs font-semibold text-gray-600 mb-1 flex items-center gap-1">
     LAKI-LAKI
 </p>
-          <p id="laki" class="skeleton text-[21px] font-bold tracking-tight tabular-nums text-gray-900 inline-block min-w-[36px] leading-6">
-0
+          <p id="laki" class="skeleton text-[21px] font-bold tracking-tight tabular-nums text-gray-900 inline-block min-w-[36px] leading-6">0</p>
+          <p id="persenLaki" class="text-[11px] font-bold text-[#FF7A45] mt-0.5"></p>
         </div>
         <div class="bg-white p-5 rounded-[24px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
           <p class="text-xs font-semibold text-gray-600 mb-1 flex items-center gap-1">
     PEREMPUAN
 </p>
-          <p id="perempuan" class="skeleton text-[21px] font-bold tracking-tight tabular-nums text-gray-900 inline-block min-w-[36px] leading-6">
-0
+          <p id="perempuan" class="skeleton text-[21px] font-bold tracking-tight tabular-nums text-gray-900 inline-block min-w-[36px] leading-6">0</p>
+          <p id="persenPerempuan" class="text-[11px] font-bold text-[#9B7EDE] mt-0.5"></p>
         </div>
       </div>
       <p id="lastUpdated" class="text-[10px] text-gray-400 leading-tight ml-5 mt-[-4px]"></p>
@@ -872,11 +872,19 @@ let modeRentang = false;
 
       terapkanTanggalUpdate(json.lastUpdated);
 
-      document.getElementById('tot').innerText = d.length;
-      document.getElementById('laki').innerText =
-        d.filter(r => r[4] && r[4].toUpperCase().includes('L')).length;
-      document.getElementById('perempuan').innerText =
-        d.filter(r => r[4] && r[4].toUpperCase().includes('P')).length;
+      const totalSiswa = d.length;
+      const totalLaki = d.filter(r => r[4] && r[4].toUpperCase().includes('L')).length;
+      const totalPerempuan = d.filter(r => r[4] && r[4].toUpperCase().includes('P')).length;
+
+      animasikanAngka('tot', totalSiswa, 900);
+      animasikanAngka('laki', totalLaki, 900, function(){
+        const persen = totalSiswa > 0 ? Math.round((totalLaki / totalSiswa) * 100) : 0;
+        document.getElementById('persenLaki').textContent = persen + '%';
+      });
+      animasikanAngka('perempuan', totalPerempuan, 900, function(){
+        const persen = totalSiswa > 0 ? Math.round((totalPerempuan / totalSiswa) * 100) : 0;
+        document.getElementById('persenPerempuan').textContent = persen + '%';
+      });
 
       const classes = [...new Set(d.map(r => r[2]))].filter(c => c).sort();
       document.getElementById('tabel-body').innerHTML = classes.map(k => {
@@ -1561,6 +1569,14 @@ function buatChart(){
         },
         bodyFont:{
           size:12
+        },
+        callbacks:{
+          label: function(context){
+            const total = context.dataset.data.reduce((a,b) => a+b, 0);
+            const nilai = context.parsed;
+            const persen = total > 0 ? Math.round((nilai / total) * 100) : 0;
+            return context.label + ': ' + persen + '%';
+          }
         }
       }
     }
@@ -1620,7 +1636,15 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
 
       tooltip:{
         titleFont:{ size:14 },
-        bodyFont:{ size:12 }
+        bodyFont:{ size:12 },
+        callbacks:{
+          label: function(context){
+            const total = context.dataset.data.reduce((a,b) => a+b, 0);
+            const nilai = context.parsed;
+            const persen = total > 0 ? Math.round((nilai / total) * 100) : 0;
+            return context.label + ': ' + persen + '%';
+          }
+        }
       }
     }
   }
@@ -2583,6 +2607,26 @@ document.addEventListener("touchend", function(e){
   }
 
 }, {passive:true});
+    function animasikanAngka(id, nilaiAkhir, durasi, callbackSelesai){
+  const el = document.getElementById(id);
+  if(!el) return;
+  const mulai = performance.now();
+
+  function langkah(sekarang){
+    const progres = Math.min((sekarang - mulai) / durasi, 1);
+    const easedProgres = 1 - Math.pow(1 - progres, 3);
+    const nilaiSekarang = Math.round(easedProgres * nilaiAkhir);
+    el.textContent = nilaiSekarang;
+
+    if(progres < 1){
+      requestAnimationFrame(langkah);
+    }else if(callbackSelesai){
+      callbackSelesai();
+    }
+  }
+
+  requestAnimationFrame(langkah);
+}
   </script>
 </body>
 </html>
