@@ -1685,9 +1685,26 @@ function setNavDisabled(disabled){
     ctx.textBaseline = "middle";
     ctx.fillText(judul, margin, 32);
 
-    // Gambar donut chart (diambil dari canvas Chart.js asli)
+    // Gambar donut chart (diambil dari canvas Chart.js asli) dengan smoothing halus
     const xChart = (LEBAR - ukuranGambarChart) / 2;
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
     ctx.drawImage(chartCanvas, xChart, paddingAtas, ukuranGambarChart, ukuranGambarChart);
+
+    // Gambar ulang angka total + label di tengah donut (karena aslinya elemen HTML terpisah, bukan bagian canvas)
+    const totalSemua = values.reduce((a,b) => a + b, 0);
+    const tengahX = xChart + ukuranGambarChart / 2;
+    const tengahY = paddingAtas + ukuranGambarChart / 2;
+
+    ctx.fillStyle = "#111827";
+    ctx.font = "800 24px 'Plus Jakarta Sans', sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "alphabetic";
+    ctx.fillText(String(totalSemua), tengahX, tengahY - 2);
+
+    ctx.fillStyle = "#6b7280";
+    ctx.font = "500 13px 'Plus Jakarta Sans', sans-serif";
+    ctx.fillText(totalLabel, tengahX, tengahY + 18);
 
     // Legend, 2 kolom
     const yMulaiLegend = paddingAtas + ukuranGambarChart + jarakSetelahChart;
