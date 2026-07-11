@@ -1768,14 +1768,14 @@ function roundRect(ctx, x, y, w, h, r){
   ctx.closePath();
 }
 function tampilkanSiswaKategori(kolom, label){
+  ...
+  document.getElementById('list-kategori').scrollTop = 0;
 
-  let hasil;
+  document.getElementById('modalKategori').classList.remove('hidden');
+  setNavDisabled(true);
+  kunciScroll(true);
 
-  if(label === "Tidak Ada"){
-    hasil = d.filter(r => String(r[kolom]).trim() === "");
-  }else{
-    hasil = d.filter(r => String(r[kolom]).trim() === label);
-  }
+}
 
   hasil.sort((a,b) => String(a[1]).localeCompare(String(b[1]), "id", {sensitivity:"base"}));
 
