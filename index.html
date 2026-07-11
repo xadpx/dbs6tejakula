@@ -1623,7 +1623,7 @@ function setNavDisabled(disabled){
   }
 
 }
-    function unduhChartGambar(idCard, idTombol, namaFile){
+   async function unduhChartGambar(idCard, idTombol, namaFile){
 
   const tombol = document.getElementById(idTombol);
   tombol.classList.add("sedang-unduh");
@@ -1631,27 +1631,32 @@ function setNavDisabled(disabled){
 
   const cardEl = document.getElementById(idCard);
 
-  html2canvas(cardEl, {
-    backgroundColor: "#ffffff",
-    scale: 2,
-    ignoreElements: (el) => el.id === idTombol
-  }).then(canvas => {
+  try {
+
+    // Pastikan font web (Plus Jakarta Sans) sudah benar-benar selesai dimuat,
+    // supaya html2canvas tidak salah hitung tinggi teks dan memotong huruf
+    if (document.fonts && document.fonts.ready) {
+      await document.fonts.ready;
+    }
+
+    const canvas = await html2canvas(cardEl, {
+      backgroundColor: "#ffffff",
+      scale: 2,
+      ignoreElements: (el) => el.id === idTombol
+    });
 
     const link = document.createElement("a");
     link.download = namaFile;
     link.href = canvas.toDataURL("image/jpeg", 0.95);
     link.click();
 
-    tombol.classList.remove("sedang-unduh");
-    tombol.textContent = "Unduh";
-
-  }).catch(err => {
+  } catch(err) {
     console.error(err);
     showToast("Gagal mengunduh gambar chart", 3000);
-
+  } finally {
     tombol.classList.remove("sedang-unduh");
     tombol.textContent = "Unduh";
-  });
+  }
 
 }
 function tampilkanSiswaKategori(kolom, label){
