@@ -312,7 +312,7 @@ Salin
 
   </div>
 
-  <table class="w-full text-sm">
+  <table id="tabelRombel" class="w-full text-sm hidden">
         <thead>
   <tr class="bg-gray-100 text-gray-900">
 
@@ -335,26 +335,11 @@ Salin
   </tr>
 </thead>
         <tbody id="tabel-body" class="text-center text-gray-700">
-          <tr class="border-b border-gray-200">
-            <td class="p-3"><span class="skeleton inline-block h-4 w-16"></span></td>
-            <td class="p-3"><span class="skeleton inline-block h-4 w-6"></span></td>
-            <td class="p-3"><span class="skeleton inline-block h-4 w-6"></span></td>
-            <td class="p-3"><span class="skeleton inline-block h-4 w-6"></span></td>
-          </tr>
-          <tr class="border-b border-gray-200">
-            <td class="p-3"><span class="skeleton inline-block h-4 w-16"></span></td>
-            <td class="p-3"><span class="skeleton inline-block h-4 w-6"></span></td>
-            <td class="p-3"><span class="skeleton inline-block h-4 w-6"></span></td>
-            <td class="p-3"><span class="skeleton inline-block h-4 w-6"></span></td>
-          </tr>
-          <tr>
-            <td class="p-3"><span class="skeleton inline-block h-4 w-16"></span></td>
-            <td class="p-3"><span class="skeleton inline-block h-4 w-6"></span></td>
-            <td class="p-3"><span class="skeleton inline-block h-4 w-6"></span></td>
-            <td class="p-3"><span class="skeleton inline-block h-4 w-6"></span></td>
-          </tr>
         </tbody>
       </table>
+      <div id="tabelRombelSpin" class="flex justify-center py-6">
+        <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
+      </div>
     </div>
     <div class="grid md:grid-cols-2 gap-4 mt-5">
 
@@ -940,6 +925,9 @@ let modeRentang = false;
   <td class="font-semibold">${L + P}</td>
 </tr>`;
       }).join('');
+
+      document.getElementById('tabelRombelSpin').classList.add('hidden');
+      document.getElementById('tabelRombel').classList.remove('hidden');
 
       buatChart();
     })
