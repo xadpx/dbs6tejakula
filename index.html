@@ -321,7 +321,7 @@ Salin
       </h2>
       <div
         id="btnUnduhKesejahteraan"
-        onclick="unduhChartGambar('cardKesejahteraan', 'btnUnduhKesejahteraan', 'Kesejahteraan_Siswa.jpg')"
+        onclick="unduhKesejahteraanGambar()"
         class="btn-unduh-chart-icon">
         <span class="material-symbols-rounded">download</span>
       </div>
@@ -353,7 +353,7 @@ Salin
       </h2>
       <div
         id="btnUnduhStatusAnak"
-        onclick="unduhChartGambar('cardStatusAnak', 'btnUnduhStatusAnak', 'Status_Anak.jpg')"
+        onclick="unduhStatusAnakGambar()"
         class="btn-unduh-chart-icon">
         <span class="material-symbols-rounded">download</span>
       </div>
@@ -1630,28 +1630,84 @@ function setNavDisabled(disabled){
   }
 
 }
-   async function unduhChartGambar(idCard, idTombol, namaFile){
+   function unduhChartSebagaiGambar(idTombol, chartInstance, judul, labels, values, colors, totalLabel, namaFile){
 
   const tombol = document.getElementById(idTombol);
   tombol.classList.add("sedang-unduh");
 
-  const cardEl = document.getElementById(idCard);
-
   try {
 
-    if (document.fonts && document.fonts.ready) {
-      await document.fonts.ready;
-    }
+    const chartCanvas = chartInstance.canvas;
+    const ukuranChart = 500;
+    const tinggiPerBaris = 56;
+    const jumlahBaris = Math.ceil(labels.length / 2);
+    const tinggiLegend = jumlahBaris * tinggiPerBaris + 24;
+    const paddingAtas = 70;
 
-    const canvas = await html2canvas(cardEl, {
-      backgroundColor: "#ffffff",
-      scale: 2,
-      ignoreElements: (el) => el.id === idTombol
+    const canvasAkhir = document.createElement("canvas");
+    const skala = 2;
+    canvasAkhir.width = (500) * skala;
+    canvasAkhir.height = (paddingAtas + ukuranChart + tinggiLegend + 30) * skala;
+
+    const ctx = canvasAkhir.getContext("2d");
+    ctx.scale(skala, skala);
+
+    // Latar putih
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, 500, paddingAtas + ukuranChart + tinggiLegend + 30);
+
+    // Judul
+    ctx.fillStyle = "#1f2937";
+    ctx.font = "700 20px 'Plus Jakarta Sans', sans-serif";
+    ctx.textBaseline = "middle";
+    ctx.fillText(judul, 24, 40);
+
+    // Gambar donut chart (diambil dari canvas Chart.js asli)
+    const ukuranGambarChart = 380;
+    const xChart = (500 - ukuranGambarChart) / 2;
+    ctx.drawImage(chartCanvas, xChart, paddingAtas, ukuranGambarChart, ukuranGambarChart);
+
+    // Legend, 2 kolom
+    const yMulaiLegend = paddingAtas + ukuranGambarChart + 24;
+    const lebarKolom = 236;
+    const jarakKolom = 16;
+
+    labels.forEach((label, i) => {
+
+      const kolom = i % 2;
+      const baris = Math.floor(i / 2);
+
+      const x = 24 + kolom * (lebarKolom + jarakKolom);
+      const y = yMulaiLegend + baris * tinggiPerBaris;
+
+      // Kotak latar abu
+      ctx.fillStyle = "#f9fafb";
+      roundRect(ctx, x, y, lebarKolom, 44, 12);
+      ctx.fill();
+
+      // Titik warna
+      ctx.fillStyle = colors[i];
+      ctx.beginPath();
+      ctx.arc(x + 20, y + 22, 5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Label
+      ctx.fillStyle = "#4b5563";
+      ctx.font = "500 14px 'Plus Jakarta Sans', sans-serif";
+      ctx.textAlign = "left";
+      ctx.fillText(label, x + 36, y + 22);
+
+      // Angka
+      ctx.fillStyle = "#111827";
+      ctx.font = "700 14px 'Plus Jakarta Sans', sans-serif";
+      ctx.textAlign = "right";
+      ctx.fillText(String(values[i]), x + lebarKolom - 14, y + 22);
+
     });
 
     const link = document.createElement("a");
     link.download = namaFile;
-    link.href = canvas.toDataURL("image/jpeg", 0.95);
+    link.href = canvasAkhir.toDataURL("image/jpeg", 0.95);
     link.click();
 
   } catch(err) {
@@ -1661,6 +1717,16 @@ function setNavDisabled(disabled){
     tombol.classList.remove("sedang-unduh");
   }
 
+}
+
+function roundRect(ctx, x, y, w, h, r){
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
 }
 function tampilkanSiswaKategori(kolom, label){
 
