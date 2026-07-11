@@ -31,7 +31,7 @@
   max-width: 100vw;
   touch-action: pan-y;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  background: #F7EEE3;
+  background: #eef2f7;
 }
     #app-scroll, #p-home, #p-siswa, #p-download {
       width: 100%;
@@ -149,9 +149,11 @@
       100%{ background-position: 0 50%; }
     }
         .nav-active .nav-icon-wrap{
-      background:#FF7A45;
-      box-shadow:0 6px 14px rgba(255,122,69,0.4);
-    }
+  background: rgba(255,122,69,0.10);
+  box-shadow:
+    inset -4px -4px 8px rgba(255,255,255,.7),
+    inset  4px  4px 8px rgba(163,177,198,.5);
+}
       .btn-unduh-chart-icon{
       width: 28px;
       height: 28px;
@@ -222,7 +224,7 @@
 
   </div>
     <div class="grid grid-cols-1 gap-3 mb-3">
-      <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+      <div class="neu-card p-5">
         <p class="text-xs font-semibold text-gray-600 mb-1 flex items-center gap-1">
   <span class="material-symbols-rounded text-[15px]">
     school
@@ -235,7 +237,7 @@
         </div>
       </div>
       <div class="grid grid-cols-2 gap-3">
-  <div class="bg-white p-5 rounded-[24px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+  <div class="neu-card p-5">
     <div class="flex items-start justify-between">
       <div>
         <p class="text-xs font-semibold text-gray-600 mb-1 flex items-center gap-1">
@@ -257,7 +259,7 @@
       </div>
     </div>
   </div>
-  <div class="bg-white p-5 rounded-[24px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+  <div class="neu-card p-5">
     <div class="flex items-start justify-between">
       <div>
         <p class="text-xs font-semibold text-gray-600 mb-1 flex items-center gap-1">
@@ -282,7 +284,7 @@
 </div>
       <p id="lastUpdated" class="text-[10px] text-gray-400 leading-tight ml-5 mt-[-3px]"></p>
     </div>
-    <div class="bg-white p-5 rounded-[24px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+    <div class="neu-card p-5">
 
   <div class="flex justify-between items-center mb-3">
 
@@ -434,7 +436,7 @@ Salin
           id="srch"
           onkeyup="filterSiswa()"
           placeholder="Cari Nama/NIK/NISN"
-          class="w-full h-[44px] pl-[42px] pr-10 bg-white rounded-full border border-gray-100 shadow-[0_4px_16px_rgba(15,23,42,0.06)] text-sm outline-none">
+          class="neu-search w-full h-[44px] pl-[42px] pr-10 rounded-full text-sm outline-none">
 
         <span
           id="btnHapusSrch"
@@ -636,7 +638,7 @@ class="w-24 min-w-[96px] h-9 rounded-xl border border-gray-300 px-2 text-sm">
 <button
 id="btnUnduh"
 onclick="bukaPINUnduh()"
-class="mt-4 w-full h-[46px] bg-white border border-gray-200 rounded-2xl flex items-center justify-center gap-2 text-gray-900 text-sm font-semibold transition-colors duration-150 active:bg-gray-100 shadow-[0_2px_8px_rgba(15,23,42,0.05)]">
+class="neu-btn mt-4 w-full h-[46px] flex items-center justify-center gap-2 text-gray-900 text-sm font-semibold">
 
 <span class="material-symbols-rounded text-[#FF7A45] text-[19px]">
 download
@@ -766,9 +768,8 @@ class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center ite
 bottom-3
 left-4
 right-4
-bg-white
+neu-nav
 rounded-[26px]
-shadow-[0_10px_30px_rgba(0,0,0,0.12)]
 flex justify-around items-center
 h-[62px]
 px-3
@@ -2390,7 +2391,7 @@ function updateNavAktif(p){
     if(id===p){
       btn.classList.remove("nav-inactive");
       btn.classList.add("nav-active");
-      iconWrap.style.color="#FFFFFF";
+      iconWrap.style.color="#FF7A45";
       label.style.color="#FF7A45";
     }else{
       btn.classList.remove("nav-active");
@@ -2733,6 +2734,51 @@ function animasikanAngkaDanRing(idAngka, idRing, idPersenText, nilaiAkhir, total
   return text;
 
 }
+    .neu-bg{ background:#eef2f7; }
+    .neu-card{
+      background:#eef2f7;
+      border-radius:24px;
+      box-shadow:
+        -8px -8px 16px rgba(255,255,255,.9),
+         8px  8px 16px rgba(163,177,198,.45);
+    }
+    .neu-btn{
+      background:#eef2f7;
+      border-radius:20px;
+      box-shadow:
+        -8px -8px 16px rgba(255,255,255,.9),
+         8px  8px 16px rgba(163,177,198,.45);
+      transition: box-shadow .12s ease;
+    }
+    .neu-btn:active{
+      box-shadow:
+        inset -6px -6px 12px rgba(255,255,255,.8),
+        inset  6px  6px 12px rgba(163,177,198,.45);
+    }
+    .neu-nav{
+      background:#eef2f7;
+      box-shadow:
+        -8px -8px 16px rgba(255,255,255,.9),
+         8px  8px 16px rgba(163,177,198,.45);
+    }
+    .neu-search{
+      background:#eef2f7;
+      box-shadow:
+        inset 1px 1px 2px rgba(163,177,198,.18),
+        inset -1px -1px 2px rgba(255,255,255,.5);
+    }
+    .neu-search-icon{
+      background:#eef2f7;
+      box-shadow:
+        inset 1px 1px 2px rgba(163,177,198,.18),
+        inset -1px -1px 2px rgba(255,255,255,.5);
+    }
+    .neu-dropdown{
+      background:#eef2f7;
+      box-shadow:
+        -4px -4px 9px rgba(255,255,255,.8),
+         4px  4px 9px rgba(163,177,198,.35);
+    }
   </script>
 </body>
 </html>
