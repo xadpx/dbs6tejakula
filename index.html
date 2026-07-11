@@ -42,19 +42,22 @@
     .kategori{
       appearance:none;
       -webkit-appearance:none;
-      width:18px;
-      height:18px;
-      border:2px solid #8E8E93;
-      border-radius:6px;
-      background:#fff;
+      width:20px;
+      height:20px;
+      border: 1px solid rgba(140,152,175,.15);
+      border-radius:7px;
+      background:#e2e8f0;
+      box-shadow:
+        inset 0.5px 0.5px 2px rgba(140,152,175,.2),
+        inset -0.5px -0.5px 2px rgba(255,255,255,.5);
       cursor:pointer;
       transition:.15s;
       position:relative;
       flex-shrink:0;
     }
     .kategori:checked{
-      background:#FF7A45;
-      border-color:#FF7A45;
+      background:#e2e8f0;
+      border-color: rgba(140,152,175,.15);
     }
     .kategori:checked::after{
       content:"";
@@ -64,8 +67,27 @@
       width:9px;
       height:6px;
       transform:translate(-50%,-73%) rotate(-45deg);
-      border-left:2px solid #fff;
-      border-bottom:2px solid #fff;
+      border-left:2px solid #FF7A45;
+      border-bottom:2px solid #FF7A45;
+    }
+      .toggle-track{
+      background:#e2e8f0 !important;
+      border: 1px solid rgba(140,152,175,.15) !important;
+      box-shadow:
+        inset 0.5px 0.5px 2px rgba(140,152,175,.2),
+        inset -0.5px -0.5px 2px rgba(255,255,255,.5) !important;
+    }
+    .toggle-track.on{
+      background: rgba(255,122,69,0.15) !important;
+    }
+    .toggle-knob-neu{
+      background:#eef2f7 !important;
+      box-shadow:
+        -2px -2px 4px rgba(255,255,255,.8),
+         2px  2px 4px rgba(163,177,198,.35) !important;
+    }
+    .toggle-knob-neu.on{
+      background: linear-gradient(160deg,#FF9A6C,#FF7A45) !important;
     }
     #p-siswa{
       overflow-x:hidden;
@@ -543,21 +565,16 @@ class="neu-dropdown w-full mt-2 h-10 pl-4 pr-10 rounded-xl text-sm outline-none"
   <div
   id="switchRentang"
   onclick="toggleRentang()"
-  class="relative w-[36px] h-[20px]
+  class="toggle-track relative w-[36px] h-[20px]
          rounded-full
-         bg-[#D1D1D6]
-         border border-[#C7C7CC]
-         shadow-[inset_0_1px_2px_rgba(0,0,0,0.08)]
          transition-all duration-200
          cursor-pointer">
 
   <div
     id="switchBulat"
-    class="absolute top-[1px] left-[1px]
+    class="toggle-knob-neu absolute top-[1px] left-[1px]
            w-[16px] h-[16px]
            rounded-full
-           bg-white
-           shadow-[0_1px_3px_rgba(0,0,0,0.28)]
            transition-all duration-200">
   </div>
 
@@ -2259,13 +2276,10 @@ function toggleRentang(){
 
   if(modeRentang){
 
-    sw.classList.remove("bg-[#D1D1D6]");
-sw.classList.remove("border-[#C7C7CC]");
+    sw.classList.add("on");
+    bulat.classList.add("on");
 
-sw.classList.add("bg-[#FF7A45]");
-sw.classList.add("border-[#FF7A45]");
-
-bulat.style.transform = "translateX(16px)";
+    bulat.style.transform = "translateX(16px)";
 
     dropdown.classList.add("hidden");
     rentang.classList.remove("hidden");
@@ -2274,13 +2288,10 @@ bulat.style.transform = "translateX(16px)";
 
   }else{
 
-    sw.classList.remove("bg-[#FF7A45]");
-sw.classList.remove("border-[#FF7A45]");
+    sw.classList.remove("on");
+    bulat.classList.remove("on");
 
-sw.classList.add("bg-[#D1D1D6]");
-sw.classList.add("border-[#C7C7CC]");
-
-bulat.style.transform = "translateX(0)";
+    bulat.style.transform = "translateX(0)";
 
     dropdown.classList.remove("hidden");
     rentang.classList.add("hidden");
