@@ -217,21 +217,46 @@ class="skeleton text-[21px] font-bold tracking-tight tabular-nums text-gray-900 
 </p>
       </div>
       <div class="grid grid-cols-2 gap-3">
-  <div class="bg-white p-5 rounded-[24px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)] flex flex-col justify-center">
-    <p class="text-xs font-semibold text-gray-600 mb-1 flex items-center gap-1">
-      LAKI-LAKI
-    </p>
-    <p id="laki" class="skeleton text-[21px] font-bold tracking-tight tabular-nums text-gray-900 inline-block min-w-[36px] leading-6">0</p>
-    <p id="persenLaki" class="text-[11px] font-bold text-[#FF7A45] mt-0.5"></p>
+  <div class="bg-white p-5 rounded-[24px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+    <div class="flex items-start justify-between">
+      <div>
+        <p class="text-xs font-semibold text-gray-600 mb-1 flex items-center gap-1">
+          LAKI-LAKI
+        </p>
+        <p id="laki" class="skeleton text-[21px] font-bold tracking-tight tabular-nums text-gray-900 inline-block min-w-[36px] leading-6">0</p>
+      </div>
+      <div class="relative w-9 h-9 shrink-0">
+        <svg width="36" height="36">
+          <circle cx="18" cy="18" r="15" fill="none" stroke="#f3f4f6" stroke-width="4"/>
+          <circle id="ringLaki" cx="18" cy="18" r="15" fill="none" stroke="#FF7A45" stroke-width="4"
+            stroke-dasharray="94.2" stroke-dashoffset="94.2" stroke-linecap="round"
+            style="transform: rotate(-90deg); transform-origin: center;"/>
+        </svg>
+        <div id="persenLaki" class="absolute inset-0 flex items-center justify-center text-[9px] font-extrabold text-[#FF7A45]">0%</div>
+      </div>
+    </div>
   </div>
-  <div class="bg-white p-5 rounded-[24px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)] flex flex-col justify-center">
-    <p class="text-xs font-semibold text-gray-600 mb-1 flex items-center gap-1">
-      PEREMPUAN
-    </p>
-    <p id="perempuan" class="skeleton text-[21px] font-bold tracking-tight tabular-nums text-gray-900 inline-block min-w-[36px] leading-6">0</p>
-    <p id="persenPerempuan" class="text-[11px] font-bold text-[#9B7EDE] mt-0.5"></p>
+  <div class="bg-white p-5 rounded-[24px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+    <div class="flex items-start justify-between">
+      <div>
+        <p class="text-xs font-semibold text-gray-600 mb-1 flex items-center gap-1">
+          PEREMPUAN
+        </p>
+        <p id="perempuan" class="skeleton text-[21px] font-bold tracking-tight tabular-nums text-gray-900 inline-block min-w-[36px] leading-6">0</p>
+      </div>
+      <div class="relative w-9 h-9 shrink-0">
+        <svg width="36" height="36">
+          <circle cx="18" cy="18" r="15" fill="none" stroke="#f3f4f6" stroke-width="4"/>
+          <circle id="ringPerempuan" cx="18" cy="18" r="15" fill="none" stroke="#9B7EDE" stroke-width="4"
+            stroke-dasharray="94.2" stroke-dashoffset="94.2" stroke-linecap="round"
+            style="transform: rotate(-90deg); transform-origin: center;"/>
+        </svg>
+        <div id="persenPerempuan" class="absolute inset-0 flex items-center justify-center text-[9px] font-extrabold text-[#9B7EDE]">0%</div>
+      </div>
+    </div>
   </div>
-</div>      </div>
+</div>      
+    </div>
       <p id="lastUpdated" class="text-[10px] text-gray-400 leading-tight ml-5 mt-[-19px]"></p>
     </div>
     <div class="bg-white p-5 rounded-[24px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
