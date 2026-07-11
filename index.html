@@ -1288,15 +1288,7 @@ function showDetailByNIK(nik){
     }
     async function copyRekap(){
 
-  let text = "REKAP DATA PER KELAS\n\n";
-
-  document.querySelectorAll("#tabel-body tr").forEach(tr=>{
-
-    let td = tr.querySelectorAll("td");
-
-    text += `${td[0].innerText} : ${td[1].innerText} L | ${td[2].innerText} P | ${td[3].innerText} Siswa\n`;
-
-  });
+  let text = buatTeksRekap();
 
   try{
 
@@ -2709,6 +2701,37 @@ function animasikanAngkaDanRing(idAngka, idRing, idPersenText, nilaiAkhir, total
   }
 
   requestAnimationFrame(langkah);
+}
+    function buatTeksRekap(){
+
+  const sekarang = new Date();
+  const dd = String(sekarang.getDate()).padStart(2,'0');
+  const mm = String(sekarang.getMonth()+1).padStart(2,'0');
+  const yyyy = sekarang.getFullYear();
+  const tanggalHariIni = `${dd}/${mm}/${yyyy}`;
+
+  let text = `Rekap Data per Kelas\nSD Negeri 6 Tejakula\nPer ${tanggalHariIni}\n\n`;
+
+  let totalSiswa = 0;
+
+  document.querySelectorAll("#tabel-body tr").forEach(tr=>{
+
+    let td = tr.querySelectorAll("td");
+    const namaKelas = td[0].innerText;
+    const L = td[1].innerText;
+    const P = td[2].innerText;
+    const Jumlah = td[3].innerText;
+
+    totalSiswa += parseInt(Jumlah) || 0;
+
+    text += `*${namaKelas}*\nLaki-laki = ${L}\nPerempuan = ${P}\nJumlah = ${Jumlah}\n\n`;
+
+  });
+
+  text += `Total: ${totalSiswa} siswa`;
+
+  return text;
+
 }
   </script>
 </body>
