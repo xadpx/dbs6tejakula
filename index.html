@@ -199,6 +199,51 @@
 #p-download.hidden {
   pointer-events: none !important;
 }
+    .neu-bg{ background:#eef2f7; }
+    .neu-card{
+      background:#eef2f7;
+      border-radius:24px;
+      box-shadow:
+        -8px -8px 16px rgba(255,255,255,.9),
+         8px  8px 16px rgba(163,177,198,.45);
+    }
+    .neu-btn{
+      background:#eef2f7;
+      border-radius:20px;
+      box-shadow:
+        -8px -8px 16px rgba(255,255,255,.9),
+         8px  8px 16px rgba(163,177,198,.45);
+      transition: box-shadow .12s ease;
+    }
+    .neu-btn:active{
+      box-shadow:
+        inset -6px -6px 12px rgba(255,255,255,.8),
+        inset  6px  6px 12px rgba(163,177,198,.45);
+    }
+    .neu-nav{
+      background:#eef2f7;
+      box-shadow:
+        -8px -8px 16px rgba(255,255,255,.9),
+         8px  8px 16px rgba(163,177,198,.45);
+    }
+    .neu-search{
+      background:#eef2f7;
+      box-shadow:
+        inset 1px 1px 2px rgba(163,177,198,.18),
+        inset -1px -1px 2px rgba(255,255,255,.5);
+    }
+    .neu-search-icon{
+      background:#eef2f7;
+      box-shadow:
+        inset 1px 1px 2px rgba(163,177,198,.18),
+        inset -1px -1px 2px rgba(255,255,255,.5);
+    }
+    .neu-dropdown{
+      background:#eef2f7;
+      box-shadow:
+        -4px -4px 9px rgba(255,255,255,.8),
+         4px  4px 9px rgba(163,177,198,.35);
+    }
   </style>
 </head>
 <body class="bg-gray-50 text-base">
@@ -2734,51 +2779,7 @@ function animasikanAngkaDanRing(idAngka, idRing, idPersenText, nilaiAkhir, total
   return text;
 
 }
-    neu-bg{ background:#eef2f7; }
-    neu-card{
-      background:#eef2f7;
-      border-radius:24px;
-      box-shadow:
-        -8px -8px 16px rgba(255,255,255,.9),
-         8px  8px 16px rgba(163,177,198,.45);
-    }
-    neu-btn{
-      background:#eef2f7;
-      border-radius:20px;
-      box-shadow:
-        -8px -8px 16px rgba(255,255,255,.9),
-         8px  8px 16px rgba(163,177,198,.45);
-      transition: box-shadow .12s ease;
-    }
-    neu-btn:active{
-      box-shadow:
-        inset -6px -6px 12px rgba(255,255,255,.8),
-        inset  6px  6px 12px rgba(163,177,198,.45);
-    }
-    neu-nav{
-      background:#eef2f7;
-      box-shadow:
-        -8px -8px 16px rgba(255,255,255,.9),
-         8px  8px 16px rgba(163,177,198,.45);
-    }
-    neu-search{
-      background:#eef2f7;
-      box-shadow:
-        inset 1px 1px 2px rgba(163,177,198,.18),
-        inset -1px -1px 2px rgba(255,255,255,.5);
-    }
-    neu-search-icon{
-      background:#eef2f7;
-      box-shadow:
-        inset 1px 1px 2px rgba(163,177,198,.18),
-        inset -1px -1px 2px rgba(255,255,255,.5);
-    }
-    neu-dropdown{
-      background:#eef2f7;
-      box-shadow:
-        -4px -4px 9px rgba(255,255,255,.8),
-         4px  4px 9px rgba(163,177,198,.35);
-    }
+    
   </script>
 </body>
 </html>
