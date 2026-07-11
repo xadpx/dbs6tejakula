@@ -256,7 +256,7 @@ class="skeleton text-[21px] font-bold tracking-tight tabular-nums text-gray-900 
     </div>
   </div> 
 </div>
-      <p id="lastUpdated" class="text-[10px] text-gray-400 leading-tight ml-5 mt-[-2px]"></p>
+      <p id="lastUpdated" class="text-[10px] text-gray-400 leading-tight ml-5 mt-[-3px]"></p>
     </div>
     <div class="bg-white p-5 rounded-[24px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
 
@@ -1583,10 +1583,13 @@ function buatChart(){
       },
       tooltip:{
         titleFont:{
-          size:14
+          size:14,
+          family: "'Plus Jakarta Sans', sans-serif",
+          weight: '600'
         },
         bodyFont:{
-          size:12
+          size:12,
+          family: "'Plus Jakarta Sans', sans-serif"
         },
         callbacks:{
           label: function(context){
@@ -1654,8 +1657,8 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
       },
 
       tooltip:{
-        titleFont:{ size:14 },
-        bodyFont:{ size:12 },
+        titleFont:{ size:14, family: "'Plus Jakarta Sans', sans-serif", weight: '600' },
+        bodyFont:{ size:12, family: "'Plus Jakarta Sans', sans-serif" },
         callbacks:{
           label: function(context){
             const total = context.dataset.data.reduce((a,b) => a+b, 0);
