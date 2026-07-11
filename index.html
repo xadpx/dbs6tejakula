@@ -114,11 +114,22 @@
       line-height:1;
     }
     .skeleton{
-      background: linear-gradient(90deg, #e9e9e9 25%, #f4f4f4 37%, #e9e9e9 63%);
-      background-size: 400% 100%;
-      animation: skeleton-loading 1.4s ease infinite;
+      background: #ececec;
       border-radius: 8px;
       color: transparent !important;
+    }
+      .spinner-ring-gray{
+      width: 20px;
+      height: 20px;
+      border-radius: 9999px;
+      background: conic-gradient(from 0deg, transparent 0%, #9CA3AF 100%);
+      -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+      mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+      animation: putarRingGray 1.6s linear infinite;
+    }
+    @keyframes putarRingGray{
+      to{ transform: rotate(360deg); }
+    }
     }
     .skeleton-circle{
       background: linear-gradient(90deg, #e9e9e9 25%, #f4f4f4 37%, #e9e9e9 63%);
@@ -211,10 +222,10 @@
   </span>
   TOTAL SISWA
 </p>
-        <p id="tot"
-class="skeleton text-[21px] font-bold tracking-tight tabular-nums text-gray-900 inline-block min-w-[48px] leading-6">
-0
-</p>
+        <div class="relative min-h-[26px] flex items-center">
+          <p id="tot" class="hidden text-[21px] font-bold tracking-tight tabular-nums text-gray-900 leading-6">0</p>
+          <div id="totSpin" class="spinner-ring-gray"></div>
+        </div>
       </div>
       <div class="grid grid-cols-2 gap-3">
   <div class="bg-white p-5 rounded-[24px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
@@ -223,7 +234,10 @@ class="skeleton text-[21px] font-bold tracking-tight tabular-nums text-gray-900 
         <p class="text-xs font-semibold text-gray-600 mb-1 flex items-center gap-1">
           LAKI-LAKI
         </p>
-        <p id="laki" class="skeleton text-[21px] font-bold tracking-tight tabular-nums text-gray-900 inline-block min-w-[36px] leading-6">0</p>
+        <div class="relative min-h-[26px] flex items-center">
+          <p id="laki" class="hidden text-[21px] font-bold tracking-tight tabular-nums text-gray-900 leading-6">0</p>
+          <div id="lakiSpin" class="spinner-ring-gray"></div>
+        </div>
       </div>
       <div class="relative w-9 h-9 shrink-0">
         <svg width="36" height="36">
@@ -242,7 +256,10 @@ class="skeleton text-[21px] font-bold tracking-tight tabular-nums text-gray-900 
         <p class="text-xs font-semibold text-gray-600 mb-1 flex items-center gap-1">
           PEREMPUAN
         </p>
-        <p id="perempuan" class="skeleton text-[21px] font-bold tracking-tight tabular-nums text-gray-900 inline-block min-w-[36px] leading-6">0</p>
+        <div class="relative min-h-[26px] flex items-center">
+          <p id="perempuan" class="hidden text-[21px] font-bold tracking-tight tabular-nums text-gray-900 leading-6">0</p>
+          <div id="perempuanSpin" class="spinner-ring-gray"></div>
+        </div>
       </div>
       <div class="relative w-9 h-9 shrink-0">
         <svg width="36" height="36">
@@ -891,7 +908,8 @@ let modeRentang = false;
       d = data.slice(1).filter(r => r[1] && r[1].trim() !== "");
 
       ["tot", "laki", "perempuan"].forEach(id => {
-        document.getElementById(id).classList.remove("skeleton");
+        document.getElementById(id).classList.remove("hidden");
+        document.getElementById(id + "Spin").classList.add("hidden");
       });
 
       terapkanTanggalUpdate(json.lastUpdated);
@@ -1594,7 +1612,7 @@ function buatChart(){
         boxWidth: 8,
         boxHeight: 8,
         usePointStyle: true,
-        callbacks:{...}
+        callbacks:{
       }
           label: function(context){
             const total = context.dataset.data.reduce((a,b) => a+b, 0);
@@ -1666,7 +1684,7 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
         boxWidth: 8,
         boxHeight: 8,
         usePointStyle: true,
-        callbacks:{...}
+        callbacks:{
       }
           label: function(context){
             const total = context.dataset.data.reduce((a,b) => a+b, 0);
