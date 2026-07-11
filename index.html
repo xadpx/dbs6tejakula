@@ -1881,11 +1881,13 @@ function tampilkanSiswaKategori(kolom, label){
     `;
   }
 
-  document.getElementById('list-kategori').scrollTop = 0;
-
   document.getElementById('modalKategori').classList.remove('hidden');
   setNavDisabled(true);
   kunciScroll(true);
+
+  requestAnimationFrame(function(){
+    document.getElementById('list-kategori').scrollTop = 0;
+  });
 
 }
 
