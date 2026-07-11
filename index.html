@@ -16,6 +16,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
     html {
       overflow-x: hidden;
@@ -133,6 +134,23 @@
       background:#FF7A45;
       box-shadow:0 6px 14px rgba(255,122,69,0.4);
     }
+      .btn-unduh-chart{
+      font-size: 11px;
+      font-weight: 600;
+      color: #6b7280;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 4px 10px;
+      cursor: pointer;
+      transition: .15s;
+    }
+    .btn-unduh-chart:active,
+    .btn-unduh-chart.sedang-unduh{
+      background: #d1d5db;
+      color: #4b5563;
+    }
+    .spinner {
     .spinner {
       width:18px;
       height:18px;
@@ -285,13 +303,21 @@ Salin
     </div>
     <div class="grid md:grid-cols-2 gap-4 mt-5">
 
-  <div class="bg-white p-5 rounded-[24px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
-    <h2 class="font-bold text-base mb-3 flex items-center gap-2">
-  <span class="material-symbols-rounded text-[19px]">
-    volunteer_activism
-  </span>
-  Kesejahteraan Siswa
-</h2>
+  <div id="cardKesejahteraan" class="bg-white p-5 rounded-[24px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="font-bold text-base flex items-center gap-2 m-0">
+        <span class="material-symbols-rounded text-[19px]">
+          volunteer_activism
+        </span>
+        Kesejahteraan Siswa
+      </h2>
+      <button
+        id="btnUnduhKesejahteraan"
+        onclick="unduhChartGambar('cardKesejahteraan', 'btnUnduhKesejahteraan', 'Kesejahteraan_Siswa.jpg')"
+        class="btn-unduh-chart">
+        Unduh
+      </button>
+    </div>
 
     <div class="relative">
       <div id="skelKesejahteraan" class="skeleton-circle w-full aspect-square"></div>
@@ -309,13 +335,21 @@ Salin
     </div>
   </div>
 
-  <div class="bg-white p-5 rounded-[24px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
-    <h2 class="font-bold text-base mb-3 flex items-center gap-2">
-  <span class="material-symbols-rounded text-[19px]">
-    family_restroom
-  </span>
-  Status Anak
-</h2>
+  <div id="cardStatusAnak" class="bg-white p-5 rounded-[24px] border border-gray-100 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="font-bold text-base flex items-center gap-2 m-0">
+        <span class="material-symbols-rounded text-[19px]">
+          family_restroom
+        </span>
+        Status Anak
+      </h2>
+      <button
+        id="btnUnduhStatusAnak"
+        onclick="unduhChartGambar('cardStatusAnak', 'btnUnduhStatusAnak', 'Status_Anak.jpg')"
+        class="btn-unduh-chart">
+        Unduh
+      </button>
+    </div>
 
     <div class="relative">
       <div id="skelStatusAnak" class="skeleton-circle w-full aspect-square"></div>
@@ -1587,6 +1621,37 @@ function setNavDisabled(disabled){
     nav.classList.remove("opacity-40");
 
   }
+
+}
+    function unduhChartGambar(idCard, idTombol, namaFile){
+
+  const tombol = document.getElementById(idTombol);
+  tombol.classList.add("sedang-unduh");
+  tombol.textContent = "...";
+
+  const cardEl = document.getElementById(idCard);
+
+  html2canvas(cardEl, {
+    backgroundColor: "#ffffff",
+    scale: 2,
+    ignoreElements: (el) => el.id === idTombol
+  }).then(canvas => {
+
+    const link = document.createElement("a");
+    link.download = namaFile;
+    link.href = canvas.toDataURL("image/jpeg", 0.95);
+    link.click();
+
+    tombol.classList.remove("sedang-unduh");
+    tombol.textContent = "Unduh";
+
+  }).catch(err => {
+    console.error(err);
+    showToast("Gagal mengunduh gambar chart", 3000);
+
+    tombol.classList.remove("sedang-unduh");
+    tombol.textContent = "Unduh";
+  });
 
 }
 function tampilkanSiswaKategori(kolom, label){
