@@ -273,12 +273,12 @@
     }
     
         .neu-search{
-      -webkit-appearance: none !important;
-      appearance: none !important;
-      background-color: #eef2f7 !important;
-      border: 1px solid rgba(163,177,198,.15) !important;
-      box-inset 0.5px 0.5px 2px rgba(163,177,198,.2),
-        inset -0.5px -0.5px 2px rgba(255,255,255,.5) !important;
+      background-color: #eef2f7;
+      border: 1px solid rgba(163,177,198,.15);
+      border-radius: 9999px;
+      box-shadow:
+        inset 0.5px 0.5px 2px rgba(163,177,198,.2),
+        inset -0.5px -0.5px 2px rgba(255,255,255,.5);
     }
     .neu-search-icon{
       background:#eef2f7;
@@ -519,18 +519,18 @@ content_copy
         Data Siswa
       </h1>
 
-      <div class="relative mb-3">
+     <div class="neu-search relative mb-3">
 
-        <span class="material-symbols-rounded absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[19px]">
-          search
-        </span>
+  <span class="material-symbols-rounded absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-[19px]">
+    search
+  </span>
 
-       <input
+  <input
   type="text"
   id="srch"
   onkeyup="filterSiswa()"
   placeholder="Cari Nama/NIK/NISN"
-  class="neu-search w-full h-[44px] pl-[42px] pr-10 rounded-full text-sm outline-none">
+  class="w-full h-[44px] pl-[42px] pr-10 rounded-full text-sm outline-none bg-transparent border-none">
         <span
           id="btnHapusSrch"
           onclick="hapusPencarianSiswa()"
