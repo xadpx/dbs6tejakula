@@ -2830,7 +2830,14 @@ function animasikanAngkaDanRing(idAngka, idRing, idPersenText, nilaiAkhir, total
   btn.addEventListener('mouseup', lepas);
   btn.addEventListener('mouseleave', lepas);
 })();
-    
+    (function(){
+  const inputSearch = document.getElementById('srch');
+  if(inputSearch){
+    inputSearch.style.setProperty('background-color', '#eef2f7', 'important');
+    inputSearch.style.setProperty('-webkit-appearance', 'none', 'important');
+    inputSearch.style.setProperty('appearance', 'none', 'important');
+  }
+})();
   </script>
 </body>
 </html>
