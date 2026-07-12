@@ -297,6 +297,19 @@
       box-shadow: 0 -4px 16px rgba(0,0,0,.06);
       padding-bottom: env(safe-area-inset-bottom, 0px);
     }
+       .neu-modal{
+      background:#eef2f7 !important;
+      box-shadow:
+        -8px -8px 16px rgba(255,255,255,.9),
+         8px  8px 16px rgba(163,177,198,.45) !important;
+    }
+    .neu-modal-close{
+      background:#eef2f7 !important;
+      box-shadow:
+        -3px -3px 6px rgba(255,255,255,.8),
+         3px  3px 6px rgba(163,177,198,.35) !important;
+    }
+  </style>
   </style>
 </head>
 <body class="text-base">
@@ -2829,19 +2842,6 @@ function animasikanAngkaDanRing(idAngka, idRing, idPersenText, nilaiAkhir, total
   btn.addEventListener('mouseup', lepas);
   btn.addEventListener('mouseleave', lepas);
 })();
-    .neu-modal{
-      background:#eef2f7 !important;
-      box-shadow:
-        -8px -8px 16px rgba(255,255,255,.9),
-         8px  8px 16px rgba(163,177,198,.45) !important;
-    }
-    .neu-modal-close{
-      background:#eef2f7 !important;
-      box-shadow:
-        -3px -3px 6px rgba(255,255,255,.8),
-         3px  3px 6px rgba(163,177,198,.35) !important;
-    }
-  </style>
   </script>
 </body>
 </html>
