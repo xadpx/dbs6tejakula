@@ -1621,8 +1621,8 @@ function cekPIN(){
     const val = values[i];
     const labelAman = l.replace(/'/g, "\\'");
 
-    return `
-      <div onclick="tampilkanSiswaKategori(${kolom}, '${labelAman}')" class="flex items-center gap-2 rounded-xl px-3 cursor-pointer active:bg-gray-100 transition" style="padding-top:10px; padding-bottom:10px;">
+   return `
+      <div onclick="tampilkanSiswaKategori(${kolom}, '${labelAman}')" class="flex items-center gap-2 rounded-xl px-3 cursor-pointer active:bg-gray-100 transition" style="padding-top:10px; padding-bottom:10px; background:#eef2f7; box-shadow: -2px -2px 5px rgba(255,255,255,.7), 2px 2px 5px rgba(163,177,198,.3);">
         <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:${colors[i]}"></span>
         <span class="text-[13px] text-gray-600 flex-1 truncate" style="line-height:1.6;">${l}</span>
         <span class="text-[13px] font-semibold text-gray-900" style="line-height:1.6;">${val}</span>
