@@ -182,8 +182,8 @@
       100%{ background-position: 0 50%; }
     }
         .nav-active .nav-icon-wrap{
-  background: rgba(37,99,235,0.10);
-  box-shadow: inset 0 2px 5px rgba(30,60,120,.12);
+  background: transparent;
+  box-shadow: none;
 }
       .btn-unduh-chart-icon{
       width: 28px;
@@ -282,34 +282,28 @@
       box-shadow: 0 3px 10px rgba(0,0,0,.2) !important;
     }
     .rombel-row {
-      padding: 10px 8px; border-radius: 14px; cursor: pointer;
+      padding: 13px 16px; border-radius: 16px; cursor: pointer;
+      background: #EEF0F4; margin-bottom: 8px;
       transition: background .15s ease;
+      display: flex; align-items: center; gap: 10px;
     }
-    .rombel-row.open { background: rgba(37,99,235,.06); }
-    .pillbar-row { display: flex; justify-content: space-around; align-items: flex-end; height: 110px; margin-bottom: 14px; padding: 0 4px; }
+    .rombel-row.open { background: #E6E9EF; }
+    .rombel-row:last-child { margin-bottom: 0; }
+    .pillbar-row { display: flex; justify-content: space-around; align-items: flex-end; height: 130px; margin-bottom: 18px; padding: 0 4px; }
     .pillbar-col { display: flex; flex-direction: column; align-items: center; }
     .pillbar-track {
-      width: 22px; height: 100%; border-radius: 11px; position: relative; overflow: hidden;
+      width: 24px; height: 100%; border-radius: 12px; position: relative; overflow: hidden;
       background: #EEF0F3; box-shadow: inset -2px -2px 5px rgba(255,255,255,.7), inset 2px 2px 5px rgba(163,177,198,.25);
     }
-    .pillbar-fill { position: absolute; bottom: 0; left: 0; width: 100%; border-radius: 11px; }
-    .pillbar-lbl { font-size: 10.5px; font-weight: 700; color: #9ca3af; margin-top: 8px; }
-    .rombel-top { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
-    .rombel-avatar {
-      width: 32px; height: 32px; border-radius: 11px; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      color: #fff; font-weight: 800; font-size: 12.5px;
-    }
-    .rombel-mid { flex: 1; min-width: 0; }
-    .rombel-name { font-size: 14px; font-weight: 700; color: #1f2937; }
-    .rombel-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .pillbar-fill { position: absolute; bottom: 0; left: 0; width: 100%; border-radius: 12px; }
+    .pillbar-lbl { font-size: 12px; font-weight: 700; color: #4b5563; margin-top: 10px; }
+    .rombel-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .rombel-name { font-size: 13.5px; font-weight: 600; color: #374151; flex: 1; min-width: 0; }
     .rombel-total { font-size: 13px; font-weight: 800; color: #1f2937; }
-    .rombel-chev { color: #c7cbd1; font-size: 20px; transition: transform .2s ease; }
-    .rombel-row.open .rombel-chev { transform: rotate(90deg); color: #2563EB; }
-    .rombel-track { width: 100%; height: 7px; background: #eef1f5; border-radius: 999px; position: relative; overflow: hidden; margin-top: 6px; }
-    .rombel-track div { position: absolute; left: 0; top: 0; height: 100%; border-radius: 999px; }
+    .rombel-chev { color: #9ca3af; font-size: 20px; transition: transform .2s ease; }
+    .rombel-row.open .rombel-chev { transform: rotate(180deg); }
     .rombel-detail { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
-    .rombel-detail.open { max-height: 70px; padding: 4px 8px 10px 44px; }
+    .rombel-detail.open { max-height: 70px; padding: 2px 16px 12px; margin-top: -8px; }
     .rombel-lp-row { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: #374151; margin-bottom: 6px; }
     .rombel-lp-row span.l { color: #C2410C; }
     .rombel-lp-row span.p { color: #6D28D9; }
@@ -379,14 +373,9 @@
   </span>
   TOTAL SISWA
 </p>
-        <div class="flex items-center gap-4">
-          <div class="neu-ring-wrap" style="width:52px;height:52px">
-            <span class="material-symbols-rounded" style="font-size:24px;color:#5B7FE8">school</span>
-          </div>
-          <div class="relative min-h-[26px] flex items-center">
-            <p id="tot" class="hidden text-[28px] font-bold tracking-tight tabular-nums text-gray-900 leading-6">0</p>
-            <div id="totSpin" class="spinner-ring-gray"></div>
-          </div>
+        <div class="relative min-h-[26px] flex items-center">
+          <p id="tot" class="hidden text-[28px] font-bold tracking-tight tabular-nums text-gray-900 leading-6">0</p>
+          <div id="totSpin" class="spinner-ring-gray"></div>
         </div>
       </div>
       <div class="grid grid-cols-2 gap-3">
@@ -441,12 +430,7 @@
 
   <div class="flex justify-between items-center mb-3">
 
-   <h2 class="font-bold text-base text-gray-800 flex items-center gap-2">
-  <span class="icon-badge-teal" style="background:linear-gradient(160deg,#6C8EF5,#3E5BC4)">
-  <span class="material-symbols-rounded text-[16px]">
-    groups
-  </span>
-  </span>
+   <h2 class="font-bold text-base text-gray-800">
   Data per Rombel
 </h2>
 
@@ -475,10 +459,7 @@ content_copy
 
   <div id="cardKesejahteraan" class="neu-card p-5">
     <div class="flex items-center justify-between mb-3">
-      <h2 class="font-bold text-base flex items-center gap-2 m-0">
-        <span class="icon-badge-teal">
-          <span class="material-symbols-rounded text-[16px]">volunteer_activism</span>
-        </span>
+      <h2 class="font-bold text-base m-0">
         Kesejahteraan Siswa
       </h2>
       <div
@@ -492,25 +473,18 @@ content_copy
     <div id="skelKesejahteraan" class="w-full flex flex-col items-center justify-center py-10">
       <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
     </div>
-    <div class="chart-glass-wrap" style="width:200px;height:200px">
-    <div class="relative" style="width:180px;height:180px">
+    <div class="flex justify-center" style="padding:14px 0">
+    <div class="relative" style="width:170px;height:170px">
   <canvas id="chartKesejahteraan" class="hidden"></canvas>
-      <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-        <span id="totalKesejahteraanNum" class="text-lg font-bold text-gray-900"></span>
-        <span id="labelKesejahteraanNum" class="text-[11px] text-gray-500"></span>
-      </div>
     </div>
     </div>
-    <div id="legendKesejahteraan" class="hidden mt-3 grid grid-cols-2 gap-2">
+    <div id="legendKesejahteraan" class="hidden mt-1 flex flex-col gap-2">
     </div>
   </div>
 
   <div id="cardStatusAnak" class="neu-card p-5">
     <div class="flex items-center justify-between mb-3">
-      <h2 class="font-bold text-base flex items-center gap-2 m-0">
-        <span class="icon-badge-purple">
-          <span class="material-symbols-rounded text-[16px]">family_restroom</span>
-        </span>
+      <h2 class="font-bold text-base m-0">
         Status Anak
       </h2>
       <div
@@ -524,16 +498,12 @@ content_copy
     <div id="skelStatusAnak" class="w-full flex flex-col items-center justify-center py-10">
       <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
     </div>
-    <div class="chart-glass-wrap" style="width:200px;height:200px">
-    <div class="relative" style="width:180px;height:180px">
+    <div class="flex justify-center" style="padding:14px 0">
+    <div class="relative" style="width:170px;height:170px">
       <canvas id="chartStatusAnak" class="hidden"></canvas>
-      <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-        <span id="totalStatusAnakNum" class="text-lg font-bold text-gray-900"></span>
-        <span id="labelStatusAnakNum" class="text-[11px] text-gray-500"></span>
-      </div>
     </div>
     </div>
-    <div id="legendStatusAnak" class="hidden mt-3 grid grid-cols-2 gap-2">
+    <div id="legendStatusAnak" class="hidden mt-1 flex flex-col gap-2">
     </div>
   </div>
 <div class="mt-5 mb-3 text-center text-[10px] text-gray-400">
@@ -1045,43 +1015,32 @@ let modeRentang = false;
       });
 
       const maxTotalRombel = Math.max(...window.rombelData.map(r => r.L + r.P), 1);
-      const avatarPalette = [
-        ['#6C8EF5','#3E5BC4'], ['#FF9A6C','#E85D2E'], ['#B49AE8','#8C6BC7'],
-        ['#4FD1C5','#2C9C8F'], ['#FFC15E','#E8A014'], ['#FF8FB3','#E85586']
-      ];
+      const totalSemuaRombel = window.rombelData.reduce((s,r)=>s+r.L+r.P, 0) || 1;
+      const refPalette = ['#3E50A8','#02B5DA','#FD5522','#F9A900','#55D9A3','#8B8FE0'];
 
       document.getElementById('pillbars').innerHTML = window.rombelData.map((r, i) => {
         const total = r.L + r.P;
         const h = (total / maxTotalRombel * 100).toFixed(0);
-        const [c1, c2] = avatarPalette[i % avatarPalette.length];
-        const nomorKelas = String(r.kelas).replace(/kelas/i,'').trim();
+        const pctOfAll = Math.round(total / totalSemuaRombel * 100);
+        const c = refPalette[i % refPalette.length];
         return `
 <div class="pillbar-col">
-  <div class="pillbar-track"><div class="pillbar-fill" style="height:${h}%;background:linear-gradient(180deg,${c1},${c2})"></div></div>
-  <span class="pillbar-lbl">${nomorKelas}</span>
+  <div class="pillbar-track"><div class="pillbar-fill" style="height:${h}%;background:${c}"></div></div>
+  <span class="pillbar-lbl">${pctOfAll}%</span>
 </div>`;
       }).join('');
 
       document.getElementById('rombelList').innerHTML = window.rombelData.map((r, i) => {
         const total = r.L + r.P;
-        const widthPct = (total / maxTotalRombel * 100).toFixed(0);
         const pctL = total ? (r.L / total * 100).toFixed(0) : 0;
         const pctP = total ? (r.P / total * 100).toFixed(0) : 0;
-        const [c1, c2] = avatarPalette[i % avatarPalette.length];
-        const nomorKelas = String(r.kelas).replace(/kelas/i,'').trim();
+        const c = refPalette[i % refPalette.length];
         return `
 <div class="rombel-row" id="rombelRow${i}" onclick="toggleRombelRow(${i})">
-  <div class="rombel-top">
-    <span class="rombel-avatar" style="background:linear-gradient(160deg,${c1},${c2})">${nomorKelas}</span>
-    <div class="rombel-mid">
-      <span class="rombel-name">${r.kelas}</span>
-      <div class="rombel-track"><div style="width:${widthPct}%;background:linear-gradient(90deg,${c1},${c2})"></div></div>
-    </div>
-    <div class="rombel-right">
-      <span class="rombel-total">${total}</span>
-      <span class="material-symbols-rounded rombel-chev">chevron_right</span>
-    </div>
-  </div>
+  <span class="rombel-dot" style="background:${c}"></span>
+  <span class="rombel-name">${r.kelas}</span>
+  <span class="rombel-total">${total}</span>
+  <span class="material-symbols-rounded rombel-chev">expand_more</span>
 </div>
 <div class="rombel-detail" id="rombelDetail${i}">
   <div class="rombel-lp-row"><span class="l">${r.L} Laki-laki</span><span class="p">${r.P} Perempuan</span></div>
@@ -1693,16 +1652,54 @@ function cekPIN(){
     const labelAman = l.replace(/'/g, "\\'");
 
    return `
-      <div onclick="tampilkanSiswaKategori(${kolom}, '${labelAman}')" class="flex items-center gap-2 rounded-full px-3 cursor-pointer active:opacity-80 transition" style="padding-top:9px; padding-bottom:9px; background:${colors[i]}22;">
+      <div onclick="tampilkanSiswaKategori(${kolom}, '${labelAman}')" class="flex items-center gap-3 rounded-2xl px-4 cursor-pointer active:opacity-70 transition" style="padding-top:13px; padding-bottom:13px; background:#EEF0F4;">
         <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:${colors[i]}"></span>
-        <span class="text-[12.5px] font-semibold text-gray-700 flex-1 truncate" style="line-height:1.5;">${l}</span>
-        <span class="text-[13px] font-extrabold text-gray-900" style="line-height:1.5;">${val}</span>
+        <span class="text-[13.5px] font-semibold text-gray-700 flex-1 truncate">${l}</span>
+        <span class="text-[13px] font-bold text-gray-900">${val}</span>
+        <span class="material-symbols-rounded text-[18px] text-gray-400">expand_more</span>
       </div>
     `;
 
   }).join('');
 
 }
+const outsideLabelsPlugin = {
+  id: 'outsideLabels',
+  afterDraw(chart) {
+    const {ctx} = chart;
+    const meta = chart.getDatasetMeta(0);
+    const dataArr = chart.data.datasets[0].data;
+    const total = dataArr.reduce((a,b)=>a+b,0);
+    if (!total) return;
+    meta.data.forEach((arc, i) => {
+      if (!dataArr[i]) return;
+      const props = arc.getProps(['startAngle','endAngle','x','y','outerRadius'], true);
+      const mid = (props.startAngle + props.endAngle) / 2;
+      const persen = Math.round(dataArr[i] / total * 100) + '%';
+      const cosM = Math.cos(mid), sinM = Math.sin(mid);
+      const lx1 = props.x + cosM * (props.outerRadius + 4);
+      const ly1 = props.y + sinM * (props.outerRadius + 4);
+      const lx2 = props.x + cosM * (props.outerRadius + 16);
+      const ly2 = props.y + sinM * (props.outerRadius + 16);
+      ctx.save();
+      ctx.strokeStyle = '#d1d5db';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(lx1, ly1);
+      ctx.lineTo(lx2, ly2);
+      ctx.stroke();
+      ctx.fillStyle = '#6b7280';
+      ctx.font = "700 11px 'Plus Jakarta Sans', sans-serif";
+      ctx.textAlign = cosM >= 0.05 ? 'left' : (cosM <= -0.05 ? 'right' : 'center');
+      ctx.textBaseline = sinM >= 0.3 ? 'top' : (sinM <= -0.3 ? 'bottom' : 'middle');
+      const tx = props.x + cosM * (props.outerRadius + 20);
+      const ty = props.y + sinM * (props.outerRadius + 20);
+      ctx.fillText(persen, tx, ty);
+      ctx.restore();
+    });
+  }
+};
+
 function buatChart(){
 
   // ===== KESEJAHTERAAN =====
@@ -1727,39 +1724,38 @@ function buatChart(){
 });
 
   const warnaKesejahteraan = [
-  "#DFF5F1", // Desil 1 → teal paling muda
-  "#B8E9E0", // Desil 2
-  "#8FD9CE", // Desil 3
-  "#5FC4B5", // Desil 4
-  "#2C9C8F", // Desil 5
-  "#1F7A70"  // Desil 6-10 → teal paling gelap
+  "#3E50A8", // Desil 1
+  "#02B5DA", // Desil 2
+  "#FD5522", // Desil 3
+  "#F9A900", // Desil 4
+  "#55D9A3", // Desil 5
+  "#8B8FE0"  // Desil 6-10
 ];
 
   const labelKesejahteraan = Object.keys(desil);
   const nilaiKesejahteraan = Object.values(desil);
 
-  document.getElementById('totalKesejahteraanNum').innerText =
-    nilaiKesejahteraan.reduce((a,b)=>a+b,0);
-  document.getElementById('labelKesejahteraanNum').innerText = "Siswa";
   document.getElementById('skelKesejahteraan').classList.add('hidden');
   document.getElementById('chartKesejahteraan').classList.remove('hidden');
   document.getElementById('legendKesejahteraan').classList.remove('hidden');
 
   window.chartKesejahteraanInstance = new Chart(document.getElementById("chartKesejahteraan"),{
   type:"doughnut",
+  plugins:[outsideLabelsPlugin],
   data:{
     labels:labelKesejahteraan,
     datasets:[{
       data:nilaiKesejahteraan,
       backgroundColor: warnaKesejahteraan,
       borderColor:"#FFFFFF",
-      borderWidth:3,
-      borderRadius:8,
+      borderWidth:4,
+      borderRadius:12,
       hoverOffset:6
     }]
   },
   options:{
     responsive:true,
+    layout:{ padding:26 },
     cutout:"68%",
     plugins:{
       legend:{
@@ -1807,13 +1803,10 @@ function buatChart(){
 
   });
 
-  const warnaStatusAnak = ["#8C6BC7","#E3D9F7"];
+  const warnaStatusAnak = ["#3E50A8","#FD5522","#F9A900","#55D9A3","#02B5DA"];
   const labelStatusAnak = Object.keys(status);
   const nilaiStatusAnak = Object.values(status);
 
-  document.getElementById('totalStatusAnakNum').innerText =
-    nilaiStatusAnak.reduce((a,b)=>a+b,0);
-  document.getElementById('labelStatusAnakNum').innerText = "Siswa";
   document.getElementById('skelStatusAnak').classList.add('hidden');
   document.getElementById('chartStatusAnak').classList.remove('hidden');
   document.getElementById('legendStatusAnak').classList.remove('hidden');
@@ -1821,6 +1814,7 @@ function buatChart(){
 window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusAnak"),{
 
   type:"doughnut",
+  plugins:[outsideLabelsPlugin],
 
   data:{
     labels:labelStatusAnak,
@@ -1830,14 +1824,15 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
   backgroundColor:warnaStatusAnak,
 
   borderColor:"#FFFFFF",
-  borderWidth:3,
-  borderRadius:8,
+  borderWidth:4,
+  borderRadius:12,
   hoverOffset:6
 }]
   },
 
   options:{
     responsive:true,
+    layout:{ padding:26 },
     cutout:"68%",
     plugins:{
       legend:{
@@ -1871,14 +1866,14 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
     function unduhKesejahteraanGambar(){
   const desil = { "Desil 1":0,"Desil 2":0,"Desil 3":0,"Desil 4":0,"Desil 5":0,"Desil 6-10":0 };
   d.forEach(r=>{ let x = String(r[13]).trim(); if(desil.hasOwnProperty(x)) desil[x]++; });
-  const warna = ["#DFF5F1","#B8E9E0","#8FD9CE","#5FC4B5","#2C9C8F","#1F7A70"];
+  const warna = ["#3E50A8","#02B5DA","#FD5522","#F9A900","#55D9A3","#8B8FE0"];
   unduhChartSebagaiGambar("btnUnduhKesejahteraan", window.chartKesejahteraanInstance, "Kesejahteraan Siswa", Object.keys(desil), Object.values(desil), warna, "Siswa", "Kesejahteraan_Siswa.jpg");
 }
 
 function unduhStatusAnakGambar(){
   let status = {};
   d.forEach(r=>{ let s = String(r[14]).trim(); if(s=="") s="Tidak Ada"; status[s]=(status[s]||0)+1; });
-  const warna = ["#8C6BC7","#E3D9F7"];
+  const warna = ["#3E50A8","#FD5522","#F9A900","#55D9A3","#02B5DA"];
   unduhChartSebagaiGambar("btnUnduhStatusAnak", window.chartStatusAnakInstance, "Status Anak", Object.keys(status), Object.values(status), warna, "Siswa", "Status_Anak.jpg");
 }
 function setNavDisabled(disabled){
@@ -2555,8 +2550,8 @@ function updateNavAktif(p){
     if(id===p){
       btn.classList.remove("nav-inactive");
       btn.classList.add("nav-active");
-      iconWrap.style.color="#2563EB";
-      label.style.color="#2563EB";
+      iconWrap.style.color="#3E50A8";
+      label.style.color="#3E50A8";
     }else{
       btn.classList.remove("nav-active");
       btn.classList.add("nav-inactive");
