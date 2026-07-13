@@ -281,28 +281,6 @@
       background:#ffffff !important;
       box-shadow: 0 3px 10px rgba(0,0,0,.2) !important;
     }
-    .rombel-row {
-      padding: 12px 8px; border-radius: 14px; cursor: pointer;
-      transition: background .15s ease;
-    }
-    .rombel-row.open { background: rgba(37,99,235,.06); }
-    .rombel-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-    .rombel-name { font-size: 14px; font-weight: 700; color: #1f2937; }
-    .rombel-right { display: flex; align-items: center; gap: 8px; }
-    .rombel-total { font-size: 13px; font-weight: 800; color: #1f2937; }
-    .rombel-chev { color: #c7cbd1; font-size: 20px; transition: transform .2s ease; }
-    .rombel-row.open .rombel-chev { transform: rotate(90deg); color: #2563EB; }
-    .rombel-track { width: 100%; height: 8px; background: #eef1f5; border-radius: 999px; position: relative; overflow: hidden; }
-    .rombel-track div { position: absolute; left: 0; top: 0; height: 100%; border-radius: 999px; background: linear-gradient(90deg,#2563EB,#4C8DF5); }
-    .rombel-detail { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
-    .rombel-detail.open { max-height: 70px; padding: 4px 8px 10px; }
-    .rombel-lp-row { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: #374151; margin-bottom: 6px; }
-    .rombel-lp-row span.l { color: #C2410C; }
-    .rombel-lp-row span.p { color: #6D28D9; }
-    .rombel-split-bar { height: 10px; border-radius: 999px; overflow: hidden; display: flex; background: #eef1f5; }
-    .rombel-split-bar div { height: 100%; }
-    .rombel-split-bar .l { background: #FF7A45; }
-    .rombel-split-bar .p { background: #9B7EDE; }
 
   </style>
 </head>
@@ -415,7 +393,31 @@ content_copy
 
 </div>
 
-  <div id="rombelList" class="hidden"></div>
+  <table id="tabelRombel" class="w-full text-sm hidden">
+        <thead>
+  <tr style="background:#eef2f7; box-shadow: -1.5px -1.5px 3px rgba(255,255,255,.7), 1.5px 1.5px 3px rgba(163,177,198,.25);" class="text-gray-900">
+
+    <th class="px-4 py-3 text-left font-semibold rounded-l-2xl">
+      Rombel
+    </th>
+
+    <th class="px-4 py-3 font-semibold">
+      L
+    </th>
+
+    <th class="px-4 py-3 font-semibold">
+      P
+    </th>
+
+    <th class="px-4 py-3 font-semibold rounded-r-2xl">
+      Jumlah
+    </th>
+
+  </tr>
+</thead>
+        <tbody id="tabel-body" class="text-center text-gray-700">
+        </tbody>
+      </table>
       <div id="tabelRombelSpin" class="flex justify-center py-6">
         <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
       </div>
@@ -982,38 +984,21 @@ let modeRentang = false;
       animasikanAngkaDanRing('perempuan', 'ringPerempuan', 'persenPerempuan', totalPerempuan, totalSiswa, 900);
 
       const classes = [...new Set(d.map(r => r[2]))].filter(c => c).sort();
-      window.rombelData = classes.map(k => {
+      document.getElementById('tabel-body').innerHTML = classes.map(k => {
         const list = d.filter(r => r[2] == k);
-        const siswaL = list.filter(r => r[4] && r[4].toUpperCase().includes('L')).map(r => r[1]);
-        const siswaP = list.filter(r => r[4] && r[4].toUpperCase().includes('P')).map(r => r[1]);
-        return { kelas: k, L: siswaL.length, P: siswaP.length, namaL: siswaL, namaP: siswaP };
-      });
-
-      const maxTotalRombel = Math.max(...window.rombelData.map(r => r.L + r.P), 1);
-      document.getElementById('rombelList').innerHTML = window.rombelData.map((r, i) => {
-        const total = r.L + r.P;
-        const widthPct = (total / maxTotalRombel * 100).toFixed(0);
-        const pctL = total ? (r.L / total * 100).toFixed(0) : 0;
-        const pctP = total ? (r.P / total * 100).toFixed(0) : 0;
+        const L = list.filter(r => r[4] && r[4].toUpperCase().includes('L')).length;
+        const P = list.filter(r => r[4] && r[4].toUpperCase().includes('P')).length;
         return `
-<div class="rombel-row" id="rombelRow${i}" onclick="toggleRombelRow(${i})">
-  <div class="rombel-top">
-    <span class="rombel-name">${r.kelas}</span>
-    <div class="rombel-right">
-      <span class="rombel-total">${total} siswa</span>
-      <span class="material-symbols-rounded rombel-chev">chevron_right</span>
-    </div>
-  </div>
-  <div class="rombel-track"><div style="width:${widthPct}%"></div></div>
-</div>
-<div class="rombel-detail" id="rombelDetail${i}">
-  <div class="rombel-lp-row"><span class="l">${r.L} Laki-laki</span><span class="p">${r.P} Perempuan</span></div>
-  <div class="rombel-split-bar"><div class="l" style="width:${pctL}%"></div><div class="p" style="width:${pctP}%"></div></div>
-</div>`;
+<tr class="border-b border-gray-200">
+  <td class="p-3 text-left text-gray-700">${k}</td>
+  <td class="font-medium text-gray-600">${L}</td>
+  <td class="font-medium text-gray-600">${P}</td>
+  <td class="font-semibold">${L + P}</td>
+</tr>`;
       }).join('');
 
       document.getElementById('tabelRombelSpin').classList.add('hidden');
-      document.getElementById('rombelList').classList.remove('hidden');
+      document.getElementById('tabelRombel').classList.remove('hidden');
 
       buatChart();
     })
@@ -1034,20 +1019,6 @@ let modeRentang = false;
       console.error("Gagal ambil tanggal update:", err);
     });
 };
-
-let rombelRowTerbuka = null;
-function toggleRombelRow(i){
-  if(rombelRowTerbuka !== null && rombelRowTerbuka !== i){
-    document.getElementById('rombelRow' + rombelRowTerbuka).classList.remove('open');
-    document.getElementById('rombelDetail' + rombelRowTerbuka).classList.remove('open');
-  }
-  const row = document.getElementById('rombelRow' + i);
-  const detail = document.getElementById('rombelDetail' + i);
-  const isOpen = row.classList.toggle('open');
-  detail.classList.toggle('open', isOpen);
-  rombelRowTerbuka = isOpen ? i : null;
-}
-
 function nav(p){
 
   if(
@@ -2802,12 +2773,17 @@ function animasikanAngkaDanRing(idAngka, idRing, idPersenText, nilaiAkhir, total
 
   let totalSiswa = 0;
 
-  (window.rombelData || []).forEach(r=>{
+  document.querySelectorAll("#tabel-body tr").forEach(tr=>{
 
-    const Jumlah = r.L + r.P;
-    totalSiswa += Jumlah;
+    let td = tr.querySelectorAll("td");
+    const namaKelas = td[0].innerText;
+    const L = td[1].innerText;
+    const P = td[2].innerText;
+    const Jumlah = td[3].innerText;
 
-    text += `*${r.kelas}*\nLaki-laki: ${r.L} | Perempuan: ${r.P}\nJumlah: ${Jumlah}\n\n`;
+    totalSiswa += parseInt(Jumlah) || 0;
+
+    text += `*${namaKelas}*\nLaki-laki: ${L} | Perempuan: ${P}\nJumlah: ${Jumlah}\n\n`;
 
   });
 
