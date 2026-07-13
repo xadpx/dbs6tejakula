@@ -282,36 +282,24 @@
       box-shadow: 0 3px 10px rgba(0,0,0,.2) !important;
     }
     .rombel-row {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 10px 6px; border-radius: 12px; cursor: pointer;
+      padding: 12px 8px; border-radius: 14px; cursor: pointer;
       transition: background .15s ease;
     }
     .rombel-row.open { background: rgba(37,99,235,.06); }
-    .rombel-left { display: flex; align-items: center; gap: 10px; font-size: 13.5px; font-weight: 700; color: #1f2937; }
-    .rombel-badge {
-      width: 28px; height: 28px; border-radius: 9px; background: #E6EEFB; color: #2563EB;
-      font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-    }
-    .rombel-right { display: flex; align-items: center; gap: 10px; }
-    .rombel-track { width: 48px; height: 6px; background: #eef1f5; border-radius: 999px; position: relative; overflow: hidden; }
-    .rombel-track div { position: absolute; left: 0; top: 0; height: 100%; border-radius: 999px; background: #2563EB; }
-    .rombel-lp { font-size: 11px; font-weight: 700; color: #6b7280; white-space: nowrap; }
-    .rombel-total { font-size: 12px; font-weight: 800; color: #1f2937; width: 22px; text-align: right; }
-    .rombel-chev { color: #c7cbd1; font-size: 18px; transition: transform .2s ease; }
+    .rombel-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .rombel-name { font-size: 14px; font-weight: 700; color: #1f2937; }
+    .rombel-right { display: flex; align-items: center; gap: 8px; }
+    .rombel-total { font-size: 13px; font-weight: 800; color: #1f2937; }
+    .rombel-chev { color: #c7cbd1; font-size: 20px; transition: transform .2s ease; }
     .rombel-row.open .rombel-chev { transform: rotate(90deg); color: #2563EB; }
+    .rombel-track { width: 100%; height: 8px; background: #eef1f5; border-radius: 999px; position: relative; overflow: hidden; }
+    .rombel-track div { position: absolute; left: 0; top: 0; height: 100%; border-radius: 999px; background: linear-gradient(90deg,#2563EB,#4C8DF5); }
     .rombel-detail { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
-    .rombel-detail.open { max-height: 260px; overflow-y: auto; padding: 6px 6px 12px 44px; }
-    .rombel-chip-list { display: flex; flex-wrap: wrap; gap: 6px; }
-    .rombel-chip {
-      background: #F3F4F6; border-radius: 999px; font-size: 11px; font-weight: 600;
-      color: #374151; padding: 5px 10px;
-    }
-    .rombel-chip.l { background: #FFE9DC; color: #C2410C; }
-    .rombel-chip.p { background: #EFE7FB; color: #6D28D9; }
-    .rombel-lp-row { display: flex; justify-content: space-between; font-size: 11.5px; font-weight: 700; color: #374151; margin-bottom: 6px; }
+    .rombel-detail.open { max-height: 70px; padding: 4px 8px 10px; }
+    .rombel-lp-row { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: #374151; margin-bottom: 6px; }
     .rombel-lp-row span.l { color: #C2410C; }
     .rombel-lp-row span.p { color: #6D28D9; }
-    .rombel-split-bar { height: 10px; border-radius: 999px; overflow: hidden; display: flex; background: #eef1f5; margin-bottom: 12px; }
+    .rombel-split-bar { height: 10px; border-radius: 999px; overflow: hidden; display: flex; background: #eef1f5; }
     .rombel-split-bar div { height: 100%; }
     .rombel-split-bar .l { background: #FF7A45; }
     .rombel-split-bar .p { background: #9B7EDE; }
@@ -1009,23 +997,18 @@ let modeRentang = false;
         const pctP = total ? (r.P / total * 100).toFixed(0) : 0;
         return `
 <div class="rombel-row" id="rombelRow${i}" onclick="toggleRombelRow(${i})">
-  <div class="rombel-left">
-    <span class="rombel-badge">${String(r.kelas).replace(/kelas/i,'').trim()}</span>
-    ${r.kelas}
+  <div class="rombel-top">
+    <span class="rombel-name">${r.kelas}</span>
+    <div class="rombel-right">
+      <span class="rombel-total">${total} siswa</span>
+      <span class="material-symbols-rounded rombel-chev">chevron_right</span>
+    </div>
   </div>
-  <div class="rombel-right">
-    <div class="rombel-track"><div style="width:${widthPct}%"></div></div>
-    <span class="rombel-total">${total}</span>
-    <span class="material-symbols-rounded rombel-chev">chevron_right</span>
-  </div>
+  <div class="rombel-track"><div style="width:${widthPct}%"></div></div>
 </div>
 <div class="rombel-detail" id="rombelDetail${i}">
   <div class="rombel-lp-row"><span class="l">${r.L} Laki-laki</span><span class="p">${r.P} Perempuan</span></div>
   <div class="rombel-split-bar"><div class="l" style="width:${pctL}%"></div><div class="p" style="width:${pctP}%"></div></div>
-  <div class="rombel-chip-list">
-    ${r.namaL.map(n => `<span class="rombel-chip l">${n}</span>`).join('')}
-    ${r.namaP.map(n => `<span class="rombel-chip p">${n}</span>`).join('')}
-  </div>
 </div>`;
       }).join('');
 
