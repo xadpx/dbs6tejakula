@@ -1679,6 +1679,10 @@ function cekPIN(){
   }).join('');
 
 }
+    function buatWarnaHighlight(nilai, warnaDasar){
+  const maxIdx = nilai.indexOf(Math.max(...nilai));
+  return nilai.map((v,i) => i === maxIdx ? warnaDasar[i] : warnaDasar[i] + '38');
+}
 const outsideLabelsPlugin = {
   id: 'outsideLabels',
   afterDraw(chart) {
@@ -1762,7 +1766,7 @@ function buatChart(){
     labels:labelKesejahteraan,
     datasets:[{
       data:nilaiKesejahteraan,
-      backgroundColor: warnaKesejahteraan,
+      backgroundColor: buatWarnaHighlight(nilaiKesejahteraan, warnaKesejahteraan),
       borderColor:"#FFFFFF",
       borderWidth:4,
       borderRadius:12,
@@ -1837,7 +1841,7 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
     datasets:[{
   data:nilaiStatusAnak,
 
-  backgroundColor:warnaStatusAnak,
+  backgroundColor:buatWarnaHighlight(nilaiStatusAnak, warnaStatusAnak),
 
   borderColor:"#FFFFFF",
   borderWidth:4,
