@@ -1386,30 +1386,29 @@ function showDetailByNIK(nik){
       setNavDisabled(false);
       kunciScroll(false);
     }
-    async function copyRekap(){
+    aasync function copyRekap(){
   let text = buatTeksRekap();
   try{
     window.focus();
-    await navigator.clipboard.writeText(text);
+
+    const salinDenganTimeout = Promise.race([
+      navigator.clipboard.writeText(text),
+      new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 2000))
+    ]);
+
+    await salinDenganTimeout;
 
     const icon = document.getElementById("copyRekapIcon");
-
     if(icon){
-
       icon.textContent = "check";
       icon.classList.remove("text-gray-400");
       icon.classList.add("text-green-600");
-
       setTimeout(function(){
-
         icon.textContent = "content_copy";
         icon.classList.remove("text-green-600");
         icon.classList.add("text-gray-400");
-
       },1000);
-
     }
-
     showToast("Rekap disalin");
   }catch(err){
     console.error(err);
