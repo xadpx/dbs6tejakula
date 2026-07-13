@@ -236,8 +236,8 @@
     .neu-bg{ background:#F0F2F5; }
     .neu-card{
       background:#ffffff;
-      border-radius:14px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+      border-radius:16px;
+      box-shadow: -6px -6px 14px rgba(255,255,255,.7), 6px 6px 16px rgba(163,177,198,.28);
     }
     .neu-btn{
       background:#ffffff;
@@ -286,6 +286,14 @@
       transition: background .15s ease;
     }
     .rombel-row.open { background: rgba(37,99,235,.06); }
+    .pillbar-row { display: flex; justify-content: space-around; align-items: flex-end; height: 110px; margin-bottom: 14px; padding: 0 4px; }
+    .pillbar-col { display: flex; flex-direction: column; align-items: center; }
+    .pillbar-track {
+      width: 22px; height: 100%; border-radius: 11px; position: relative; overflow: hidden;
+      background: #EEF0F3; box-shadow: inset -2px -2px 5px rgba(255,255,255,.7), inset 2px 2px 5px rgba(163,177,198,.25);
+    }
+    .pillbar-fill { position: absolute; bottom: 0; left: 0; width: 100%; border-radius: 11px; }
+    .pillbar-lbl { font-size: 10.5px; font-weight: 700; color: #9ca3af; margin-top: 8px; }
     .rombel-top { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
     .rombel-avatar {
       width: 32px; height: 32px; border-radius: 11px; flex-shrink: 0;
@@ -310,20 +318,11 @@
     .rombel-split-bar .l { background: #FF7A45; }
     .rombel-split-bar .p { background: #9B7EDE; }
 
-    .hero-total {
-      background: linear-gradient(160deg,#4B3FBF 0%,#382E9E 100%) !important;
-      box-shadow: 0 10px 26px rgba(56,46,158,.35) !important;
-      color: #fff;
-    }
-    .hero-total p, .hero-total span { color: #fff !important; }
-    .hero-total .material-symbols-rounded { color: #fff !important; }
-    .pastel-laki {
-      background: linear-gradient(160deg,#FFE4D2,#FFD3B6) !important;
-      box-shadow: 0 4px 14px rgba(255,122,69,.18) !important;
-    }
-    .pastel-perempuan {
-      background: linear-gradient(160deg,#E7E1FB,#D9CFF7) !important;
-      box-shadow: 0 4px 14px rgba(140,107,199,.18) !important;
+    .neu-ring-wrap {
+      border-radius: 50%; flex-shrink: 0; position: relative;
+      box-shadow: inset -4px -4px 9px rgba(255,255,255,.75), inset 4px 4px 9px rgba(163,177,198,.35);
+      display: flex; align-items: center; justify-content: center;
+      background: #fff;
     }
     .fab-copy {
       width: 34px; height: 34px; border-radius: 50%;
@@ -343,8 +342,10 @@
       background: linear-gradient(160deg,#B49AE8,#8C6BC7);
       display: flex; align-items: center; justify-content: center; color: #fff;
     }
-    .hero-total .spinner-ring-gray{
-      background: conic-gradient(from 0deg, transparent 0%, rgba(255,255,255,.85) 100%) !important;
+    .chart-glass-wrap {
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      box-shadow: inset -6px -6px 14px rgba(255,255,255,.8), inset 6px 6px 14px rgba(163,177,198,.3);
+      background: #fff; padding: 10px; margin: 0 auto;
     }
   </style>
 </head>
@@ -371,23 +372,28 @@
 
   </div>
     <div class="grid grid-cols-1 gap-6 mb-3">
-      <div class="neu-card p-5 hero-total">
-        <p class="text-xs font-semibold mb-1 flex items-center gap-1">
+      <div class="neu-card p-5">
+        <p class="text-xs font-semibold text-gray-500 mb-2 flex items-center gap-1">
   <span class="material-symbols-rounded text-[15px]">
     school
   </span>
   TOTAL SISWA
 </p>
-        <div class="relative min-h-[26px] flex items-center">
-          <p id="tot" class="hidden text-[28px] font-bold tracking-tight tabular-nums leading-6">0</p>
-          <div id="totSpin" class="spinner-ring-gray"></div>
+        <div class="flex items-center gap-4">
+          <div class="neu-ring-wrap" style="width:52px;height:52px">
+            <span class="material-symbols-rounded" style="font-size:24px;color:#5B7FE8">school</span>
+          </div>
+          <div class="relative min-h-[26px] flex items-center">
+            <p id="tot" class="hidden text-[28px] font-bold tracking-tight tabular-nums text-gray-900 leading-6">0</p>
+            <div id="totSpin" class="spinner-ring-gray"></div>
+          </div>
         </div>
       </div>
       <div class="grid grid-cols-2 gap-3">
-  <div class="neu-card p-5 pastel-laki">
+  <div class="neu-card p-5">
     <div class="flex items-start justify-between">
       <div>
-        <p class="text-xs font-semibold text-[#8A4B2A] mb-1 flex items-center gap-1">
+        <p class="text-xs font-semibold text-gray-500 mb-1 flex items-center gap-1">
           LAKI-LAKI
         </p>
         <div class="relative min-h-[26px] flex items-center">
@@ -395,9 +401,9 @@
           <div id="lakiSpin" class="spinner-ring-gray"></div>
         </div>
       </div>
-      <div class="relative w-9 h-9 shrink-0">
+      <div class="neu-ring-wrap relative w-9 h-9 shrink-0">
         <svg width="36" height="36">
-          <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="4"/>
+          <circle cx="18" cy="18" r="15" fill="none" stroke="#f3f4f6" stroke-width="4"/>
           <circle id="ringLaki" cx="18" cy="18" r="15" fill="none" stroke="#FF7A45" stroke-width="4"
             stroke-dasharray="94.2" stroke-dashoffset="94.2" stroke-linecap="round"
             style="transform: rotate(-90deg); transform-origin: center;"/>
@@ -406,10 +412,10 @@
       </div>
     </div>
   </div>
-  <div class="neu-card p-5 pastel-perempuan">
+  <div class="neu-card p-5">
     <div class="flex items-start justify-between">
       <div>
-        <p class="text-xs font-semibold text-[#5B3F94] mb-1 flex items-center gap-1">
+        <p class="text-xs font-semibold text-gray-500 mb-1 flex items-center gap-1">
           PEREMPUAN
         </p>
         <div class="relative min-h-[26px] flex items-center">
@@ -417,9 +423,9 @@
           <div id="perempuanSpin" class="spinner-ring-gray"></div>
         </div>
       </div>
-      <div class="relative w-9 h-9 shrink-0">
+      <div class="neu-ring-wrap relative w-9 h-9 shrink-0">
         <svg width="36" height="36">
-          <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="4"/>
+          <circle cx="18" cy="18" r="15" fill="none" stroke="#f3f4f6" stroke-width="4"/>
           <circle id="ringPerempuan" cx="18" cy="18" r="15" fill="none" stroke="#9B7EDE" stroke-width="4"
             stroke-dasharray="94.2" stroke-dashoffset="94.2" stroke-linecap="round"
             style="transform: rotate(-90deg); transform-origin: center;"/>
@@ -459,6 +465,7 @@ content_copy
 
 </div>
 
+  <div id="pillbars" class="pillbar-row"></div>
   <div id="rombelList" class="hidden"></div>
       <div id="tabelRombelSpin" class="flex justify-center py-6">
         <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
@@ -485,12 +492,14 @@ content_copy
     <div id="skelKesejahteraan" class="w-full flex flex-col items-center justify-center py-10">
       <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
     </div>
-    <div class="relative">
+    <div class="chart-glass-wrap" style="width:200px;height:200px">
+    <div class="relative" style="width:180px;height:180px">
   <canvas id="chartKesejahteraan" class="hidden"></canvas>
       <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
         <span id="totalKesejahteraanNum" class="text-lg font-bold text-gray-900"></span>
         <span id="labelKesejahteraanNum" class="text-[11px] text-gray-500"></span>
       </div>
+    </div>
     </div>
     <div id="legendKesejahteraan" class="hidden mt-3 grid grid-cols-2 gap-2">
     </div>
@@ -515,12 +524,14 @@ content_copy
     <div id="skelStatusAnak" class="w-full flex flex-col items-center justify-center py-10">
       <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
     </div>
-    <div class="relative">
+    <div class="chart-glass-wrap" style="width:200px;height:200px">
+    <div class="relative" style="width:180px;height:180px">
       <canvas id="chartStatusAnak" class="hidden"></canvas>
       <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
         <span id="totalStatusAnakNum" class="text-lg font-bold text-gray-900"></span>
         <span id="labelStatusAnakNum" class="text-[11px] text-gray-500"></span>
       </div>
+    </div>
     </div>
     <div id="legendStatusAnak" class="hidden mt-3 grid grid-cols-2 gap-2">
     </div>
@@ -1038,6 +1049,19 @@ let modeRentang = false;
         ['#6C8EF5','#3E5BC4'], ['#FF9A6C','#E85D2E'], ['#B49AE8','#8C6BC7'],
         ['#4FD1C5','#2C9C8F'], ['#FFC15E','#E8A014'], ['#FF8FB3','#E85586']
       ];
+
+      document.getElementById('pillbars').innerHTML = window.rombelData.map((r, i) => {
+        const total = r.L + r.P;
+        const h = (total / maxTotalRombel * 100).toFixed(0);
+        const [c1, c2] = avatarPalette[i % avatarPalette.length];
+        const nomorKelas = String(r.kelas).replace(/kelas/i,'').trim();
+        return `
+<div class="pillbar-col">
+  <div class="pillbar-track"><div class="pillbar-fill" style="height:${h}%;background:linear-gradient(180deg,${c1},${c2})"></div></div>
+  <span class="pillbar-lbl">${nomorKelas}</span>
+</div>`;
+      }).join('');
+
       document.getElementById('rombelList').innerHTML = window.rombelData.map((r, i) => {
         const total = r.L + r.P;
         const widthPct = (total / maxTotalRombel * 100).toFixed(0);
