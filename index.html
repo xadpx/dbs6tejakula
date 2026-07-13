@@ -1387,11 +1387,9 @@ function showDetailByNIK(nik){
       kunciScroll(false);
     }
     async function copyRekap(){
-
   let text = buatTeksRekap();
-
   try{
-
+    window.focus();
     await navigator.clipboard.writeText(text);
 
     const icon = document.getElementById("copyRekapIcon");
@@ -1413,13 +1411,10 @@ function showDetailByNIK(nik){
     }
 
     showToast("Rekap disalin");
-
   }catch(err){
-
     console.error(err);
-
+    showToast("Gagal menyalin, coba ketuk lagi", 2500);
   }
-
 }
 function showToast(text, durasi = 1800){
 
