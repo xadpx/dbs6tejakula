@@ -282,20 +282,26 @@
       box-shadow: 0 3px 10px rgba(0,0,0,.2) !important;
     }
     .rombel-row {
-      padding: 12px 8px; border-radius: 14px; cursor: pointer;
+      padding: 10px 8px; border-radius: 14px; cursor: pointer;
       transition: background .15s ease;
     }
     .rombel-row.open { background: rgba(37,99,235,.06); }
-    .rombel-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .rombel-top { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .rombel-avatar {
+      width: 32px; height: 32px; border-radius: 11px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 800; font-size: 12.5px;
+    }
+    .rombel-mid { flex: 1; min-width: 0; }
     .rombel-name { font-size: 14px; font-weight: 700; color: #1f2937; }
-    .rombel-right { display: flex; align-items: center; gap: 8px; }
+    .rombel-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
     .rombel-total { font-size: 13px; font-weight: 800; color: #1f2937; }
     .rombel-chev { color: #c7cbd1; font-size: 20px; transition: transform .2s ease; }
     .rombel-row.open .rombel-chev { transform: rotate(90deg); color: #2563EB; }
-    .rombel-track { width: 100%; height: 8px; background: #eef1f5; border-radius: 999px; position: relative; overflow: hidden; }
-    .rombel-track div { position: absolute; left: 0; top: 0; height: 100%; border-radius: 999px; background: linear-gradient(90deg,#2563EB,#4C8DF5); }
+    .rombel-track { width: 100%; height: 7px; background: #eef1f5; border-radius: 999px; position: relative; overflow: hidden; margin-top: 6px; }
+    .rombel-track div { position: absolute; left: 0; top: 0; height: 100%; border-radius: 999px; }
     .rombel-detail { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
-    .rombel-detail.open { max-height: 70px; padding: 4px 8px 10px; }
+    .rombel-detail.open { max-height: 70px; padding: 4px 8px 10px 44px; }
     .rombel-lp-row { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: #374151; margin-bottom: 6px; }
     .rombel-lp-row span.l { color: #C2410C; }
     .rombel-lp-row span.p { color: #6D28D9; }
@@ -1028,21 +1034,30 @@ let modeRentang = false;
       });
 
       const maxTotalRombel = Math.max(...window.rombelData.map(r => r.L + r.P), 1);
+      const avatarPalette = [
+        ['#6C8EF5','#3E5BC4'], ['#FF9A6C','#E85D2E'], ['#B49AE8','#8C6BC7'],
+        ['#4FD1C5','#2C9C8F'], ['#FFC15E','#E8A014'], ['#FF8FB3','#E85586']
+      ];
       document.getElementById('rombelList').innerHTML = window.rombelData.map((r, i) => {
         const total = r.L + r.P;
         const widthPct = (total / maxTotalRombel * 100).toFixed(0);
         const pctL = total ? (r.L / total * 100).toFixed(0) : 0;
         const pctP = total ? (r.P / total * 100).toFixed(0) : 0;
+        const [c1, c2] = avatarPalette[i % avatarPalette.length];
+        const nomorKelas = String(r.kelas).replace(/kelas/i,'').trim();
         return `
 <div class="rombel-row" id="rombelRow${i}" onclick="toggleRombelRow(${i})">
   <div class="rombel-top">
-    <span class="rombel-name">${r.kelas}</span>
+    <span class="rombel-avatar" style="background:linear-gradient(160deg,${c1},${c2})">${nomorKelas}</span>
+    <div class="rombel-mid">
+      <span class="rombel-name">${r.kelas}</span>
+      <div class="rombel-track"><div style="width:${widthPct}%;background:linear-gradient(90deg,${c1},${c2})"></div></div>
+    </div>
     <div class="rombel-right">
-      <span class="rombel-total">${total} siswa</span>
+      <span class="rombel-total">${total}</span>
       <span class="material-symbols-rounded rombel-chev">chevron_right</span>
     </div>
   </div>
-  <div class="rombel-track"><div style="width:${widthPct}%"></div></div>
 </div>
 <div class="rombel-detail" id="rombelDetail${i}">
   <div class="rombel-lp-row"><span class="l">${r.L} Laki-laki</span><span class="p">${r.P} Perempuan</span></div>
@@ -1654,10 +1669,10 @@ function cekPIN(){
     const labelAman = l.replace(/'/g, "\\'");
 
    return `
-      <div onclick="tampilkanSiswaKategori(${kolom}, '${labelAman}')" class="flex items-center gap-2 rounded-xl px-3 cursor-pointer active:bg-gray-100 transition" style="padding-top:10px; padding-bottom:10px; background:#eef2f7; box-shadow: -2px -2px 5px rgba(255,255,255,.7), 2px 2px 5px rgba(163,177,198,.3);">
+      <div onclick="tampilkanSiswaKategori(${kolom}, '${labelAman}')" class="flex items-center gap-2 rounded-full px-3 cursor-pointer active:opacity-80 transition" style="padding-top:9px; padding-bottom:9px; background:${colors[i]}22;">
         <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:${colors[i]}"></span>
-        <span class="text-[13px] text-gray-600 flex-1 truncate" style="line-height:1.6;">${l}</span>
-        <span class="text-[13px] font-semibold text-gray-900" style="line-height:1.6;">${val}</span>
+        <span class="text-[12.5px] font-semibold text-gray-700 flex-1 truncate" style="line-height:1.5;">${l}</span>
+        <span class="text-[13px] font-extrabold text-gray-900" style="line-height:1.5;">${val}</span>
       </div>
     `;
 
@@ -1688,12 +1703,12 @@ function buatChart(){
 });
 
   const warnaKesejahteraan = [
-  "#D4D4D4", // Desil 1 → abu paling muda
-  "#B8B8B8", // Desil 2 → abu tengah
-  "#9B9B9B", // Desil 3 → abu paling gelap
-  "#FFBB94", // Desil 4
-  "#FF9A6C", // Desil 5
-  "#FF7A45"  // Desil 6-10
+  "#DFF5F1", // Desil 1 → teal paling muda
+  "#B8E9E0", // Desil 2
+  "#8FD9CE", // Desil 3
+  "#5FC4B5", // Desil 4
+  "#2C9C8F", // Desil 5
+  "#1F7A70"  // Desil 6-10 → teal paling gelap
 ];
 
   const labelKesejahteraan = Object.keys(desil);
@@ -1768,7 +1783,7 @@ function buatChart(){
 
   });
 
-  const warnaStatusAnak = ["#FF7A45","#9B9B9B"];
+  const warnaStatusAnak = ["#8C6BC7","#E3D9F7"];
   const labelStatusAnak = Object.keys(status);
   const nilaiStatusAnak = Object.values(status);
 
@@ -1832,14 +1847,14 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
     function unduhKesejahteraanGambar(){
   const desil = { "Desil 1":0,"Desil 2":0,"Desil 3":0,"Desil 4":0,"Desil 5":0,"Desil 6-10":0 };
   d.forEach(r=>{ let x = String(r[13]).trim(); if(desil.hasOwnProperty(x)) desil[x]++; });
-  const warna = ["#D4D4D4","#B8B8B8","#9B9B9B","#FFBB94","#FF9A6C","#FF7A45"];
+  const warna = ["#DFF5F1","#B8E9E0","#8FD9CE","#5FC4B5","#2C9C8F","#1F7A70"];
   unduhChartSebagaiGambar("btnUnduhKesejahteraan", window.chartKesejahteraanInstance, "Kesejahteraan Siswa", Object.keys(desil), Object.values(desil), warna, "Siswa", "Kesejahteraan_Siswa.jpg");
 }
 
 function unduhStatusAnakGambar(){
   let status = {};
   d.forEach(r=>{ let s = String(r[14]).trim(); if(s=="") s="Tidak Ada"; status[s]=(status[s]||0)+1; });
-  const warna = ["#FF7A45","#9B9B9B"];
+  const warna = ["#8C6BC7","#E3D9F7"];
   unduhChartSebagaiGambar("btnUnduhStatusAnak", window.chartStatusAnakInstance, "Status Anak", Object.keys(status), Object.values(status), warna, "Siswa", "Status_Anak.jpg");
 }
 function setNavDisabled(disabled){
