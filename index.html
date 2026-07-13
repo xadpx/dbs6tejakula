@@ -1099,10 +1099,9 @@ function filterSiswa() {
 
   if (q === "") {
     document.getElementById("list-siswa").innerHTML = `
-<div class="rounded-3xl overflow-hidden" style="background:#e6ddf0; border: 1px solid #d9cceb;">
-        <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">manage_search</span>
-        <p class="text-sm text-gray-600 font-medium">Ketik minimal 3 huruf</p>
-        <p class="text-xs text-gray-600 mt-1">Cari berdasarkan Nama, NISN, atau NIK</p>
+      <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:#e6ddf0; border: 1px solid #d9cceb;">
+        <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">keyboard</span>
+        <p class="text-sm text-gray-600 font-medium">Ketik ${sisa} huruf lagi</p>
       </div>
     `;
     return;
@@ -1111,9 +1110,9 @@ function filterSiswa() {
   if (q.length < 3) {
     const sisa = 3 - q.length;
     document.getElementById("list-siswa").innerHTML = `
-      <div class="flex flex-col items-center justify-center text-center pt-14 px-6">
-        <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">keyboard</span>
-        <p class="text-sm text-gray-600 font-medium">Ketik ${sisa} huruf lagi</p>
+      <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:#e6ddf0; border: 1px solid #d9cceb;">
+        <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">person_off</span>
+        <p class="text-sm text-gray-600 font-medium">Siswa tidak ditemukan</p>
       </div>
     `;
     return;
@@ -1173,7 +1172,7 @@ hasil.sort((a, b) => {
   }
 
   document.getElementById("list-siswa").innerHTML = `
-<div class="rounded-3xl overflow-hidden" style="background:#f1eef5;">
+<div class="rounded-3xl overflow-hidden" style="background:#e6ddf0; border: 1px solid #d9cceb;">
 
 ${hasil.map((r,i)=>{
 
