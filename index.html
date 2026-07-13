@@ -253,21 +253,21 @@
       box-shadow: 0 -1px 4px rgba(0,0,0,0.06);
     }
     .neu-search{
-      -webkit-appearance: none !important;
-      appearance: none !important;
-      background-color: #ffffff !important;
-      border: none;
-      border-radius: 9999px;
-      box-shadow: none !important;
-    }
-    .neu-search-icon{
-      background:#ffffff;
-      box-shadow: none;
-    }
-    .neu-dropdown{
-      background:#ffffff;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-    }
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  background-color: #F0F2F5 !important;
+  border: none;
+  border-radius: 9999px;
+  box-shadow: inset 3px 3px 7px rgba(163,177,198,.35), inset -3px -3px 7px rgba(255,255,255,.8) !important;
+}
+.neu-search-icon{
+  background:#ffffff;
+  box-shadow: none;
+}
+.neu-dropdown{
+  background:#F0F2F5;
+  box-shadow: inset 3px 3px 7px rgba(163,177,198,.3), inset -3px -3px 7px rgba(255,255,255,.75);
+}
       .neu-nav-flat{
       background:#ffffff;
       box-shadow: 0 -1px 4px rgba(0,0,0,0.06);
@@ -289,14 +289,17 @@
     }
     .rombel-row.open { background: #E6E9EF; }
     .rombel-row:last-child { margin-bottom: 0; }
-    .pillbar-row { display: flex; justify-content: space-around; align-items: flex-end; height: 130px; margin-bottom: 18px; padding: 0 4px; }
-    .pillbar-col { display: flex; flex-direction: column; align-items: center; }
-    .pillbar-track {
-      width: 24px; height: 100%; border-radius: 12px; position: relative; overflow: hidden;
-      background: #EEF0F3; box-shadow: inset -2px -2px 5px rgba(255,255,255,.7), inset 2px 2px 5px rgba(163,177,198,.25);
-    }
-    .pillbar-fill { position: absolute; bottom: 0; left: 0; width: 100%; border-radius: 12px; }
-    .pillbar-lbl { font-size: 12px; font-weight: 700; color: #4b5563; margin-top: 10px; }
+    .pillbar-row { display: flex; justify-content: space-around; align-items: flex-end; height: 180px; margin-bottom: 20px; padding: 0 4px; }
+.pillbar-col { display: flex; flex-direction: column; align-items: center; }
+.pillbar-track {
+  width: 32px; height: 100%; border-radius: 16px; position: relative; overflow: hidden;
+  background: #EEF0F3; box-shadow: inset -3px -3px 7px rgba(255,255,255,.8), inset 3px 3px 7px rgba(163,177,198,.35);
+}
+.pillbar-fill {
+  position: absolute; bottom: 0; left: 0; width: 100%; border-radius: 16px;
+  box-shadow: -2px -2px 5px rgba(255,255,255,.35) inset, 2px 2px 6px rgba(0,0,0,.15);
+}
+.pillbar-lbl { font-size: 13px; font-weight: 700; color: #4b5563; margin-top: 12px; }
     .rombel-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
     .rombel-name { font-size: 13.5px; font-weight: 600; color: #374151; flex: 1; min-width: 0; }
     .rombel-total { font-size: 13px; font-weight: 800; color: #1f2937; }
@@ -341,6 +344,17 @@
       box-shadow: inset -6px -6px 14px rgba(255,255,255,.8), inset 6px 6px 14px rgba(163,177,198,.3);
       background: #fff; padding: 10px; margin: 0 auto;
     }
+      .legend-chip-neu {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  background: #ffffff; border-radius: 12px; padding: 8px 4px;
+  box-shadow: -3px -3px 7px rgba(255,255,255,.8), 3px 3px 8px rgba(163,177,198,.28);
+}
+.legend-chip-lbl {
+  font-size: 9.5px; font-weight: 700; color: #6b7280;
+  text-align: center; line-height: 1.2; max-width: 100%;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.legend-chip-val { font-size: 12.5px; font-weight: 800; color: #1f2937; }
   </style>
 </head>
 <body class="text-base">
@@ -473,13 +487,15 @@ content_copy
     <div id="skelKesejahteraan" class="w-full flex flex-col items-center justify-center py-10">
       <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
     </div>
-    <div class="flex justify-center" style="padding:14px 0">
-    <div class="relative" style="width:170px;height:170px">
-  <canvas id="chartKesejahteraan" class="hidden"></canvas>
-    </div>
-    </div>
-    <div id="legendKesejahteraan" class="hidden mt-1 flex flex-col gap-2">
-    </div>
+   <div class="flex justify-center" style="padding:16px 0">
+<div class="chart-glass-wrap" style="width:250px;height:250px">
+<div class="relative" style="width:230px;height:230px">
+<canvas id="chartKesejahteraan" class="hidden"></canvas>
+</div>
+</div>
+</div>
+<div id="legendKesejahteraan" class="hidden mt-2 grid grid-cols-4 gap-2">
+</div>
   </div>
 
   <div id="cardStatusAnak" class="neu-card p-5">
@@ -498,13 +514,15 @@ content_copy
     <div id="skelStatusAnak" class="w-full flex flex-col items-center justify-center py-10">
       <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
     </div>
-    <div class="flex justify-center" style="padding:14px 0">
-    <div class="relative" style="width:170px;height:170px">
-      <canvas id="chartStatusAnak" class="hidden"></canvas>
-    </div>
-    </div>
-    <div id="legendStatusAnak" class="hidden mt-1 flex flex-col gap-2">
-    </div>
+    <div class="flex justify-center" style="padding:16px 0">
+<div class="chart-glass-wrap" style="width:250px;height:250px">
+<div class="relative" style="width:230px;height:230px">
+<canvas id="chartStatusAnak" class="hidden"></canvas>
+</div>
+</div>
+</div>
+<div id="legendStatusAnak" class="hidden mt-2 grid grid-cols-4 gap-2">
+</div>
   </div>
 <div class="mt-5 mb-3 text-center text-[10px] text-gray-400">
 
@@ -631,7 +649,7 @@ class="neu-dropdown w-full mt-2 h-10 pl-4 pr-10 rounded-xl text-sm outline-none"
     <select
 id="kelasAwal"
 onchange="updateKelasAkhir()"
-class="w-24 min-w-[96px] h-9 rounded-xl border border-gray-300 px-2 text-sm">
+class="neu-dropdown w-24 min-w-[96px] h-9 rounded-xl border-none px-2 text-sm">
 
       <option value="Kelas 1">Kelas 1</option>
       <option value="Kelas 2">Kelas 2</option>
@@ -645,9 +663,9 @@ class="w-24 min-w-[96px] h-9 rounded-xl border border-gray-300 px-2 text-sm">
       sampai
     </span>
 
-    <select
+   <select
 id="kelasAkhir"
-class="w-24 min-w-[96px] h-9 rounded-xl border border-gray-300 px-2 text-sm">
+class="neu-dropdown w-24 min-w-[96px] h-9 rounded-xl border-none px-2 text-sm">
 
       <option value="Kelas 2">Kelas 2</option>
       <option value="Kelas 3">Kelas 3</option>
@@ -1652,11 +1670,10 @@ function cekPIN(){
     const labelAman = l.replace(/'/g, "\\'");
 
    return `
-      <div onclick="tampilkanSiswaKategori(${kolom}, '${labelAman}')" class="flex items-center gap-3 rounded-2xl px-4 cursor-pointer active:opacity-70 transition" style="padding-top:13px; padding-bottom:13px; background:#EEF0F4;">
-        <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:${colors[i]}"></span>
-        <span class="text-[13.5px] font-semibold text-gray-700 flex-1 truncate">${l}</span>
-        <span class="text-[13px] font-bold text-gray-900">${val}</span>
-        <span class="material-symbols-rounded text-[18px] text-gray-400">expand_more</span>
+      <div onclick="tampilkanSiswaKategori(${kolom}, '${labelAman}')" class="legend-chip-neu cursor-pointer active:opacity-70 transition">
+        <span class="w-2 h-2 rounded-full shrink-0" style="background:${colors[i]}"></span>
+        <span class="legend-chip-lbl">${l}</span>
+        <span class="legend-chip-val">${val}</span>
       </div>
     `;
 
