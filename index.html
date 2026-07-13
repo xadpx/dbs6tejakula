@@ -341,7 +341,8 @@
     }
     .chart-glass-wrap {
   border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  background: transparent; padding: 10px; margin: 0 auto;
+  box-shadow: inset -8px -8px 16px rgba(255,255,255,.85), inset 8px 8px 18px rgba(163,177,198,.32);
+  background: #F0F2F5; padding: 14px; margin: 0 auto;
 }
       .legend-chip-neu {
   display: flex; flex-direction: column; align-items: center; gap: 3px;
@@ -487,8 +488,8 @@ content_copy
       <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
     </div>
    <div class="flex justify-center" style="padding:16px 0">
-<div class="chart-glass-wrap" style="width:250px;height:250px">
-<div class="relative" style="width:230px;height:230px">
+<div class="chart-glass-wrap" style="width:290px;height:290px">
+<div class="relative" style="width:262px;height:262px">
 <canvas id="chartKesejahteraan" class="hidden"></canvas>
 </div>
 </div>
@@ -514,8 +515,8 @@ content_copy
       <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
     </div>
     <div class="flex justify-center" style="padding:16px 0">
-<div class="chart-glass-wrap" style="width:250px;height:250px">
-<div class="relative" style="width:230px;height:230px">
+<div class="chart-glass-wrap" style="width:290px;height:290px">
+<div class="relative" style="width:262px;height:262px">
 <canvas id="chartStatusAnak" class="hidden"></canvas>
 </div>
 </div>
@@ -1767,6 +1768,7 @@ function buatChart(){
     datasets:[{
       data:nilaiKesejahteraan,
       backgroundColor: buatWarnaHighlight(nilaiKesejahteraan, warnaKesejahteraan),
+      hoverBackgroundColor: buatWarnaHighlight(nilaiKesejahteraan, warnaKesejahteraan),
       borderColor:"#FFFFFF",
       borderWidth:4,
       borderRadius:12,
@@ -1775,7 +1777,7 @@ function buatChart(){
   },
   options:{
     responsive:true,
-    layout:{ padding:44 },
+    layout:{ padding:50 },
     cutout:"68%",
     plugins:{
       legend:{
@@ -1842,17 +1844,17 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
   data:nilaiStatusAnak,
 
   backgroundColor:buatWarnaHighlight(nilaiStatusAnak, warnaStatusAnak),
-
+hoverBackgroundColor: buatWarnaHighlight(nilaiStatusAnak, warnaStatusAnak),
   borderColor:"#FFFFFF",
   borderWidth:4,
   borderRadius:12,
-  hoverOffset:6
+  hoverOffset:0
 }]
   },
 
   options:{
     responsive:true,
-    layout:{ padding:44 },
+    layout:{ padding:50 },
     cutout:"68%",
     plugins:{
       legend:{
