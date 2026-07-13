@@ -1010,8 +1010,8 @@ let modeRentang = false;
         return `
 <div class="rombel-row" id="rombelRow${i}" onclick="toggleRombelRow(${i})">
   <div class="rombel-left">
-    <span class="rombel-badge">${r.kelas}</span>
-    Kelas ${r.kelas}
+    <span class="rombel-badge">${String(r.kelas).replace(/kelas/i,'').trim()}</span>
+    ${r.kelas}
   </div>
   <div class="rombel-right">
     <div class="rombel-track"><div style="width:${widthPct}%"></div></div>
@@ -2824,7 +2824,7 @@ function animasikanAngkaDanRing(idAngka, idRing, idPersenText, nilaiAkhir, total
     const Jumlah = r.L + r.P;
     totalSiswa += Jumlah;
 
-    text += `*Kelas ${r.kelas}*\nLaki-laki: ${r.L} | Perempuan: ${r.P}\nJumlah: ${Jumlah}\n\n`;
+    text += `*${r.kelas}*\nLaki-laki: ${r.L} | Perempuan: ${r.P}\nJumlah: ${Jumlah}\n\n`;
 
   });
 
