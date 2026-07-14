@@ -312,13 +312,13 @@
       background: #fff;
     }
     .fab-copy {
-      width: 34px; height: 34px; border-radius: 50%;
-      background: linear-gradient(160deg,#5B7FE8,#3E5BC4) !important;
-      box-shadow: 0 4px 12px rgba(59,91,196,.35);
-      display: flex; align-items: center; justify-content: center;
-      color: #fff !important;
-    }
-    .fab-copy .material-symbols-rounded { color: #fff !important; font-size: 17px; }
+  width: 34px; height: 34px; border-radius: 50%;
+  background: #ffffff;
+  box-shadow: -3px -3px 7px rgba(255,255,255,.8), 3px 3px 8px rgba(163,177,198,.28);
+  display: flex; align-items: center; justify-content: center;
+  color: #6b7280;
+}
+.fab-copy .material-symbols-rounded { color: #6b7280; font-size: 17px; }
     .icon-badge-teal {
       width: 30px; height: 30px; border-radius: 10px;
       background: linear-gradient(160deg,#4FD1C5,#2C9C8F);
@@ -1200,12 +1200,11 @@ function filterSiswa() {
     document.getElementById("list-siswa").innerHTML = `
       <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:#e6ddf0; border: 1px solid #d9cceb;">
         <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">keyboard</span>
-        <p class="text-sm text-gray-600 font-medium">Ketik ${sisa} huruf lagi</p>
+        <p class="text-sm text-gray-600 font-medium">Ketik 3 huruf lagi</p>
       </div>
     `;
     return;
   }
-
   if (q.length < 3) {
     const sisa = 3 - q.length;
     document.getElementById("list-siswa").innerHTML = `
