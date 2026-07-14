@@ -292,17 +292,27 @@
     .pillbar-row { display: flex; flex-direction: column; gap: 14px; padding: 4px 0; }
 .pillbar-col { display: flex; align-items: center; gap: 12px; }
 .pillbar-name { width: 56px; flex-shrink: 0; font-size: 13px; font-weight: 700; color: #374151; }
-.pillbar-track {
-  flex: 1; height: 26px; border-radius: 13px; position: relative; overflow: hidden;
-  background: #F4F8FB; box-shadow: inset 2px 2px 5px rgba(163,177,198,.25);
-  cursor: pointer;
+.pillbar-track{
+    height:14px;
+    border-radius:999px;
 }
-.pillbar-fill {
-  position: absolute; top: 0; left: 0; height: 100%; border-radius: 13px;
+
+.pillbar-fill{
+    border-radius:999px;
 }
-.pillbar-lbl {
-  width: 30px; flex-shrink: 0; text-align: right;
-  font-size: 13px; font-weight: 800; color: #374151;
+
+.pillbar-row{
+    gap:10px;
+}
+
+.pillbar-name{
+    width:50px;
+    font-size:12px;
+}
+
+.pillbar-lbl{
+    width:26px;
+    font-size:12px;
 }
 
     .neu-ring-wrap {
