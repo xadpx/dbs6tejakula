@@ -380,23 +380,7 @@
       transform: scale(0.94);
       box-shadow: inset 2px 2px 5px rgba(163,177,198,.4), inset -2px -2px 5px rgba(255,255,255,.6);
     }
-      .rombel-popup-overlay {
-  position: fixed; inset: 0; background: rgba(20,22,30,.35);
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none; transition: opacity .2s ease; z-index: 60;
-}
-.rombel-popup-overlay.show { opacity: 1; pointer-events: auto; }
-.rombel-popup-card {
-  background: #fff; border-radius: 20px; padding: 20px 24px; width: 260px;
-  transform: scale(.9); transition: transform .25s cubic-bezier(.2,.8,.2,1);
-  box-shadow: 0 20px 50px rgba(0,0,0,.2);
-}
-.rombel-popup-overlay.show .rombel-popup-card { transform: scale(1); }
-.rombel-popup-title { font-size: 14px; font-weight: 800; color: #1f2937; margin: 0 0 14px; text-align: center; }
-.rombel-popup-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 700; padding: 8px 0; border-bottom: 1px solid #F3F4F6; }
-.rombel-popup-row:last-child { border-bottom: none; }
-.rombel-popup-row .l { color: #475DB5; }
-.rombel-popup-row .p { color: #E0447D; }
+      
   </style>
 </head>
 <body class="text-base">
@@ -1152,10 +1136,14 @@ function bukaPopupRombel(i){
   document.getElementById('rombelPopupTitle').textContent = r.kelas + ' (' + (r.L+r.P) + ' siswa)';
   document.getElementById('rombelPopupL').textContent = r.L;
   document.getElementById('rombelPopupP').textContent = r.P;
-  document.getElementById('rombelPopupOverlay').classList.add('show');
+  document.getElementById('rombelPopupOverlay').classList.remove('hidden');
+  setNavDisabled(true);
+  kunciScroll(true);
 }
 function tutupPopupRombel(){
-  document.getElementById('rombelPopupOverlay').classList.remove('show');
+  document.getElementById('rombelPopupOverlay').classList.add('hidden');
+  setNavDisabled(false);
+  kunciScroll(false);
 }
 function nav(p){
 
