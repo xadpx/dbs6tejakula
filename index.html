@@ -340,9 +340,21 @@
       display: flex; align-items: center; justify-content: center; color: #fff;
     }
     .chart-glass-wrap {
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      background: transparent; padding: 0; margin: 0 auto;
-    }
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  box-shadow: inset 6px 6px 14px rgba(163,177,198,.4), inset -6px -6px 14px rgba(255,255,255,.9);
+  background: transparent; padding: 0; margin: 0 auto; position: relative;
+}
+.ring-center-raised {
+  position: absolute;
+  width: 132px; height: 132px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow:
+    -10px -10px 22px rgba(255,255,255,1),
+    10px 10px 22px rgba(163,177,198,.55),
+    0 0 18px rgba(163,177,198,.45);
+  z-index: 0;
+}
     .legend-chip-neu {
       display: flex; flex-direction: column; align-items: center; gap: 3px;
       background: #ffffff; border-radius: 12px; padding: 8px 4px;
@@ -494,10 +506,10 @@ content_copy
     <div id="skelKesejahteraan" class="w-full flex flex-col items-center justify-center py-10">
       <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
     </div>
-    <div class="flex justify-center" style="padding:16px 0">
     <div class="chart-glass-wrap" style="width:290px;height:290px">
-    <div class="relative" style="width:262px;height:262px">
-  <canvas id="chartKesejahteraan" class="hidden"></canvas>
+<div class="ring-center-raised"></div>
+<div class="relative" style="width:262px;height:262px">
+<canvas id="chartKesejahteraan" class="hidden"></canvas>
     </div>
     </div>
     </div>
@@ -521,10 +533,10 @@ content_copy
     <div id="skelStatusAnak" class="w-full flex flex-col items-center justify-center py-10">
       <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
     </div>
-    <div class="flex justify-center" style="padding:16px 0">
-    <div class="chart-glass-wrap" style="width:290px;height:290px">
-    <div class="relative" style="width:262px;height:262px">
-      <canvas id="chartStatusAnak" class="hidden"></canvas>
+   <div class="chart-glass-wrap" style="width:290px;height:290px">
+<div class="ring-center-raised"></div>
+<div class="relative" style="width:262px;height:262px">
+<canvas id="chartStatusAnak" class="hidden"></canvas>
     </div>
     </div>
     </div>
@@ -1728,41 +1740,6 @@ function handleLegendTap(containerId, i){
   if(chip) chip.classList.add('legend-chip-selected');
 }
 
-const groovePlugin = {
-  id: 'groove',
-  beforeDatasetsDraw(chart) {
-    const meta = chart.getDatasetMeta(0);
-    if (!meta.data[0]) return;
-    const {ctx} = chart;
-    const props = meta.data[0].getProps(['x','y','innerRadius','outerRadius'], true);
-
-    ctx.save();
-    // alur dasar (warna netral, senada background card)
-    ctx.beginPath();
-    ctx.arc(props.x, props.y, props.outerRadius, 0, Math.PI*2);
-    ctx.arc(props.x, props.y, props.innerRadius, 0, Math.PI*2, true);
-    ctx.closePath();
-    ctx.fillStyle = '#EEF0F3';
-    ctx.fill();
-
-    // shading biar keliatan cekung (gelap kiri-atas, terang kanan-bawah)
-    const grad = ctx.createLinearGradient(
-      props.x - props.outerRadius, props.y - props.outerRadius,
-      props.x + props.outerRadius, props.y + props.outerRadius
-    );
-    grad.addColorStop(0, 'rgba(163,177,198,.45)');
-    grad.addColorStop(0.5, 'rgba(0,0,0,0)');
-    grad.addColorStop(1, 'rgba(255,255,255,.9)');
-    ctx.beginPath();
-    ctx.arc(props.x, props.y, props.outerRadius, 0, Math.PI*2);
-    ctx.arc(props.x, props.y, props.innerRadius, 0, Math.PI*2, true);
-    ctx.closePath();
-    ctx.fillStyle = grad;
-    ctx.fill();
-    ctx.restore();
-  }
-};
-
 const glossyPlugin = {
   id: 'glossy',
   afterDatasetsDraw(chart) {
@@ -1867,7 +1844,7 @@ function buatChart(){
 
   window.chartKesejahteraanInstance = new Chart(document.getElementById("chartKesejahteraan"),{
   type:"doughnut",
-  plugins:[groovePlugin, glossyPlugin, outsideLabelsPlugin],
+  plugins:[glossyPlugin, outsideLabelsPlugin],
   data:{
     labels:labelKesejahteraan,
     datasets:[{
