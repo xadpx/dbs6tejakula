@@ -341,8 +341,8 @@
     }
     .chart-glass-wrap {
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      box-shadow: inset -8px -8px 16px rgba(255,255,255,.85), inset 8px 8px 18px rgba(163,177,198,.32);
-      background: #F0F2F5; padding: 14px; margin: 0 auto;
+      box-shadow: inset -6px -6px 14px rgba(255,255,255,.9), inset 6px 6px 14px rgba(163,177,198,.22);
+      background: #ffffff; padding: 6px; margin: 0 auto;
     }
     .legend-chip-neu {
       display: flex; flex-direction: column; align-items: center; gap: 3px;
@@ -1816,12 +1816,12 @@ function buatChart(){
 });
 
   const warnaKesejahteraan = [
-  "#3E50A8", // Desil 1
-  "#02B5DA", // Desil 2
-  "#FD5522", // Desil 3
-  "#F9A900", // Desil 4
-  "#55D9A3", // Desil 5
-  "#8B8FE0"  // Desil 6-10
+  "#11C8F5", // Desil 1 - cyan
+  "#CFC9FF", // Desil 2 - lavender
+  "#FFD6CC", // Desil 3 - peach
+  "#FFE59A", // Desil 4 - kuning
+  "#C9F6E6", // Desil 5 - mint
+  "#B9C2F0"  // Desil 6-10 - periwinkle (senada, tambahan krn kategori ada 6)
 ];
 
   const labelKesejahteraan = Object.keys(desil);
@@ -1908,7 +1908,7 @@ function buatChart(){
 
   });
 
-  const warnaStatusAnak = ["#3E50A8","#FD5522","#F9A900","#55D9A3","#02B5DA"];
+  const warnaStatusAnak = ["#11C8F5","#FFD6CC","#FFE59A","#C9F6E6","#CFC9FF"];
   const labelStatusAnak = Object.keys(status);
   const nilaiStatusAnak = Object.values(status);
 
@@ -1984,14 +1984,14 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
     function unduhKesejahteraanGambar(){
   const desil = { "Desil 1":0,"Desil 2":0,"Desil 3":0,"Desil 4":0,"Desil 5":0,"Desil 6-10":0 };
   d.forEach(r=>{ let x = String(r[13]).trim(); if(desil.hasOwnProperty(x)) desil[x]++; });
-  const warna = ["#3E50A8","#02B5DA","#FD5522","#F9A900","#55D9A3","#8B8FE0"];
+  const warna = ["#11C8F5","#CFC9FF","#FFD6CC","#FFE59A","#C9F6E6","#B9C2F0"];
   unduhChartSebagaiGambar("btnUnduhKesejahteraan", window.chartKesejahteraanInstance, "Kesejahteraan Siswa", Object.keys(desil), Object.values(desil), warna, "Siswa", "Kesejahteraan_Siswa.jpg");
 }
 
 function unduhStatusAnakGambar(){
   let status = {};
   d.forEach(r=>{ let s = String(r[14]).trim(); if(s=="") s="Tidak Ada"; status[s]=(status[s]||0)+1; });
-  const warna = ["#3E50A8","#FD5522","#F9A900","#55D9A3","#02B5DA"];
+  const warna = ["#11C8F5","#FFD6CC","#FFE59A","#C9F6E6","#CFC9FF"];
   unduhChartSebagaiGambar("btnUnduhStatusAnak", window.chartStatusAnakInstance, "Status Anak", Object.keys(status), Object.values(status), warna, "Siswa", "Status_Anak.jpg");
 }
 function setNavDisabled(disabled){
