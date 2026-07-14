@@ -2036,7 +2036,7 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
   const idxYatimPiatu = labelStatusAnak.findIndex(l => l.toLowerCase().includes('yatim'));
 const jumlahYatimPiatu = idxYatimPiatu >= 0 ? nilaiStatusAnak[idxYatimPiatu] : 0;
 document.getElementById('previewStatusAnak').textContent =
-  nilaiStatusAnak.reduce((a,b)=>a+b,0) + ' siswa \u00b7 ' + jumlahYatimPiatu + ' siswa yatim/piatu';
+  nilaiStatusAnak.reduce((a,b)=>a+b,0) + ' siswa \u00b7 ' + jumlahYatimPiatu + ' yatim/piatu';
 
 }
     function unduhKesejahteraanGambar(){
