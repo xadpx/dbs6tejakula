@@ -1728,6 +1728,8 @@ function warnaPekat(hex, faktor){
 
 window.donutState = {};
 
+window.donutTapTimers = window.donutTapTimers || {};
+
 function handleChartTap(containerId, i){
   const state = window.donutState[containerId];
   if(!state || !state.chart) return;
@@ -1737,12 +1739,21 @@ function handleChartTap(containerId, i){
   const labelEl = document.getElementById(idLabel);
   const total = ds.data.reduce((a,b)=>a+b,0);
 
-  if(state.preview === i){
+  if(window.donutTapTimers[containerId]){
+    clearTimeout(window.donutTapTimers[containerId]);
+    window.donutTapTimers[containerId] = null;
+  }
+
+  function baliknormal(){
     ds.backgroundColor = state.warnaAsli.slice();
     ds.offset = state.warnaAsli.map(()=>0);
     state.preview = null;
     chart.update();
     if(labelEl) labelEl.innerHTML = '<span class="cl-pct">'+ total +'</span><span class="cl-name">Total Siswa</span>';
+  }
+
+  if(state.preview === i){
+    baliknormal();
     return;
   }
 
@@ -1753,6 +1764,8 @@ function handleChartTap(containerId, i){
   if(labelEl){
     labelEl.innerHTML = '<span class="cl-name">' + state.labels[i] + '</span>';
   }
+
+  window.donutTapTimers[containerId] = setTimeout(baliknormal, 3000);
 }
 const glossyPlugin = {
   id: 'glossy',
@@ -1780,30 +1793,9 @@ const glossyPlugin = {
 const outsideLabelsPlugin = {
   id: 'outsideLabels',
   afterDraw(chart) {
-    const containerId = chart.donutContainerId;
-    const state = containerId ? window.donutState[containerId] : null;
-    if(!state || state.preview === null || state.preview === undefined) return;
-    const {ctx} = chart;
-    const meta = chart.getDatasetMeta(0);
-    const i = state.preview;
-    const arc = meta.data[i];
-    if(!arc) return;
-    const props = arc.getProps(['startAngle','endAngle','x','y','innerRadius'], true);
-    const mid = (props.startAngle + props.endAngle) / 2;
-    const cosM = Math.cos(mid), sinM = Math.sin(mid);
-    const lx1 = props.x + cosM * props.innerRadius;
-    const ly1 = props.y + sinM * props.innerRadius;
-    ctx.save();
-    ctx.strokeStyle = 'rgba(107,114,128,.6)';
-    ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.moveTo(lx1, ly1);
-    ctx.lineTo(props.x, props.y);
-    ctx.stroke();
-    ctx.restore();
+    // sengaja dikosongin — garis ke tengah udah nggak dipakai lagi
   }
 };
-
 function buatChart(){
 
   // ===== KESEJAHTERAAN =====
@@ -1865,6 +1857,12 @@ function buatChart(){
     onClick:(evt, els, chart)=>{
   const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
   if(points.length) handleChartTap('legendKesejahteraan', points[0].index);
+  clearTimeout(window.tooltipTimerKesejahteraan);
+  window.tooltipTimerKesejahteraan = setTimeout(()=>{
+    chart.tooltip.setActiveElements([], {x:0,y:0});
+    chart.setActiveElements([]);
+    chart.update();
+  }, 3000);
 },
     plugins:{
       legend:{
@@ -1955,6 +1953,12 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
    onClick:(evt, els, chart)=>{
   const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
   if(points.length) handleChartTap('legendStatusAnak', points[0].index);
+  clearTimeout(window.tooltipTimerStatusAnak);
+  window.tooltipTimerStatusAnak = setTimeout(()=>{
+    chart.tooltip.setActiveElements([], {x:0,y:0});
+    chart.setActiveElements([]);
+    chart.update();
+  }, 3000);
 },
     plugins:{
       legend:{
