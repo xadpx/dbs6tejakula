@@ -1068,13 +1068,13 @@ let modeRentang = false;
 
       const maxTotalRombel = Math.max(...window.rombelData.map(r => r.L + r.P), 1);
       const warnaRombel = [
-        { top:'#7081E2', bottom:'#475DB5' }, // Kelas 1
-        { top:'#01AECC', bottom:'#01AECC' }, // Kelas 2
-        { top:'#FFC55C', bottom:'#FFC55C' }, // Kelas 3
-        { top:'#3EB884', bottom:'#3EB884' }, // Kelas 4
-        { top:'#FF6FA5', bottom:'#E0447D' }, // Kelas 5
-        { top:'#B18AFF', bottom:'#8A5CF0' }  // Kelas 6-10 dst
-      ];
+  { top:"#A8D8FF", bottom:"#7BBEF8" }, // Soft Blue
+  { top:"#C9F6E6", bottom:"#8FE4C1" }, // Soft Mint
+  { top:"#FFE59A", bottom:"#FFD36E" }, // Soft Yellow
+  { top:"#FFD6CC", bottom:"#FFB8A6" }, // Soft Peach
+  { top:"#DCCEFF", bottom:"#BFA6FF" }, // Soft Lavender
+  { top:"#F8D5EA", bottom:"#F1A8D2" }  // Soft Pink
+];
 
       document.getElementById('pillbars').innerHTML = window.rombelData.map((r, i) => {
         const total = r.L + r.P;
