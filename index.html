@@ -529,15 +529,15 @@ style="opacity:0; transition: opacity .25s ease;">
       <h2 class="font-bold text-base m-0">
         Kesejahteraan Siswa
       </h2>
-      <div class="flex items-center">
-      <div
-        id="btnUnduhKesejahteraan"
-        onclick="event.stopPropagation(); unduhKesejahteraanGambar()"
-        class="btn-unduh-chart-icon">
-        <span class="material-symbols-rounded">download</span>
+      <div class="flex items-center justify-between mb-3 card-collapse-head" id="headKesejahteraan" onclick="toggleCardCollapse('Kesejahteraan')">
+      <div>
+        <h2 class="font-bold text-base m-0">
+          Kesejahteraan Siswa
+        </h2>
+        <p class="text-[12px] text-gray-400 font-medium m-0 mt-0.5" id="previewKesejahteraan"></p>
       </div>
       <span class="material-symbols-rounded card-collapse-chev" id="chevKesejahteraan">expand_more</span>
-      </div>
+    </div>
     </div>
 
     <div class="card-collapse-body" id="bodyKesejahteraan">
@@ -561,15 +561,15 @@ style="opacity:0; transition: opacity .25s ease;">
       <h2 class="font-bold text-base m-0">
         Status Anak
       </h2>
-      <div class="flex items-center">
-      <div
-        id="btnUnduhStatusAnak"
-        onclick="event.stopPropagation(); unduhStatusAnakGambar()"
-        class="btn-unduh-chart-icon">
-        <span class="material-symbols-rounded">download</span>
+      <div class="flex items-center justify-between mb-3 card-collapse-head" id="headStatusAnak" onclick="toggleCardCollapse('StatusAnak')">
+      <div>
+        <h2 class="font-bold text-base m-0">
+          Status Anak
+        </h2>
+        <p class="text-[12px] text-gray-400 font-medium m-0 mt-0.5" id="previewStatusAnak"></p>
       </div>
       <span class="material-symbols-rounded card-collapse-chev" id="chevStatusAnak">expand_more</span>
-      </div>
+    </div>
     </div>
 
     <div class="card-collapse-body" id="bodyStatusAnak">
@@ -1950,6 +1950,9 @@ function buatChart(){
     labels: labelKesejahteraan,
     preview: null
   };
+  const jumlahDesil1sd4 = nilaiKesejahteraan.slice(0,4).reduce((a,b)=>a+b,0);
+document.getElementById('previewKesejahteraan').textContent =
+  nilaiKesejahteraan.reduce((a,b)=>a+b,0) + ' siswa \u00b7 ' + jumlahDesil1sd4 + ' di Desil 1-4';
   // ===== STATUS ANAK =====
 
   let status={};
@@ -2041,6 +2044,10 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
     labels: labelStatusAnak,
     preview: null
   };
+  const idxYatimPiatu = labelStatusAnak.findIndex(l => l.toLowerCase().includes('yatim'));
+const jumlahYatimPiatu = idxYatimPiatu >= 0 ? nilaiStatusAnak[idxYatimPiatu] : 0;
+document.getElementById('previewStatusAnak').textContent =
+  nilaiStatusAnak.reduce((a,b)=>a+b,0) + ' siswa \u00b7 ' + jumlahYatimPiatu + ' siswa yatim/piatu';
 
 }
     function unduhKesejahteraanGambar(){
