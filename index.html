@@ -349,7 +349,7 @@
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: 92px; height: 92px;
+  width: 112px; height: 112px;
   border-radius: 50%;
   background: #fff;
   box-shadow:
@@ -1860,7 +1860,7 @@ function buatChart(){
   },
   options:{
     responsive:true,
-    layout:{ padding:50 },
+    layout:{ padding:34 },
     cutout:"68%",
     onClick:(evt, els, chart)=>{
       const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
