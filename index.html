@@ -1733,27 +1733,23 @@ function handleChartTap(containerId, i){
   const ds = chart.data.datasets[0];
   const idLabel = 'centerLabel' + containerId.replace('legend','');
   const labelEl = document.getElementById(idLabel);
+  const total = ds.data.reduce((a,b)=>a+b,0);
 
   if(state.preview === i){
-    // udah timbul, tap lagi -> balik semula
     ds.backgroundColor = state.warnaAsli.slice();
     ds.offset = state.warnaAsli.map(()=>0);
     state.preview = null;
     chart.update();
-    if(labelEl) labelEl.classList.remove('show');
+    if(labelEl) labelEl.innerHTML = '<span class="cl-pct">'+ total +'</span><span class="cl-name">Total Siswa</span>';
     return;
   }
 
-  // timbulkan segmen ini doang, yang lain tetap ukuran semula
   ds.backgroundColor = state.warnaAsli.map((w,idx)=> idx===i ? warnaPekat(w) : w);
-  ds.offset = state.warnaAsli.map((w,idx)=> idx===i ? 14 : 0);
+  ds.offset = state.warnaAsli.map((w,idx)=> idx===i ? 6 : 0);
   state.preview = i;
   chart.update();
   if(labelEl){
-    const total = ds.data.reduce((a,b)=>a+b,0);
-    const persen = Math.round(ds.data[i] / total * 100);
-    labelEl.innerHTML = '<span class="cl-name">' + state.labels[i] + '</span><span class="cl-pct">' + persen + '%</span>';
-    labelEl.classList.add('show');
+    labelEl.innerHTML = '<span class="cl-name">' + state.labels[i] + '</span>';
   }
 }
 const glossyPlugin = {
