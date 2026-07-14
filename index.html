@@ -894,8 +894,10 @@ class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justi
 <!-- MODAL KATEGORI (daftar siswa per kategori chart) -->
 <div id="modalKategori"
 onclick="if(event.target===this) closeModalKategori()"
-class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-6">
-  <div class="neu-modal relative w-[93%] max-w-sm max-h-[75vh] rounded-lg flex flex-col overflow-hidden">
+class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-6"
+style="opacity:0; transition: opacity .25s ease;">
+  <div id="modalKategoriBox" class="neu-modal relative w-[93%] max-w-sm max-h-[75vh] rounded-lg flex flex-col overflow-hidden"
+  style="transform: scale(.92) translateY(12px); opacity:0; transition: transform .28s cubic-bezier(.2,.8,.2,1), opacity .28s ease;">
     <button
       onclick="closeModalKategori()"
       class="neu-modal-close absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center text-gray-500 transition z-10">
