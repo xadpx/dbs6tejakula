@@ -341,8 +341,7 @@
     }
     .chart-glass-wrap {
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      box-shadow: inset -6px -6px 14px rgba(255,255,255,.9), inset 6px 6px 14px rgba(163,177,198,.22);
-      background: #ffffff; padding: 6px; margin: 0 auto;
+      background: transparent; padding: 0; margin: 0 auto;
     }
     .legend-chip-neu {
       display: flex; flex-direction: column; align-items: center; gap: 3px;
@@ -1729,6 +1728,41 @@ function handleLegendTap(containerId, i){
   if(chip) chip.classList.add('legend-chip-selected');
 }
 
+const groovePlugin = {
+  id: 'groove',
+  beforeDatasetsDraw(chart) {
+    const meta = chart.getDatasetMeta(0);
+    if (!meta.data[0]) return;
+    const {ctx} = chart;
+    const props = meta.data[0].getProps(['x','y','innerRadius','outerRadius'], true);
+
+    ctx.save();
+    // alur dasar (warna netral, senada background card)
+    ctx.beginPath();
+    ctx.arc(props.x, props.y, props.outerRadius, 0, Math.PI*2);
+    ctx.arc(props.x, props.y, props.innerRadius, 0, Math.PI*2, true);
+    ctx.closePath();
+    ctx.fillStyle = '#EEF0F3';
+    ctx.fill();
+
+    // shading biar keliatan cekung (gelap kiri-atas, terang kanan-bawah)
+    const grad = ctx.createLinearGradient(
+      props.x - props.outerRadius, props.y - props.outerRadius,
+      props.x + props.outerRadius, props.y + props.outerRadius
+    );
+    grad.addColorStop(0, 'rgba(163,177,198,.45)');
+    grad.addColorStop(0.5, 'rgba(0,0,0,0)');
+    grad.addColorStop(1, 'rgba(255,255,255,.9)');
+    ctx.beginPath();
+    ctx.arc(props.x, props.y, props.outerRadius, 0, Math.PI*2);
+    ctx.arc(props.x, props.y, props.innerRadius, 0, Math.PI*2, true);
+    ctx.closePath();
+    ctx.fillStyle = grad;
+    ctx.fill();
+    ctx.restore();
+  }
+};
+
 const glossyPlugin = {
   id: 'glossy',
   afterDatasetsDraw(chart) {
@@ -1833,7 +1867,7 @@ function buatChart(){
 
   window.chartKesejahteraanInstance = new Chart(document.getElementById("chartKesejahteraan"),{
   type:"doughnut",
-  plugins:[glossyPlugin, outsideLabelsPlugin],
+  plugins:[groovePlugin, glossyPlugin, outsideLabelsPlugin],
   data:{
     labels:labelKesejahteraan,
     datasets:[{
@@ -1919,7 +1953,7 @@ function buatChart(){
 window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusAnak"),{
 
   type:"doughnut",
-  plugins:[glossyPlugin, outsideLabelsPlugin],
+  plugins:[groovePlugin, glossyPlugin, outsideLabelsPlugin],
 
   data:{
     labels:labelStatusAnak,
