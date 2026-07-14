@@ -289,17 +289,34 @@
     }
     .rombel-row.open { background: #E6E9EF; }
     .rombel-row:last-child { margin-bottom: 0; }
-    .pillbar-row { display: flex; justify-content: space-around; align-items: flex-end; height: 180px; margin-bottom: 20px; padding: 0 4px; }
+    .pillbar-row { display: flex; justify-content: space-around; align-items: flex-end; height: 190px; margin-bottom: 10px; padding: 0 4px; }
+.rombel-popup-overlay {
+  position: fixed; inset: 0; background: rgba(20,22,30,.35);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity .2s ease; z-index: 60;
+}
+.rombel-popup-overlay.show { opacity: 1; pointer-events: auto; }
+.rombel-popup-card {
+  background: #fff; border-radius: 20px; padding: 20px 24px; width: 260px;
+  transform: scale(.9); transition: transform .25s cubic-bezier(.2,.8,.2,1);
+  box-shadow: 0 20px 50px rgba(0,0,0,.2);
+}
+.rombel-popup-overlay.show .rombel-popup-card { transform: scale(1); }
+.rombel-popup-title { font-size: 14px; font-weight: 800; color: #1f2937; margin: 0 0 14px; text-align: center; }
+.rombel-popup-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 700; padding: 8px 0; border-bottom: 1px solid #F3F4F6; }
+.rombel-popup-row:last-child { border-bottom: none; }
+.rombel-popup-row .l { color: #475DB5; }
+.rombel-popup-row .p { color: #E0447D; }
     .pillbar-col { display: flex; flex-direction: column; align-items: center; }
     .pillbar-track {
-      width: 32px; height: 100%; border-radius: 16px; position: relative; overflow: hidden;
-      background: #EEF0F3; box-shadow: inset -3px -3px 7px rgba(255,255,255,.8), inset 3px 3px 7px rgba(163,177,198,.35);
-    }
-    .pillbar-fill {
-      position: absolute; bottom: 0; left: 0; width: 100%; border-radius: 16px;
-      box-shadow: -2px -2px 5px rgba(255,255,255,.35) inset, 2px 2px 6px rgba(0,0,0,.15);
-    }
-    .pillbar-lbl { font-size: 13px; font-weight: 700; color: #4b5563; margin-top: 12px; }
+  width: 34px; height: 100%; border-radius: 17px; position: relative; overflow: hidden;
+  background: #F4F8FB; box-shadow: inset 2px 2px 5px rgba(163,177,198,.25);
+  cursor: pointer;
+}
+.pillbar-fill {
+  position: absolute; bottom: 0; left: 0; width: 100%; border-radius: 17px;
+}
+.pillbar-lbl { font-size: 14px; font-weight: 800; color: #374151; margin-top: 10px; }
     .rombel-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
     .rombel-name { font-size: 13.5px; font-weight: 600; color: #374151; flex: 1; min-width: 0; }
     .rombel-total { font-size: 13px; font-weight: 800; color: #1f2937; }
@@ -499,7 +516,14 @@ content_copy
 </div>
 
   <div id="pillbars" class="pillbar-row"></div>
-  <div id="rombelList" class="hidden"></div>
+
+<div class="rombel-popup-overlay" id="rombelPopupOverlay" onclick="if(event.target===this) tutupPopupRombel()">
+  <div class="rombel-popup-card">
+    <p class="rombel-popup-title" id="rombelPopupTitle"></p>
+    <div class="rombel-popup-row"><span class="l">Laki-laki</span><span id="rombelPopupL"></span></div>
+    <div class="rombel-popup-row"><span class="p">Perempuan</span><span id="rombelPopupP"></span></div>
+  </div>
+</div>
       <div id="tabelRombelSpin" class="flex justify-center py-6">
         <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
       </div>
@@ -1070,41 +1094,29 @@ let modeRentang = false;
       });
 
       const maxTotalRombel = Math.max(...window.rombelData.map(r => r.L + r.P), 1);
-      const totalSemuaRombel = window.rombelData.reduce((s,r)=>s+r.L+r.P, 0) || 1;
-      const refPalette = ['#3E50A8','#02B5DA','#FD5522','#F9A900','#55D9A3','#8B8FE0'];
+      const warnaRombel = [
+        { top:'#7081E2', bottom:'#475DB5' }, // Kelas 1
+        { top:'#01AECC', bottom:'#01AECC' }, // Kelas 2
+        { top:'#FFC55C', bottom:'#FFC55C' }, // Kelas 3
+        { top:'#3EB884', bottom:'#3EB884' }, // Kelas 4
+        { top:'#FF6FA5', bottom:'#E0447D' }, // Kelas 5
+        { top:'#B18AFF', bottom:'#8A5CF0' }  // Kelas 6-10 dst
+      ];
 
       document.getElementById('pillbars').innerHTML = window.rombelData.map((r, i) => {
         const total = r.L + r.P;
         const h = (total / maxTotalRombel * 100).toFixed(0);
-        const pctOfAll = Math.round(total / totalSemuaRombel * 100);
-        const c = refPalette[i % refPalette.length];
+        const c = warnaRombel[i % warnaRombel.length];
         return `
 <div class="pillbar-col">
-  <div class="pillbar-track"><div class="pillbar-fill" style="height:${h}%;background:${c}"></div></div>
-  <span class="pillbar-lbl">${pctOfAll}%</span>
-</div>`;
-      }).join('');
-
-      document.getElementById('rombelList').innerHTML = window.rombelData.map((r, i) => {
-        const total = r.L + r.P;
-        const pctL = total ? (r.L / total * 100).toFixed(0) : 0;
-        const pctP = total ? (r.P / total * 100).toFixed(0) : 0;
-        const c = refPalette[i % refPalette.length];
-        return `
-<div class="rombel-row" id="rombelRow${i}" onclick="toggleRombelRow(${i})">
-  <span class="rombel-dot" style="background:${c}"></span>
-  <span class="rombel-name">${r.kelas}</span>
-  <span class="rombel-total">${total}</span>
-  <span class="material-symbols-rounded rombel-chev">expand_more</span>
-</div>
-<div class="rombel-detail" id="rombelDetail${i}">
-  <div class="rombel-lp-row"><span class="l">${r.L} Laki-laki</span><span class="p">${r.P} Perempuan</span></div>
-  <div class="rombel-split-bar"><div class="l" style="width:${pctL}%"></div><div class="p" style="width:${pctP}%"></div></div>
+  <div class="pillbar-track" onclick="bukaPopupRombel(${i})">
+    <div class="pillbar-fill" style="height:${h}%;background:linear-gradient(180deg,${c.top},${c.bottom})"></div>
+  </div>
+  <span class="pillbar-lbl">${total}</span>
 </div>`;
       }).join('');
 
       document.getElementById('tabelRombelSpin').classList.add('hidden');
-      document.getElementById('rombelList').classList.remove('hidden');
 
       buatChart();
     })
@@ -1138,7 +1150,16 @@ function toggleRombelRow(i){
   detail.classList.toggle('open', isOpen);
   rombelRowTerbuka = isOpen ? i : null;
 }
-
+function bukaPopupRombel(i){
+  const r = window.rombelData[i];
+  document.getElementById('rombelPopupTitle').textContent = r.kelas + ' (' + (r.L+r.P) + ' siswa)';
+  document.getElementById('rombelPopupL').textContent = r.L;
+  document.getElementById('rombelPopupP').textContent = r.P;
+  document.getElementById('rombelPopupOverlay').classList.add('show');
+}
+function tutupPopupRombel(){
+  document.getElementById('rombelPopupOverlay').classList.remove('show');
+}
 function nav(p){
 
   if(
