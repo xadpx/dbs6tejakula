@@ -393,6 +393,9 @@
 .card-collapse-body.open { max-height: 1300px; padding: 4px 4px 14px; }
 .chart-preview-text { display: block; }
 .card-collapse-head.open .chart-preview-text { display: none; }
+      .card-collapse-head { align-items: center; }
+.card-collapse-head h2 { line-height: 1.2; }
+.card-collapse-chev { display: flex; align-items: center; }
   </style>
 </head>
 <body class="text-base">
@@ -530,7 +533,7 @@ style="opacity:0; transition: opacity .25s ease;">
     <div class="grid md:grid-cols-2 gap-6 mt-8">
 
    <div id="cardKesejahteraan" class="neu-card px-5 pt-4 pb-4">
-    <div class="flex items-center justify-between mb-3 card-collapse-head" id="headKesejahteraan" onclick="toggleCardCollapse('Kesejahteraan')">
+    <div class="flex items-center justify-between card-collapse-head" id="headKesejahteraan" onclick="toggleCardCollapse('Kesejahteraan')">
       <div>
         <h2 class="font-bold text-base m-0">
           Kesejahteraan Siswa
@@ -539,7 +542,7 @@ style="opacity:0; transition: opacity .25s ease;">
       </div>
       <span class="material-symbols-rounded card-collapse-chev" id="chevKesejahteraan">expand_more</span>
     </div>
-    <div class="card-collapse-body" id="bodyKesejahteraan">
+    <div class="card-collapse-body mt-3" id="bodyKesejahteraan">
     <div id="skelKesejahteraan" class="w-full flex flex-col items-center justify-center py-10">
       <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
     </div>
