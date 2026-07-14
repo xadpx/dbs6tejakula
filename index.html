@@ -493,8 +493,10 @@ content_copy
 
 <div id="rombelPopupOverlay"
 onclick="if(event.target===this) tutupPopupRombel()"
-class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-6">
-  <div class="neu-modal relative w-[78%] max-w-[260px] rounded-lg overflow-hidden px-4 py-4">
+class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-6"
+style="opacity:0; transition: opacity .25s ease;">
+  <div id="rombelPopupBox" class="neu-modal relative w-[78%] max-w-[260px] rounded-lg overflow-hidden px-4 py-4"
+  style="transform: scale(.92) translateY(12px); opacity:0; transition: transform .28s cubic-bezier(.2,.8,.2,1), opacity .28s ease;">
     <button
       onclick="tutupPopupRombel()"
       class="neu-modal-close absolute top-2 right-2 w-6 h-6 rounded-full flex items-center justify-center text-gray-500 transition z-10">
@@ -1141,14 +1143,30 @@ function bukaPopupRombel(i){
   document.getElementById('rombelPopupTitle').textContent = r.kelas + ' (' + (r.L+r.P) + ' siswa)';
   document.getElementById('rombelPopupL').textContent = r.L;
   document.getElementById('rombelPopupP').textContent = r.P;
-  document.getElementById('rombelPopupOverlay').classList.remove('hidden');
+  const overlay = document.getElementById('rombelPopupOverlay');
+  const box = document.getElementById('rombelPopupBox');
+  overlay.classList.remove('hidden');
   setNavDisabled(true);
   kunciScroll(true);
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      overlay.style.opacity = '1';
+      box.style.transform = 'scale(1) translateY(0)';
+      box.style.opacity = '1';
+    });
+  });
 }
 function tutupPopupRombel(){
-  document.getElementById('rombelPopupOverlay').classList.add('hidden');
+  const overlay = document.getElementById('rombelPopupOverlay');
+  const box = document.getElementById('rombelPopupBox');
+  overlay.style.opacity = '0';
+  box.style.transform = 'scale(.92) translateY(12px)';
+  box.style.opacity = '0';
   setNavDisabled(false);
   kunciScroll(false);
+  setTimeout(function(){
+    overlay.classList.add('hidden');
+  }, 260);
 }
 function nav(p){
 
