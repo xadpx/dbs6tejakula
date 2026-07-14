@@ -289,48 +289,21 @@
     }
     .rombel-row.open { background: #E6E9EF; }
     .rombel-row:last-child { margin-bottom: 0; }
-    .pillbar-row { display: flex; justify-content: space-around; align-items: flex-end; height: 190px; margin-bottom: 10px; padding: 0 4px; }
-.rombel-popup-overlay {
-  position: fixed; inset: 0; background: rgba(20,22,30,.35);
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none; transition: opacity .2s ease; z-index: 60;
-}
-.rombel-popup-overlay.show { opacity: 1; pointer-events: auto; }
-.rombel-popup-card {
-  background: #fff; border-radius: 20px; padding: 20px 24px; width: 260px;
-  transform: scale(.9); transition: transform .25s cubic-bezier(.2,.8,.2,1);
-  box-shadow: 0 20px 50px rgba(0,0,0,.2);
-}
-.rombel-popup-overlay.show .rombel-popup-card { transform: scale(1); }
-.rombel-popup-title { font-size: 14px; font-weight: 800; color: #1f2937; margin: 0 0 14px; text-align: center; }
-.rombel-popup-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 700; padding: 8px 0; border-bottom: 1px solid #F3F4F6; }
-.rombel-popup-row:last-child { border-bottom: none; }
-.rombel-popup-row .l { color: #475DB5; }
-.rombel-popup-row .p { color: #E0447D; }
-    .pillbar-col { display: flex; flex-direction: column; align-items: center; }
-    .pillbar-track {
-  width: 34px; height: 100%; border-radius: 17px; position: relative; overflow: hidden;
+    .pillbar-row { display: flex; flex-direction: column; gap: 14px; padding: 4px 0; }
+.pillbar-col { display: flex; align-items: center; gap: 12px; }
+.pillbar-name { width: 56px; flex-shrink: 0; font-size: 13px; font-weight: 700; color: #374151; }
+.pillbar-track {
+  flex: 1; height: 26px; border-radius: 13px; position: relative; overflow: hidden;
   background: #F4F8FB; box-shadow: inset 2px 2px 5px rgba(163,177,198,.25);
   cursor: pointer;
 }
 .pillbar-fill {
-  position: absolute; bottom: 0; left: 0; width: 100%; border-radius: 17px;
+  position: absolute; top: 0; left: 0; height: 100%; border-radius: 13px;
 }
-.pillbar-lbl { font-size: 14px; font-weight: 800; color: #374151; margin-top: 10px; }
-    .rombel-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-    .rombel-name { font-size: 13.5px; font-weight: 600; color: #374151; flex: 1; min-width: 0; }
-    .rombel-total { font-size: 13px; font-weight: 800; color: #1f2937; }
-    .rombel-chev { color: #9ca3af; font-size: 20px; transition: transform .2s ease; }
-    .rombel-row.open .rombel-chev { transform: rotate(180deg); }
-    .rombel-detail { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
-    .rombel-detail.open { max-height: 70px; padding: 2px 16px 12px; margin-top: -8px; }
-    .rombel-lp-row { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: #374151; margin-bottom: 6px; }
-    .rombel-lp-row span.l { color: #C2410C; }
-    .rombel-lp-row span.p { color: #6D28D9; }
-    .rombel-split-bar { height: 10px; border-radius: 999px; overflow: hidden; display: flex; background: #eef1f5; }
-    .rombel-split-bar div { height: 100%; }
-    .rombel-split-bar .l { background: #FF7A45; }
-    .rombel-split-bar .p { background: #9B7EDE; }
+.pillbar-lbl {
+  width: 30px; flex-shrink: 0; text-align: right;
+  font-size: 13px; font-weight: 800; color: #374151;
+}
 
     .neu-ring-wrap {
       border-radius: 50%; flex-shrink: 0; position: relative;
@@ -1105,12 +1078,13 @@ let modeRentang = false;
 
       document.getElementById('pillbars').innerHTML = window.rombelData.map((r, i) => {
         const total = r.L + r.P;
-        const h = (total / maxTotalRombel * 100).toFixed(0);
+        const wPct = (total / maxTotalRombel * 100).toFixed(0);
         const c = warnaRombel[i % warnaRombel.length];
         return `
-<div class="pillbar-col">
-  <div class="pillbar-track" onclick="bukaPopupRombel(${i})">
-    <div class="pillbar-fill" style="height:${h}%;background:linear-gradient(180deg,${c.top},${c.bottom})"></div>
+<div class="pillbar-col" onclick="bukaPopupRombel(${i})">
+  <span class="pillbar-name">${r.kelas}</span>
+  <div class="pillbar-track">
+    <div class="pillbar-fill" style="width:${wPct}%;background:linear-gradient(90deg,${c.top},${c.bottom})"></div>
   </div>
   <span class="pillbar-lbl">${total}</span>
 </div>`;
