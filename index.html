@@ -2178,20 +2178,33 @@ function tampilkanSiswaKategori(kolom, label){
     `;
   }
 
-  document.getElementById('modalKategori').classList.remove('hidden');
+  const modalEl = document.getElementById('modalKategori');
+  const boxEl = document.getElementById('modalKategoriBox');
+  modalEl.classList.remove('hidden');
   setNavDisabled(true);
   kunciScroll(true);
+  document.getElementById('list-kategori').scrollTop = 0;
 
   requestAnimationFrame(function(){
-    document.getElementById('list-kategori').scrollTop = 0;
+    requestAnimationFrame(function(){
+      modalEl.style.opacity = '1';
+      boxEl.style.transform = 'scale(1) translateY(0)';
+      boxEl.style.opacity = '1';
+    });
   });
-
 }
 
 function closeModalKategori(){
-  document.getElementById('modalKategori').classList.add('hidden');
+  const modalEl = document.getElementById('modalKategori');
+  const boxEl = document.getElementById('modalKategoriBox');
+  modalEl.style.opacity = '0';
+  boxEl.style.transform = 'scale(.92) translateY(12px)';
+  boxEl.style.opacity = '0';
   setNavDisabled(false);
   kunciScroll(false);
+  setTimeout(function(){
+    modalEl.classList.add('hidden');
+  }, 260);
 }
 function downloadCSV(){
 
