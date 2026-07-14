@@ -1860,7 +1860,7 @@ function buatChart(){
   },
   options:{
     responsive:true,
-    layout:{ padding:4 },
+    layout:{ padding:1 },
     cutout:"68%",
     onClick:(evt, els, chart)=>{
       const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
@@ -1950,7 +1950,7 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
 
   options:{
     responsive:true,
-    layout:{ padding:4 },
+    layout:{ padding:1 },
     cutout:"68%",
     onClick:(evt, els, chart)=>{
       const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
