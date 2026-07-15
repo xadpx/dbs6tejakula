@@ -422,6 +422,8 @@
   transition: transform .35s cubic-bezier(.16,1,.3,1), opacity .3s cubic-bezier(.16,1,.3,1);
 }
 .premium-popup-overlay.show .premium-popup-box { transform: scale(1) translateY(0); opacity: 1; }
+      .center-label.show { pointer-events: auto; cursor: pointer; transition: transform 0.1s; }
+.center-label.show:active { transform: translate(-50%, -50%) scale(0.9); }
   </style>
 </head>
 <body class="text-base">
@@ -1985,8 +1987,13 @@ function buatChart(){
 document.getElementById('previewKesejahteraan').textContent =
   nilaiKesejahteraan.reduce((a,b)=>a+b,0) + ' siswa \u00b7 ' + jumlahDesil1sd4 + ' di Desil 1-4';
   const labelKes = document.getElementById('centerLabelKesejahteraan');
-labelKes.innerHTML = '<span class="cl-pct">' + nilaiKesejahteraan.reduce((a,b)=>a+b,0) + '</span><span class="cl-name">Siswa</span>';
+const isiKes = '<span class="cl-pct">' + nilaiKesejahteraan.reduce((a,b)=>a+b,0) + '</span><span class="cl-name">Siswa</span>';
+labelKes.innerHTML = isiKes;
 labelKes.classList.add('show');
+labelKes.onclick = function() {
+  labelKes.innerHTML = '<span class="cl-name" style="margin-top:8px;">Mengunduh<br>chart...</span>';
+  setTimeout(() => { unduhKesejahteraanGambar(); labelKes.innerHTML = isiKes; }, 300);
+};
   // ===== STATUS ANAK =====
 
   let status={};
@@ -2083,9 +2090,13 @@ const jumlahYatimPiatu = idxYatimPiatu >= 0 ? nilaiStatusAnak[idxYatimPiatu] : 0
 document.getElementById('previewStatusAnak').textContent =
   nilaiStatusAnak.reduce((a,b)=>a+b,0) + ' siswa \u00b7 ' + jumlahYatimPiatu + ' yatim/piatu';
   const labelStatus = document.getElementById('centerLabelStatusAnak');
-labelStatus.innerHTML = '<span class="cl-pct">' + nilaiStatusAnak.reduce((a,b)=>a+b,0) + '</span><span class="cl-name">Siswa</span>';
+const isiStatus = '<span class="cl-pct">' + nilaiStatusAnak.reduce((a,b)=>a+b,0) + '</span><span class="cl-name">Siswa</span>';
+labelStatus.innerHTML = isiStatus;
 labelStatus.classList.add('show');
-
+labelStatus.onclick = function() {
+  labelStatus.innerHTML = '<span class="cl-name" style="margin-top:8px;">Mengunduh<br>chart...</span>';
+  setTimeout(() => { unduhStatusAnakGambar(); labelStatus.innerHTML = isiStatus; }, 300);
+};
 }
     function unduhKesejahteraanGambar(){
   const desil = { "Desil 1":0,"Desil 2":0,"Desil 3":0,"Desil 4":0,"Desil 5":0,"Desil 6-10":0 };
