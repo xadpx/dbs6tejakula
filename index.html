@@ -1520,10 +1520,9 @@ function showDetailByNIK(nik){
 }
 
     function closeModal() {
-      document.getElementById('modal').classList.add('hidden');
-
       setNavDisabled(false);
       kunciScroll(false);
+      tutupPopupPremium('modal', 'modalBox');
     }
     async function copyRekap(){
   let text = buatTeksRekap();
