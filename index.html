@@ -2127,8 +2127,14 @@ const totalKes = nilaiKesejahteraan.reduce((a,b)=>a+b,0);
   labelKes.innerHTML = isiKes;
   labelKes.classList.add('show');
   labelKes.onclick = function() {
-    labelKes.innerHTML = '<span class="cl-name">Mengunduh...</span>';
-    setTimeout(() => { unduhKesejahteraanGambar(); labelKes.innerHTML = isiKes; }, 800);
+    if(labelKes.classList.contains('sedang-proses')) return;
+    labelKes.classList.add('sedang-proses');
+    labelKes.innerHTML = '<span class="cl-name">Mengunduh Chart</span>';
+    setTimeout(() => {
+      unduhKesejahteraanGambar();
+      labelKes.innerHTML = isiKes;
+      labelKes.classList.remove('sedang-proses');
+    }, 800);
   };
   // ===== STATUS ANAK =====
 
@@ -2232,8 +2238,14 @@ document.getElementById('previewStatusAnak').textContent =
   labelStatus.innerHTML = isiStatus;
   labelStatus.classList.add('show');
   labelStatus.onclick = function() {
-    labelStatus.innerHTML = '<span class="cl-name">Mengunduh...</span>';
-    setTimeout(() => { unduhStatusAnakGambar(); labelStatus.innerHTML = isiStatus; }, 800);
+    if(labelStatus.classList.contains('sedang-proses')) return;
+    labelStatus.classList.add('sedang-proses');
+    labelStatus.innerHTML = '<span class="cl-name">Mengunduh Chart</span>';
+    setTimeout(() => {
+      unduhStatusAnakGambar();
+      labelStatus.innerHTML = isiStatus;
+      labelStatus.classList.remove('sedang-proses');
+    }, 800);
   };
 }
     function unduhKesejahteraanGambar(){
