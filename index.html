@@ -412,7 +412,10 @@
 }
 .chart-preview-text { display: block; }
 .card-collapse-head.open .chart-preview-text { display: none; }
-      .premium-popup-overlay { opacity: 0; transition: opacity .3s cubic-bezier(.16,1,.3,1); }
+      .btn-unduh-pressed {
+  box-shadow: inset 4px 4px 10px rgba(163,177,198,.4), inset -4px -4px 10px rgba(255,255,255,.6) !important;
+}
+.premium-popup-overlay { opacity: 0; transition: opacity .3s cubic-bezier(.16,1,.3,1); }
 .premium-popup-overlay.show { opacity: 1; }
 .premium-popup-box {
   transform: scale(.92) translateY(12px); opacity: 0;
@@ -1671,6 +1674,7 @@ document.querySelectorAll(".kategori").forEach(c=>{
   const isiAsli = btn.innerHTML;
 
   btn.disabled = true;
+  btn.classList.add("btn-unduh-pressed");
   btn.innerHTML = `
     <span class="material-symbols-rounded animate-spin text-[#3E50A8]">
       autorenew
@@ -1681,39 +1685,25 @@ document.querySelectorAll(".kategori").forEach(c=>{
   setTimeout(function(){
 
     btn.disabled = false;
+    btn.classList.remove("btn-unduh-pressed");
     btn.innerHTML = isiAsli;
 
     // Buka PIN modal setelah animasi selesai
-    const pinModalEl = document.getElementById("pinModal");
-    const pinBoxEl = document.getElementById("pinModalBox");
-    pinModalEl.classList.remove("hidden");
     document.getElementById("pinInput").value="";
     document.getElementById("pinError").classList.add("hidden");
     setNavDisabled(true);
     kunciScroll(true);
     cekIsiPIN();
-    requestAnimationFrame(function(){
-      requestAnimationFrame(function(){
-        pinModalEl.style.opacity = '1';
-        pinBoxEl.style.transform = 'scale(1) translateY(0)';
-        pinBoxEl.style.opacity = '1';
-      });
-    });
-   setTimeout(function(){
+    bukaPopupPremium('pinModal', 'pinModalBox');
+    setTimeout(function(){
       document.getElementById("pinInput").focus();
     },100);
   }, 1000);
 }
 function tutupPinModalAnimasi(){
-  const pinModalEl = document.getElementById("pinModal");
-  const pinBoxEl = document.getElementById("pinModalBox");
-  pinModalEl.style.opacity = '0';
-  pinBoxEl.style.transform = 'scale(.92) translateY(12px)';
-  pinBoxEl.style.opacity = '0';
+  tutupPopupPremium('pinModal', 'pinModalBox');
+  return;
   setTimeout(function(){
-    pinModalEl.classList.add("hidden");
-  }, 260);
-}
 function batalPIN(){
   selesaiLoadingPIN();
   document.getElementById("pinInput").value="";
