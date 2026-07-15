@@ -394,13 +394,17 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: box-shadow 0.2s ease; /* Ini rahasianya, bikin transisi lebih halus */
-}
-
-.center-label.show:active {
-  box-shadow: inset 4px 4px 10px rgba(163,177,198,.4), inset -4px -4px 10px rgba(255,255,255,.6);
+  transition: box-shadow 0.2s ease;
+  z-index: 2;
+  position: absolute;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
 }
+.center-label.show:active {
+  box-shadow: inset 4px 4px 10px rgba(163,177,198,.4), inset -4px -4px 10px rgba(255,255,255,.6);
+}
+.center-label .cl-name { display:block; font-size: 11.5px; font-weight: 700; color:#6b7280; }
+.center-label .cl-pct { display:block; font-size: 16px; font-weight: 800; color:#1f2937; margin-top:2px; }
     .legend-chip-neu.legend-chip-selected {
       box-shadow: 0 0 0 2px rgba(31,41,55,.12), -3px -3px 7px rgba(255,255,255,.8), 3px 3px 8px rgba(163,177,198,.28);
       transform: translateY(-1px);
@@ -2013,8 +2017,10 @@ function buatChart(){
   const jumlahDesil1sd4 = nilaiKesejahteraan.slice(0,4).reduce((a,b)=>a+b,0);
 document.getElementById('previewKesejahteraan').textContent =
   nilaiKesejahteraan.reduce((a,b)=>a+b,0) + ' siswa \u00b7 ' + jumlahDesil1sd4 + ' di Desil 1-4';
-  const labelKes = document.getElementById('centerLabelKesejahteraan');
-const isiKes = '<span class="cl-pct">' + nilaiKesejahteraan.reduce((a,b)=>a+b,0) + '</span><span class="cl-name">Siswa</span>';
+  // BAGIAN KESEJAHTERAAN
+const labelKes = document.getElementById('centerLabelKesejahteraan');
+const totalKes = nilaiKesejahteraan.reduce((a,b)=>a+b,0);
+const isiKes = '<span class="cl-pct">' + totalKes + '</span><span class="cl-name">Siswa</span>';
 labelKes.innerHTML = isiKes;
 labelKes.classList.add('show');
 labelKes.onclick = function() {
@@ -2116,8 +2122,10 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
 const jumlahYatimPiatu = idxYatimPiatu >= 0 ? nilaiStatusAnak[idxYatimPiatu] : 0;
 document.getElementById('previewStatusAnak').textContent =
   nilaiStatusAnak.reduce((a,b)=>a+b,0) + ' siswa \u00b7 ' + jumlahYatimPiatu + ' yatim/piatu';
-  const labelStatus = document.getElementById('centerLabelStatusAnak');
-const isiStatus = '<span class="cl-pct">' + nilaiStatusAnak.reduce((a,b)=>a+b,0) + '</span><span class="cl-name">Siswa</span>';
+  // BAGIAN STATUS ANAK
+const labelStatus = document.getElementById('centerLabelStatusAnak');
+const totalStatus = nilaiStatusAnak.reduce((a,b)=>a+b,0);
+const isiStatus = '<span class="cl-pct">' + totalStatus + '</span><span class="cl-name">Siswa</span>';
 labelStatus.innerHTML = isiStatus;
 labelStatus.classList.add('show');
 labelStatus.onclick = function() {
