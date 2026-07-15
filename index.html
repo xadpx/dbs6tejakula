@@ -1844,29 +1844,6 @@ function handleChartTap(containerId, i){
 
   window.donutTapTimers[containerId] = setTimeout(baliknormal, 3000);
 }
-  function baliknormal(){
-    ds.backgroundColor = state.warnaAsli.slice();
-    ds.offset = state.warnaAsli.map(()=>0);
-    state.preview = null;
-    chart.update();
-    if(labelEl) labelEl.innerHTML = '<span class="cl-pct">'+ total +'</span><span class="cl-name">Total Siswa</span>';
-  }
-
-  if(state.preview === i){
-    baliknormal();
-    return;
-  }
-
-  ds.backgroundColor = state.warnaAsli.map((w,idx)=> idx===i ? warnaPekat(w) : w);
-  ds.offset = state.warnaAsli.map((w,idx)=> idx===i ? 6 : 0);
-  state.preview = i;
-  chart.update();
-  if(labelEl){
-    labelEl.innerHTML = '<span class="cl-name">' + state.labels[i] + '</span>';
-  }
-
-  window.donutTapTimers[containerId] = setTimeout(baliknormal, 3000);
-}
 const glossyPlugin = {
   id: 'glossy',
   afterDatasetsDraw(chart) {
