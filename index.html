@@ -384,9 +384,23 @@
   opacity: 0;
   transition: opacity .2s ease;
 }
-.center-label.show { opacity: 1; }
-.center-label .cl-name { display:block; font-size: 11.5px; font-weight: 700; color:#6b7280; }
-.center-label .cl-pct { display:block; font-size: 16px; font-weight: 800; color:#1f2937; margin-top:2px; }
+.center-label.show {
+  pointer-events: auto;
+  cursor: pointer;
+  width: 164px;
+  height: 164px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: box-shadow 0.2s ease; /* Ini rahasianya, bikin transisi lebih halus */
+}
+
+.center-label.show:active {
+  box-shadow: inset 4px 4px 10px rgba(163,177,198,.4), inset -4px -4px 10px rgba(255,255,255,.6);
+  transform: translate(-50%, -50%);
+}
     .legend-chip-neu.legend-chip-selected {
       box-shadow: 0 0 0 2px rgba(31,41,55,.12), -3px -3px 7px rgba(255,255,255,.8), 3px 3px 8px rgba(163,177,198,.28);
       transform: translateY(-1px);
