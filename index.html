@@ -1644,10 +1644,12 @@ document.querySelectorAll(".kategori").forEach(c=>{
         pinBoxEl.style.opacity = '1';
       });
     });
-    setTimeout(function(){
+   setTimeout(function(){
       document.getElementById("pinInput").focus();
     },100);
+  }, 1000);
 }
+function tutupPinModalAnimasi(){
              function tutupPinModalAnimasi(){
   const pinModalEl = document.getElementById("pinModal");
   const pinBoxEl = document.getElementById("pinModalBox");
