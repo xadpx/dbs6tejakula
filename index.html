@@ -374,16 +374,6 @@
 .legend-chip-val { font-size: 12px; font-weight: 800; color: #1f2937; }
       .legend-chip-val { font-size: 15px; font-weight: 800; color: #1f2937; }
 
-.center-label {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  text-align: center;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity .2s ease;
-}
 .center-label.show {
   pointer-events: auto;
   cursor: pointer;
@@ -394,12 +384,17 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: box-shadow 0.2s ease;
-  z-index: 2;
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
 }
+.center-label.show:active {
+  box-shadow: inset 4px 4px 10px rgba(163,177,198,.4), inset -4px -4px 10px rgba(255,255,255,.6);
+  transform: translate(-50%, -50%) scale(0.96);
+}
+.cl-name { font-size: 11px; font-weight: 700; color:#6b7280; }
+.cl-pct { font-size: 20px; font-weight: 800; color:#1f2937; line-height:1; }
 .center-label.show:active {
   box-shadow: inset 4px 4px 10px rgba(163,177,198,.4), inset -4px -4px 10px rgba(255,255,255,.6);
 }
@@ -2018,18 +2013,15 @@ function buatChart(){
 document.getElementById('previewKesejahteraan').textContent =
   nilaiKesejahteraan.reduce((a,b)=>a+b,0) + ' siswa \u00b7 ' + jumlahDesil1sd4 + ' di Desil 1-4';
   // BAGIAN KESEJAHTERAAN
-const labelKes = document.getElementById('centerLabelKesejahteraan');
 const totalKes = nilaiKesejahteraan.reduce((a,b)=>a+b,0);
-const isiKes = '<span class="cl-pct">' + totalKes + '</span><span class="cl-name">Siswa</span>';
-labelKes.innerHTML = isiKes;
-labelKes.classList.add('show');
-labelKes.onclick = function() {
-  labelKes.innerHTML = '<span class="cl-name" style="margin-top:8px;">Mengunduh<br>chart...</span>';
-  setTimeout(() => { 
-    unduhKesejahteraanGambar(); 
-    labelKes.innerHTML = isiKes; 
-  }, 300);
-};
+  const labelKes = document.getElementById('centerLabelKesejahteraan');
+  const isiKes = `<span class="cl-pct">${totalKes}</span><span class="cl-name">Siswa</span>`;
+  labelKes.innerHTML = isiKes;
+  labelKes.classList.add('show');
+  labelKes.onclick = function() {
+    labelKes.innerHTML = '<span class="cl-name">Mengunduh...</span>';
+    setTimeout(() => { unduhKesejahteraanGambar(); labelKes.innerHTML = isiKes; }, 800);
+  };
   // ===== STATUS ANAK =====
 
   let status={};
