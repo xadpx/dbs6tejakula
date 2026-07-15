@@ -2102,14 +2102,14 @@ labelStatus.onclick = function() {
   const desil = { "Desil 1":0,"Desil 2":0,"Desil 3":0,"Desil 4":0,"Desil 5":0,"Desil 6-10":0 };
   d.forEach(r=>{ let x = String(r[13]).trim(); if(desil.hasOwnProperty(x)) desil[x]++; });
   const warna = ["#11C8F5","#CFC9FF","#FFD6CC","#FFE59A","#C9F6E6","#B9C2F0"];
-  unduhChartSebagaiGambar("btnUnduhKesejahteraan", window.chartKesejahteraanInstance, "Kesejahteraan Siswa", Object.keys(desil), Object.values(desil), warna, "Siswa", "Kesejahteraan_Siswa.jpg");
+  unduhChartSebagaiGambar("centerLabelKesejahteraan", window.chartKesejahteraanInstance, "Kesejahteraan Siswa", Object.keys(desil), Object.values(desil), warna, "Siswa", "Kesejahteraan_Siswa.jpg");
 }
 
 function unduhStatusAnakGambar(){
   let status = {};
   d.forEach(r=>{ let s = String(r[14]).trim(); if(s=="") s="Tidak Ada"; status[s]=(status[s]||0)+1; });
   const warna = ["#11C8F5","#FFD6CC","#FFE59A","#C9F6E6","#CFC9FF"];
-  unduhChartSebagaiGambar("btnUnduhStatusAnak", window.chartStatusAnakInstance, "Status Anak", Object.keys(status), Object.values(status), warna, "Siswa", "Status_Anak.jpg");
+  unduhChartSebagaiGambar("centerLabelStatusAnak", window.chartStatusAnakInstance, "Status Anak", Object.keys(status), Object.values(status), warna, "Siswa", "Status_Anak.jpg");
 }
 function setNavDisabled(disabled){
 
