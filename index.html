@@ -1991,6 +1991,9 @@ function buatChart(){
   const jumlahDesil1sd4 = nilaiKesejahteraan.slice(0,4).reduce((a,b)=>a+b,0);
 document.getElementById('previewKesejahteraan').textContent =
   nilaiKesejahteraan.reduce((a,b)=>a+b,0) + ' siswa \u00b7 ' + jumlahDesil1sd4 + ' di Desil 1-4';
+  const labelKes = document.getElementById('centerLabelKesejahteraan');
+labelKes.innerHTML = '<span class="cl-pct">' + nilaiKesejahteraan.reduce((a,b)=>a+b,0) + '</span><span class="cl-name">Siswa</span>';
+labelKes.classList.add('show');
   // ===== STATUS ANAK =====
 
   let status={};
@@ -2086,6 +2089,9 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
 const jumlahYatimPiatu = idxYatimPiatu >= 0 ? nilaiStatusAnak[idxYatimPiatu] : 0;
 document.getElementById('previewStatusAnak').textContent =
   nilaiStatusAnak.reduce((a,b)=>a+b,0) + ' siswa \u00b7 ' + jumlahYatimPiatu + ' yatim/piatu';
+  const labelStatus = document.getElementById('centerLabelStatusAnak');
+labelStatus.innerHTML = '<span class="cl-pct">' + nilaiStatusAnak.reduce((a,b)=>a+b,0) + '</span><span class="cl-name">Siswa</span>';
+labelStatus.classList.add('show');
 
 }
     function unduhKesejahteraanGambar(){
