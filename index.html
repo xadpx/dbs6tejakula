@@ -953,7 +953,7 @@ Unduh Data
   <div id="modal"
 onclick="if(event.target===this) closeModal()"
 class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-6">
-    <div id="modalBox" class="premium-popup-box neu-modal relative w-[93%] max-w-sm max-h-[85vh] overflow-y-auto px-5 py-6 rounded-lg">
+    <div id="modalBox" class="premium-popup-box neu-modal relative w-[93%] max-w-sm max-h-[85vh] overflow-y-auto px-5 py-6 rounded-[28px]">
       <button
   onclick="closeModal()"
   class="neu-modal-close absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center text-gray-500 transition">
@@ -963,10 +963,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
   </span>
 
 </button>
-      <h2 class="font-bold border-b border-gray-100 pb-3 mb-3 text-base flex items-center gap-2 text-gray-800">
-  <span class="material-symbols-rounded text-[20px] text-gray-500">
-  description
-</span>
+      <h2 class="font-bold pb-3 mb-1 text-[15px] tracking-wide text-gray-800">
   DETAIL SISWA
 </h2>
       <div id="detail-content" class="text-sm space-y-2 text-gray-600"></div>
@@ -1546,101 +1543,98 @@ function showDetailByNIK(nik){
 
   const r = d.find(item => item[8] == nik);
   if (!r) return;
+
+  // Kolom foto siswa (opsional). Isi URL foto di index ke-18 pada data sumber.
+  // Kalau kosong / belum ada, otomatis pakai ikon person sebagai placeholder.
+  const fotoUrl = (r[18] && String(r[18]).trim()) ? String(r[18]).trim() : '';
+
   document.getElementById('detail-content').innerHTML = `
 
-<div class="space-y-3 text-[13px]">
+<div class="text-[13px]">
 
-<div class="flex items-start gap-2">
-  <span class="material-symbols-rounded text-[17px] text-gray-500 mt-[2px] shrink-0">account_circle</span>
-  <div class="flex-1 leading-5">
-    <span class="font-semibold text-gray-800">Nama:</span>
-    <span class="text-gray-600"> ${r[1]}</span>
+<div class="flex justify-center mb-3">
+  <div class="w-[104px] h-[104px] rounded-full overflow-hidden flex items-center justify-center shrink-0" style="background:#eef1f4; border:1px solid #dbe1e7;">
+    ${fotoUrl
+      ? `<img src="${fotoUrl}" alt="Foto ${r[1]}" class="w-full h-full object-cover">`
+      : `<span class="material-symbols-rounded" style="font-size:60px; color:#aab3bd; font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;">person</span>`
+    }
   </div>
 </div>
 
-<div class="flex items-center gap-2">
-  <span class="material-symbols-rounded text-[17px] text-gray-500 shrink-0">school</span>
-  <div>
-    <span class="font-semibold text-gray-800">Kelas:</span>
-    <span class="text-gray-600"> ${r[2]}</span>
+<div class="text-center mb-4">
+  <div class="text-[16px] font-bold text-gray-900">${r[1]}</div>
+  <div class="text-[12px] text-gray-400 mt-0.5">NISN: ${r[5]}</div>
+</div>
+
+<div class="grid grid-cols-2 gap-3 pb-3 mb-3 border-b border-gray-100">
+  <div class="flex items-start gap-1.5">
+    <span class="material-symbols-rounded text-[16px] text-gray-500 mt-[1px] shrink-0">calendar_month</span>
+    <div class="leading-5">
+      <div class="font-semibold text-gray-800">Tempat Lahir:</div>
+      <div class="text-gray-600">${r[6]}</div>
+    </div>
+  </div>
+  <div class="flex items-start gap-1.5">
+    <span class="material-symbols-rounded text-[16px] text-gray-500 mt-[1px] shrink-0">location_on</span>
+    <div class="leading-5">
+      <div class="font-semibold text-gray-800">Tanggal Lahir:</div>
+      <div class="text-gray-600">${formatTanggalUntukTampilan(r[7])}</div>
+    </div>
   </div>
 </div>
 
-<div class="flex items-center gap-2">
-  <span class="material-symbols-rounded text-[17px] text-gray-500 shrink-0">badge</span>
-  <div>
-    <span class="font-semibold text-gray-800">NISN:</span>
-    <span class="text-gray-600"> ${r[5]}</span>
-  </div>
-</div>
-
-<div class="flex items-center gap-2">
-  <span class="material-symbols-rounded text-[17px] text-gray-500 shrink-0">contact_page</span>
+<div class="space-y-2 pb-3 mb-3 border-b border-gray-100">
 
   <div class="flex items-center gap-2">
+    <span class="material-symbols-rounded text-[17px] text-gray-500 shrink-0">school</span>
+    <span class="font-semibold text-gray-800">Kelas:</span>
+    <span class="text-gray-600">${r[2]}</span>
+  </div>
 
-    <span>
-      <span class="font-semibold text-gray-800">NIK:</span>
-      <span class="text-gray-600"> ${r[8]}</span>
-    </span>
-
+  <div class="flex items-center gap-2">
+    <span class="material-symbols-rounded text-[17px] text-gray-500 shrink-0">badge</span>
+    <span class="font-semibold text-gray-800">NIK:</span>
+    <span class="text-gray-600">${r[8]}</span>
     <span
       id="copyNikIcon"
       class="material-symbols-rounded text-[15px] text-gray-400 cursor-pointer hover:text-blue-600 transition"
       onclick="event.stopPropagation(); salinNIK('${r[8]}')">
       content_copy
     </span>
-
   </div>
 
 </div>
 
-<div class="flex items-center gap-2">
-  <span class="material-symbols-rounded text-[17px] text-gray-500 shrink-0">location_on</span>
-  <div>
-    <span class="font-semibold text-gray-800">Tempat Lahir:</span>
-    <span class="text-gray-600"> ${r[6]}</span>
-  </div>
-</div>
+<div class="space-y-2 pb-3 mb-3 border-b border-gray-100">
 
-<div class="flex items-center gap-2">
-  <span class="material-symbols-rounded text-[17px] text-gray-500 shrink-0">calendar_month</span>
-  <div>
-    <span class="font-semibold text-gray-800">Tanggal Lahir:</span>
-    <span class="text-gray-600"> ${formatTanggalUntukTampilan(r[7])}</span>
-  </div>
-</div>
-
-<div class="flex items-start gap-2">
-  <span class="material-symbols-rounded text-[17px] text-gray-500 mt-[2px] shrink-0">man</span>
-  <div class="flex-1 leading-5">
+  <div class="flex items-center gap-2">
+    <span class="material-symbols-rounded text-[17px] text-gray-500 shrink-0">man</span>
     <span class="font-semibold text-gray-800">Ayah:</span>
-    <span class="text-gray-600"> ${r[11]}</span>
+    <span class="text-gray-600">${r[11]}</span>
   </div>
-</div>
 
-<div class="flex items-start gap-2">
-  <span class="material-symbols-rounded text-[17px] text-gray-500 mt-[2px] shrink-0">woman</span>
-  <div class="flex-1 leading-5">
+  <div class="flex items-center gap-2">
+    <span class="material-symbols-rounded text-[17px] text-gray-500 shrink-0">woman</span>
     <span class="font-semibold text-gray-800">Ibu:</span>
-    <span class="text-gray-600"> ${r[12]}</span>
+    <span class="text-gray-600">${r[12]}</span>
   </div>
+
 </div>
 
-<div class="flex items-center gap-2">
-  <span class="material-symbols-rounded text-[17px] text-gray-500 shrink-0">volunteer_activism</span>
-  <div>
-    <span class="font-semibold text-gray-800">Kesejahteraan:</span>
-    <span class="text-gray-600"> ${r[13]}</span>
-  </div>
-</div>
+<div class="space-y-2">
 
-<div class="flex items-center gap-2">
-  <span class="material-symbols-rounded text-[17px] text-gray-500 shrink-0">family_restroom</span>
-  <div>
+  <div class="flex items-center gap-2">
+    <span class="material-symbols-rounded text-[17px] text-gray-500 shrink-0">shield</span>
+    <span class="font-semibold text-gray-800">Status Kesejahteraan</span>
+    <span class="px-2 py-0.5 rounded-full text-[11px] font-medium" style="background:#e3f6ea; color:#2f9e5c;">${r[13]}</span>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <span class="material-symbols-rounded text-[17px] text-gray-500 shrink-0">diversity_3</span>
     <span class="font-semibold text-gray-800">Status Anak:</span>
-    <span class="text-gray-600"> ${r[14]}</span>
+    <span class="text-gray-600">${r[14]}</span>
   </div>
+
 </div>
 
 </div>
@@ -2130,7 +2124,7 @@ const totalKes = nilaiKesejahteraan.reduce((a,b)=>a+b,0);
   labelKes.onclick = function() {
     if(labelKes.classList.contains('sedang-proses')) return;
     labelKes.classList.add('sedang-proses');
-    labelKes.innerHTML = '<span class="cl-name">Mengunduh...</span>';
+    labelKes.innerHTML = '<span class="cl-name">Mengunduh Chart</span>';
     setTimeout(() => {
       unduhKesejahteraanGambar();
       labelKes.innerHTML = isiKes;
@@ -2241,7 +2235,7 @@ document.getElementById('previewStatusAnak').textContent =
   labelStatus.onclick = function() {
     if(labelStatus.classList.contains('sedang-proses')) return;
     labelStatus.classList.add('sedang-proses');
-    labelStatus.innerHTML = '<span class="cl-name">Mengunduh...</span>';
+    labelStatus.innerHTML = '<span class="cl-name">Mengunduh Chart</span>';
     setTimeout(() => {
       unduhStatusAnakGambar();
       labelStatus.innerHTML = isiStatus;
