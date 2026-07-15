@@ -1819,15 +1819,31 @@ function handleChartTap(containerId, i){
   if(!state || !state.chart) return;
   const chart = state.chart;
   const ds = chart.data.datasets[0];
-  const idLabel = 'centerLabel' + containerId.replace('legend','');
-  const labelEl = document.getElementById(idLabel);
-  const total = ds.data.reduce((a,b)=>a+b,0);
 
   if(window.donutTapTimers[containerId]){
     clearTimeout(window.donutTapTimers[containerId]);
     window.donutTapTimers[containerId] = null;
   }
 
+  function baliknormal(){
+    ds.backgroundColor = state.warnaAsli.slice();
+    ds.offset = state.warnaAsli.map(()=>0);
+    state.preview = null;
+    chart.update();
+  }
+
+  if(state.preview === i){
+    baliknormal();
+    return;
+  }
+
+  ds.backgroundColor = state.warnaAsli.map((w,idx)=> idx===i ? warnaPekat(w) : w);
+  ds.offset = state.warnaAsli.map((w,idx)=> idx===i ? 6 : 0);
+  state.preview = i;
+  chart.update();
+
+  window.donutTapTimers[containerId] = setTimeout(baliknormal, 3000);
+}
   function baliknormal(){
     ds.backgroundColor = state.warnaAsli.slice();
     ds.offset = state.warnaAsli.map(()=>0);
