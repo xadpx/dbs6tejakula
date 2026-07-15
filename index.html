@@ -855,8 +855,8 @@ Unduh Data
 
   <div id="modal"
 onclick="if(event.target===this) closeModal()"
-class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-6">
-    <div class="neu-modal relative w-[93%] max-w-sm max-h-[85vh] overflow-y-auto px-5 py-6 rounded-lg">
+class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-6">
+    <div id="modalBox" class="premium-popup-box neu-modal relative w-[93%] max-w-sm max-h-[85vh] overflow-y-auto px-5 py-6 rounded-lg">
       <button
   onclick="closeModal()"
   class="neu-modal-close absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center text-gray-500 transition">
@@ -878,9 +878,8 @@ class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center ite
   </div>
 <!-- MODAL PIN -->
 <div id="pinModal"
-class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-6"
-class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-6">
-  <div id="modalKategoriBox" class="premium-popup-box neu-modal relative w-[93%] max-w-sm max-h-[75vh] rounded-lg flex flex-col overflow-hidden">
+class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-6">
+  <div id="pinModalBox" class="premium-popup-box neu-modal w-[84%] max-w-[300px] rounded-2xl overflow-hidden">
     <div class="px-5 pt-5 pb-4">
 
       <div class="text-sm text-center font-medium text-gray-900 mb-3">
@@ -1470,10 +1469,9 @@ function showDetailByNIK(nik){
 </div>
 
 `;
-  document.getElementById('modal').classList.remove('hidden');
   setNavDisabled(true);
   kunciScroll(true);
-
+  bukaPopupPremium('modal', 'modalBox');
 }
    
     async function salinNIK(nik){
