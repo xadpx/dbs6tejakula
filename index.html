@@ -2118,18 +2118,15 @@ const jumlahYatimPiatu = idxYatimPiatu >= 0 ? nilaiStatusAnak[idxYatimPiatu] : 0
 document.getElementById('previewStatusAnak').textContent =
   nilaiStatusAnak.reduce((a,b)=>a+b,0) + ' siswa \u00b7 ' + jumlahYatimPiatu + ' yatim/piatu';
   // BAGIAN STATUS ANAK
-const labelStatus = document.getElementById('centerLabelStatusAnak');
-const totalStatus = nilaiStatusAnak.reduce((a,b)=>a+b,0);
-const isiStatus = '<span class="cl-pct">' + totalStatus + '</span><span class="cl-name">Siswa</span>';
-labelStatus.innerHTML = isiStatus;
-labelStatus.classList.add('show');
-labelStatus.onclick = function() {
-  labelStatus.innerHTML = '<span class="cl-name" style="margin-top:8px;">Mengunduh<br>chart...</span>';
-  setTimeout(() => { 
-    unduhStatusAnakGambar(); 
-    labelStatus.innerHTML = isiStatus; 
-  }, 300);
-};
+  const totalStatus = nilaiStatusAnak.reduce((a,b)=>a+b,0);
+  const labelStatus = document.getElementById('centerLabelStatusAnak');
+  const isiStatus = `<span class="cl-pct">${totalStatus}</span><span class="cl-name">Siswa</span>`;
+  labelStatus.innerHTML = isiStatus;
+  labelStatus.classList.add('show');
+  labelStatus.onclick = function() {
+    labelStatus.innerHTML = '<span class="cl-name">Mengunduh...</span>';
+    setTimeout(() => { unduhStatusAnakGambar(); labelStatus.innerHTML = isiStatus; }, 800);
+  };
 }
     function unduhKesejahteraanGambar(){
   const desil = { "Desil 1":0,"Desil 2":0,"Desil 3":0,"Desil 4":0,"Desil 5":0,"Desil 6-10":0 };
