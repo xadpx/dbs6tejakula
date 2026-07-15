@@ -317,6 +317,44 @@
   width: 30px; flex-shrink: 0; text-align: right;
   font-size: 13px; font-weight: 800; color: #374151;
 }
+.pillbar-col {
+  position: relative;
+  border-radius: 10px;
+  transition: transform .12s ease, background-color .12s ease;
+}
+.pillbar-col:active {
+  transform: scale(.985);
+  background-color: rgba(140,107,199,.06);
+}
+.pillbar-ripple-wrap {
+  position: absolute; inset: -4px; overflow: hidden; border-radius: 10px; pointer-events: none;
+}
+.pillbar-ripple {
+  position: absolute; border-radius: 50%;
+  background: radial-gradient(circle, rgba(140,107,199,.35) 0%, rgba(140,107,199,.15) 60%, rgba(140,107,199,0) 70%);
+  transform: scale(0); opacity: 1;
+  animation: pillbarRippleAnim .6s ease-out forwards;
+}
+@keyframes pillbarRippleAnim {
+  to { transform: scale(1); opacity: 0; }
+}
+.pillbar-hint-tooltip {
+  position: absolute; left: 50%; bottom: calc(100% + 8px);
+  transform: translateX(-50%) translateY(4px);
+  background: #1f2937; color: #fff; font-size: 11px; font-weight: 600;
+  padding: 6px 10px; border-radius: 8px; white-space: nowrap;
+  opacity: 0; pointer-events: none; z-index: 5;
+  box-shadow: 0 4px 12px rgba(0,0,0,.18);
+  transition: opacity .25s ease, transform .25s ease;
+}
+.pillbar-hint-tooltip::after {
+  content: ""; position: absolute; top: 100%; left: 50%;
+  width: 8px; height: 8px; margin-top: -4px; margin-left: -4px;
+  background: #1f2937; transform: rotate(45deg);
+}
+.pillbar-hint-tooltip.show {
+  opacity: 1; transform: translateX(-50%) translateY(0);
+}
 
     .neu-ring-wrap {
       border-radius: 50%; flex-shrink: 0; position: relative;
@@ -1158,16 +1196,30 @@ let modeRentang = false;
         const wPct = (total / maxTotalRombel * 100).toFixed(0);
         const c = warnaRombel[i % warnaRombel.length];
         return `
-<div class="pillbar-col" onclick="bukaPopupRombel(${i})">
+<div class="pillbar-col" onclick="bukaPopupRombel(${i}, event)">
+  <div class="pillbar-ripple-wrap"></div>
   <span class="pillbar-name">${r.kelas}</span>
   <div class="pillbar-track">
     <div class="pillbar-fill" style="width:${wPct}%;background:linear-gradient(90deg,${c.top},${c.bottom})"></div>
   </div>
   <span class="pillbar-lbl">${total}</span>
+  ${i === 0 ? '<div class="pillbar-hint-tooltip" id="pillbarHintTooltip">Tap untuk lihat detail kelas</div>' : ''}
 </div>`;
       }).join('');
 
       document.getElementById('tabelRombelSpin').classList.add('hidden');
+
+      // Tampilkan hint tooltip sekali setiap kali halaman dimuat/direfresh
+      setTimeout(function(){
+        const tip = document.getElementById('pillbarHintTooltip');
+        if(!tip) return;
+        requestAnimationFrame(function(){
+          tip.classList.add('show');
+        });
+        setTimeout(function(){
+          tip.classList.remove('show');
+        }, 3000);
+      }, 400);
 
       buatChart();
     })
@@ -1201,7 +1253,29 @@ function toggleRombelRow(i){
   detail.classList.toggle('open', isOpen);
   rombelRowTerbuka = isOpen ? i : null;
 }
-function bukaPopupRombel(i){
+function pillbarRipple(el, evt){
+  if(!el) return;
+  const wrap = el.querySelector('.pillbar-ripple-wrap');
+  if(!wrap) return;
+  const rect = el.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height) * 1.8;
+  const clientX = evt && (evt.touches ? evt.touches[0].clientX : evt.clientX);
+  const clientY = evt && (evt.touches ? evt.touches[0].clientY : evt.clientY);
+  const x = (typeof clientX === 'number' ? clientX - rect.left : rect.width / 2);
+  const y = (typeof clientY === 'number' ? clientY - rect.top : rect.height / 2);
+  const ripple = document.createElement('span');
+  ripple.className = 'pillbar-ripple';
+  ripple.style.width = size + 'px';
+  ripple.style.height = size + 'px';
+  ripple.style.left = (x - size / 2) + 'px';
+  ripple.style.top = (y - size / 2) + 'px';
+  wrap.appendChild(ripple);
+  setTimeout(function(){ ripple.remove(); }, 650);
+}
+function bukaPopupRombel(i, evt){
+  if(evt && evt.currentTarget){
+    pillbarRipple(evt.currentTarget, evt);
+  }
   const r = window.rombelData[i];
   document.getElementById('rombelPopupTitle').textContent = r.kelas;
   document.getElementById('rombelPopupL').textContent = r.L;
