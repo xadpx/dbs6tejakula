@@ -274,7 +274,12 @@
     .neu-dropdown{
   background:#ffffff;
   border: 1px solid rgba(163,177,198,.25);
-  box-shadow: -8px -8px 18px rgba(255,255,255,1), 8px 8px 20px rgba(163,177,198,.55);
+  box-shadow: -6px -6px 16px rgba(255,255,255,1), 6px 6px 18px rgba(163,177,198,.55);
+  transition: box-shadow .15s ease, border-color .15s ease;
+}
+.neu-dropdown:focus{
+  outline: none;
+  box-shadow: inset 3px 3px 8px rgba(163,177,198,.35), inset -3px -3px 8px rgba(255,255,255,.8);
 }
       .neu-nav-flat{
       background:#ffffff;
@@ -419,7 +424,7 @@
 <body class="text-base">
   <div id="app-scroll">
 
-  <div id="p-home" class="p-5">
+  <div id="p-home" class="p-5 pb-24">
   <div class="mb-5">
 
   <div>
@@ -658,7 +663,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
 
 </div>
 
-  <div id="p-download" class="hidden p-5">
+  <div id="p-download" class="hidden p-5 pb-24">
   <h1 class="text-xl font-bold text-gray-800 flex items-center gap-2 mb-5">
   <span class="material-symbols-rounded text-[23px]">
     download_for_offline
@@ -1631,7 +1636,7 @@ function showToast(text, durasi = 1800){
 
   if(isi==""){
 
-    btn.classList.remove("text-[#FF7A45]");
+    btn.classList.remove("text-[#3E50A8]");
     btn.classList.add("text-gray-400");
 
     btn.style.pointerEvents = "none";
@@ -1639,7 +1644,7 @@ function showToast(text, durasi = 1800){
   }else{
 
     btn.classList.remove("text-gray-400");
-    btn.classList.add("text-[#FF7A45]");
+    btn.classList.add("text-[#3E50A8]");
 
     btn.style.pointerEvents = "auto";
 
@@ -1724,7 +1729,7 @@ function mulaiLoadingPIN(){
   const btn = document.getElementById("btnPIN");
 
   btn.textContent = "Memeriksa...";
-  btn.classList.remove("text-[#FF7A45]");
+  btn.classList.remove("text-[#3E50A8]");
   btn.classList.add("text-gray-400");
 
   btn.style.pointerEvents = "none";
@@ -2287,16 +2292,9 @@ function tampilkanSiswaKategori(kolom, label){
 }
 
 function closeModalKategori(){
-  const modalEl = document.getElementById('modalKategori');
-  const boxEl = document.getElementById('modalKategoriBox');
-  modalEl.style.opacity = '0';
-  boxEl.style.transform = 'scale(.92) translateY(12px)';
-  boxEl.style.opacity = '0';
   setNavDisabled(false);
   kunciScroll(false);
-  setTimeout(function(){
-    modalEl.classList.add('hidden');
-  }, 260);
+  tutupPopupPremium('modalKategori', 'modalKategoriBox');
 }
 function downloadCSV(){
 
@@ -2322,7 +2320,7 @@ function downloadCSV(){
   btn.disabled = true;
 
   btn.innerHTML = `
-    <span class="material-symbols-rounded animate-spin text-[#FF7A45]">
+    <span class="material-symbols-rounded animate-spin text-[#3E50A8]">
       autorenew
     </span>
     Mengunduh...
@@ -2596,7 +2594,7 @@ XLSX.writeFile(wb, namaFile);
 btn.disabled = false;
 
 btn.innerHTML = `
-<span class="material-symbols-rounded text-[#FF7A45] text-[19px]">
+<span class="material-symbols-rounded text-[#3E50A8] text-[19px]">
 download
 </span>
 Unduh Data
