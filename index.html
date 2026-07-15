@@ -2067,10 +2067,12 @@ function setNavDisabled(disabled){
   if(disabled){
 
     nav.classList.add("opacity-40");
+    nav.style.pointerEvents = "none";
 
   }else{
 
     nav.classList.remove("opacity-40");
+    nav.style.pointerEvents = "";
 
   }
 
