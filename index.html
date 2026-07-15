@@ -2130,7 +2130,7 @@ const totalKes = nilaiKesejahteraan.reduce((a,b)=>a+b,0);
   labelKes.onclick = function() {
     if(labelKes.classList.contains('sedang-proses')) return;
     labelKes.classList.add('sedang-proses');
-    labelKes.innerHTML = '<span class="cl-name">Mengunduh Chart</span>';
+    labelKes.innerHTML = '<span class="cl-name">Mengunduh...</span>';
     setTimeout(() => {
       unduhKesejahteraanGambar();
       labelKes.innerHTML = isiKes;
@@ -2241,7 +2241,7 @@ document.getElementById('previewStatusAnak').textContent =
   labelStatus.onclick = function() {
     if(labelStatus.classList.contains('sedang-proses')) return;
     labelStatus.classList.add('sedang-proses');
-    labelStatus.innerHTML = '<span class="cl-name">Mengunduh Chart</span>';
+    labelStatus.innerHTML = '<span class="cl-name">Mengunduh...</span>';
     setTimeout(() => {
       unduhStatusAnakGambar();
       labelStatus.innerHTML = isiStatus;
