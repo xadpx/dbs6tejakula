@@ -2025,7 +2025,10 @@ labelKes.innerHTML = isiKes;
 labelKes.classList.add('show');
 labelKes.onclick = function() {
   labelKes.innerHTML = '<span class="cl-name" style="margin-top:8px;">Mengunduh<br>chart...</span>';
-  setTimeout(() => { unduhKesejahteraanGambar(); labelKes.innerHTML = isiKes; }, 300);
+  setTimeout(() => { 
+    unduhKesejahteraanGambar(); 
+    labelKes.innerHTML = isiKes; 
+  }, 300);
 };
   // ===== STATUS ANAK =====
 
@@ -2130,7 +2133,10 @@ labelStatus.innerHTML = isiStatus;
 labelStatus.classList.add('show');
 labelStatus.onclick = function() {
   labelStatus.innerHTML = '<span class="cl-name" style="margin-top:8px;">Mengunduh<br>chart...</span>';
-  setTimeout(() => { unduhStatusAnakGambar(); labelStatus.innerHTML = isiStatus; }, 300);
+  setTimeout(() => { 
+    unduhStatusAnakGambar(); 
+    labelStatus.innerHTML = isiStatus; 
+  }, 300);
 };
 }
     function unduhKesejahteraanGambar(){
