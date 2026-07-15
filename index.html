@@ -1195,7 +1195,6 @@ function tutupPopupRombel(){
   }, 260);
 }
 function nav(p){
-
   if(
     !document.getElementById("modal").classList.contains("hidden") ||
     !document.getElementById("pinModal").classList.contains("hidden") ||
@@ -1206,9 +1205,57 @@ function nav(p){
   if(p!="download"){
     halamanSebelumnya=p;
   }
+  gantiHalamanFade(p);
+}
 
-  jalankanTransisiNav(p);
+let sedangTransisiNav = false;
+function gantiHalamanFade(pTarget){
+  const pSekarang = halamanAktifSaatIni();
 
+  if(pSekarang === pTarget){
+    updateNavAktif(pTarget);
+    return;
+  }
+  if(sedangTransisiNav) return;
+  if(!pSekarang) return;
+  sedangTransisiNav = true;
+
+  const currentEl = document.getElementById("p-" + pSekarang);
+  const targetEl = document.getElementById("p-" + pTarget);
+
+  currentEl.style.transition = "opacity .16s ease, transform .16s ease";
+  currentEl.style.opacity = "0";
+  currentEl.style.transform = "translateY(6px)";
+
+  setTimeout(function(){
+    currentEl.classList.add("hidden");
+    currentEl.style.transition = "";
+    currentEl.style.opacity = "";
+    currentEl.style.transform = "";
+
+    targetEl.classList.remove("hidden");
+    targetEl.style.transition = "none";
+    targetEl.style.opacity = "0";
+    targetEl.style.transform = "translateY(6px)";
+
+    updateNavAktif(pTarget);
+
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        targetEl.style.transition = "opacity .22s ease, transform .22s ease";
+        targetEl.style.opacity = "1";
+        targetEl.style.transform = "translateY(0)";
+      });
+    });
+
+    setTimeout(function(){
+      targetEl.style.transition = "";
+      targetEl.style.opacity = "";
+      targetEl.style.transform = "";
+      sedangTransisiNav = false;
+    }, 260);
+
+  }, 160);
 }
     function hitungSkorKedekatan(kataNama, kataQuery){
 
