@@ -2815,7 +2815,7 @@ function jalankanTransisiNav(pTarget){
     siapkanElemenSwipe(targetEl);
     targetEl.classList.remove("hidden");
 
-    const lebar = window.innerWidth;
+    const lebar = document.getElementById('app-scroll').offsetWidth;
     targetEl.style.transform = `translateX(${arah === -1 ? lebar : -lebar}px)`;
 
     updateNavAktif(pTarget);
@@ -2954,7 +2954,7 @@ document.addEventListener("touchmove", function(e){
 
   e.preventDefault();
 
-  const lebar = window.innerWidth;
+  const lebar = document.getElementById('app-scroll').offsetWidth;
   let geser = Math.max(-lebar, Math.min(lebar, dx));
 
   swipeCurrentEl.style.transform = `translateX(${geser}px)`;
@@ -2974,7 +2974,7 @@ document.addEventListener("touchend", function(e){
 
   const endX = e.changedTouches[0].clientX;
   const dx = endX - swipeStartX;
-  const lebar = window.innerWidth;
+  const lebar = document.getElementById('app-scroll').offsetWidth;
   const lolos = Math.abs(dx) > lebar * 0.28;
 
   swipeCurrentEl.style.transition = "transform .25s ease";
