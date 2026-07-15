@@ -567,14 +567,14 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
   </div>
 
    <div id="cardStatusAnak" class="neu-card px-5 pt-1 pb-1">
-    <div class="flex items-center justify-between mb-3 card-collapse-head" id="headStatusAnak" onclick="toggleCardCollapse('StatusAnak')">
+    <div class="card-collapse-head" id="headStatusAnak" onclick="toggleCardCollapse('StatusAnak')" style="position:relative; padding-right:28px;">
       <div>
         <h2 class="font-bold text-base m-0">
           Status Anak
         </h2>
         <p class="chart-preview-text text-[12px] text-gray-400 font-medium m-0 mt-0.5" id="previewStatusAnak"></p>
       </div>
-      <span class="material-symbols-rounded card-collapse-chev" id="chevStatusAnak">expand_more</span>
+      <span class="material-symbols-rounded card-collapse-chev" id="chevStatusAnak" style="position:absolute; top:2px; right:0;">expand_more</span>
     </div>
 
     <div class="card-collapse-body" id="bodyStatusAnak">
