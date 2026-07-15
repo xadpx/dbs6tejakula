@@ -533,14 +533,14 @@ style="opacity:0; transition: opacity .25s ease;">
     <div class="grid md:grid-cols-2 gap-6 mt-8">
 
    <div id="cardKesejahteraan" class="neu-card px-5 pt-4 pb-4">
-    <div class="flex items-center justify-between card-collapse-head" id="headKesejahteraan" onclick="toggleCardCollapse('Kesejahteraan')">
+    <div class="card-collapse-head" id="headKesejahteraan" onclick="toggleCardCollapse('Kesejahteraan')" style="position:relative; padding-right:28px;">
       <div>
         <h2 class="font-bold text-base m-0">
           Kesejahteraan Siswa
         </h2>
         <p class="chart-preview-text text-[12px] text-gray-400 font-medium m-0 mt-0.5" id="previewKesejahteraan"></p>
       </div>
-      <span class="material-symbols-rounded card-collapse-chev" id="chevKesejahteraan">expand_more</span>
+      <span class="material-symbols-rounded card-collapse-chev" id="chevKesejahteraan" style="position:absolute; top:2px; right:0;">expand_more</span>
     </div>
     <div class="card-collapse-body mt-3" id="bodyKesejahteraan">
     <div id="skelKesejahteraan" class="w-full flex flex-col items-center justify-center py-10">
