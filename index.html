@@ -1161,7 +1161,7 @@ function toggleRombelRow(i){
 }
 function bukaPopupRombel(i){
   const r = window.rombelData[i];
-  document.getElementById('rombelPopupTitle').textContent = r.kelas + ' (' + (r.L+r.P) + ' siswa)';
+  document.getElementById('rombelPopupTitle').textContent = r.kelas;
   document.getElementById('rombelPopupL').textContent = r.L;
   document.getElementById('rombelPopupP').textContent = r.P;
   const overlay = document.getElementById('rombelPopupOverlay');
