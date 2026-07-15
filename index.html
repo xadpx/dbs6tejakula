@@ -59,20 +59,20 @@
       flex-shrink:0;
     }
     .kategori:checked{
-      background:#e8f0fe;
-      border-color: rgba(37,99,235,.25);
-    }
-    .kategori:checked::after{
-      content:"";
-      position:absolute;
-      left:50%;
-      top:50%;
-      width:9px;
-      height:6px;
-      transform:translate(-50%,-73%) rotate(-45deg);
-      border-left:2px solid #2563EB;
-      border-bottom:2px solid #2563EB;
-    }
+  background:#e8eaf6;
+  border-color: rgba(62,80,168,.3);
+}
+.kategori:checked::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:9px;
+  height:6px;
+  transform:translate(-50%,-73%) rotate(-45deg);
+  border-left:2px solid #3E50A8;
+  border-bottom:2px solid #3E50A8;
+}
       .neu-mini-pill{
       background:#ffffff;
       border-radius:8px;
@@ -265,9 +265,9 @@
       box-shadow: none;
     }
     .neu-dropdown{
-      background:#F0F2F5;
-      box-shadow: inset 3px 3px 7px rgba(163,177,198,.3), inset -3px -3px 7px rgba(255,255,255,.75);
-    }
+  background:#ffffff;
+  box-shadow: -4px -4px 10px rgba(255,255,255,.8), 4px 4px 10px rgba(163,177,198,.35);
+}
       .neu-nav-flat{
       background:#ffffff;
       box-shadow: 0 -1px 4px rgba(0,0,0,0.06);
@@ -820,9 +820,10 @@ class="neu-dropdown w-24 min-w-[96px] h-9 rounded-xl border-none px-2 text-sm">
 <button
 id="btnUnduh"
 onclick="bukaPINUnduh()"
-class="neu-btn mt-4 w-full h-[46px] flex items-center justify-center gap-2 text-gray-900 text-sm font-semibold">
+class="mt-4 w-full h-[46px] flex items-center justify-center gap-2 text-[#3E50A8] text-sm font-semibold"
+style="background:#ffffff; border-radius:14px; box-shadow: -6px -6px 14px rgba(255,255,255,.9), 6px 6px 16px rgba(163,177,198,.4);">
 
-<span class="material-symbols-rounded text-[#2563EB] text-[19px]">
+<span class="material-symbols-rounded text-[#3E50A8] text-[19px]">
 download
 </span>
 
@@ -907,7 +908,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
 
       <div
         onclick="batalPIN()"
-        class="flex-1 flex items-center justify-center text-[#FF7A45] text-sm font-medium cursor-pointer active:bg-gray-100">
+        class="flex-1 flex items-center justify-center text-[#3E50A8] text-sm font-medium cursor-pointer active:bg-gray-100">
         Batal
       </div>
 
@@ -916,10 +917,9 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
       <div
         id="btnPIN"
         onclick="cekPIN()"
-        class="flex-1 flex items-center justify-center text-gray-400 text-sm font-semibold cursor-pointer">
+        class="flex-1 flex items-center justify-center text-[#3E50A8] text-sm font-semibold cursor-pointer">
         OK
       </div>
-
     </div>
     </div>
 
@@ -1617,7 +1617,7 @@ document.querySelectorAll(".kategori").forEach(c=>{
 
   btn.disabled = true;
   btn.innerHTML = `
-    <span class="material-symbols-rounded animate-spin text-[#FF7A45]">
+    <span class="material-symbols-rounded animate-spin text-[#3E50A8]">
       autorenew
     </span>
     Mengunduh...
