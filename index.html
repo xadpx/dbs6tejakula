@@ -1136,7 +1136,7 @@ let modeRentang = false;
       const mm = String(tgl.getMonth()+1).padStart(2,'0');
       const yyyy = tgl.getFullYear();
 
-      el.innerHTML = `Per ${dd}/${mm}/${yyyy}${perkiraan ? ' *' : ''}`;
+      el.innerHTML = `sync ${dd}/${mm}/${yyyy}${perkiraan ? ' *' : ''}`;
     }
 
     function formatTanggalUntukTampilan(value){
