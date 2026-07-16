@@ -271,6 +271,11 @@
       background:#ffffff;
       box-shadow: none;
     }
+      .neu-dropdown-inset{
+  background:#ffffff;
+  border: none;
+  box-shadow: inset 2px 2px 5px rgba(163,177,198,.35), inset -2px -2px 5px rgba(255,255,255,.8);
+}
 .neu-dropdown{
   background:#ffffff;
   border: none;
@@ -814,7 +819,7 @@ class="neu-dropdown w-full mt-2 h-10 pl-4 pr-10 rounded-xl text-sm outline-none"
     <select
 id="kelasAwal"
 onchange="updateKelasAkhir()"
-class="neu-dropdown w-24 min-w-[96px] h-9 rounded-xl border-none px-2 text-sm">
+class="neu-dropdown-inset w-24 min-w-[96px] h-9 rounded-xl px-2 text-sm">
 
       <option value="Kelas 1">Kelas 1</option>
       <option value="Kelas 2">Kelas 2</option>
@@ -830,7 +835,7 @@ class="neu-dropdown w-24 min-w-[96px] h-9 rounded-xl border-none px-2 text-sm">
 
     <select
 id="kelasAkhir"
-class="neu-dropdown w-24 min-w-[96px] h-9 rounded-xl border-none px-2 text-sm">
+class="neu-dropdown-inset w-24 min-w-[96px] h-9 rounded-xl px-2 text-sm">
 
       <option value="Kelas 2">Kelas 2</option>
       <option value="Kelas 3">Kelas 3</option>
