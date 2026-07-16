@@ -1560,7 +1560,7 @@ function showDetailByNIK(nik){
 
 <div class="text-center mb-4">
   <div class="text-[16px] font-bold text-gray-900">${r[1]}</div>
-  <div class="text-[12px] text-gray-400 mt-0.5">NISN: ${r[5]}</div>
+  <div class="text-[12px] text-gray-500 font-medium mt-0.5">NISN: ${r[5]}</div>
 </div>
 
 <div class="grid grid-cols-2 gap-3 pb-3 mb-3 border-b border-gray-100">
@@ -1571,8 +1571,8 @@ function showDetailByNIK(nik){
       <div class="text-gray-600">${r[6]}</div>
     </div>
   </div>
-  <div class="flex items-start gap-1.5">
-    <span class="material-symbols-rounded text-[16px] text-gray-500 mt-[1px] shrink-0">calendar_month</span>
+  <div class="flex items-start gap-1.5 pl-3">
+    <span class="material-symbols-rounded text-[16px] text-gray-500 mt-[1px] shrink-0">location_on</span>
     <div class="leading-5">
       <div class="font-semibold text-gray-800">Tanggal Lahir:</div>
       <div class="text-gray-600">${formatTanggalUntukTampilan(r[7])}</div>
