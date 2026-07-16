@@ -963,10 +963,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
   </span>
 
 </button>
-      <h2 class="font-bold pb-3 mb-1 text-[15px] tracking-wide text-gray-800">
-  DETAIL SISWA
-</h2>
-      <div id="detail-content" class="text-sm space-y-2 text-gray-600"></div>
+            <div id="detail-content" class="text-sm space-y-2 text-gray-600"></div>
 
     </div>
   </div>
@@ -1568,14 +1565,14 @@ function showDetailByNIK(nik){
 
 <div class="grid grid-cols-2 gap-3 pb-3 mb-3 border-b border-gray-100">
   <div class="flex items-start gap-1.5">
-    <span class="material-symbols-rounded text-[16px] text-gray-500 mt-[1px] shrink-0">calendar_month</span>
+    <span class="material-symbols-rounded text-[16px] text-gray-500 mt-[1px] shrink-0">location_on</span>
     <div class="leading-5">
       <div class="font-semibold text-gray-800">Tempat Lahir:</div>
       <div class="text-gray-600">${r[6]}</div>
     </div>
   </div>
   <div class="flex items-start gap-1.5">
-    <span class="material-symbols-rounded text-[16px] text-gray-500 mt-[1px] shrink-0">location_on</span>
+    <span class="material-symbols-rounded text-[16px] text-gray-500 mt-[1px] shrink-0">calendar_month</span>
     <div class="leading-5">
       <div class="font-semibold text-gray-800">Tanggal Lahir:</div>
       <div class="text-gray-600">${formatTanggalUntukTampilan(r[7])}</div>
@@ -1626,7 +1623,7 @@ function showDetailByNIK(nik){
   <div class="flex items-center gap-2">
     <span class="material-symbols-rounded text-[17px] text-gray-500 shrink-0">shield</span>
     <span class="font-semibold text-gray-800">Status Kesejahteraan</span>
-    <span class="px-2 py-0.5 rounded-full text-[11px] font-medium" style="background:#e3f6ea; color:#2f9e5c;">${r[13]}</span>
+    <span class="px-2 py-0.5 rounded-full text-[11px] font-medium" style="background:${warnaDesil(r[13]).bg}; color:${warnaDesil(r[13]).text};">${r[13]}</span>
   </div>
 
   <div class="flex items-center gap-2">
@@ -3252,6 +3249,16 @@ function tutupPopupPremium(overlayId, boxId, callback){
     overlay.classList.add('hidden');
     if(callback) callback();
   }, 300);
+}
+    function warnaDesil(nilai){
+  const v = String(nilai).trim();
+  if(["Desil 1","Desil 2","Desil 3","Desil 4"].includes(v)){
+    return { bg:"#fde2e1", text:"#d92d20" }; // merah
+  }
+  if(v === "Desil 5"){
+    return { bg:"#ffead1", text:"#c2410c" }; // oranye
+  }
+  return { bg:"#e3f6ea", text:"#2f9e5c" }; // hijau (Desil 6-10)
 }
   </script>
 </body>
