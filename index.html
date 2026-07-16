@@ -307,20 +307,21 @@
     }
     .rombel-row.open { background: #E6E9EF; }
     .rombel-row:last-child { margin-bottom: 0; }
-    .pillbar-row { display: flex; flex-direction: column; gap: 14px; padding: 4px 0; }
-.pillbar-col { display: flex; align-items: center; gap: 12px; }
-.pillbar-name { width: 56px; flex-shrink: 0; font-size: 13px; font-weight: 700; color: #374151; }
+    .pillbar-row { display: flex; flex-direction: column; gap: 18px; padding: 4px 0; }
+.pillbar-col { display: flex; align-items: center; gap: 14px; }
+.pillbar-name { width: 62px; flex-shrink: 0; font-size: 15px; font-weight: 700; color: #1f2937; }
 .pillbar-track {
-  flex: 1; height: 14px; border-radius: 7px; position: relative; overflow: hidden;
-  background: #F4F8FB; box-shadow: inset 2px 2px 5px rgba(163,177,198,.25);
+  flex: 1; height: 26px; border-radius: 9999px; position: relative; overflow: visible;
+  background: #E4E7EC;
   cursor: pointer;
 }
 .pillbar-fill {
-  position: absolute; top: 0; left: 0; height: 100%; border-radius: 7px;
+  position: absolute; top: 0; left: 0; height: 100%; border-radius: 9999px;
+  box-shadow: 0 0 14px rgba(140,107,199,.55);
 }
 .pillbar-lbl {
-  width: 30px; flex-shrink: 0; text-align: right;
-  font-size: 13px; font-weight: 800; color: #374151;
+  width: 32px; flex-shrink: 0; text-align: right;
+  font-size: 17px; font-weight: 800; color: #1f2937;
 }
 .pillbar-col {
   position: relative;
@@ -1197,12 +1198,12 @@ let modeRentang = false;
 
       const maxTotalRombel = Math.max(...window.rombelData.map(r => r.L + r.P), 1);
       const warnaRombel = [
-  { top:"#B49AE8", bottom:"#8C6BC7" },
-  { top:"#B49AE8", bottom:"#8C6BC7" },
-  { top:"#B49AE8", bottom:"#8C6BC7" },
-  { top:"#B49AE8", bottom:"#8C6BC7" },
-  { top:"#B49AE8", bottom:"#8C6BC7" },
-  { top:"#B49AE8", bottom:"#8C6BC7" }
+  { kiri:"#4C2E8C", kanan:"#C9B6F2" },
+  { kiri:"#4C2E8C", kanan:"#C9B6F2" },
+  { kiri:"#4C2E8C", kanan:"#C9B6F2" },
+  { kiri:"#4C2E8C", kanan:"#C9B6F2" },
+  { kiri:"#4C2E8C", kanan:"#C9B6F2" },
+  { kiri:"#4C2E8C", kanan:"#C9B6F2" }
 ];
 
       document.getElementById('pillbars').innerHTML = window.rombelData.map((r, i) => {
@@ -1214,7 +1215,7 @@ let modeRentang = false;
   <div class="pillbar-ripple-wrap"></div>
   <span class="pillbar-name">${r.kelas}</span>
   <div class="pillbar-track">
-    <div class="pillbar-fill" style="width:${wPct}%;background:linear-gradient(90deg,${c.top},${c.bottom})"></div>
+    <div class="pillbar-fill" style="width:${wPct}%;background:linear-gradient(90deg,${c.kiri},${c.kanan})"></div>
   </div>
   <span class="pillbar-lbl">${total}</span>
   ${i === 0 ? '<div class="pillbar-hint-tooltip" id="pillbarHintTooltip">Tap untuk lihat detail kelas</div>' : ''}
