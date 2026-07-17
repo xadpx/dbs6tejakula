@@ -45,7 +45,7 @@
   box-sizing: border-box;
 }
 #app-scroll {
-  background: #F0F2F5;
+  background: #FFFFFF;
   min-height: 100vh;
   box-shadow: 0 0 40px rgba(0,0,0,.08);
 }
@@ -146,6 +146,9 @@
       align-items:center;
       justify-content:center;
       border-radius:9999px;
+      background: #ffffff;
+      border: 1px solid #E7EAEF;
+      box-shadow: 0 2px 6px rgba(16,24,40,.06);
       transition:.25s;
     }
     .nav-label{
@@ -189,10 +192,7 @@
       0%{ background-position: 100% 50%; }
       100%{ background-position: 0 50%; }
     }
-        .nav-active .nav-icon-wrap{
-  background: transparent;
-  box-shadow: none;
-}
+        
       .btn-unduh-chart-icon{
       width: 28px;
       height: 28px;
@@ -240,7 +240,7 @@
 #p-download.hidden {
   pointer-events: none !important;
 }
-    .neu-bg{ background:#F0F2F5; }
+    .neu-bg{ background:#FFFFFF; }
     GANTI:
     .neu-card{
       background:#ffffff;
@@ -277,7 +277,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background:#F0F2F5;
+      background:#ffffff;
       box-shadow: -3px -3px 6px rgba(255,255,255,.8), 3px 3px 6px rgba(163,177,198,.4);
     }
       .neu-dropdown-inset{
@@ -1427,7 +1427,7 @@ function filterSiswa() {
 
   if (q === "") {
     document.getElementById("list-siswa").innerHTML = `
-      <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:#F0F2F5; border: 1px solid #e5e7eb;">
+      <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:#ffffff; border: 1px solid #E7EAEF;">
         <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">keyboard</span>
         <p class="text-sm text-gray-600 font-medium">Ketik minimal 3 huruf Nama siswa</p>
       </div>
@@ -1437,7 +1437,7 @@ function filterSiswa() {
   if (q.length < 3) {
     const sisa = 3 - q.length;
     document.getElementById("list-siswa").innerHTML = `
-      <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:#F0F2F5; border: 1px solid #e5e7eb;">
+      <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:#ffffff; border: 1px solid #E7EAEF;">
         <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2"> </span>
         <p class="text-sm text-gray-600 font-medium">Ketik ${sisa} huruf lagi</p>
       </div>
@@ -1499,7 +1499,7 @@ hasil.sort((a, b) => {
   }
 
   document.getElementById("list-siswa").innerHTML = `
-<div class="rounded-3xl overflow-hidden" style="background:#ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+<div class="rounded-3xl overflow-hidden" style="background:#ffffff; border:1px solid #E7EAEF; box-shadow: 0 2px 6px rgba(16,24,40,.06);">
 
 ${hasil.map((r,i)=>{
 
