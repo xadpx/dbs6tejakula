@@ -54,12 +54,9 @@
       -webkit-appearance:none;
       width:20px;
       height:20px;
-      border: 1px solid rgba(140,152,175,.15);
+      border: 1px solid #C9D0DB;
       border-radius:7px;
-      background:#e2e8f0;
-      box-shadow:
-        inset 0.5px 0.5px 2px rgba(140,152,175,.2),
-        inset -0.5px -0.5px 2px rgba(255,255,255,.5);
+      background:#ffffff;
       cursor:pointer;
       transition:.15s;
       position:relative;
@@ -192,7 +189,6 @@
       0%{ background-position: 100% 50%; }
       100%{ background-position: 0 50%; }
     }
-        
       .btn-unduh-chart-icon{
       width: 28px;
       height: 28px;
@@ -241,7 +237,6 @@
   pointer-events: none !important;
 }
     .neu-bg{ background:#FFFFFF; }
-    GANTI:
     .neu-card{
       background:#ffffff;
       border-radius:16px;
@@ -322,7 +317,7 @@
 .pillbar-name { width: 56px; flex-shrink: 0; font-size: 13px; font-weight: 700; color: #374151; }
 .pillbar-track {
   flex: 1; height: 14px; border-radius: 7px; position: relative; overflow: hidden;
-  background: #F4F8FB; box-shadow: inset 2px 2px 5px rgba(163,177,198,.25);
+  background: #F4F8FB; border: 1px solid #D8DEE6;
   cursor: pointer;
 }
 .pillbar-fill {
@@ -373,14 +368,16 @@
 
     .neu-ring-wrap {
       border-radius: 50%; flex-shrink: 0; position: relative;
-      box-shadow: inset -4px -4px 9px rgba(255,255,255,.75), inset 4px 4px 9px rgba(163,177,198,.35);
+      border: 1px solid #D8DEE6;
+      box-shadow: 0 2px 6px rgba(16,24,40,.06);
       display: flex; align-items: center; justify-content: center;
       background: #fff;
     }
     .fab-copy {
   width: 34px; height: 34px; border-radius: 50%;
   background: #ffffff;
-  box-shadow: -3px -3px 7px rgba(255,255,255,.8), 3px 3px 8px rgba(163,177,198,.28);
+  border: 1px solid #D8DEE6;
+  box-shadow: 0 2px 6px rgba(16,24,40,.06);
   display: flex; align-items: center; justify-content: center;
   color: #6b7280;
 }
@@ -397,8 +394,9 @@
     }
     .chart-glass-wrap {
   border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  box-shadow: inset 6px 6px 14px rgba(163,177,198,.4), inset -6px -6px 14px rgba(255,255,255,.9);
-  background: transparent; padding: 0; margin: 0 auto;
+  border: 1px solid #D8DEE6;
+  box-shadow: 0 2px 6px rgba(16,24,40,.06);
+  background: #fff; padding: 0; margin: 0 auto;
   position: relative;
 }
 .ring-center-raised {
@@ -408,16 +406,15 @@
   width: 164px; height: 164px;
   border-radius: 50%;
   background: #fff;
-  box-shadow:
-    -10px -10px 22px rgba(255,255,255,1),
-    10px 10px 22px rgba(163,177,198,.55),
-    0 0 18px rgba(163,177,198,.45);
+  border: 1px solid #D8DEE6;
+  box-shadow: 0 2px 6px rgba(16,24,40,.08);
   z-index: 0;
 }
     .legend-chip-neu {
   display: flex; flex-direction: row; align-items: center; gap: 8px; justify-content: space-between;
   background: #ffffff; border-radius: 999px; padding: 9px 14px;
-  box-shadow: 0 4px 10px rgba(163,177,198,.22);
+  border: 1px solid #D8DEE6;
+  box-shadow: 0 2px 6px rgba(16,24,40,.06);
   position: relative; overflow: hidden;
 }
     .ripple-effect { position: relative; overflow: hidden; }
@@ -457,23 +454,23 @@
   z-index: 10;
 }
 .center-label.show:active {
-  box-shadow: inset 4px 4px 10px rgba(163,177,198,.4), inset -4px -4px 10px rgba(255,255,255,.6);
+  box-shadow: inset 0 2px 5px rgba(16,24,40,.12);
   transform: translate(-50%, -50%) scale(0.96);
 }
 .cl-name { font-size: 11px; font-weight: 700; color:#6b7280; }
 .cl-pct { font-size: 20px; font-weight: 800; color:#1f2937; line-height:1; }
 .center-label.show:active {
-  box-shadow: inset 4px 4px 10px rgba(163,177,198,.4), inset -4px -4px 10px rgba(255,255,255,.6);
+  box-shadow: inset 0 2px 5px rgba(16,24,40,.12);
 }
 .center-label .cl-name { display:block; font-size: 11.5px; font-weight: 700; color:#6b7280; }
 .center-label .cl-pct { display:block; font-size: 16px; font-weight: 800; color:#1f2937; margin-top:2px; }
     .legend-chip-neu.legend-chip-selected {
-      box-shadow: 0 0 0 2px rgba(31,41,55,.12), -3px -3px 7px rgba(255,255,255,.8), 3px 3px 8px rgba(163,177,198,.28);
+      box-shadow: 0 0 0 2px rgba(31,41,55,.12);
       transform: translateY(-1px);
     }
     .legend-chip-neu.legend-chip-pressed {
       transform: scale(0.94);
-      box-shadow: inset 2px 2px 5px rgba(163,177,198,.4), inset -2px -2px 5px rgba(255,255,255,.6);
+      box-shadow: inset 0 2px 4px rgba(16,24,40,.12);
     }
       .card-collapse-head { cursor: pointer; position: relative; }
 .card-collapse-chev {
@@ -514,7 +511,7 @@
   align-items: center;
 }
 .center-label.show:active {
-  box-shadow: inset 4px 4px 10px rgba(163,177,198,.4), inset -4px -4px 10px rgba(255,255,255,.6);
+  box-shadow: inset 0 2px 5px rgba(16,24,40,.12);
   transform: translate(-50%, -50%);
 }
   </style>
@@ -999,7 +996,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
         oninput="cekIsiPIN()"
         onkeydown="tekanEnterPIN(event)"
         class="w-full h-9 px-4 rounded-xl text-sm outline-none"
-        style="background:#eef2f7; box-shadow: inset 3px 3px 6px rgba(0,0,0,.10), inset -3px -3px 6px rgba(255,255,255,.8);">
+        style="background:#ffffff; border:1px solid #D8DEE6; box-shadow: 0 2px 6px rgba(16,24,40,.06);">
 
       <div
         id="pinError"
