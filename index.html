@@ -1195,30 +1195,30 @@ let modeRentang = false;
       });
 
       const maxTotalRombel = Math.max(...window.rombelData.map(r => r.L + r.P), 1);
-      const warnaRombel = [
-  { top:"#B49AE8", bottom:"#8C6BC7" },
-  { top:"#B49AE8", bottom:"#8C6BC7" },
-  { top:"#B49AE8", bottom:"#8C6BC7" },
-  { top:"#B49AE8", bottom:"#8C6BC7" },
-  { top:"#B49AE8", bottom:"#8C6BC7" },
-  { top:"#B49AE8", bottom:"#8C6BC7" }
-];
 
-      document.getElementById('pillbars').innerHTML = window.rombelData.map((r, i) => {
-        const total = r.L + r.P;
-        const wPct = (total / maxTotalRombel * 100).toFixed(0);
-        const c = warnaRombel[i % warnaRombel.length];
-        return `
+document.getElementById('pillbars').innerHTML = window.rombelData.map((r, i) => {
+  const total = r.L + r.P;
+  const wPct = (total / maxTotalRombel * 100).toFixed(0);
+  
+  // LOGIC WARNA: Kalau lebih dari 28 siswa, kasih warna merah/oranye gradasi
+  let c;
+  if (total > 28) {
+    c = { top: "#FF7A45", bottom: "#E65100" }; // Warna Over-Kuota (Oranye/Merah)
+  } else {
+    c = { top: "#B49AE8", bottom: "#8C6BC7" }; // Warna Normal (Ungu)
+  }
+
+  return `
 <div class="pillbar-col" onclick="bukaPopupRombel(${i}, event)">
   <div class="pillbar-ripple-wrap"></div>
   <span class="pillbar-name">${r.kelas}</span>
   <div class="pillbar-track">
     <div class="pillbar-fill" style="width:${wPct}%;background:linear-gradient(90deg,${c.top},${c.bottom})"></div>
   </div>
-  <span class="pillbar-lbl">${total}</span>
+  <span class="pillbar-lbl ${total > 28 ? 'text-red-600 font-extrabold' : ''}">${total}</span>
   ${i === 0 ? '<div class="pillbar-hint-tooltip" id="pillbarHintTooltip">Tap untuk lihat detail kelas</div>' : ''}
 </div>`;
-      }).join('');
+}).join('');
 
       document.getElementById('tabelRombelSpin').classList.add('hidden');
 
