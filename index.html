@@ -2051,12 +2051,18 @@ function buatChart(){
     labels:labelKesejahteraan,
     datasets:[{
       data:nilaiKesejahteraan,
-      backgroundColor: warnaKesejahteraan.slice(),
-      borderColor:"#FFFFFF",
-      borderWidth:4,
-      borderRadius:12,
-      hoverOffset:0,
-      spacing:6
+      backgroundColor: [
+        "#5C85E5", // Desil 1
+        "#9871F5", // Desil 2
+        "#DE6B9A", // Desil 3
+        "#E07A5F", // Desil 4
+        "#C29B74", // Desil 5
+        "#7F94A8"  // Desil 6-10
+      ],
+      borderWidth: 0,
+      borderRadius: 0,
+      hoverOffset: 0,
+      spacing: 0
     }]
   },
   options:{
@@ -2162,16 +2168,13 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
   data:{
     labels:labelStatusAnak,
     datasets:[{
-  data:nilaiStatusAnak,
-
-  backgroundColor:warnaStatusAnak.slice(),
-
-  borderColor:"#FFFFFF",
-  borderWidth:4,
-  borderRadius:12,
-  hoverOffset:0,
-  spacing:6
-}]
+      data:nilaiStatusAnak,
+      backgroundColor: ["#5C85E5","#9871F5","#DE6B9A","#E07A5F","#C29B74"],
+      borderWidth: 0,
+      borderRadius: 0,
+      hoverOffset: 0,
+      spacing: 0
+    }]
   },
 
   options:{
