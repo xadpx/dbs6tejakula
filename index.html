@@ -148,6 +148,11 @@
       box-shadow: 0 2px 6px rgba(16,24,40,.06);
       transition:.25s;
     }
+    .nav-active .nav-icon-wrap{
+      background: linear-gradient(160deg,#60A5FA,#2563EB);
+      border-color: transparent;
+      box-shadow: 0 6px 14px rgba(37,99,235,.35);
+    }
     .nav-label{
       font-size:10px;
       font-weight:600;
@@ -291,9 +296,9 @@
   border-color: #93A5C4;
   box-shadow: 0 0 0 3px rgba(37,99,235,.12);
 }
-      .neu-nav-flat{
-      background: #ffffff;
-      box-shadow: -6px -6px 14px rgba(255,255,255,.7), 6px 6px 16px rgba(163,177,198,.28);
+       .neu-nav-flat{
+      background: transparent;
+      box-shadow: none;
       padding-bottom: env(safe-area-inset-bottom, 0px);
     }
            .neu-modal{
@@ -2939,8 +2944,8 @@ function updateNavAktif(p){
     if(id===p){
       btn.classList.remove("nav-inactive");
       btn.classList.add("nav-active");
-      iconWrap.style.color="#3E50A8";
-      label.style.color="#3E50A8";
+      iconWrap.style.color="#ffffff";
+      label.style.color="#2563EB";
     }else{
       btn.classList.remove("nav-active");
       btn.classList.add("nav-inactive");
