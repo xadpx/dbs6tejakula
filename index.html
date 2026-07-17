@@ -619,6 +619,18 @@ content_copy
 
   <div id="pillbars" class="pillbar-row"></div>
 
+  <!-- Keterangan Kuota Polos -->
+  <div class="mt-3 flex flex-col gap-1 px-1 text-[11px] text-gray-500 font-medium">
+    <div class="flex items-center gap-1.5">
+      <span class="w-2 h-2 rounded-full shrink-0" style="background: linear-gradient(160deg,#B49AE8,#8C6BC7)"></span>
+      <span>Ungu: Jumlah siswa normal (≤ 28 siswa)</span>
+    </div>
+    <div class="flex items-center gap-1.5">
+      <span class="w-2 h-2 rounded-full shrink-0" style="background: linear-gradient(160deg,#FF7A45,#E65100)"></span>
+      <span>Oranye: Jumlah siswa melebihi standar kuota (> 28 siswa)</span>
+    </div>
+  </div>
+
 <div id="rombelPopupOverlay"
 onclick="if(event.target===this) tutupPopupRombel()"
 class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-6">
