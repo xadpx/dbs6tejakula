@@ -84,7 +84,7 @@
       background:#ffffff;
       border-radius:8px;
       padding:4px 8px;
-      border: 1px solid #E7EAEF;
+      border: 1px solid #D8DEE6;
       box-shadow: 0 2px 6px rgba(16,24,40,.06);
       transition:.15s;
     }
@@ -147,7 +147,7 @@
       justify-content:center;
       border-radius:9999px;
       background: #ffffff;
-      border: 1px solid #E7EAEF;
+      border: 1px solid #D8DEE6;
       box-shadow: 0 2px 6px rgba(16,24,40,.06);
       transition:.25s;
     }
@@ -198,7 +198,7 @@
       height: 28px;
       border-radius: 9999px;
       background: #ffffff;
-      border: 1px solid #E7EAEF;
+      border: 1px solid #D8DEE6;
       box-shadow: 0 2px 6px rgba(16,24,40,.06);
       display: flex;
       align-items: center;
@@ -245,13 +245,13 @@
     .neu-card{
       background:#ffffff;
       border-radius:16px;
-      border: 1px solid #E7EAEF;
+      border: 1px solid #D8DEE6;
       box-shadow: 0 2px 6px rgba(16,24,40,.06);
     }
     .neu-btn{
       background:#ffffff;
       border-radius:14px;
-      border: 1px solid #E7EAEF;
+      border: 1px solid #D8DEE6;
       box-shadow: 0 2px 6px rgba(16,24,40,.06);
       transition: box-shadow .12s ease;
     }
@@ -266,7 +266,7 @@
       -webkit-appearance: none !important;
       appearance: none !important;
       background-color: #ffffff !important;
-      border: 1px solid #E7EAEF;
+      border: 1px solid #D8DEE6;
       border-radius: 9999px;
       box-shadow: 0 2px 6px rgba(16,24,40,.06) !important;
     }
@@ -282,12 +282,12 @@
     }
       .neu-dropdown-inset{
   background:#ffffff;
-  border: 1px solid #E7EAEF;
+  border: 1px solid #D8DEE6;
   box-shadow: 0 2px 6px rgba(16,24,40,.06);
 }
 .neu-dropdown{
   background:#ffffff;
-  border: 1px solid #E7EAEF;
+  border: 1px solid #D8DEE6;
   box-shadow: 0 2px 6px rgba(16,24,40,.06);
   transition: box-shadow .15s ease;
 }
@@ -297,8 +297,8 @@
   box-shadow: 0 0 0 3px rgba(37,99,235,.12);
 }
       .neu-nav-flat{
-      background: transparent;
-      box-shadow: none;
+      background: #ffffff;
+      box-shadow: -6px -6px 14px rgba(255,255,255,.7), 6px 6px 16px rgba(163,177,198,.28);
       padding-bottom: env(safe-area-inset-bottom, 0px);
     }
            .neu-modal{
@@ -1427,7 +1427,7 @@ function filterSiswa() {
 
   if (q === "") {
     document.getElementById("list-siswa").innerHTML = `
-      <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:#ffffff; border: 1px solid #E7EAEF;">
+      <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:#ffffff; border: 1px solid #D8DEE6;">
         <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">keyboard</span>
         <p class="text-sm text-gray-600 font-medium">Ketik minimal 3 huruf Nama siswa</p>
       </div>
@@ -1437,7 +1437,7 @@ function filterSiswa() {
   if (q.length < 3) {
     const sisa = 3 - q.length;
     document.getElementById("list-siswa").innerHTML = `
-      <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:#ffffff; border: 1px solid #E7EAEF;">
+      <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:#ffffff; border: 1px solid #D8DEE6;">
         <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2"> </span>
         <p class="text-sm text-gray-600 font-medium">Ketik ${sisa} huruf lagi</p>
       </div>
@@ -1499,7 +1499,7 @@ hasil.sort((a, b) => {
   }
 
   document.getElementById("list-siswa").innerHTML = `
-<div class="rounded-3xl overflow-hidden" style="background:#ffffff; border:1px solid #E7EAEF; box-shadow: 0 2px 6px rgba(16,24,40,.06);">
+<div class="rounded-3xl overflow-hidden" style="background:#ffffff; border:1px solid #D8DEE6; box-shadow: 0 2px 6px rgba(16,24,40,.06);">
 
 ${hasil.map((r,i)=>{
 
