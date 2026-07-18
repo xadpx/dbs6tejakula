@@ -417,7 +417,7 @@
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: 164px; height: 164px;
+  width: 136px; height: 136px;
   border-radius: 50%;
   background: #fff;
   box-shadow:
@@ -456,8 +456,8 @@
 .center-label.show {
   pointer-events: auto;
   cursor: pointer;
-  width: 164px;
-  height: 164px;
+  width: 136px;
+  height: 136px;
   border-radius: 50%;
   display: flex;
   flex-direction: column;
@@ -518,8 +518,8 @@
       .center-label.show {
   pointer-events: auto;
   cursor: pointer;
-  width: 164px;
-  height: 164px;
+  width: 136px;
+  height: 136px;
   border-radius: 50%;
   display: flex;
   flex-direction: column;
@@ -544,7 +544,20 @@
     <p class="text-[10px] font-bold text-[#FF7A45] uppercase tracking-widest ml-[2px] m-0">
       SD Negeri 6 Tejakula
     </p>
-    <p id="lastUpdated" class="text-[9px] text-gray-400 leading-tight m-0"></p>
+    <div class="relative" id="notifWrap">
+      <button id="btnNotifUpdate" onpointerdown="buatRipple(event)" onclick="toggleNotifUpdate(event)"
+        class="relative flex items-center justify-center"
+        style="width:30px;height:30px;border-radius:50%;background:#ffffff;overflow:hidden;
+               box-shadow:-3px -3px 6px rgba(255,255,255,.8), 3px 3px 8px rgba(163,177,198,.35);">
+        <span class="material-symbols-rounded" style="font-size:16px;color:#6b7280;">notifications</span>
+        <span id="notifDot" class="hidden" style="position:absolute;top:3px;right:4px;width:7px;height:7px;border-radius:50%;background:#2563EB;border:1.5px solid #fff;"></span>
+      </button>
+      <div id="notifDropdown" class="hidden" style="position:absolute;top:38px;right:0;width:210px;background:#ffffff;border-radius:16px;padding:12px;z-index:50;
+             box-shadow:-6px -6px 12px rgba(255,255,255,.8), 6px 6px 16px rgba(163,177,198,.4);">
+        <p style="font-size:11px;font-weight:700;color:#374151;margin:0 0 8px;">Pembaruan Terakhir</p>
+        <div id="notifList" style="display:flex;flex-direction:column;gap:6px;"></div>
+      </div>
+    </div>
   </div>
 
   <h1 class="text-xl font-bold mb-0 text-gray-800 flex items-center gap-2">
@@ -680,10 +693,10 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
     <div id="skelKesejahteraan" class="w-full flex flex-col items-center justify-center py-10">
       <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
     </div>
-    <div class="chart-glass-wrap" style="width:290px;height:290px">
+    <div class="chart-glass-wrap" style="width:240px;height:240px">
 <div class="ring-center-raised"></div>
 <div class="center-label" id="centerLabelKesejahteraan"></div>
-<div class="relative" style="width:274px;height:274px">
+<div class="relative" style="width:224px;height:224px">
 <canvas id="chartKesejahteraan" class="hidden"></canvas>
     </div>
     </div>
@@ -707,10 +720,10 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
     <div id="skelStatusAnak" class="w-full flex flex-col items-center justify-center py-10">
       <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
     </div>
-   <div class="chart-glass-wrap" style="width:290px;height:290px">
+   <div class="chart-glass-wrap" style="width:240px;height:240px">
 <div class="ring-center-raised"></div>
 <div class="center-label" id="centerLabelStatusAnak"></div>
-<div class="relative" style="width:274px;height:274px">
+<div class="relative" style="width:224px;height:224px">
 <canvas id="chartStatusAnak" class="hidden"></canvas>
     </div>
     </div>
@@ -1139,24 +1152,72 @@ let pinPercobaan = 0;
 let halamanSebelumnya = "home";
 let modeRentang = false;
 
-    function terapkanTanggalUpdate(tanggalDariServer){
-      const el = document.getElementById('lastUpdated');
-      if(!el) return;
+    let riwayatUpdateData = []; // array of ISO date strings, terbaru duluan
 
-      let tgl, perkiraan;
-      if(tanggalDariServer){
-        tgl = new Date(tanggalDariServer);
-        perkiraan = false;
-      }else{
-        tgl = new Date();
-        perkiraan = true;
-      }
-
+    function formatTanggalUpdate(iso){
+      const tgl = new Date(iso);
       const dd = String(tgl.getDate()).padStart(2,'0');
       const mm = String(tgl.getMonth()+1).padStart(2,'0');
       const yyyy = tgl.getFullYear();
+      const hh = String(tgl.getHours()).padStart(2,'0');
+      const min = String(tgl.getMinutes()).padStart(2,'0');
+      return `${dd}/${mm}/${yyyy} • ${hh}.${min}`;
+    }
 
-      el.innerHTML = `sync ${dd}/${mm}/${yyyy}${perkiraan ? ' *' : ''}`;
+    function renderNotifList(){
+      const list = document.getElementById('notifList');
+      if(!list) return;
+      if(!riwayatUpdateData.length){
+        list.innerHTML = `<p style="font-size:11px;color:#9ca3af;margin:0;">Belum ada data pembaruan</p>`;
+        return;
+      }
+      list.innerHTML = riwayatUpdateData.slice(0,3).map((iso,i) => `
+        <div style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:10px;${i===0 ? 'background:#F3F6FF;' : ''}">
+          <span class="material-symbols-rounded" style="font-size:15px;color:${i===0 ? '#2563EB' : '#9ca3af'};">sync</span>
+          <span style="font-size:11.5px;font-weight:${i===0 ? '700' : '500'};color:${i===0 ? '#1f2937' : '#6b7280'};">${formatTanggalUpdate(iso)}</span>
+        </div>
+      `).join('');
+    }
+
+    function toggleNotifUpdate(e){
+      if(e) e.stopPropagation();
+      const dd = document.getElementById('notifDropdown');
+      const dot = document.getElementById('notifDot');
+      const willOpen = dd.classList.contains('hidden');
+      dd.classList.toggle('hidden');
+      if(willOpen){
+        dot.classList.add('hidden');
+        if(riwayatUpdateData[0]) localStorage.setItem('lastSeenUpdate', riwayatUpdateData[0]);
+      }
+    }
+
+    document.addEventListener('click', function(e){
+      const wrap = document.getElementById('notifWrap');
+      const dd = document.getElementById('notifDropdown');
+      if(dd && !dd.classList.contains('hidden') && wrap && !wrap.contains(e.target)){
+        dd.classList.add('hidden');
+      }
+    });
+
+    function terapkanTanggalUpdate(tanggalDariServer, riwayatDariServer){
+      if(Array.isArray(riwayatDariServer) && riwayatDariServer.length){
+        riwayatUpdateData = riwayatDariServer;
+      }else if(tanggalDariServer){
+        riwayatUpdateData = [tanggalDariServer];
+      }else{
+        riwayatUpdateData = [new Date().toISOString()];
+      }
+
+      renderNotifList();
+
+      const dot = document.getElementById('notifDot');
+      if(!dot) return;
+      const lastSeen = localStorage.getItem('lastSeenUpdate');
+      if(riwayatUpdateData[0] && riwayatUpdateData[0] !== lastSeen){
+        dot.classList.remove('hidden');
+      }else{
+        dot.classList.add('hidden');
+      }
     }
 
     function formatTanggalUntukTampilan(value){
@@ -1267,7 +1328,7 @@ document.getElementById('pillbars').innerHTML = window.rombelData.map((r, i) => 
     .then(res => res.json())
     .then(json => {
       if (!json.error) {
-        terapkanTanggalUpdate(json.lastUpdated);
+        terapkanTanggalUpdate(json.lastUpdated, json.riwayat);
       }
     })
     .catch(err => {
