@@ -408,8 +408,8 @@
     .chart-glass-wrap {
   border-radius: 50%; display: flex; align-items: center; justify-content: center;
   box-shadow:
-    -6px -6px 12px rgba(255,255,255,.8),
-    6px 6px 14px rgba(163,177,198,.35);
+    inset 3px 3px 7px rgba(163,177,198,.4),
+    inset -3px -3px 7px rgba(255,255,255,.8);
   background: #fff; padding: 0; margin: 0 auto;
   position: relative;
 }
@@ -1997,6 +1997,20 @@ function handleChartTap(containerId, i){
 
   window.donutTapTimers[containerId] = setTimeout(baliknormal, 3000);
 }
+const neuShadowPlugin = {
+  id: 'neuShadowDonut',
+  beforeDatasetsDraw(chart) {
+    const {ctx} = chart;
+    ctx.save();
+    ctx.shadowColor = 'rgba(140,152,175,.45)';
+    ctx.shadowBlur = 10;
+    ctx.shadowOffsetX = 3;
+    ctx.shadowOffsetY = 4;
+  },
+  afterDatasetsDraw(chart) {
+    chart.ctx.restore();
+  }
+};
 const glossyPlugin = {
   id: 'glossy',
   afterDatasetsDraw(chart) {
@@ -2067,7 +2081,7 @@ function buatChart(){
 
   window.chartKesejahteraanInstance = new Chart(document.getElementById("chartKesejahteraan"),{
   type:"doughnut",
-  plugins:[glossyPlugin, outsideLabelsPlugin],
+  plugins:[neuShadowPlugin, glossyPlugin, outsideLabelsPlugin],
   data:{
     labels:labelKesejahteraan,
     datasets:[{
@@ -2081,9 +2095,9 @@ function buatChart(){
         "#7F94A8"  // Desil 6-10
       ],
       borderWidth: 0,
-      borderRadius: 0,
+      borderRadius: 16,
       hoverOffset: 0,
-      spacing: 0
+      spacing: 6
     }]
   },
   options:{
@@ -2184,7 +2198,7 @@ const totalKes = nilaiKesejahteraan.reduce((a,b)=>a+b,0);
 window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusAnak"),{
 
   type:"doughnut",
-  plugins:[glossyPlugin, outsideLabelsPlugin],
+  plugins:[neuShadowPlugin, glossyPlugin, outsideLabelsPlugin],
 
   data:{
     labels:labelStatusAnak,
@@ -2192,9 +2206,9 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
       data:nilaiStatusAnak,
       backgroundColor: ["#5C85E5","#9871F5","#DE6B9A","#E07A5F","#C29B74"],
       borderWidth: 0,
-      borderRadius: 0,
+      borderRadius: 16,
       hoverOffset: 0,
-      spacing: 0
+      spacing: 6
     }]
   },
 
