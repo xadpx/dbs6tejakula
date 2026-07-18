@@ -136,29 +136,36 @@
     nav{
       position:relative;
     }
+    nav button{
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      border: none;
+      outline: none;
+      padding: 0;
+      margin: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
     .nav-icon-wrap{
-      width:38px;
-      height:38px;
+      width:46px;
+      height:46px;
       display:flex;
       align-items:center;
       justify-content:center;
       border-radius:9999px;
       background: #ffffff;
-      border: 1px solid #D8DEE6;
-      box-shadow: 0 2px 6px rgba(16,24,40,.06);
+      box-shadow:
+        -6px -6px 12px rgba(255,255,255,.8),
+        6px 6px 14px rgba(163,177,198,.35);
       transition:.25s;
     }
     .nav-active .nav-icon-wrap{
-      background: linear-gradient(160deg,#60A5FA,#2563EB);
-      border-color: transparent;
-      box-shadow: 0 6px 14px rgba(37,99,235,.35);
-    }
-    .nav-label{
-      font-size:10px;
-      font-weight:600;
-      color:#9CA3AF;
-      transition:.2s;
-      line-height:1;
+      width:52px;
+      height:52px;
+      background: #2563EB;
+      box-shadow:
+        -4px -4px 10px rgba(255,255,255,.2),
+        6px 6px 16px rgba(37,99,235,.4);
     }
     .skeleton{
       background: #ececec;
@@ -297,8 +304,8 @@
   box-shadow: 0 0 0 3px rgba(37,99,235,.12);
 }
        .neu-nav-flat{
-      background: transparent;
-      box-shadow: none;
+      background: #ffffff;
+      box-shadow: 0 -1px 4px rgba(0,0,0,0.06);
       padding-bottom: env(safe-area-inset-bottom, 0px);
     }
            .neu-modal{
@@ -1057,49 +1064,46 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
 bottom-0
 neu-nav-flat
 flex justify-around items-center
-h-[64px]
-px-3
+h-[76px]
+px-6
 z-50"
 style="left:50%; transform:translateX(-50%); width:100%; max-width:480px;">
 <button
 id="nav-home"
 onclick="nav('home')"
-class="nav-inactive flex flex-col items-center justify-center gap-0.5 transition-colors duration-150">
+class="nav-inactive flex items-center justify-center transition-colors duration-150">
 
 <span class="nav-icon-wrap">
-<span class="material-symbols-rounded nav-icon text-[26px]">
+<span class="material-symbols-rounded nav-icon text-[24px]">
 home
 </span>
 </span>
-<span class="nav-label">Beranda</span>
 
 </button>
 
 <button
 id="nav-siswa"
 onclick="nav('siswa')"
-class="nav-inactive flex flex-col items-center justify-center gap-0.5 transition-colors duration-150">
+class="nav-inactive flex items-center justify-center transition-colors duration-150">
 
 <span class="nav-icon-wrap">
-<span class="material-symbols-rounded nav-icon text-[26px]">
+<span class="material-symbols-rounded nav-icon text-[24px]">
 school
 </span>
 </span>
-<span class="nav-label">Siswa</span>
 
 </button>
 
 <button
 id="nav-download"
 onclick="nav('download')"
-class="nav-inactive flex flex-col items-center justify-center gap-0.5 transition-colors duration-150">
+class="nav-inactive flex items-center justify-center transition-colors duration-150">
 
 <span class="nav-icon-wrap">
-<span class="material-symbols-rounded nav-icon text-[26px]">
+<span class="material-symbols-rounded nav-icon text-[24px]">
 download_for_offline
 </span>
 </span>
-<span class="nav-label">Unduh</span>
 
 </button>
 </nav>
@@ -2940,17 +2944,14 @@ function updateNavAktif(p){
   ["home","siswa","download"].forEach(id=>{
     const btn=document.getElementById("nav-"+id);
     const iconWrap = btn.querySelector(".nav-icon-wrap");
-    const label = btn.querySelector(".nav-label");
     if(id===p){
       btn.classList.remove("nav-inactive");
       btn.classList.add("nav-active");
       iconWrap.style.color="#ffffff";
-      label.style.color="#2563EB";
     }else{
       btn.classList.remove("nav-active");
       btn.classList.add("nav-inactive");
       iconWrap.style.color="#4B5563";
-      label.style.color="#9CA3AF";
     }
   });
 }
