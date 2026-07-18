@@ -540,6 +540,9 @@
 
   <div>
 
+  <p id="greetingText" class="text-sm text-gray-500 m-0 mb-0.5"></p>
+  <p id="greetingDate" class="text-[11px] text-gray-400 m-0 mb-3"></p>
+
   <div class="flex items-center justify-between mb-1">
     <p class="text-[10px] font-bold text-[#FF7A45] uppercase tracking-widest ml-[2px] m-0">
       SD Negeri 6 Tejakula
@@ -570,65 +573,70 @@
   </div>
 
   </div>
-    <div class="grid grid-cols-1 gap-3 mb-3">
-      <div class="neu-card p-5">
-        <p class="text-xs font-semibold text-gray-500 mb-2 flex items-center gap-1">
-  <span class="material-symbols-rounded text-[15px]">
-    school
-  </span>
-  TOTAL SISWA
-</p>
-        <div class="relative min-h-[26px] flex items-center">
-          <p id="tot" class="hidden text-[28px] font-bold tracking-tight tabular-nums text-gray-900 leading-6">0</p>
-          <div id="totSpin" class="spinner-ring-gray"></div>
+
+  <div
+    onclick="bukaStatusAnak()"
+    class="cursor-pointer mb-3"
+    style="background:#FDF0E7;border-radius:14px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;">
+    <span class="material-symbols-rounded" style="font-size:18px;color:#993C1D;margin-top:1px;">info</span>
+    <div>
+      <p style="font-size:13px;font-weight:600;color:#712B13;margin:0 0 2px;">Perlu perhatian</p>
+      <p style="font-size:12px;color:#993C1D;margin:0;line-height:1.4;">6 siswa berstatus yatim/piatu, ketuk untuk lihat detail</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 gap-3 mb-3">
+    <div class="neu-card p-5 flex flex-col justify-center">
+      <span class="material-symbols-rounded text-[20px] text-gray-500 mb-2">school</span>
+      <p class="text-xs font-semibold text-gray-500 mb-1">TOTAL SISWA</p>
+      <div class="relative min-h-[26px] flex items-center">
+        <p id="tot" class="hidden text-[24px] font-bold tracking-tight tabular-nums text-gray-900 leading-6">0</p>
+        <div id="totSpin" class="spinner-ring-gray"></div>
+      </div>
+    </div>
+    <div class="flex flex-col gap-3">
+      <div class="neu-card p-4 flex-1 flex flex-col justify-center">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-xs font-semibold text-gray-500 mb-1">LAKI-LAKI</p>
+            <div class="relative min-h-[22px] flex items-center">
+              <p id="laki" class="hidden text-[17px] font-bold tracking-tight tabular-nums text-gray-900 leading-6">0</p>
+              <div id="lakiSpin" class="spinner-ring-gray"></div>
+            </div>
+          </div>
+          <div class="neu-ring-wrap relative w-8 h-8 shrink-0">
+            <svg width="32" height="32">
+              <circle cx="16" cy="16" r="13" fill="none" stroke="#f3f4f6" stroke-width="4"/>
+              <circle id="ringLaki" cx="16" cy="16" r="13" fill="none" stroke="#FF7A45" stroke-width="4"
+                stroke-dasharray="81.7" stroke-dashoffset="81.7" stroke-linecap="round"
+                style="transform: rotate(-90deg); transform-origin: center;"/>
+            </svg>
+            <div id="persenLaki" class="absolute inset-0 flex items-center justify-center text-[8px] font-extrabold text-[#FF7A45]">0%</div>
+          </div>
         </div>
       </div>
-      <div class="grid grid-cols-2 gap-3">
-  <div class="neu-card p-5">
-    <div class="flex items-start justify-between">
-      <div>
-        <p class="text-xs font-semibold text-gray-500 mb-1 flex items-center gap-1">
-          LAKI-LAKI
-        </p>
-        <div class="relative min-h-[26px] flex items-center">
-          <p id="laki" class="hidden text-[21px] font-bold tracking-tight tabular-nums text-gray-900 leading-6">0</p>
-          <div id="lakiSpin" class="spinner-ring-gray"></div>
+      <div class="neu-card p-4 flex-1 flex flex-col justify-center">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-xs font-semibold text-gray-500 mb-1">PEREMPUAN</p>
+            <div class="relative min-h-[22px] flex items-center">
+              <p id="perempuan" class="hidden text-[17px] font-bold tracking-tight tabular-nums text-gray-900 leading-6">0</p>
+              <div id="perempuanSpin" class="spinner-ring-gray"></div>
+            </div>
+          </div>
+          <div class="neu-ring-wrap relative w-8 h-8 shrink-0">
+            <svg width="32" height="32">
+              <circle cx="16" cy="16" r="13" fill="none" stroke="#f3f4f6" stroke-width="4"/>
+              <circle id="ringPerempuan" cx="16" cy="16" r="13" fill="none" stroke="#9B7EDE" stroke-width="4"
+                stroke-dasharray="81.7" stroke-dashoffset="81.7" stroke-linecap="round"
+                style="transform: rotate(-90deg); transform-origin: center;"/>
+            </svg>
+            <div id="persenPerempuan" class="absolute inset-0 flex items-center justify-center text-[8px] font-extrabold text-[#9B7EDE]">0%</div>
+          </div>
         </div>
-      </div>
-      <div class="neu-ring-wrap relative w-9 h-9 shrink-0">
-        <svg width="36" height="36">
-          <circle cx="18" cy="18" r="15" fill="none" stroke="#f3f4f6" stroke-width="4"/>
-          <circle id="ringLaki" cx="18" cy="18" r="15" fill="none" stroke="#FF7A45" stroke-width="4"
-            stroke-dasharray="94.2" stroke-dashoffset="94.2" stroke-linecap="round"
-            style="transform: rotate(-90deg); transform-origin: center;"/>
-        </svg>
-        <div id="persenLaki" class="absolute inset-0 flex items-center justify-center text-[9px] font-extrabold text-[#FF7A45]">0%</div>
       </div>
     </div>
   </div>
-  <div class="neu-card p-5">
-    <div class="flex items-start justify-between">
-      <div>
-        <p class="text-xs font-semibold text-gray-500 mb-1 flex items-center gap-1">
-          PEREMPUAN
-        </p>
-        <div class="relative min-h-[26px] flex items-center">
-          <p id="perempuan" class="hidden text-[21px] font-bold tracking-tight tabular-nums text-gray-900 leading-6">0</p>
-          <div id="perempuanSpin" class="spinner-ring-gray"></div>
-        </div>
-      </div>
-      <div class="neu-ring-wrap relative w-9 h-9 shrink-0">
-        <svg width="36" height="36">
-          <circle cx="18" cy="18" r="15" fill="none" stroke="#f3f4f6" stroke-width="4"/>
-          <circle id="ringPerempuan" cx="18" cy="18" r="15" fill="none" stroke="#9B7EDE" stroke-width="4"
-            stroke-dasharray="94.2" stroke-dashoffset="94.2" stroke-linecap="round"
-            style="transform: rotate(-90deg); transform-origin: center;"/>
-        </svg>
-        <div id="persenPerempuan" class="absolute inset-0 flex items-center justify-center text-[9px] font-extrabold text-[#9B7EDE]">0%</div>
-      </div>
-    </div>
-  </div> 
-</div>
     </div>
     <div class="neu-card p-5">
 
@@ -1153,6 +1161,39 @@ let halamanSebelumnya = "home";
 let modeRentang = false;
 
     let riwayatUpdateData = []; // array of ISO date strings, terbaru duluan
+
+    function renderGreeting(){
+      const elText = document.getElementById('greetingText');
+      const elDate = document.getElementById('greetingDate');
+      if(!elText || !elDate) return;
+
+      const now = new Date();
+      const jam = now.getHours();
+      let sapaan = 'Selamat malam';
+      if(jam >= 4 && jam < 11) sapaan = 'Selamat pagi';
+      else if(jam >= 11 && jam < 15) sapaan = 'Selamat siang';
+      else if(jam >= 15 && jam < 18) sapaan = 'Selamat sore';
+
+      const hari = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'][now.getDay()];
+      const bulan = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'][now.getMonth()];
+
+      elText.textContent = sapaan;
+      elDate.textContent = `${hari}, ${now.getDate()} ${bulan} ${now.getFullYear()}`;
+    }
+    renderGreeting();
+
+    function bukaStatusAnak(){
+      const body = document.getElementById('bodyStatusAnak');
+      const head = document.getElementById('headStatusAnak');
+      if(body && !body.classList.contains('open')){
+        body.classList.add('open');
+      }
+      if(head && !head.classList.contains('open')){
+        head.classList.add('open');
+      }
+      const card = document.getElementById('cardStatusAnak');
+      if(card) card.scrollIntoView({behavior:'smooth', block:'start'});
+    }
 
     function formatTanggalUpdate(iso){
       const tgl = new Date(iso);
