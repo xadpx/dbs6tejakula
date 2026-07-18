@@ -540,9 +540,6 @@
 
   <div>
 
-  <p id="greetingText" class="text-sm text-gray-500 m-0 mb-0.5"></p>
-  <p id="greetingDate" class="text-[11px] text-gray-400 m-0 mb-3"></p>
-
   <div class="flex items-center justify-between mb-1">
     <p class="text-[10px] font-bold text-[#FF7A45] uppercase tracking-widest ml-[2px] m-0">
       SD Negeri 6 Tejakula
@@ -563,11 +560,7 @@
     </div>
   </div>
 
-  <h1 class="text-xl font-bold mb-0 text-gray-800 flex items-center gap-2">
-  <span class="material-symbols-rounded text-[22px]">
-  home
-</span>
-   Beranda
+  <h1 id="greetingText" class="text-xl font-bold mb-0 text-gray-800 flex items-center gap-2">
 </h1>
 
   </div>
@@ -1164,8 +1157,7 @@ let modeRentang = false;
 
     function renderGreeting(){
       const elText = document.getElementById('greetingText');
-      const elDate = document.getElementById('greetingDate');
-      if(!elText || !elDate) return;
+      if(!elText) return;
 
       const now = new Date();
       const jam = now.getHours();
@@ -1174,11 +1166,7 @@ let modeRentang = false;
       else if(jam >= 11 && jam < 15) sapaan = 'Selamat siang';
       else if(jam >= 15 && jam < 18) sapaan = 'Selamat sore';
 
-      const hari = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'][now.getDay()];
-      const bulan = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'][now.getMonth()];
-
-      elText.textContent = sapaan;
-      elDate.textContent = `${hari}, ${now.getDate()} ${bulan} ${now.getFullYear()}`;
+      elText.textContent = sapaan + ' 👋';
     }
     renderGreeting();
 
