@@ -515,6 +515,10 @@
   transition: transform .35s cubic-bezier(.16,1,.3,1), opacity .3s cubic-bezier(.16,1,.3,1);
 }
 .premium-popup-overlay.show .premium-popup-box { transform: scale(1) translateY(0); opacity: 1; }
+.detail-fullpage-overlay { opacity: 0; background: #ffffff; transition: opacity .3s cubic-bezier(.16,1,.3,1); }
+.detail-fullpage-overlay.show { opacity: 1; }
+.detail-fullpage-box { transform: translateY(14px); opacity: 0; transition: transform .3s cubic-bezier(.16,1,.3,1), opacity .3s cubic-bezier(.16,1,.3,1); }
+.detail-fullpage-overlay.show .detail-fullpage-box { transform: translateY(0); opacity: 1; }
       .center-label.show {
   pointer-events: auto;
   cursor: pointer;
@@ -1042,8 +1046,8 @@ Unduh Data
 </div>
   <div id="modal"
 onclick="if(event.target===this) closeModal()"
-class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-6">
-    <div id="modalBox" class="premium-popup-box neu-modal relative w-[93%] max-w-sm max-h-[85vh] overflow-y-auto px-5 py-6 rounded-[28px]">
+class="hidden detail-fullpage-overlay fixed inset-0 z-50 overflow-y-auto">
+    <div id="modalBox" class="detail-fullpage-box relative w-full min-h-full px-5 py-6">
 
       <div class="flex items-center justify-between mb-3">
         <button
