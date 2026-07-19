@@ -821,19 +821,15 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
 
     </div>
 
-    <div id="panelDataGuru" class="hidden flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-5 pb-5 max-w-full">
+   <div id="panelDataGuru" class="hidden flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-5 pb-5 max-w-full">
       <div class="flex flex-col items-center justify-center text-center pt-14 px-6">
-        <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">school</span>
-        <p class="text-sm text-gray-600 font-medium">Data guru belum tersedia</p>
-        <p class="text-xs text-gray-600 mt-1">Fitur ini akan segera hadir</p>
+        <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
       </div>
     </div>
 
     <div id="panelDataTendik" class="hidden flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-5 pb-5 max-w-full">
       <div class="flex flex-col items-center justify-center text-center pt-14 px-6">
-        <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">badge</span>
-        <p class="text-sm text-gray-600 font-medium">Data tenaga kependidikan belum tersedia</p>
-        <p class="text-xs text-gray-600 mt-1">Fitur ini akan segera hadir</p>
+        <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
       </div>
     </div>
 
@@ -1259,6 +1255,9 @@ let modeRentang = false;
           panel.classList.add('hidden');
         }
       });
+
+      if(tab === 'guru') muatDataGuru();
+      if(tab === 'tendik') muatDataTendik();
     }
 
     let riwayatUpdateData = []; // array of ISO date strings, terbaru duluan
@@ -1765,7 +1764,9 @@ function showDetailByNIK(nik){
   const r = d.find(item => item[8] == nik);
   if (!r) return;
 
+  window.currentDetailTipe = 'siswa';
   window.currentDetailNIK = nik;
+  window.currentDetailKey = nik;
 
   // Kolom foto siswa (opsional). Isi URL foto di index ke-18 pada data sumber.
   // Kalau kosong / belum ada, otomatis pakai ikon person sebagai placeholder.
@@ -1880,6 +1881,195 @@ function showDetailByNIK(nik){
   bukaPopupPremium('modal', 'modalBox');
   history.pushState({ modalDetailSiswa: true }, '');
 }
+
+let dataGuru = [];
+let dataTendik = [];
+let sudahMuatGuru = false;
+let sudahMuatTendik = false;
+
+function muatDataGuru(){
+  if(sudahMuatGuru) return;
+  sudahMuatGuru = true;
+  fetch(`${APPS_SCRIPT_URL}?action=getDataGuru`)
+    .then(res => res.json())
+    .then(json => {
+      if(json.error){
+        showToast("Gagal memuat data guru: " + json.error, 3000);
+        return;
+      }
+      dataGuru = json.data.slice(1).filter(r => r[1] && String(r[1]).trim() !== "");
+      renderListPegawai('guru');
+    })
+    .catch(err => {
+      console.error(err);
+      showToast("Tidak bisa terhubung ke server data guru", 3000);
+    });
+}
+
+function muatDataTendik(){
+  if(sudahMuatTendik) return;
+  sudahMuatTendik = true;
+  fetch(`${APPS_SCRIPT_URL}?action=getDataTendik`)
+    .then(res => res.json())
+    .then(json => {
+      if(json.error){
+        showToast("Gagal memuat data tendik: " + json.error, 3000);
+        return;
+      }
+      dataTendik = json.data.slice(1).filter(r => r[1] && String(r[1]).trim() !== "");
+      renderListPegawai('tendik');
+    })
+    .catch(err => {
+      console.error(err);
+      showToast("Tidak bisa terhubung ke server data tendik", 3000);
+    });
+}
+
+function renderListPegawai(tipe){
+  const sumber = tipe === 'guru' ? dataGuru : dataTendik;
+  const el = document.getElementById(tipe === 'guru' ? 'panelDataGuru' : 'panelDataTendik');
+
+  if(sumber.length === 0){
+    el.innerHTML = `
+      <div class="flex flex-col items-center justify-center text-center pt-14 px-6">
+        <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">${tipe === 'guru' ? 'school' : 'badge'}</span>
+        <p class="text-sm text-gray-600 font-medium">Belum ada data ${tipe === 'guru' ? 'guru' : 'tenaga kependidikan'}</p>
+      </div>
+    `;
+    return;
+  }
+
+  el.innerHTML = `
+<div class="rounded-3xl overflow-hidden" style="background:#ffffff; border:1px solid #D8DEE6; box-shadow: 0 2px 6px rgba(16,24,40,.06);">
+${sumber.map((r,i)=>`
+<div
+onpointerdown="buatRipple(event)"
+onclick="showDetailPegawai('${tipe}', ${i})"
+class="flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-100 transition ripple-effect">
+  <div class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
+    <span class="material-symbols-rounded text-[13px] text-gray-400"
+      style="font-variation-settings:'FILL' 1,'wght' 300,'GRAD' 0,'opsz' 24;">
+      account_circle
+    </span>
+  </div>
+  <div class="ml-3 flex-1 min-w-0">
+    <div class="text-[13px] font-semibold text-gray-900 truncate">${r[1]}</div>
+    <div class="text-[11px] text-gray-600 mt-0.5">${r[2] || '-'}</div>
+  </div>
+</div>
+${i < sumber.length - 1 ? '<div class="ml-[52px] border-b border-gray-200"></div>' : ''}
+`).join('')}
+</div>
+`;
+}
+
+function showDetailPegawai(tipe, idx){
+
+  const sumber = tipe === 'guru' ? dataGuru : dataTendik;
+  const r = sumber[idx];
+  if(!r) return;
+
+  window.currentDetailTipe = tipe;
+  window.currentDetailKey = idx;
+
+  document.getElementById('detail-content').innerHTML = `
+
+<div class="text-[13px] w-full max-w-4xl mx-auto">
+
+<div class="grid grid-cols-1 sm:grid-cols-[190px_1fr] gap-5 sm:gap-8 items-start">
+
+  <div class="flex sm:flex-col items-center gap-4 sm:gap-3">
+
+    <div class="w-[52px] h-[52px] sm:w-[92px] sm:h-[92px] rounded-full overflow-hidden flex items-center justify-center shrink-0"
+      style="background:#eef1f4; box-shadow: -5px -5px 10px rgba(255,255,255,.95), 5px 5px 12px rgba(163,177,198,.55);">
+      <span class="material-symbols-rounded" style="font-size:28px; color:#aab3bd; font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;">person</span>
+    </div>
+
+    <div class="text-left sm:text-center">
+      <div class="text-[16px] sm:text-[18px] font-bold text-gray-900">${r[1]}</div>
+      <div class="text-[12px] text-gray-500 font-medium mt-0.5">${r[2] || '-'}</div>
+    </div>
+
+  </div>
+
+  <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+
+    <div class="neu-card p-3">
+      <div class="flex items-center gap-1.5 text-gray-500 text-[11px] font-semibold mb-1">
+        <span class="material-symbols-rounded text-[15px]">work</span> Jabatan
+      </div>
+      <div class="text-gray-800 font-medium">${r[2] || '-'}</div>
+    </div>
+
+    <div class="neu-card p-3">
+      <div class="flex items-center gap-1.5 text-gray-500 text-[11px] font-semibold mb-1">
+        <span class="material-symbols-rounded text-[15px]">badge</span> Status Kepegawaian
+      </div>
+      <div class="text-gray-800 font-medium">${r[3] || '-'}</div>
+    </div>
+
+    <div class="neu-card p-3">
+      <div class="flex items-center gap-1.5 text-gray-500 text-[11px] font-semibold mb-1">
+        <span class="material-symbols-rounded text-[15px]">location_on</span> Tempat Lahir
+      </div>
+      <div class="text-gray-800 font-medium">${r[4] || '-'}</div>
+    </div>
+
+    <div class="neu-card p-3">
+      <div class="flex items-center gap-1.5 text-gray-500 text-[11px] font-semibold mb-1">
+        <span class="material-symbols-rounded text-[15px]">calendar_month</span> Tanggal Lahir
+      </div>
+      <div class="text-gray-800 font-medium">${formatTanggalUntukTampilan(r[5])}</div>
+    </div>
+
+    <div class="neu-card p-3">
+      <div class="flex items-center gap-1.5 text-gray-500 text-[11px] font-semibold mb-1">
+        <span class="material-symbols-rounded text-[15px]">assignment_ind</span> NIP
+      </div>
+      <div class="text-gray-800 font-medium">${r[6] || '-'}</div>
+    </div>
+
+    <div class="neu-card p-3">
+      <div class="flex items-center justify-between mb-1">
+        <div class="flex items-center gap-1.5 text-gray-500 text-[11px] font-semibold">
+          <span class="material-symbols-rounded text-[15px]">badge</span> NIK
+        </div>
+        <span
+          id="copyNikIcon"
+          class="material-symbols-rounded text-[15px] text-gray-400 cursor-pointer hover:text-blue-600 transition"
+          onclick="event.stopPropagation(); salinNIK('${r[7]}')">
+          content_copy
+        </span>
+      </div>
+      <div class="text-gray-800 font-medium">${r[7] || '-'}</div>
+    </div>
+
+    <div class="neu-card p-3">
+      <div class="flex items-center gap-1.5 text-gray-500 text-[11px] font-semibold mb-1">
+        <span class="material-symbols-rounded text-[15px]">fingerprint</span> NUPTK
+      </div>
+      <div class="text-gray-800 font-medium">${r[8] || '-'}</div>
+    </div>
+
+    <div class="neu-card p-3">
+      <div class="flex items-center gap-1.5 text-gray-500 text-[11px] font-semibold mb-1">
+        <span class="material-symbols-rounded text-[15px]">receipt_long</span> NPWP
+      </div>
+      <div class="text-gray-800 font-medium">${r[9] || '-'}</div>
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+
+`;
+  setNavDisabled(true);
+  kunciScroll(true);
+  bukaPopupPremium('modal', 'modalBox');
+  history.pushState({ modalDetailSiswa: true }, '');
+}
    
     function toggleDetailMenu(e){
       if(e) e.stopPropagation();
@@ -1895,8 +2085,23 @@ function showDetailByNIK(nik){
       }
     });
 
-    function buatTeksDetailSiswa(){
-      const r = d.find(item => item[8] == window.currentDetailNIK);
+    function buatTeksDetail(){
+      if(window.currentDetailTipe === 'guru' || window.currentDetailTipe === 'tendik'){
+        const sumber = window.currentDetailTipe === 'guru' ? dataGuru : dataTendik;
+        const r = sumber[window.currentDetailKey];
+        if(!r) return '';
+        return `Nama: ${r[1]}
+Jabatan: ${r[2]}
+Status Kepegawaian: ${r[3]}
+Tempat Lahir: ${r[4]}
+Tanggal Lahir: ${formatTanggalUntukTampilan(r[5])}
+NIP: ${r[6]}
+NIK: ${r[7]}
+NUPTK: ${r[8]}
+NPWP: ${r[9]}`;
+      }
+
+      const r = d.find(item => item[8] == window.currentDetailKey);
       if(!r) return '';
       return `Nama: ${r[1]}
 Kelas: ${r[2]}
@@ -1912,7 +2117,7 @@ Status Anak: ${r[14]}`;
 
     async function salinDataSiswa(){
       toggleDetailMenu();
-      const teks = buatTeksDetailSiswa();
+      const teks = buatTeksDetail();
       if(!teks) return;
       try{
         await navigator.clipboard.writeText(teks);
@@ -1923,7 +2128,7 @@ Status Anak: ${r[14]}`;
 
     async function bagikanDataSiswa(){
       toggleDetailMenu();
-      const teks = buatTeksDetailSiswa();
+      const teks = buatTeksDetail();
       if(!teks) return;
       if(navigator.share){
         try{
@@ -1947,7 +2152,7 @@ Status Anak: ${r[14]}`;
       try{
         const canvas = await html2canvas(box, { backgroundColor: '#ffffff', scale: 2 });
         const link = document.createElement('a');
-        link.download = `detail-siswa-${window.currentDetailNIK || 'data'}.png`;
+        link.download = `detail-${window.currentDetailTipe || 'siswa'}-${window.currentDetailKey || 'data'}.png`;
         link.href = canvas.toDataURL('image/png');
         link.click();
       }catch(err){
