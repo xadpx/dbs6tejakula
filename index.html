@@ -540,34 +540,42 @@
 <body class="text-base">
   <div id="app-scroll">
 
-  <div id="p-login" class="p-6 flex flex-col justify-center" style="min-height:100vh;">
+  <div id="p-login" class="flex flex-col justify-end" style="min-height:100vh; position:relative; overflow:hidden; background:linear-gradient(160deg,#2E5FA3 0%,#2563EB 45%,#5B9BE8 100%); padding:32px 24px 44px; box-sizing:border-box;">
 
-    <div class="text-center mb-8">
-      <div class="mx-auto mb-3" style="width:64px;height:64px;border-radius:20px;background:linear-gradient(160deg,#5B9BE8,#2563EB);display:flex;align-items:center;justify-content:center;">
-        <span class="material-symbols-rounded text-[30px]" style="color:#fff;">school</span>
+    <div style="position:absolute; top:-60px; right:-60px; width:220px; height:220px; border-radius:50%; background:rgba(255,255,255,.08);"></div>
+    <div style="position:absolute; top:140px; left:-80px; width:180px; height:180px; border-radius:50%; background:rgba(255,255,255,.06);"></div>
+    <div style="position:absolute; bottom:220px; right:-40px; width:160px; height:160px; border-radius:50%; background:rgba(255,255,255,.07);"></div>
+
+    <div style="position:relative; z-index:1;">
+
+      <h1 class="font-bold" style="color:#ffffff; font-size:28px; line-height:1.25; margin:0 0 12px;">
+        Kelola Data Sekolah,<br>Lebih Mudah
+      </h1>
+      <p style="color:rgba(255,255,255,.85); font-size:13px; line-height:1.6; margin:0 0 28px;">
+        Pantau data siswa, guru, dan tenaga kependidikan SD Negeri 6 Tejakula dalam satu aplikasi.
+      </p>
+
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
+        <div style="flex:1; height:1px; background:rgba(255,255,255,.3);"></div>
+        <span style="color:rgba(255,255,255,.75); font-size:11px; white-space:nowrap;">Atau lanjutkan dengan</span>
+        <div style="flex:1; height:1px; background:rgba(255,255,255,.3);"></div>
       </div>
-      <h1 class="text-lg font-bold text-gray-800 m-0">SD Negeri 6 Tejakula</h1>
-      <p class="text-[12px] text-gray-500 mt-1 m-0">Masuk sebagai guru</p>
-    </div>
 
-    <div class="neu-card p-5" style="display:flex;flex-direction:column;align-items:center;">
-
-      <p class="text-[12px] text-gray-500 text-center mb-4">Masuk pakai akun Google yang terdaftar sebagai guru/tendik di sekolah</p>
-
-      <div id="g_id_onload"
-        data-client_id="183272939624-9hm3c0ruqm5s5uo73vkk16v2lvu2cr6b.apps.googleusercontent.com"
-        data-callback="handleGoogleCredential">
+      <div style="display:flex; justify-content:center;">
+        <div id="g_id_onload"
+          data-client_id="183272939624-9hm3c0ruqm5s5uo73vkk16v2lvu2cr6b.apps.googleusercontent.com"
+          data-callback="handleGoogleCredential">
+        </div>
+        <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="filled_white" data-size="large" data-text="continue_with" data-logo_alignment="left" data-width="300"></div>
       </div>
-      <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="outline" data-size="large" data-logo_alignment="left"></div>
 
-      <div id="loginSpinner" class="hidden mt-4"><div class="spinner" style="border-top-color:#2563EB;border-color:rgba(37,99,235,.2);"></div></div>
+      <div id="loginSpinner" class="hidden mt-4" style="display:flex;justify-content:center;"><div class="spinner" style="border-top-color:#ffffff;border-color:rgba(255,255,255,.3);"></div></div>
 
-      <div id="loginError" class="hidden text-red-500 text-[12px] mt-3 text-center"></div>
+      <div id="loginError" class="hidden text-center mt-3" style="color:#FFD3D3; font-size:12px;"></div>
 
     </div>
 
   </div>
-
   <div id="p-home" class="p-5 pb-24">
   <div class="mb-5">
 
