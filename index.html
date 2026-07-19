@@ -535,6 +535,41 @@
   box-shadow: inset 0 2px 5px rgba(16,24,40,.12);
   transform: translate(-50%, -50%);
 }
+    .carousel-grafik{
+      display:flex;
+      gap:12px;
+      overflow-x:auto;
+      scroll-snap-type:x mandatory;
+      padding-bottom:4px;
+      margin:0 -20px 16px;
+      padding-left:36px;
+      padding-right:36px;
+      -webkit-overflow-scrolling:touch;
+    }
+    .carousel-grafik::-webkit-scrollbar{ display:none; }
+    .chart-card-carousel{
+      scroll-snap-align:center;
+      flex:0 0 250px;
+      background:#fff; border:1px solid #D8DEE6;
+      box-shadow:0 2px 6px rgba(16,24,40,.06);
+      border-radius:18px;
+      padding:16px;
+      box-sizing:border-box;
+      transition:opacity .2s ease, transform .2s ease;
+      opacity:.45;
+      transform:scale(.94);
+    }
+    .chart-card-carousel.fokus{
+      opacity:1;
+      transform:scale(1);
+    }
+    .dot-grafik{
+      width:5px; height:5px; border-radius:50%; background:#D8DEE6; transition:.2s;
+      display:inline-block;
+    }
+    .dot-grafik.active{
+      background:#2563EB; width:14px; border-radius:3px;
+    }
   </style>
 </head>
 <body class="text-base">
@@ -641,10 +676,6 @@
         </div>
       </div>
 
-      <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer mt-auto flex items-center justify-center" style="border-radius:9999px; padding:11px 12px; background:linear-gradient(90deg, #D68FC9 0%, #8FA8E8 100%); box-shadow:-4px -4px 10px rgba(255,255,255,.5), 4px 4px 10px rgba(120,110,180,.4);">
-        <span class="text-[12px] font-bold text-white">Detail Rombel</span>
-      </div>
-
     </div>
 
     <div class="flex flex-col gap-3">
@@ -688,30 +719,102 @@
     </div>
 
   </div>
-    <div class="neu-card p-5" id="cardDataRombel">
+    <div class="flex items-center justify-between mb-2">
+      <p class="text-[11px] font-bold text-gray-400 uppercase m-0" style="letter-spacing:.04em;">Grafik Data</p>
+      <div class="flex gap-1" id="dotsGrafik">
+        <span class="dot-grafik" data-idx="0"></span>
+        <span class="dot-grafik" data-idx="1"></span>
+        <span class="dot-grafik" data-idx="2"></span>
+        <span class="dot-grafik" data-idx="3"></span>
+      </div>
+    </div>
 
-  <div class="flex justify-between items-center mb-3">
+    <div class="carousel-grafik" id="carouselGrafik">
 
-   <h2 class="font-bold text-base text-gray-800">
-  Data per Rombel
-</h2>
+      <!-- CLONE Kepegawaian (ujung kiri, ilusi loop) -->
+      <div class="chart-card-carousel" data-real="3">
+        <p class="font-bold text-[13px] text-gray-800 m-0 mb-0.5">Status Kepegawaian</p>
+        <p class="text-[10.5px] text-gray-400 m-0 mb-3">Guru &amp; Tendik</p>
+        <div class="chart-glass-wrap" style="width:150px;height:150px;margin-bottom:6px;">
+          <div class="ring-center-raised" style="width:88px;height:88px;"></div>
+          <div class="relative" style="width:140px;height:140px;"></div>
+        </div>
+      </div>
 
-<div
-id="btnCopyRekap"
-onclick="copyRekap()"
-class="fab-copy cursor-pointer transition">
+      <!-- ASLI: Data per Rombel -->
+      <div class="chart-card-carousel" id="cardDataRombel" data-real="0">
+        <div class="flex items-center justify-between mb-0.5">
+          <p class="font-bold text-[13px] text-gray-800 m-0">Data per Rombel</p>
+          <div id="btnCopyRekap" onclick="event.stopPropagation(); copyRekap()" class="fab-copy cursor-pointer transition" style="width:26px;height:26px;">
+            <span id="copyRekapIcon" class="material-symbols-rounded" style="font-size:13px;">content_copy</span>
+          </div>
+        </div>
+        <p class="text-[10.5px] text-gray-400 m-0 mb-3" id="subtitleRombel">Memuat data...</p>
+        <div id="pillbars" class="pillbar-row"></div>
+        <div id="tabelRombelSpin" class="flex justify-center py-6">
+          <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
+        </div>
+      </div>
 
-<span
-id="copyRekapIcon"
-class="material-symbols-rounded">
-content_copy
-</span>
+      <!-- ASLI: Kesejahteraan -->
+      <div class="chart-card-carousel" id="cardKesejahteraan" data-real="1">
+        <p class="font-bold text-[13px] text-gray-800 m-0">Kesejahteraan Siswa</p>
+        <p class="text-[10.5px] text-gray-400 m-0 mb-2" id="previewKesejahteraan"></p>
+        <div id="skelKesejahteraan" class="w-full flex flex-col items-center justify-center py-10">
+          <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
+        </div>
+        <div class="chart-glass-wrap" style="width:150px;height:150px;">
+          <div class="ring-center-raised" style="width:88px;height:88px;"></div>
+          <div class="center-label" id="centerLabelKesejahteraan" style="width:88px;height:88px;"></div>
+          <div class="relative" style="width:140px;height:140px;">
+            <canvas id="chartKesejahteraan" class="hidden"></canvas>
+          </div>
+        </div>
+        <div id="legendKesejahteraan" class="hidden mt-2 grid grid-cols-2 gap-1.5"></div>
+      </div>
 
-</div>
+      <!-- ASLI: Status Anak -->
+      <div class="chart-card-carousel" id="cardStatusAnak" data-real="2">
+        <p class="font-bold text-[13px] text-gray-800 m-0">Status Anak</p>
+        <p class="text-[10.5px] text-gray-400 m-0 mb-2" id="previewStatusAnak"></p>
+        <div id="skelStatusAnak" class="w-full flex flex-col items-center justify-center py-10">
+          <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
+        </div>
+        <div class="chart-glass-wrap" style="width:150px;height:150px;">
+          <div class="ring-center-raised" style="width:88px;height:88px;"></div>
+          <div class="center-label" id="centerLabelStatusAnak" style="width:88px;height:88px;"></div>
+          <div class="relative" style="width:140px;height:140px;">
+            <canvas id="chartStatusAnak" class="hidden"></canvas>
+          </div>
+        </div>
+        <div id="legendStatusAnak" class="hidden mt-2 grid grid-cols-2 gap-1.5"></div>
+      </div>
 
-</div>
+      <!-- ASLI: Kepegawaian -->
+      <div class="chart-card-carousel" id="cardKepegawaian" data-real="3">
+        <p class="font-bold text-[13px] text-gray-800 m-0">Status Kepegawaian</p>
+        <p class="text-[10.5px] text-gray-400 m-0 mb-2" id="previewKepegawaian">Guru &amp; Tendik</p>
+        <div id="skelKepegawaian" class="w-full flex flex-col items-center justify-center py-10">
+          <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
+        </div>
+        <div class="chart-glass-wrap" style="width:150px;height:150px;">
+          <div class="ring-center-raised" style="width:88px;height:88px;"></div>
+          <div class="center-label" id="centerLabelKepegawaian" style="width:88px;height:88px;"></div>
+          <div class="relative" style="width:140px;height:140px;">
+            <canvas id="chartKepegawaian" class="hidden"></canvas>
+          </div>
+        </div>
+        <div id="legendKepegawaian" class="hidden mt-2 grid grid-cols-2 gap-1.5"></div>
+      </div>
 
-  <div id="pillbars" class="pillbar-row"></div>
+      <!-- CLONE Data per Rombel (ujung kanan, ilusi loop) -->
+      <div class="chart-card-carousel" data-real="0">
+        <p class="font-bold text-[13px] text-gray-800 m-0 mb-0.5">Data per Rombel</p>
+        <p class="text-[10.5px] text-gray-400 m-0 mb-3">Memuat data...</p>
+        <div class="pillbar-row"></div>
+      </div>
+
+    </div>
 
 <div id="rombelPopupOverlay"
 onclick="if(event.target===this) tutupPopupRombel()"
@@ -731,64 +834,45 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
     </div>
   </div>
 </div>
-      <div id="tabelRombelSpin" class="flex justify-center py-6">
-        <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
-      </div>
-    </div>
-    <div class="grid grid-cols-1 gap-3 mt-3">
 
-   <div id="cardKesejahteraan" class="neu-card px-5 pt-1 pb-1">
-    <div class="card-collapse-head" id="headKesejahteraan" onclick="toggleCardCollapse('Kesejahteraan')" style="position:relative; padding-right:28px;">
-      <div style="margin-top:8px;">
-        <h2 class="font-bold text-base m-0">
-          Kesejahteraan Siswa
-        </h2>
-        <p class="chart-preview-text text-[12px] text-gray-400 font-medium m-0" id="previewKesejahteraan" style="margin-top:-2px;"></p>
-      </div>
-      <span class="material-symbols-rounded card-collapse-chev" id="chevKesejahteraan" style="position:absolute; top:2px; right:0;">expand_more</span>
-    </div>
-    <div class="card-collapse-body mt-3" id="bodyKesejahteraan">
-    <div id="skelKesejahteraan" class="w-full flex flex-col items-center justify-center py-10">
-      <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
-    </div>
-    <div class="chart-glass-wrap" style="width:240px;height:240px">
-<div class="ring-center-raised"></div>
-<div class="center-label" id="centerLabelKesejahteraan"></div>
-<div class="relative" style="width:224px;height:224px">
-<canvas id="chartKesejahteraan" class="hidden"></canvas>
-    </div>
-    </div>
-    <div id="legendKesejahteraan" class="hidden mt-2 grid grid-cols-2 gap-2">
-    </div>
-    </div>
-  </div>
+    <p class="text-[11px] font-bold text-gray-400 uppercase m-0 mb-2" style="letter-spacing:.04em;">Kategori</p>
 
-   <div id="cardStatusAnak" class="neu-card px-5 pt-1 pb-1">
-    <div class="card-collapse-head" id="headStatusAnak" onclick="toggleCardCollapse('StatusAnak')" style="position:relative; padding-right:28px;">
-      <div style="margin-top:8px;">
-        <h2 class="font-bold text-base m-0">
-          Status Anak
-        </h2>
-        <p class="chart-preview-text text-[12px] text-gray-400 font-medium m-0" id="previewStatusAnak" style="margin-top:-2px;"></p>
-      </div>
-      <span class="material-symbols-rounded card-collapse-chev" id="chevStatusAnak" style="position:absolute; top:2px; right:0;">expand_more</span>
-    </div>
+    <div class="neu-card" style="overflow:hidden;">
 
-    <div class="card-collapse-body mt-3" id="bodyStatusAnak">
-    <div id="skelStatusAnak" class="w-full flex flex-col items-center justify-center py-10">
-      <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
+      <div onclick="bukaDataRombelDariBeranda()" class="flex items-center gap-3 px-4 py-3 cursor-pointer active:bg-gray-50 transition" style="border-bottom:1px solid #F1F2F4;">
+        <div style="width:34px;height:34px;border-radius:10px;background:linear-gradient(160deg,#5B9BE8,#2563EB);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <span class="material-symbols-rounded text-[17px]" style="color:#fff;">groups</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-[13px] font-bold text-gray-800 m-0">Data Rombel</p>
+          <p class="text-[11px] text-gray-400 m-0 mt-0.5">Cari siswa per kelas</p>
+        </div>
+        <span class="material-symbols-rounded text-[18px]" style="color:#d1d5db;">chevron_right</span>
+      </div>
+
+      <div onclick="bukaKategoriKesejahteraanDariBeranda()" class="flex items-center gap-3 px-4 py-3 cursor-pointer active:bg-gray-50 transition" style="border-bottom:1px solid #F1F2F4;">
+        <div style="width:34px;height:34px;border-radius:10px;background:linear-gradient(160deg,#F5A65C,#E07A2F);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <span class="material-symbols-rounded text-[17px]" style="color:#fff;">volunteer_activism</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-[13px] font-bold text-gray-800 m-0">Kesejahteraan</p>
+          <p class="text-[11px] text-gray-400 m-0 mt-0.5">Cari siswa per Desil</p>
+        </div>
+        <span class="material-symbols-rounded text-[18px]" style="color:#d1d5db;">chevron_right</span>
+      </div>
+
+      <div onclick="bukaKategoriStatusAnakDariBeranda()" class="flex items-center gap-3 px-4 py-3 cursor-pointer active:bg-gray-50 transition">
+        <div style="width:34px;height:34px;border-radius:10px;background:linear-gradient(160deg,#4FD1C5,#2C9C8F);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <span class="material-symbols-rounded text-[17px]" style="color:#fff;">shield</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-[13px] font-bold text-gray-800 m-0">Status Anak</p>
+          <p class="text-[11px] text-gray-400 m-0 mt-0.5">Cari siswa per status</p>
+        </div>
+        <span class="material-symbols-rounded text-[18px]" style="color:#d1d5db;">chevron_right</span>
+      </div>
+
     </div>
-   <div class="chart-glass-wrap" style="width:240px;height:240px">
-<div class="ring-center-raised"></div>
-<div class="center-label" id="centerLabelStatusAnak"></div>
-<div class="relative" style="width:224px;height:224px">
-<canvas id="chartStatusAnak" class="hidden"></canvas>
-    </div>
-    </div>
-    <div id="legendStatusAnak" class="hidden mt-2 grid grid-cols-2 gap-2">
-    </div>
-    </div>
-  </div>
 
 <div class="mt-5 mb-3 text-center text-[10px] text-gray-400">
 
@@ -1290,6 +1374,7 @@ z-[9999]">
 let pinPercobaan = 0;
 let halamanSebelumnya = "home";
 let modeRentang = false;
+let carouselGrafikSudahInit = false;
 
     function switchDataTab(tab){
       const tabs = {
@@ -1351,27 +1436,8 @@ let modeRentang = false;
     }
 
     function muatTotalGuruTendik(){
-      fetch(`${APPS_SCRIPT_URL}?action=getDataGuru`)
-        .then(res => res.json())
-        .then(json => {
-          if(json.error) return;
-          const total = json.data.slice(1).filter(r => r[1] && String(r[1]).trim() !== "").length;
-          document.getElementById('totGuru').classList.remove('hidden');
-          document.getElementById('totGuruSpin').classList.add('hidden');
-          animasikanAngka('totGuru', total, 700);
-        })
-        .catch(err => console.error(err));
-
-      fetch(`${APPS_SCRIPT_URL}?action=getDataTendik`)
-        .then(res => res.json())
-        .then(json => {
-          if(json.error) return;
-          const total = json.data.slice(1).filter(r => r[1] && String(r[1]).trim() !== "").length;
-          document.getElementById('totTendik').classList.remove('hidden');
-          document.getElementById('totTendikSpin').classList.add('hidden');
-          animasikanAngka('totTendik', total, 700);
-        })
-        .catch(err => console.error(err));
+      muatDataGuru();
+      muatDataTendik();
     }
 
     function bukaDataRombelDariBeranda(){
@@ -1447,6 +1513,173 @@ let modeRentang = false;
                 <div class="ml-3 flex-1 min-w-0">
                   <div class="text-[13px] font-semibold text-gray-900 truncate">${r[1]}</div>
                   <div class="text-[11px] text-gray-600 mt-0.5">${namaKelas}</div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      document.getElementById('detail-content').innerHTML = `<div class="text-[13px] w-full max-w-4xl mx-auto">${isi}</div>`;
+    }
+
+    const WARNA_DESIL = { "Desil 1":"#5C85E5", "Desil 2":"#9871F5", "Desil 3":"#DE6B9A", "Desil 4":"#E07A5F", "Desil 5":"#C29B74", "Desil 6-10":"#7F94A8" };
+    const WARNA_STATUS_ANAK = { "Tidak Ada":"#3EA1EC", "Yatim":"#FA7F65", "Piatu":"#F7CA41", "Yatim Piatu":"#4ECA9E" };
+
+    function bukaKategoriKesejahteraanDariBeranda(){
+      window.modalStack = [];
+      dorongModalStep({ type: 'daftarDesil' });
+    }
+
+    function renderDaftarDesil(){
+      document.getElementById('modalHeaderTitle').textContent = 'Kesejahteraan';
+      document.getElementById('detailDotsWrap').classList.add('hidden');
+
+      let desil = { "Desil 1":0, "Desil 2":0, "Desil 3":0, "Desil 4":0, "Desil 5":0, "Desil 6-10":0 };
+      d.forEach(r=>{
+        let x = String(r[13]).trim();
+        if(desil.hasOwnProperty(x)) desil[x]++;
+      });
+
+      const isi = `
+        <div class="rounded-3xl overflow-hidden" style="background:#ffffff; border:1px solid #D8DEE6; box-shadow: 0 2px 6px rgba(16,24,40,.06);">
+          ${Object.keys(desil).map((label,i,arr) => `
+            <div
+              onpointerdown="buatRipple(event)"
+              onclick="tampilkanSiswaDesil('${label}')"
+              class="flex items-center justify-between px-4 py-3 cursor-pointer active:bg-gray-100 transition ripple-effect ${i < arr.length-1 ? 'border-b border-gray-100' : ''}">
+              <div class="flex items-center gap-2.5">
+                <span style="width:8px;height:8px;border-radius:50%;background:${WARNA_DESIL[label]};flex-shrink:0;"></span>
+                <span class="text-[13px] font-semibold text-gray-900">${label}</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-[13px] font-bold text-gray-700">${desil[label]}</span>
+                <span class="material-symbols-rounded text-[16px] text-gray-300">chevron_right</span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      document.getElementById('detail-content').innerHTML = `<div class="text-[13px] w-full max-w-4xl mx-auto">${isi}</div>`;
+    }
+
+    function tampilkanSiswaDesil(label){
+      dorongModalStep({ type: 'siswaDesil', label: label });
+    }
+
+    function renderSiswaDesil(label){
+      let hasil = d.filter(r => String(r[13]).trim() === label);
+      hasil.sort((a,b) => String(a[1]).localeCompare(String(b[1]), "id", {sensitivity:"base"}));
+
+      document.getElementById('modalHeaderTitle').textContent = `${label} (${hasil.length} siswa)`;
+      document.getElementById('detailDotsWrap').classList.add('hidden');
+
+      let isi;
+      if(hasil.length === 0){
+        isi = `<p class="text-center text-gray-500 py-6">Tidak ada siswa di kategori ini</p>`;
+      }else{
+        isi = `
+          <div class="rounded-3xl overflow-hidden" style="background:#ffffff; border:1px solid #D8DEE6; box-shadow: 0 2px 6px rgba(16,24,40,.06);">
+            ${hasil.map((r,i) => `
+              <div
+                onpointerdown="buatRipple(event)"
+                onclick="showDetailByNIK('${r[8]}')"
+                class="flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-100 transition ripple-effect ${i < hasil.length-1 ? 'border-b border-gray-100' : ''}">
+                <div class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
+                  <span class="material-symbols-rounded text-[13px] text-gray-400"
+                    style="font-variation-settings:'FILL' 1,'wght' 300,'GRAD' 0,'opsz' 24;">
+                    account_circle
+                  </span>
+                </div>
+                <div class="ml-3 flex-1 min-w-0">
+                  <div class="text-[13px] font-semibold text-gray-900 truncate">${r[1]}</div>
+                  <div class="text-[11px] text-gray-600 mt-0.5">${r[2]}</div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      document.getElementById('detail-content').innerHTML = `<div class="text-[13px] w-full max-w-4xl mx-auto">${isi}</div>`;
+    }
+
+    function bukaKategoriStatusAnakDariBeranda(){
+      window.modalStack = [];
+      dorongModalStep({ type: 'daftarStatusAnak' });
+    }
+
+    function renderDaftarStatusAnak(){
+      document.getElementById('modalHeaderTitle').textContent = 'Status Anak';
+      document.getElementById('detailDotsWrap').classList.add('hidden');
+
+      let status = {};
+      d.forEach(r=>{
+        let s = String(r[14]).trim();
+        if(s === "") s = "Tidak Ada";
+        status[s] = (status[s]||0) + 1;
+      });
+
+      const labels = Object.keys(status);
+      const isi = `
+        <div class="rounded-3xl overflow-hidden" style="background:#ffffff; border:1px solid #D8DEE6; box-shadow: 0 2px 6px rgba(16,24,40,.06);">
+          ${labels.map((label,i) => `
+            <div
+              onpointerdown="buatRipple(event)"
+              onclick="tampilkanSiswaStatusAnak('${label}')"
+              class="flex items-center justify-between px-4 py-3 cursor-pointer active:bg-gray-100 transition ripple-effect ${i < labels.length-1 ? 'border-b border-gray-100' : ''}">
+              <div class="flex items-center gap-2.5">
+                <span style="width:8px;height:8px;border-radius:50%;background:${WARNA_STATUS_ANAK[label] || '#9871F5'};flex-shrink:0;"></span>
+                <span class="text-[13px] font-semibold text-gray-900">${label}</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-[13px] font-bold text-gray-700">${status[label]}</span>
+                <span class="material-symbols-rounded text-[16px] text-gray-300">chevron_right</span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      document.getElementById('detail-content').innerHTML = `<div class="text-[13px] w-full max-w-4xl mx-auto">${isi}</div>`;
+    }
+
+    function tampilkanSiswaStatusAnak(label){
+      dorongModalStep({ type: 'siswaStatusAnak', label: label });
+    }
+
+    function renderSiswaStatusAnak(label){
+      let hasil = d.filter(r => {
+        let s = String(r[14]).trim();
+        if(s === "") s = "Tidak Ada";
+        return s === label;
+      });
+      hasil.sort((a,b) => String(a[1]).localeCompare(String(b[1]), "id", {sensitivity:"base"}));
+
+      document.getElementById('modalHeaderTitle').textContent = `${label} (${hasil.length} siswa)`;
+      document.getElementById('detailDotsWrap').classList.add('hidden');
+
+      let isi;
+      if(hasil.length === 0){
+        isi = `<p class="text-center text-gray-500 py-6">Tidak ada siswa di kategori ini</p>`;
+      }else{
+        isi = `
+          <div class="rounded-3xl overflow-hidden" style="background:#ffffff; border:1px solid #D8DEE6; box-shadow: 0 2px 6px rgba(16,24,40,.06);">
+            ${hasil.map((r,i) => `
+              <div
+                onpointerdown="buatRipple(event)"
+                onclick="showDetailByNIK('${r[8]}')"
+                class="flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-100 transition ripple-effect ${i < hasil.length-1 ? 'border-b border-gray-100' : ''}">
+                <div class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
+                  <span class="material-symbols-rounded text-[13px] text-gray-400"
+                    style="font-variation-settings:'FILL' 1,'wght' 300,'GRAD' 0,'opsz' 24;">
+                    account_circle
+                  </span>
+                </div>
+                <div class="ml-3 flex-1 min-w-0">
+                  <div class="text-[13px] font-semibold text-gray-900 truncate">${r[1]}</div>
+                  <div class="text-[11px] text-gray-600 mt-0.5">${r[2]}</div>
                 </div>
               </div>
             `).join('')}
@@ -1682,6 +1915,11 @@ let modeRentang = false;
       });
 
       const maxTotalRombel = Math.max(...window.rombelData.map(r => r.L + r.P), 1);
+
+      const elSubtitleRombel = document.getElementById('subtitleRombel');
+      if(elSubtitleRombel){
+        elSubtitleRombel.textContent = `${classes.length} kelas \u00b7 ${totalSiswa} siswa`;
+      }
 
 document.getElementById('pillbars').innerHTML = window.rombelData.map((r, i) => {
   const total = r.L + r.P;
@@ -2159,6 +2397,14 @@ let dataGuru = [];
 let dataTendik = [];
 let sudahMuatGuru = false;
 let sudahMuatTendik = false;
+let guruSiap = false;
+let tendikSiap = false;
+
+function cobaBuatChartKepegawaian(){
+  if(guruSiap && tendikSiap){
+    buatChartKepegawaian();
+  }
+}
 
 function muatDataGuru(){
   if(sudahMuatGuru) return;
@@ -2172,6 +2418,15 @@ function muatDataGuru(){
       }
       dataGuru = json.data.slice(1).filter(r => r[1] && String(r[1]).trim() !== "");
       renderListPegawai('guru');
+      const elTot = document.getElementById('totGuru');
+      const elSpin = document.getElementById('totGuruSpin');
+      if(elTot){
+        elTot.classList.remove('hidden');
+        elSpin.classList.add('hidden');
+        animasikanAngka('totGuru', dataGuru.length, 700);
+      }
+      guruSiap = true;
+      cobaBuatChartKepegawaian();
     })
     .catch(err => {
       console.error(err);
@@ -2191,6 +2446,15 @@ function muatDataTendik(){
       }
       dataTendik = json.data.slice(1).filter(r => r[1] && String(r[1]).trim() !== "");
       renderListPegawai('tendik');
+      const elTot = document.getElementById('totTendik');
+      const elSpin = document.getElementById('totTendikSpin');
+      if(elTot){
+        elTot.classList.remove('hidden');
+        elSpin.classList.add('hidden');
+        animasikanAngka('totTendik', dataTendik.length, 700);
+      }
+      tendikSiap = true;
+      cobaBuatChartKepegawaian();
     })
     .catch(err => {
       console.error(err);
@@ -2510,6 +2774,16 @@ Status Anak: ${r[14]}`;
         renderDaftarKelas();
       }else if(step.type === 'siswaKelas'){
         renderSiswaKelas(step.kelas);
+      }else if(step.type === 'daftarDesil'){
+        renderDaftarDesil();
+      }else if(step.type === 'siswaDesil'){
+        renderSiswaDesil(step.label);
+      }else if(step.type === 'daftarStatusAnak'){
+        renderDaftarStatusAnak();
+      }else if(step.type === 'siswaStatusAnak'){
+        renderSiswaStatusAnak(step.label);
+      }else if(step.type === 'pegawaiKategori'){
+        renderPegawaiKategori(step);
       }else if(step.type === 'detailSiswa'){
         document.getElementById('modalHeaderTitle').textContent = '';
         document.getElementById('detailDotsWrap').classList.remove('hidden');
@@ -3105,8 +3379,63 @@ document.getElementById('previewStatusAnak').textContent =
       labelStatus.classList.remove('sedang-proses');
     }, 800);
   };
+
+  setTimeout(initCarouselGrafik, 60);
 }
-    function unduhKesejahteraanGambar(){
+    function initCarouselGrafik(){
+  if(carouselGrafikSudahInit) return;
+  carouselGrafikSudahInit = true;
+
+  const carousel = document.getElementById('carouselGrafik');
+  if(!carousel) return;
+  const cards = Array.from(carousel.querySelectorAll('.chart-card-carousel'));
+  const dots = Array.from(document.querySelectorAll('#dotsGrafik .dot-grafik'));
+  let settleTimerGrafik = null;
+
+  function scrollToCardGrafik(idx, behavior){
+    const card = cards[idx];
+    const target = card.offsetLeft - (carousel.clientWidth - card.offsetWidth) / 2;
+    carousel.scrollTo({ left: target, behavior: behavior || 'smooth' });
+  }
+
+  function cariIndexTerdekatGrafik(){
+    const tengahContainer = carousel.scrollLeft + carousel.clientWidth / 2;
+    let idxTerdekat = 0;
+    let jarakTerdekat = Infinity;
+    cards.forEach((card, i) => {
+      const posisiKartu = card.offsetLeft + card.offsetWidth / 2;
+      const jarak = Math.abs(posisiKartu - tengahContainer);
+      if(jarak < jarakTerdekat){ jarakTerdekat = jarak; idxTerdekat = i; }
+    });
+    return idxTerdekat;
+  }
+
+  function updateFokusGrafik(){
+    const idx = cariIndexTerdekatGrafik();
+    cards.forEach((card, i) => card.classList.toggle('fokus', i === idx));
+    const realIdx = parseInt(cards[idx].dataset.real, 10);
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === realIdx));
+  }
+
+  carousel.addEventListener('scroll', () => {
+    updateFokusGrafik();
+    clearTimeout(settleTimerGrafik);
+    settleTimerGrafik = setTimeout(() => {
+      const idx = cariIndexTerdekatGrafik();
+      if(idx === 0){
+        scrollToCardGrafik(cards.length - 2, 'auto');
+      }else if(idx === cards.length - 1){
+        scrollToCardGrafik(1, 'auto');
+      }
+      updateFokusGrafik();
+    }, 120);
+  });
+
+  scrollToCardGrafik(1, 'auto');
+  updateFokusGrafik();
+}
+
+function unduhKesejahteraanGambar(){
   const desil = { "Desil 1":0,"Desil 2":0,"Desil 3":0,"Desil 4":0,"Desil 5":0,"Desil 6-10":0 };
   d.forEach(r=>{ let x = String(r[13]).trim(); if(desil.hasOwnProperty(x)) desil[x]++; });
   const warna = ["#11C8F5","#CFC9FF","#FFD6CC","#FFE59A","#C9F6E6","#B9C2F0"];
@@ -3119,6 +3448,153 @@ function unduhStatusAnakGambar(){
   const warna = ["#11C8F5","#FFD6CC","#FFE59A","#C9F6E6","#CFC9FF"];
   unduhChartSebagaiGambar("centerLabelStatusAnak", window.chartStatusAnakInstance, "Status Anak", Object.keys(status), Object.values(status), warna, "Siswa", "Status_Anak.jpg");
 }
+
+function buatLegendKepegawaian(containerId, labels, values, colors){
+  const el = document.getElementById(containerId);
+  el.innerHTML = labels.map((l,i)=>{
+    const val = values[i];
+    const labelAman = l.replace(/'/g, "\\'");
+    return `
+      <div id="${containerId}Chip${i}" onpointerdown="buatRipple(event)" onclick="tampilkanPegawaiKategori('${labelAman}')" class="legend-chip-neu cursor-pointer active:opacity-70 transition">
+        <span class="w-2 h-2 rounded-full shrink-0" style="background:${colors[i]}"></span>
+        <span class="legend-chip-lbl">${l}</span>
+        <span class="legend-chip-val">${val}</span>
+      </div>
+    `;
+  }).join('');
+}
+
+function buatChartKepegawaian(){
+
+  let status = {};
+  dataGuru.concat(dataTendik).forEach(r=>{
+    let s = String(r[3]).trim();
+    if(s === "") s = "Tidak Diketahui";
+    status[s] = (status[s]||0) + 1;
+  });
+
+  const warnaKepegawaian = ["#4FD1C5","#B49AE8","#F5A65C","#5C85E5","#DE6B9A"];
+  const labelKepegawaian = Object.keys(status);
+  const nilaiKepegawaian = Object.values(status);
+
+  document.getElementById('skelKepegawaian').classList.add('hidden');
+  document.getElementById('chartKepegawaian').classList.remove('hidden');
+  document.getElementById('legendKepegawaian').classList.remove('hidden');
+  document.getElementById('previewKepegawaian').textContent =
+    (dataGuru.length + dataTendik.length) + ' orang \u00b7 ' + dataGuru.length + ' guru, ' + dataTendik.length + ' tendik';
+
+  window.chartKepegawaianInstance = new Chart(document.getElementById("chartKepegawaian"),{
+    type:"doughnut",
+    plugins:[neuShadowPlugin, glossyPlugin, outsideLabelsPlugin],
+    data:{
+      labels: labelKepegawaian,
+      datasets:[{
+        data: nilaiKepegawaian,
+        backgroundColor: warnaKepegawaian,
+        borderWidth: 0,
+        borderRadius: 16,
+        hoverOffset: 0,
+        spacing: 6
+      }]
+    },
+    options:{
+      responsive:true,
+      layout:{ padding:0 },
+      cutout:"68%",
+      onClick:(evt, els, chart)=>{
+        const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
+        if(points.length) handleChartTap('legendKepegawaian', points[0].index);
+        clearTimeout(window.tooltipTimerKepegawaian);
+        window.tooltipTimerKepegawaian = setTimeout(()=>{
+          chart.tooltip.setActiveElements([], {x:0,y:0});
+          chart.setActiveElements([]);
+          chart.update();
+        }, 3000);
+      },
+      plugins:{
+        legend:{ display:false },
+        tooltip:{
+          titleFont:{ size:14, family: "'Plus Jakarta Sans', sans-serif", weight: '600' },
+          bodyFont:{ size:12, family: "'Plus Jakarta Sans', sans-serif" },
+          boxWidth: 8, boxHeight: 8, usePointStyle: true,
+          callbacks:{
+            label: function(context){
+              const total = context.dataset.data.reduce((a,b)=>a+b,0);
+              const nilai = context.parsed;
+              const persen = total > 0 ? Math.round((nilai/total)*100) : 0;
+              return persen + '%';
+            }
+          },
+          boxPadding: 6
+        }
+      }
+    }
+  });
+
+  buatLegendKepegawaian('legendKepegawaian', labelKepegawaian, nilaiKepegawaian, warnaKepegawaian);
+  window.chartKepegawaianInstance.donutContainerId = 'legendKepegawaian';
+  window.donutState['legendKepegawaian'] = {
+    chart: window.chartKepegawaianInstance,
+    warnaAsli: warnaKepegawaian.slice(),
+    labels: labelKepegawaian,
+    preview: null
+  };
+
+  const totalKepegawaian = nilaiKepegawaian.reduce((a,b)=>a+b,0);
+  const labelKep = document.getElementById('centerLabelKepegawaian');
+  labelKep.innerHTML = `<span class="cl-pct">${totalKepegawaian}</span><span class="cl-name">Orang</span>`;
+  labelKep.classList.add('show');
+}
+
+function tampilkanPegawaiKategori(label){
+  const gabungan = [
+    ...dataGuru.map((r,i)=>({ r, tipe:'guru', idx:i })),
+    ...dataTendik.map((r,i)=>({ r, tipe:'tendik', idx:i }))
+  ].filter(item => {
+    let s = String(item.r[3]).trim();
+    if(s === "") s = "Tidak Diketahui";
+    return s === label;
+  });
+
+  gabungan.sort((a,b) => String(a.r[1]).localeCompare(String(b.r[1]), "id", {sensitivity:"base"}));
+
+  dorongModalStep({ type: 'pegawaiKategori', label: label, items: gabungan });
+}
+
+function renderPegawaiKategori(step){
+  document.getElementById('modalHeaderTitle').textContent = `${step.label} (${step.items.length})`;
+  document.getElementById('detailDotsWrap').classList.add('hidden');
+
+  let isi;
+  if(step.items.length === 0){
+    isi = `<p class="text-center text-gray-500 py-6">Tidak ada data</p>`;
+  }else{
+    isi = `
+      <div class="rounded-3xl overflow-hidden" style="background:#ffffff; border:1px solid #D8DEE6; box-shadow: 0 2px 6px rgba(16,24,40,.06);">
+        ${step.items.map((item,i) => `
+          <div
+            onpointerdown="buatRipple(event)"
+            onclick="showDetailPegawai('${item.tipe}', ${item.idx})"
+            class="flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-100 transition ripple-effect ${i < step.items.length-1 ? 'border-b border-gray-100' : ''}">
+            <div class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-rounded text-[13px] text-gray-400"
+                style="font-variation-settings:'FILL' 1,'wght' 300,'GRAD' 0,'opsz' 24;">
+                account_circle
+              </span>
+            </div>
+            <div class="ml-3 flex-1 min-w-0">
+              <div class="text-[13px] font-semibold text-gray-900 truncate">${item.r[1]}</div>
+              <div class="text-[11px] text-gray-600 mt-0.5">${item.tipe === 'guru' ? 'Guru' : 'Tendik'} &middot; ${item.r[2] || '-'}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  document.getElementById('detail-content').innerHTML = `<div class="text-[13px] w-full max-w-4xl mx-auto">${isi}</div>`;
+}
+
 function setNavDisabled(disabled){
 
   const nav = document.querySelector("nav");
