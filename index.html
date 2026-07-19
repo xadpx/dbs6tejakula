@@ -570,6 +570,14 @@
     .dot-grafik.active{
       background:#2563EB; width:14px; border-radius:3px;
     }
+    .chart-card-carousel .legend-chip-neu{
+      padding:5px 9px;
+      box-shadow:none;
+      background:#F8F9FB;
+      border-radius:10px;
+    }
+    .chart-card-carousel .legend-chip-lbl{ font-size:9.5px; text-align:left; }
+    .chart-card-carousel .legend-chip-val{ font-size:10.5px; }
   </style>
 </head>
 <body class="text-base">
@@ -735,9 +743,11 @@
       <div class="chart-card-carousel" data-real="3">
         <p class="font-bold text-[13px] text-gray-800 m-0 mb-0.5">Status Kepegawaian</p>
         <p class="text-[10.5px] text-gray-400 m-0 mb-3">Guru &amp; Tendik</p>
-        <div class="chart-glass-wrap" style="width:150px;height:150px;margin-bottom:6px;">
-          <div class="ring-center-raised" style="width:88px;height:88px;"></div>
-          <div class="relative" style="width:140px;height:140px;"></div>
+        <div class="flex items-center gap-3">
+          <div class="chart-glass-wrap shrink-0" style="width:96px;height:96px;">
+            <div class="ring-center-raised" style="width:56px;height:56px;"></div>
+            <div class="relative" style="width:88px;height:88px;"></div>
+          </div>
         </div>
       </div>
 
@@ -760,51 +770,57 @@
       <div class="chart-card-carousel" id="cardKesejahteraan" data-real="1">
         <p class="font-bold text-[13px] text-gray-800 m-0">Kesejahteraan Siswa</p>
         <p class="text-[10.5px] text-gray-400 m-0 mb-2" id="previewKesejahteraan"></p>
-        <div id="skelKesejahteraan" class="w-full flex flex-col items-center justify-center py-10">
+        <div id="skelKesejahteraan" class="w-full flex flex-col items-center justify-center py-6">
           <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
         </div>
-        <div class="chart-glass-wrap" style="width:150px;height:150px;">
-          <div class="ring-center-raised" style="width:88px;height:88px;"></div>
-          <div class="center-label" id="centerLabelKesejahteraan" style="width:88px;height:88px;"></div>
-          <div class="relative" style="width:140px;height:140px;">
-            <canvas id="chartKesejahteraan" class="hidden"></canvas>
+        <div class="flex items-center gap-3">
+          <div class="chart-glass-wrap shrink-0" style="width:96px;height:96px;">
+            <div class="ring-center-raised" style="width:56px;height:56px;"></div>
+            <div class="center-label" id="centerLabelKesejahteraan" style="width:56px;height:56px;"></div>
+            <div class="relative" style="width:88px;height:88px;">
+              <canvas id="chartKesejahteraan" class="hidden"></canvas>
+            </div>
           </div>
+          <div id="legendKesejahteraan" class="hidden flex flex-col gap-1 flex-1 min-w-0"></div>
         </div>
-        <div id="legendKesejahteraan" class="hidden mt-2 grid grid-cols-2 gap-1.5"></div>
       </div>
 
       <!-- ASLI: Status Anak -->
       <div class="chart-card-carousel" id="cardStatusAnak" data-real="2">
         <p class="font-bold text-[13px] text-gray-800 m-0">Status Anak</p>
         <p class="text-[10.5px] text-gray-400 m-0 mb-2" id="previewStatusAnak"></p>
-        <div id="skelStatusAnak" class="w-full flex flex-col items-center justify-center py-10">
+        <div id="skelStatusAnak" class="w-full flex flex-col items-center justify-center py-6">
           <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
         </div>
-        <div class="chart-glass-wrap" style="width:150px;height:150px;">
-          <div class="ring-center-raised" style="width:88px;height:88px;"></div>
-          <div class="center-label" id="centerLabelStatusAnak" style="width:88px;height:88px;"></div>
-          <div class="relative" style="width:140px;height:140px;">
-            <canvas id="chartStatusAnak" class="hidden"></canvas>
+        <div class="flex items-center gap-3">
+          <div class="chart-glass-wrap shrink-0" style="width:96px;height:96px;">
+            <div class="ring-center-raised" style="width:56px;height:56px;"></div>
+            <div class="center-label" id="centerLabelStatusAnak" style="width:56px;height:56px;"></div>
+            <div class="relative" style="width:88px;height:88px;">
+              <canvas id="chartStatusAnak" class="hidden"></canvas>
+            </div>
           </div>
+          <div id="legendStatusAnak" class="hidden flex flex-col gap-1 flex-1 min-w-0"></div>
         </div>
-        <div id="legendStatusAnak" class="hidden mt-2 grid grid-cols-2 gap-1.5"></div>
       </div>
 
       <!-- ASLI: Kepegawaian -->
       <div class="chart-card-carousel" id="cardKepegawaian" data-real="3">
         <p class="font-bold text-[13px] text-gray-800 m-0">Status Kepegawaian</p>
         <p class="text-[10.5px] text-gray-400 m-0 mb-2" id="previewKepegawaian">Guru &amp; Tendik</p>
-        <div id="skelKepegawaian" class="w-full flex flex-col items-center justify-center py-10">
+        <div id="skelKepegawaian" class="w-full flex flex-col items-center justify-center py-6">
           <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
         </div>
-        <div class="chart-glass-wrap" style="width:150px;height:150px;">
-          <div class="ring-center-raised" style="width:88px;height:88px;"></div>
-          <div class="center-label" id="centerLabelKepegawaian" style="width:88px;height:88px;"></div>
-          <div class="relative" style="width:140px;height:140px;">
-            <canvas id="chartKepegawaian" class="hidden"></canvas>
+        <div class="flex items-center gap-3">
+          <div class="chart-glass-wrap shrink-0" style="width:96px;height:96px;">
+            <div class="ring-center-raised" style="width:56px;height:56px;"></div>
+            <div class="center-label" id="centerLabelKepegawaian" style="width:56px;height:56px;"></div>
+            <div class="relative" style="width:88px;height:88px;">
+              <canvas id="chartKepegawaian" class="hidden"></canvas>
+            </div>
           </div>
+          <div id="legendKepegawaian" class="hidden flex flex-col gap-1 flex-1 min-w-0"></div>
         </div>
-        <div id="legendKepegawaian" class="hidden mt-2 grid grid-cols-2 gap-1.5"></div>
       </div>
 
       <!-- CLONE Data per Rombel (ujung kanan, ilusi loop) -->
@@ -4421,7 +4437,8 @@ document.addEventListener("touchstart", function(e){
     target.closest("#srch") ||
     target.closest("select") ||
     target.closest("#switchRentang") ||
-    target.closest(".kategori")
+    target.closest(".kategori") ||
+    target.closest("#carouselGrafik")
   ){
     swipeAktif = false;
     return;
