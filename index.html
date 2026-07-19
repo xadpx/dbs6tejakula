@@ -579,9 +579,10 @@
   </div>
 
   <div class="grid grid-cols-2 gap-3 mb-3">
-    <div class="p-5 flex flex-col justify-center" style="background:#EEF2FB;border-radius:16px;">
-      <span class="material-symbols-rounded text-[20px] mb-2" style="color:#185FA5;">school</span>
-      <p class="text-xs font-semibold mb-1" style="color:#185FA5;">TOTAL SISWA</p>
+    <div class="p-5 flex flex-col justify-center relative" style="background:#EEF2FB;border-radius:16px;overflow:hidden;">
+      <span class="material-symbols-rounded" style="position:absolute;right:-14px;bottom:-18px;font-size:96px;color:#185FA5;opacity:.12;">school</span>
+      <span class="material-symbols-rounded text-[20px] mb-2 relative" style="color:#185FA5;">school</span>
+      <p class="text-xs font-semibold mb-1 relative" style="color:#185FA5;">TOTAL SISWA</p>
       <div class="relative min-h-[26px] flex items-center">
         <p id="tot" class="hidden text-[24px] font-bold tracking-tight tabular-nums leading-6" style="color:#042C53;">0</p>
         <div id="totSpin" class="spinner-ring-gray"></div>
@@ -747,12 +748,31 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
     <!-- HEADER -->
     <div class="shrink-0 px-5">
 
-      <h1 class="text-xl font-bold text-gray-800 flex items-center gap-2 mb-5">
+      <h1 class="text-xl font-bold text-gray-800 flex items-center gap-2 mb-4">
         <span class="material-symbols-rounded text-[23px]">
-          person_search
+          folder_open
         </span>
-        Data Siswa
+        Data
       </h1>
+
+      <div id="dataTabTrack" class="flex mb-4" style="background:#EEF0F4;border-radius:14px;padding:4px;gap:4px;">
+        <button id="tabDataSiswa" onclick="switchDataTab('siswa')"
+          class="flex-1 text-sm font-semibold py-2 rounded-[10px] transition-all duration-150"
+          style="background:#ffffff;color:#1f2937;box-shadow:0 2px 6px rgba(16,24,40,.08);">
+          Siswa
+        </button>
+        <button id="tabDataGuru" onclick="switchDataTab('guru')"
+          class="flex-1 text-sm font-semibold py-2 rounded-[10px] transition-all duration-150"
+          style="background:transparent;color:#9ca3af;">
+          Guru
+        </button>
+      </div>
+
+    </div>
+
+    <div id="panelDataSiswa" class="flex-1 min-h-0 flex flex-col overflow-x-hidden">
+
+     <div class="shrink-0 px-5">
 
      <div class="neu-search relative mb-3">
 
@@ -783,6 +803,16 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
         <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">manage_search</span>
         <p class="text-sm text-gray-600 font-medium">Ketik minimal 3 huruf</p>
         <p class="text-xs text-gray-600 mt-1">Cari berdasarkan Nama, NISN, atau NIK</p>
+      </div>
+    </div>
+
+    </div>
+
+    <div id="panelDataGuru" class="hidden flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-5 pb-5 max-w-full">
+      <div class="flex flex-col items-center justify-center text-center pt-14 px-6">
+        <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">school</span>
+        <p class="text-sm text-gray-600 font-medium">Data guru belum tersedia</p>
+        <p class="text-xs text-gray-600 mt-1">Fitur ini akan segera hadir</p>
       </div>
     </div>
 
@@ -1152,6 +1182,28 @@ z-[9999]">
 let pinPercobaan = 0;
 let halamanSebelumnya = "home";
 let modeRentang = false;
+
+    function switchDataTab(tab){
+      const btnSiswa = document.getElementById('tabDataSiswa');
+      const btnGuru = document.getElementById('tabDataGuru');
+      const panelSiswa = document.getElementById('panelDataSiswa');
+      const panelGuru = document.getElementById('panelDataGuru');
+
+      const aktif = 'background:#ffffff;color:#1f2937;box-shadow:0 2px 6px rgba(16,24,40,.08);';
+      const nonaktif = 'background:transparent;color:#9ca3af;';
+
+      if(tab === 'siswa'){
+        btnSiswa.style.cssText = aktif;
+        btnGuru.style.cssText = nonaktif;
+        panelSiswa.classList.remove('hidden');
+        panelGuru.classList.add('hidden');
+      }else{
+        btnGuru.style.cssText = aktif;
+        btnSiswa.style.cssText = nonaktif;
+        panelGuru.classList.remove('hidden');
+        panelSiswa.classList.add('hidden');
+      }
+    }
 
     let riwayatUpdateData = []; // array of ISO date strings, terbaru duluan
 
