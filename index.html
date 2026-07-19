@@ -755,15 +755,17 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
         Data
       </h1>
 
-      <div id="dataTabTrack" class="flex mb-4" style="background:#EEF0F4;border-radius:14px;padding:4px;gap:4px;">
+      <div id="dataTabTrack" class="flex mb-4" style="background:#EEF0F4;border-radius:9999px;padding:4px;gap:4px;">
         <button id="tabDataSiswa" onclick="switchDataTab('siswa')"
-          class="flex-1 text-sm font-semibold py-2 rounded-[10px] transition-all duration-150"
-          style="background:#ffffff;color:#1f2937;box-shadow:0 2px 6px rgba(16,24,40,.08);">
+          class="flex-1 text-sm font-semibold py-2 rounded-full transition-all duration-200"
+          style="background:#ffffff;color:#1f2937;
+                 box-shadow:-4px -4px 10px rgba(255,255,255,.9), 5px 5px 12px rgba(163,177,198,.45);">
           Siswa
         </button>
         <button id="tabDataGuru" onclick="switchDataTab('guru')"
-          class="flex-1 text-sm font-semibold py-2 rounded-[10px] transition-all duration-150"
-          style="background:transparent;color:#9ca3af;">
+          class="flex-1 text-sm font-semibold py-2 rounded-full transition-all duration-200"
+          style="background:#EEF0F4;color:#9ca3af;
+                 box-shadow:inset 2px 2px 5px rgba(163,177,198,.4), inset -2px -2px 5px rgba(255,255,255,.7);">
           Guru
         </button>
       </div>
@@ -1189,8 +1191,8 @@ let modeRentang = false;
       const panelSiswa = document.getElementById('panelDataSiswa');
       const panelGuru = document.getElementById('panelDataGuru');
 
-      const aktif = 'background:#ffffff;color:#1f2937;box-shadow:0 2px 6px rgba(16,24,40,.08);';
-      const nonaktif = 'background:transparent;color:#9ca3af;';
+      const aktif = 'background:#ffffff;color:#1f2937;box-shadow:-4px -4px 10px rgba(255,255,255,.9), 5px 5px 12px rgba(163,177,198,.45);';
+      const nonaktif = 'background:#EEF0F4;color:#9ca3af;box-shadow:inset 2px 2px 5px rgba(163,177,198,.4), inset -2px -2px 5px rgba(255,255,255,.7);';
 
       if(tab === 'siswa'){
         btnSiswa.style.cssText = aktif;
