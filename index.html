@@ -603,25 +603,10 @@
 
   <h1 id="greetingText" class="text-xl font-bold mb-0 text-gray-800 flex items-center gap-2">
 </h1>
+  <p id="namaGuruAktif" class="text-sm text-gray-500 mt-0.5 mb-0"></p>
 
   </div>
 
-  </div>
-
-  <div
-    <div class="neu-card mb-3 p-4" style="display:flex;align-items:center;justify-content:space-between;">
-    <div style="display:flex;align-items:center;gap:10px;min-width:0;">
-      <div id="inisialGuruAktif" style="width:36px;height:36px;border-radius:50%;background:linear-gradient(160deg,#5B9BE8,#2563EB);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:700;flex-shrink:0;">-</div>
-      <div style="min-width:0;">
-        <p class="text-[11px] text-gray-500 m-0">Masuk sebagai</p>
-        <p class="text-[13px] font-semibold text-gray-800 m-0 truncate" id="namaGuruAktif">-</p>
-      </div>
-    </div>
-    <button onclick="logoutGuru()" class="flex items-center justify-center shrink-0"
-      style="width:32px;height:32px;border-radius:50%;background:#ffffff;border:none;
-             box-shadow:-3px -3px 6px rgba(255,255,255,.8), 3px 3px 8px rgba(163,177,198,.35);">
-      <span class="material-symbols-rounded text-[16px]" style="color:#6b7280;">logout</span>
-    </button>
   </div>
 
   <div class="grid grid-cols-2 gap-3 mb-3">
@@ -1428,10 +1413,8 @@ let modeRentang = false;
 
     function tampilkanNamaGuru(){
       const elNama = document.getElementById('namaGuruAktif');
-      const elInisial = document.getElementById('inisialGuruAktif');
       if(!window.guruAktif) return;
       if(elNama) elNama.textContent = window.guruAktif.nama;
-      if(elInisial) elInisial.textContent = hitungInisial(window.guruAktif.nama);
     }
 
     function cekSesiLogin(){
