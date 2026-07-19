@@ -1044,15 +1044,41 @@ Unduh Data
 onclick="if(event.target===this) closeModal()"
 class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-6">
     <div id="modalBox" class="premium-popup-box neu-modal relative w-[93%] max-w-sm max-h-[85vh] overflow-y-auto px-5 py-6 rounded-[28px]">
-      <button
-  onclick="closeModal()"
-  class="neu-modal-close absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center text-gray-500 transition">
 
-  <span class="material-symbols-rounded text-[20px]">
-    close
-  </span>
+      <div class="flex items-center justify-between mb-3">
+        <button
+          onclick="closeModal()"
+          class="flex items-center justify-center"
+          style="width:36px;height:36px;border-radius:50%;background:#ffffff;border:none;
+                 box-shadow:-4px -4px 10px rgba(255,255,255,.9), 5px 5px 12px rgba(163,177,198,.45);">
+          <span class="material-symbols-rounded text-[18px]" style="color:#5f6368;">arrow_back</span>
+        </button>
 
-</button>
+        <div class="relative">
+          <button
+            id="detailDotsBtn"
+            onclick="toggleDetailMenu(event)"
+            class="flex items-center justify-center"
+            style="width:36px;height:36px;border-radius:50%;background:#ffffff;border:none;
+                   box-shadow:-4px -4px 10px rgba(255,255,255,.9), 5px 5px 12px rgba(163,177,198,.45);">
+            <span class="material-symbols-rounded text-[18px]" style="color:#5f6368;">more_horiz</span>
+          </button>
+
+          <div id="detailDotsMenu" class="hidden" style="position:absolute;right:0;top:44px;width:190px;background:#ffffff;border-radius:14px;padding:6px;z-index:20;
+               box-shadow:-6px -6px 14px rgba(255,255,255,.8), 6px 6px 16px rgba(163,177,198,.4);">
+            <div onclick="salinDataSiswa()" class="cursor-pointer flex items-center gap-2 px-3 py-2 rounded-[10px] text-[13px] text-gray-700 hover:bg-gray-100">
+              <span class="material-symbols-rounded text-[16px]">content_copy</span> Salin data
+            </div>
+            <div onclick="bagikanDataSiswa()" class="cursor-pointer flex items-center gap-2 px-3 py-2 rounded-[10px] text-[13px] text-gray-700 hover:bg-gray-100">
+              <span class="material-symbols-rounded text-[16px]">ios_share</span> Bagikan
+            </div>
+            <div onclick="unduhGambarSiswa()" class="cursor-pointer flex items-center gap-2 px-3 py-2 rounded-[10px] text-[13px] text-gray-700 hover:bg-gray-100">
+              <span class="material-symbols-rounded text-[16px]">image</span> Unduh sebagai gambar
+            </div>
+          </div>
+        </div>
+      </div>
+
             <div id="detail-content" class="text-sm space-y-2 text-gray-600"></div>
     </div>
   </div>
@@ -1730,6 +1756,8 @@ function showDetailByNIK(nik){
   const r = d.find(item => item[8] == nik);
   if (!r) return;
 
+  window.currentDetailNIK = nik;
+
   // Kolom foto siswa (opsional). Isi URL foto di index ke-18 pada data sumber.
   // Kalau kosong / belum ada, otomatis pakai ikon person sebagai placeholder.
   const fotoUrl = (r[18] && String(r[18]).trim()) ? String(r[18]).trim() : '';
@@ -1830,6 +1858,80 @@ function showDetailByNIK(nik){
   bukaPopupPremium('modal', 'modalBox');
 }
    
+    function toggleDetailMenu(e){
+      if(e) e.stopPropagation();
+      const menu = document.getElementById('detailDotsMenu');
+      menu.classList.toggle('hidden');
+    }
+
+    document.addEventListener('click', function(e){
+      const menu = document.getElementById('detailDotsMenu');
+      const btn = document.getElementById('detailDotsBtn');
+      if(menu && !menu.classList.contains('hidden') && !menu.contains(e.target) && e.target !== btn){
+        menu.classList.add('hidden');
+      }
+    });
+
+    function buatTeksDetailSiswa(){
+      const r = d.find(item => item[8] == window.currentDetailNIK);
+      if(!r) return '';
+      return `Nama: ${r[1]}
+Kelas: ${r[2]}
+NISN: ${r[5]}
+NIK: ${r[8]}
+Tempat Lahir: ${r[6]}
+Tanggal Lahir: ${formatTanggalUntukTampilan(r[7])}
+Ayah: ${r[11]}
+Ibu: ${r[12]}
+Kesejahteraan: ${r[13]}
+Status Anak: ${r[14]}`;
+    }
+
+    async function salinDataSiswa(){
+      toggleDetailMenu();
+      const teks = buatTeksDetailSiswa();
+      if(!teks) return;
+      try{
+        await navigator.clipboard.writeText(teks);
+      }catch(err){
+        console.error('Gagal menyalin data siswa:', err);
+      }
+    }
+
+    async function bagikanDataSiswa(){
+      toggleDetailMenu();
+      const teks = buatTeksDetailSiswa();
+      if(!teks) return;
+      if(navigator.share){
+        try{
+          await navigator.share({ text: teks });
+        }catch(err){
+          console.error('Gagal membagikan data siswa:', err);
+        }
+      }else{
+        try{
+          await navigator.clipboard.writeText(teks);
+        }catch(err){
+          console.error('Gagal menyalin data siswa:', err);
+        }
+      }
+    }
+
+    async function unduhGambarSiswa(){
+      toggleDetailMenu();
+      const box = document.getElementById('modalBox');
+      if(!box || typeof html2canvas === 'undefined') return;
+      try{
+        const canvas = await html2canvas(box, { backgroundColor: '#ffffff', scale: 2 });
+        const link = document.createElement('a');
+        link.download = `detail-siswa-${window.currentDetailNIK || 'data'}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      }catch(err){
+        console.error('Gagal membuat gambar:', err);
+      }
+    }
+
     async function salinNIK(nik){
 
   try{
@@ -1878,6 +1980,8 @@ function showDetailByNIK(nik){
     function closeModal() {
       setNavDisabled(false);
       kunciScroll(false);
+      const menu = document.getElementById('detailDotsMenu');
+      if(menu) menu.classList.add('hidden');
       tutupPopupPremium('modal', 'modalBox');
     }
     async function copyRekap(){
