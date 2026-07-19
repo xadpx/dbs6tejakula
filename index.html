@@ -1099,14 +1099,16 @@ class="hidden detail-fullpage-overlay fixed inset-0 z-[60] overflow-y-auto">
 
       <div class="flex items-center justify-between mb-8">
         <button
-          onclick="closeModal()"
-          class="flex items-center justify-center"
+          onclick="mundurModal()"
+          class="flex items-center justify-center shrink-0"
           style="width:36px;height:36px;border-radius:50%;background:#ffffff;border:none;
                  box-shadow:-4px -4px 10px rgba(255,255,255,.9), 5px 5px 12px rgba(163,177,198,.45);">
           <span class="material-symbols-rounded text-[20px]" style="color:#5f6368;">chevron_left</span>
         </button>
 
-        <div class="relative">
+        <span id="modalHeaderTitle" class="text-[14px] font-bold text-gray-800 flex-1 text-center px-2 truncate"></span>
+
+        <div id="detailDotsWrap" class="relative shrink-0">
           <button
             id="detailDotsBtn"
             onclick="toggleDetailMenu(event)"
@@ -1373,22 +1375,22 @@ let modeRentang = false;
     }
 
     function bukaDataRombelDariBeranda(){
-      bukaDaftarKelas();
+      window.modalStack = [];
+      dorongModalStep({ type: 'daftarKelas' });
     }
 
-    function bukaDaftarKelas(){
-      document.getElementById("judulKategoriText").innerText = "Detail Rombel";
-      document.getElementById("rombelBackBtn").classList.add("hidden");
+    function renderDaftarKelas(){
+      document.getElementById('modalHeaderTitle').textContent = 'Detail Rombel';
+      document.getElementById('detailDotsWrap').classList.add('hidden');
 
       const data = window.rombelData || [];
 
+      let isi;
       if(data.length === 0){
-        document.getElementById("list-kategori").innerHTML = `
-          <p class="text-center text-gray-500 py-6">Data rombel belum tersedia</p>
-        `;
+        isi = `<p class="text-center text-gray-500 py-6">Data rombel belum tersedia</p>`;
       }else{
-        document.getElementById("list-kategori").innerHTML = `
-          <div class="rounded-3xl overflow-hidden" style="background:#ffffff; border:1px solid #D8DEE6;">
+        isi = `
+          <div class="rounded-3xl overflow-hidden" style="background:#ffffff; border:1px solid #D8DEE6; box-shadow: 0 2px 6px rgba(16,24,40,.06);">
             ${data.map((r,i) => {
               const total = r.L + r.P;
               return `
@@ -1411,30 +1413,30 @@ let modeRentang = false;
         `;
       }
 
-      document.getElementById('list-kategori').scrollTop = 0;
-      setNavDisabled(true);
-      kunciScroll(true);
-      bukaPopupPremium('modalKategori', 'modalKategoriBox');
+      document.getElementById('detail-content').innerHTML = `<div class="text-[13px] w-full max-w-4xl mx-auto">${isi}</div>`;
     }
 
     function tampilkanSiswaKelas(namaKelas){
+      dorongModalStep({ type: 'siswaKelas', kelas: namaKelas });
+    }
+
+    function renderSiswaKelas(namaKelas){
       let hasil = d.filter(r => String(r[2]).trim() === namaKelas);
       hasil.sort((a,b) => String(a[1]).localeCompare(String(b[1]), "id", {sensitivity:"base"}));
 
-      document.getElementById("judulKategoriText").innerText = `${namaKelas} (${hasil.length} siswa)`;
-      document.getElementById("rombelBackBtn").classList.remove("hidden");
+      document.getElementById('modalHeaderTitle').textContent = `${namaKelas} (${hasil.length} siswa)`;
+      document.getElementById('detailDotsWrap').classList.add('hidden');
 
+      let isi;
       if(hasil.length === 0){
-        document.getElementById("list-kategori").innerHTML = `
-          <p class="text-center text-gray-500 py-6">Tidak ada siswa di kelas ini</p>
-        `;
+        isi = `<p class="text-center text-gray-500 py-6">Tidak ada siswa di kelas ini</p>`;
       }else{
-        document.getElementById("list-kategori").innerHTML = `
-          <div class="rounded-3xl overflow-hidden" style="background:#ffffff; border:1px solid #D8DEE6;">
+        isi = `
+          <div class="rounded-3xl overflow-hidden" style="background:#ffffff; border:1px solid #D8DEE6; box-shadow: 0 2px 6px rgba(16,24,40,.06);">
             ${hasil.map((r,i) => `
               <div
                 onpointerdown="buatRipple(event)"
-                onclick="pilihSiswaRombel('${r[8]}')"
+                onclick="showDetailByNIK('${r[8]}')"
                 class="flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-100 transition ripple-effect ${i < hasil.length-1 ? 'border-b border-gray-100' : ''}">
                 <div class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
                   <span class="material-symbols-rounded text-[13px] text-gray-400"
@@ -1452,14 +1454,7 @@ let modeRentang = false;
         `;
       }
 
-      document.getElementById('list-kategori').scrollTop = 0;
-    }
-
-    function pilihSiswaRombel(nik){
-      closeModalKategori();
-      setTimeout(function(){
-        showDetailByNIK(nik);
-      }, 260);
+      document.getElementById('detail-content').innerHTML = `<div class="text-[13px] w-full max-w-4xl mx-auto">${isi}</div>`;
     }
 
     function bukaDataPegawaiDariBeranda(tipe){
@@ -2034,13 +2029,20 @@ function hapusPencarianSiswa(){
   document.getElementById("srch").focus();
 }
 function showDetailByNIK(nik){
-
   const r = d.find(item => item[8] == nik);
   if (!r) return;
 
   window.currentDetailTipe = 'siswa';
   window.currentDetailNIK = nik;
   window.currentDetailKey = nik;
+
+  dorongModalStep({ type: 'detailSiswa', nik: nik });
+}
+
+function renderDetailSiswaContent(nik){
+
+  const r = d.find(item => item[8] == nik);
+  if (!r) return;
 
   // Kolom foto siswa (opsional). Isi URL foto di index ke-18 pada data sumber.
   // Kalau kosong / belum ada, otomatis pakai ikon person sebagai placeholder.
@@ -2150,10 +2152,7 @@ function showDetailByNIK(nik){
 
 </div>
 
-`;  setNavDisabled(true);
-  kunciScroll(true);
-  bukaPopupPremium('modal', 'modalBox');
-  history.pushState({ modalDetailSiswa: true }, '');
+`;
 }
 
 let dataGuru = [];
@@ -2245,6 +2244,15 @@ function showDetailPegawai(tipe, idx){
 
   window.currentDetailTipe = tipe;
   window.currentDetailKey = idx;
+
+  dorongModalStep({ type: 'detailPegawai', tipe: tipe, idx: idx });
+}
+
+function renderDetailPegawaiContent(tipe, idx){
+
+  const sumber = tipe === 'guru' ? dataGuru : dataTendik;
+  const r = sumber[idx];
+  if(!r) return;
 
   document.getElementById('detail-content').innerHTML = `
 
@@ -2339,10 +2347,6 @@ function showDetailPegawai(tipe, idx){
 </div>
 
 `;
-  setNavDisabled(true);
-  kunciScroll(true);
-  bukaPopupPremium('modal', 'modalBox');
-  history.pushState({ modalDetailSiswa: true }, '');
 }
    
     function toggleDetailMenu(e){
@@ -2479,11 +2483,50 @@ Status Anak: ${r[14]}`;
 
 }
 
+    window.modalStack = [];
+
+    function dorongModalStep(step){
+      if(window.modalStack.length === 0){
+        setNavDisabled(true);
+        kunciScroll(true);
+        bukaPopupPremium('modal', 'modalBox');
+        history.pushState({ modalDetailSiswa: true }, '');
+      }
+      window.modalStack.push(step);
+      renderModalStep(step);
+    }
+
+    function mundurModal(){
+      if(window.modalStack.length > 1){
+        window.modalStack.pop();
+        renderModalStep(window.modalStack[window.modalStack.length - 1]);
+      }else{
+        closeModal();
+      }
+    }
+
+    function renderModalStep(step){
+      if(step.type === 'daftarKelas'){
+        renderDaftarKelas();
+      }else if(step.type === 'siswaKelas'){
+        renderSiswaKelas(step.kelas);
+      }else if(step.type === 'detailSiswa'){
+        document.getElementById('modalHeaderTitle').textContent = '';
+        document.getElementById('detailDotsWrap').classList.remove('hidden');
+        renderDetailSiswaContent(step.nik);
+      }else if(step.type === 'detailPegawai'){
+        document.getElementById('modalHeaderTitle').textContent = '';
+        document.getElementById('detailDotsWrap').classList.remove('hidden');
+        renderDetailPegawaiContent(step.tipe, step.idx);
+      }
+    }
+
     function tutupModalVisual() {
       setNavDisabled(false);
       kunciScroll(false);
       const menu = document.getElementById('detailDotsMenu');
       if(menu) menu.classList.add('hidden');
+      window.modalStack = [];
       tutupPopupPremium('modal', 'modalBox');
     }
     function closeModal() {
