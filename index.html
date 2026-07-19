@@ -36,7 +36,7 @@
   background: #F0F2F5;
 }
     body { background: #DADFE6; }
-#app-scroll, #p-home, #p-siswa, #p-download {
+#app-scroll, #p-home, #p-siswa, #p-download, #p-login {
   width: 100%;
   max-width: 480px;
   margin-left: auto;
@@ -539,6 +539,34 @@
 <body class="text-base">
   <div id="app-scroll">
 
+  <div id="p-login" class="p-6 flex flex-col justify-center" style="min-height:100vh;">
+
+    <div class="text-center mb-8">
+      <div class="mx-auto mb-3" style="width:64px;height:64px;border-radius:20px;background:linear-gradient(160deg,#5B9BE8,#2563EB);display:flex;align-items:center;justify-content:center;">
+        <span class="material-symbols-rounded text-[30px]" style="color:#fff;">school</span>
+      </div>
+      <h1 class="text-lg font-bold text-gray-800 m-0">SD Negeri 6 Tejakula</h1>
+      <p class="text-[12px] text-gray-500 mt-1 m-0">Masuk sebagai guru</p>
+    </div>
+
+    <div class="neu-card p-5" style="display:flex;flex-direction:column;align-items:center;">
+
+      <p class="text-[12px] text-gray-500 text-center mb-4">Masuk pakai akun Google yang terdaftar sebagai guru/tendik di sekolah</p>
+
+      <div id="g_id_onload"
+        data-client_id="183272939624-9hm3c0ruqm5s5uo73vkk16v2lvu2cr6b.apps.googleusercontent.com"
+        data-callback="handleGoogleCredential">
+      </div>
+      <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="outline" data-size="large" data-logo_alignment="left"></div>
+
+      <div id="loginSpinner" class="hidden mt-4"><div class="spinner" style="border-top-color:#2563EB;border-color:rgba(37,99,235,.2);"></div></div>
+
+      <div id="loginError" class="hidden text-red-500 text-[12px] mt-3 text-center"></div>
+
+    </div>
+
+  </div>
+
   <div id="p-home" class="p-5 pb-24">
   <div class="mb-5">
 
@@ -572,14 +600,19 @@
   </div>
 
   <div
-    onclick="bukaStatusAnak()"
-    class="cursor-pointer mb-3"
-    style="background:#FDF0E7;border-radius:14px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;">
-    <span class="material-symbols-rounded" style="font-size:18px;color:#993C1D;margin-top:1px;">info</span>
-    <div>
-      <p style="font-size:13px;font-weight:600;color:#712B13;margin:0 0 2px;">Perlu perhatian</p>
-      <p style="font-size:12px;color:#993C1D;margin:0;line-height:1.4;">6 siswa berstatus yatim/piatu, ketuk untuk lihat detail</p>
+    <div class="neu-card mb-3 p-4" style="display:flex;align-items:center;justify-content:space-between;">
+    <div style="display:flex;align-items:center;gap:10px;min-width:0;">
+      <div id="inisialGuruAktif" style="width:36px;height:36px;border-radius:50%;background:linear-gradient(160deg,#5B9BE8,#2563EB);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:700;flex-shrink:0;">-</div>
+      <div style="min-width:0;">
+        <p class="text-[11px] text-gray-500 m-0">Masuk sebagai</p>
+        <p class="text-[13px] font-semibold text-gray-800 m-0 truncate" id="namaGuruAktif">-</p>
+      </div>
     </div>
+    <button onclick="logoutGuru()" class="flex items-center justify-center shrink-0"
+      style="width:32px;height:32px;border-radius:50%;background:#ffffff;border:none;
+             box-shadow:-3px -3px 6px rgba(255,255,255,.8), 3px 3px 8px rgba(163,177,198,.35);">
+      <span class="material-symbols-rounded text-[16px]" style="color:#6b7280;">logout</span>
+    </button>
   </div>
 
   <div class="grid grid-cols-2 gap-3 mb-3">
@@ -1377,8 +1410,94 @@ let modeRentang = false;
       return teks;
     }
 
+    function hitungInisial(nama){
+      if(!nama) return '?';
+      const kata = String(nama).trim().split(/\s+/);
+      const inisial = kata.slice(0,2).map(k => k.charAt(0).toUpperCase()).join('');
+      return inisial || '?';
+    }
+
+    function tampilkanNamaGuru(){
+      const elNama = document.getElementById('namaGuruAktif');
+      const elInisial = document.getElementById('inisialGuruAktif');
+      if(!window.guruAktif) return;
+      if(elNama) elNama.textContent = window.guruAktif.nama;
+      if(elInisial) elInisial.textContent = hitungInisial(window.guruAktif.nama);
+    }
+
+    function cekSesiLogin(){
+      const sesi = localStorage.getItem('guruLogin');
+      if(sesi){
+        try{
+          window.guruAktif = JSON.parse(sesi);
+          document.getElementById('p-login').classList.add('hidden');
+          tampilkanNamaGuru();
+          return true;
+        }catch(err){
+          localStorage.removeItem('guruLogin');
+        }
+      }
+      document.getElementById('p-login').classList.remove('hidden');
+      document.getElementById('p-home').classList.add('hidden');
+      document.querySelector('nav').classList.add('hidden');
+      return false;
+    }
+
+    function handleGoogleCredential(response){
+      const idToken = response.credential;
+      const errEl = document.getElementById('loginError');
+      const spinnerEl = document.getElementById('loginSpinner');
+      errEl.classList.add('hidden');
+      spinnerEl.classList.remove('hidden');
+
+      fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'action=verifyGoogleLogin&idToken=' + encodeURIComponent(idToken)
+      })
+        .then(res => res.json())
+        .then(json => {
+          spinnerEl.classList.add('hidden');
+
+          if(json.success){
+            window.guruAktif = { nama: json.nama, email: json.email };
+            localStorage.setItem('guruLogin', JSON.stringify(window.guruAktif));
+            selesaiLogin();
+          }else{
+            errEl.textContent = json.error || 'Email ini tidak terdaftar';
+            errEl.classList.remove('hidden');
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          spinnerEl.classList.add('hidden');
+          errEl.textContent = 'Gagal terhubung ke server';
+          errEl.classList.remove('hidden');
+        });
+    }
+
+    function selesaiLogin(){
+      document.getElementById('p-login').classList.add('hidden');
+      document.getElementById('p-home').classList.remove('hidden');
+      document.querySelector('nav').classList.remove('hidden');
+      tampilkanNamaGuru();
+      nav('home');
+    }
+
+    function logoutGuru(){
+      localStorage.removeItem('guruLogin');
+      window.guruAktif = null;
+      if(window.google && google.accounts && google.accounts.id){
+        google.accounts.id.disableAutoSelect();
+      }
+      location.reload();
+    }
+
     window.onload = () => {
-  nav("home");
+  const sudahLogin = cekSesiLogin();
+  if(sudahLogin){
+    nav("home");
+  }
 
   fetch(`${APPS_SCRIPT_URL}?action=getData`)
     .then(res => res.json())
