@@ -757,16 +757,23 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
 
       <div id="dataTabTrack" class="flex mb-4" style="background:#EEF0F4;border-radius:9999px;padding:4px;gap:4px;">
         <button id="tabDataSiswa" onclick="switchDataTab('siswa')"
-          class="flex-1 text-sm font-semibold py-2 rounded-full transition-all duration-200"
+          class="flex-1 flex items-center justify-center gap-1 text-[12.5px] font-semibold py-2 px-1 rounded-full transition-all duration-200"
           style="background:#ffffff;color:#1f2937;
                  box-shadow:-4px -4px 10px rgba(255,255,255,.9), 5px 5px 12px rgba(163,177,198,.45);">
+          <span class="material-symbols-rounded text-[15px]">group</span>
           Siswa
         </button>
         <button id="tabDataGuru" onclick="switchDataTab('guru')"
-          class="flex-1 text-sm font-semibold py-2 rounded-full transition-all duration-200"
-          style="background:#EEF0F4;color:#9ca3af;
-                 box-shadow:inset 2px 2px 5px rgba(163,177,198,.4), inset -2px -2px 5px rgba(255,255,255,.7);">
+          class="flex-1 flex items-center justify-center gap-1 text-[12.5px] font-semibold py-2 px-1 rounded-full transition-all duration-200"
+          style="background:transparent;color:#9ca3af;">
+          <span class="material-symbols-rounded text-[15px]">school</span>
           Guru
+        </button>
+        <button id="tabDataTendik" onclick="switchDataTab('tendik')"
+          class="flex-1 flex items-center justify-center gap-1 text-[12.5px] font-semibold py-2 px-1 rounded-full transition-all duration-200"
+          style="background:transparent;color:#9ca3af;">
+          <span class="material-symbols-rounded text-[15px]">badge</span>
+          Tendik
         </button>
       </div>
 
@@ -814,6 +821,14 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
       <div class="flex flex-col items-center justify-center text-center pt-14 px-6">
         <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">school</span>
         <p class="text-sm text-gray-600 font-medium">Data guru belum tersedia</p>
+        <p class="text-xs text-gray-600 mt-1">Fitur ini akan segera hadir</p>
+      </div>
+    </div>
+
+    <div id="panelDataTendik" class="hidden flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-5 pb-5 max-w-full">
+      <div class="flex flex-col items-center justify-center text-center pt-14 px-6">
+        <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">badge</span>
+        <p class="text-sm text-gray-600 font-medium">Data tenaga kependidikan belum tersedia</p>
         <p class="text-xs text-gray-600 mt-1">Fitur ini akan segera hadir</p>
       </div>
     </div>
@@ -1186,25 +1201,29 @@ let halamanSebelumnya = "home";
 let modeRentang = false;
 
     function switchDataTab(tab){
-      const btnSiswa = document.getElementById('tabDataSiswa');
-      const btnGuru = document.getElementById('tabDataGuru');
-      const panelSiswa = document.getElementById('panelDataSiswa');
-      const panelGuru = document.getElementById('panelDataGuru');
+      const tabs = {
+        siswa:  { btn: document.getElementById('tabDataSiswa'), panel: document.getElementById('panelDataSiswa') },
+        guru:   { btn: document.getElementById('tabDataGuru'),  panel: document.getElementById('panelDataGuru') },
+        tendik: { btn: document.getElementById('tabDataTendik'),panel: document.getElementById('panelDataTendik') }
+      };
 
-      const aktif = 'background:#ffffff;color:#1f2937;box-shadow:-4px -4px 10px rgba(255,255,255,.9), 5px 5px 12px rgba(163,177,198,.45);';
-      const nonaktif = 'background:#EEF0F4;color:#9ca3af;box-shadow:inset 2px 2px 5px rgba(163,177,198,.4), inset -2px -2px 5px rgba(255,255,255,.7);';
+      const aktifSiswa  = 'background:#ffffff;color:#1f2937;box-shadow:-4px -4px 10px rgba(255,255,255,.9), 5px 5px 12px rgba(163,177,198,.45);';
+      const aktifGuru   = 'background:#ffffff;color:#1f2937;box-shadow:4px 4px 10px rgba(255,255,255,.9), -5px -5px 12px rgba(163,177,198,.45);';
+      const aktifTendik = aktifSiswa;
+      const nonaktif    = 'background:transparent;color:#9ca3af;';
 
-      if(tab === 'siswa'){
-        btnSiswa.style.cssText = aktif;
-        btnGuru.style.cssText = nonaktif;
-        panelSiswa.classList.remove('hidden');
-        panelGuru.classList.add('hidden');
-      }else{
-        btnGuru.style.cssText = aktif;
-        btnSiswa.style.cssText = nonaktif;
-        panelGuru.classList.remove('hidden');
-        panelSiswa.classList.add('hidden');
-      }
+      const aktifStyle = { siswa: aktifSiswa, guru: aktifGuru, tendik: aktifTendik };
+
+      Object.keys(tabs).forEach(key => {
+        const {btn, panel} = tabs[key];
+        if(key === tab){
+          btn.style.cssText = aktifStyle[key];
+          panel.classList.remove('hidden');
+        }else{
+          btn.style.cssText = nonaktif;
+          panel.classList.add('hidden');
+        }
+      });
     }
 
     let riwayatUpdateData = []; // array of ISO date strings, terbaru duluan
