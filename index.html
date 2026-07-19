@@ -1775,13 +1775,13 @@ function showDetailByNIK(nik){
   <div class="flex sm:flex-col items-center gap-4 sm:gap-3">
 
     <div class="w-[112px] h-[112px] sm:w-[180px] sm:h-[180px] rounded-[26px] sm:rounded-[34px] flex items-center justify-center shrink-0" style="background:#eef1f4;">
-      <div class="w-[84px] h-[84px] sm:w-[140px] sm:h-[140px] rounded-full overflow-hidden flex items-center justify-center"
-        style="background:#eef1f4; box-shadow: -8px -8px 14px rgba(255,255,255,.95), 8px 8px 16px rgba(163,177,198,.6);">
-        ${fotoUrl
-          ? `<img src="${fotoUrl}" alt="Foto ${r[1]}" class="w-full h-full object-cover">`
-          : `<span class="material-symbols-rounded" style="font-size:46px; color:#aab3bd; font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;">person</span>`
-        }
-      </div>
+      <div class="w-[64px] h-[64px] sm:w-[104px] sm:h-[104px] rounded-full overflow-hidden flex items-center justify-center shrink-0"
+      style="background:#eef1f4; box-shadow: inset 4px 4px 8px rgba(163,177,198,.55), inset -4px -4px 8px rgba(255,255,255,.9);">
+      ${fotoUrl
+        ? `<img src="${fotoUrl}" alt="Foto ${r[1]}" class="w-full h-full object-cover">`
+        : `<span class="material-symbols-rounded" style="font-size:34px; color:#aab3bd; font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;">person</span>`
+      }
+    </div>
     </div>
 
     <div class="text-left sm:text-center">
