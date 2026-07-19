@@ -535,33 +535,26 @@
   box-shadow: inset 0 2px 5px rgba(16,24,40,.12);
   transform: translate(-50%, -50%);
 }
+    .carousel-grafik-wrap{
+      position:relative;
+      margin-bottom:16px;
+    }
     .carousel-grafik{
       display:flex;
-      gap:12px;
       overflow-x:auto;
       scroll-snap-type:x mandatory;
       padding-bottom:4px;
-      margin:0 -20px 16px;
-      padding-left:36px;
-      padding-right:36px;
       -webkit-overflow-scrolling:touch;
     }
     .carousel-grafik::-webkit-scrollbar{ display:none; }
     .chart-card-carousel{
-      scroll-snap-align:center;
-      flex:0 0 250px;
+      scroll-snap-align:start;
+      flex:0 0 100%;
       background:#fff; border:1px solid #D8DEE6;
       box-shadow:0 2px 6px rgba(16,24,40,.06);
       border-radius:18px;
       padding:16px;
       box-sizing:border-box;
-      transition:opacity .2s ease, transform .2s ease;
-      opacity:.45;
-      transform:scale(.94);
-    }
-    .chart-card-carousel.fokus{
-      opacity:1;
-      transform:scale(1);
     }
     .dot-grafik{
       width:5px; height:5px; border-radius:50%; background:#D8DEE6; transition:.2s;
@@ -569,6 +562,29 @@
     }
     .dot-grafik.active{
       background:#2563EB; width:14px; border-radius:3px;
+    }
+    .swipe-hint-grafik{
+      position:absolute;
+      left:50%; bottom:8px;
+      transform:translateX(-50%);
+      display:flex; align-items:center; gap:5px;
+      background:#1f2937; color:#fff;
+      font-size:10.5px; font-weight:600;
+      padding:6px 12px; border-radius:999px;
+      box-shadow:0 4px 12px rgba(0,0,0,.18);
+      opacity:0; pointer-events:none;
+      transition:opacity .3s ease;
+      z-index:5;
+      white-space:nowrap;
+    }
+    .swipe-hint-grafik.show{ opacity:1; }
+    .swipe-hint-grafik .material-symbols-rounded{
+      font-size:14px;
+      animation: gesertangan 1.4s ease-in-out infinite;
+    }
+    @keyframes gesertangan{
+      0%,100%{ transform:translateX(0); }
+      50%{ transform:translateX(4px); }
     }
     .chart-card-carousel .legend-chip-neu{
       padding:5px 9px;
@@ -737,6 +753,7 @@
       </div>
     </div>
 
+    <div class="carousel-grafik-wrap">
     <div class="carousel-grafik" id="carouselGrafik">
 
       <!-- CLONE Kepegawaian (ujung kiri, ilusi loop) -->
@@ -744,9 +761,9 @@
         <p class="font-bold text-[13px] text-gray-800 m-0 mb-0.5">Status Kepegawaian</p>
         <p class="text-[10.5px] text-gray-400 m-0 mb-3">Guru &amp; Tendik</p>
         <div class="flex items-center gap-3">
-          <div class="chart-glass-wrap shrink-0" style="width:96px;height:96px;">
-            <div class="ring-center-raised" style="width:56px;height:56px;"></div>
-            <div class="relative" style="width:88px;height:88px;"></div>
+          <div class="chart-glass-wrap shrink-0" style="width:130px;height:130px;">
+            <div class="ring-center-raised" style="width:76px;height:76px;"></div>
+            <div class="relative" style="width:116px;height:116px;"></div>
           </div>
         </div>
       </div>
@@ -774,10 +791,10 @@
           <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
         </div>
         <div class="flex items-center gap-3">
-          <div class="chart-glass-wrap shrink-0" style="width:96px;height:96px;">
-            <div class="ring-center-raised" style="width:56px;height:56px;"></div>
-            <div class="center-label" id="centerLabelKesejahteraan" style="width:56px;height:56px;"></div>
-            <div class="relative" style="width:88px;height:88px;">
+          <div class="chart-glass-wrap shrink-0" style="width:130px;height:130px;">
+            <div class="ring-center-raised" style="width:76px;height:76px;"></div>
+            <div class="center-label" id="centerLabelKesejahteraan" style="width:76px;height:76px;"></div>
+            <div class="relative" style="width:116px;height:116px;">
               <canvas id="chartKesejahteraan" class="hidden"></canvas>
             </div>
           </div>
@@ -793,10 +810,10 @@
           <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
         </div>
         <div class="flex items-center gap-3">
-          <div class="chart-glass-wrap shrink-0" style="width:96px;height:96px;">
-            <div class="ring-center-raised" style="width:56px;height:56px;"></div>
-            <div class="center-label" id="centerLabelStatusAnak" style="width:56px;height:56px;"></div>
-            <div class="relative" style="width:88px;height:88px;">
+          <div class="chart-glass-wrap shrink-0" style="width:130px;height:130px;">
+            <div class="ring-center-raised" style="width:76px;height:76px;"></div>
+            <div class="center-label" id="centerLabelStatusAnak" style="width:76px;height:76px;"></div>
+            <div class="relative" style="width:116px;height:116px;">
               <canvas id="chartStatusAnak" class="hidden"></canvas>
             </div>
           </div>
@@ -812,10 +829,10 @@
           <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
         </div>
         <div class="flex items-center gap-3">
-          <div class="chart-glass-wrap shrink-0" style="width:96px;height:96px;">
-            <div class="ring-center-raised" style="width:56px;height:56px;"></div>
-            <div class="center-label" id="centerLabelKepegawaian" style="width:56px;height:56px;"></div>
-            <div class="relative" style="width:88px;height:88px;">
+          <div class="chart-glass-wrap shrink-0" style="width:130px;height:130px;">
+            <div class="ring-center-raised" style="width:76px;height:76px;"></div>
+            <div class="center-label" id="centerLabelKepegawaian" style="width:76px;height:76px;"></div>
+            <div class="relative" style="width:116px;height:116px;">
               <canvas id="chartKepegawaian" class="hidden"></canvas>
             </div>
           </div>
@@ -830,6 +847,12 @@
         <div class="pillbar-row"></div>
       </div>
 
+    </div>
+
+      <div class="swipe-hint-grafik" id="swipeHintGrafik">
+        <span class="material-symbols-rounded">swipe</span>
+        Geser untuk lihat grafik lain
+      </div>
     </div>
 
 <div id="rombelPopupOverlay"
@@ -3406,7 +3429,10 @@ document.getElementById('previewStatusAnak').textContent =
   if(!carousel) return;
   const cards = Array.from(carousel.querySelectorAll('.chart-card-carousel'));
   const dots = Array.from(document.querySelectorAll('#dotsGrafik .dot-grafik'));
+  const hint = document.getElementById('swipeHintGrafik');
   let settleTimerGrafik = null;
+  let siapDeteksiGeser = false;
+  let sudahDigeserGrafik = false;
 
   function scrollToCardGrafik(idx, behavior){
     const card = cards[idx];
@@ -3428,12 +3454,15 @@ document.getElementById('previewStatusAnak').textContent =
 
   function updateFokusGrafik(){
     const idx = cariIndexTerdekatGrafik();
-    cards.forEach((card, i) => card.classList.toggle('fokus', i === idx));
     const realIdx = parseInt(cards[idx].dataset.real, 10);
     dots.forEach((dot, i) => dot.classList.toggle('active', i === realIdx));
   }
 
   carousel.addEventListener('scroll', () => {
+    if(siapDeteksiGeser && !sudahDigeserGrafik){
+      sudahDigeserGrafik = true;
+      if(hint) hint.classList.remove('show');
+    }
     updateFokusGrafik();
     clearTimeout(settleTimerGrafik);
     settleTimerGrafik = setTimeout(() => {
@@ -3449,6 +3478,15 @@ document.getElementById('previewStatusAnak').textContent =
 
   scrollToCardGrafik(1, 'auto');
   updateFokusGrafik();
+
+  setTimeout(() => {
+    siapDeteksiGeser = true;
+    if(hint) hint.classList.add('show');
+  }, 250);
+
+  setTimeout(() => {
+    if(!sudahDigeserGrafik && hint) hint.classList.remove('show');
+  }, 3700);
 }
 
 function unduhKesejahteraanGambar(){
