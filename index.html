@@ -601,9 +601,8 @@
     </div>
   </div>
 
-  <h1 id="greetingText" class="text-xl font-bold mb-0 text-gray-800 flex items-center gap-2">
-</h1>
-  <p id="namaGuruAktif" class="text-sm text-gray-500 mt-0.5 mb-0"></p>
+  <p id="greetingText" class="text-sm text-gray-500 m-0"></p>
+  <h1 id="namaGuruAktif" class="text-xl font-bold text-gray-800 m-0 mt-0.5"></h1>
 
   </div>
 
@@ -1300,7 +1299,7 @@ let modeRentang = false;
       else if(jam >= 11 && jam < 15) sapaan = 'Selamat siang';
       else if(jam >= 15 && jam < 18) sapaan = 'Selamat sore';
 
-      elText.textContent = sapaan + ' 👋';
+      elText.textContent = sapaan + ',';
     }
     renderGreeting();
 
@@ -1411,10 +1410,20 @@ let modeRentang = false;
       return inisial || '?';
     }
 
+    function ambilNamaSingkat(namaLengkap){
+      let kata = String(namaLengkap).trim().split(/\s+/);
+      if(kata.length && ['ni','i'].includes(kata[0].toLowerCase())){
+        kata = kata.slice(1);
+      }
+      return kata.slice(0, 2).join(' ');
+    }
+
     function tampilkanNamaGuru(){
       const elNama = document.getElementById('namaGuruAktif');
       if(!window.guruAktif) return;
-      if(elNama) elNama.textContent = window.guruAktif.nama;
+      if(elNama){
+        elNama.textContent = ambilNamaSingkat(window.guruAktif.nama) + '!';
+      }
     }
 
     function cekSesiLogin(){
