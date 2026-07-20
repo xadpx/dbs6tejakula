@@ -325,29 +325,57 @@
     }
     .rombel-row.open { background: #E6E9EF; }
     .rombel-row:last-child { margin-bottom: 0; }
-    .pillbar-row { display: flex; flex-direction: column; gap: 14px; padding: 4px 0; }
-.pillbar-col { display: flex; align-items: center; gap: 12px; }
-.pillbar-name { width: 56px; flex-shrink: 0; font-size: 13px; font-weight: 700; color: #374151; }
-.pillbar-track {
-  flex: 1; height: 14px; border-radius: 7px; position: relative; overflow: hidden;
-  background: #F4F8FB; border: 1px solid #D8DEE6;
-  cursor: pointer;
+    .pillbar-row {
+  display: flex; align-items: flex-end; gap: 10px;
+  padding: 40px 2px 0; overflow-x: auto; scrollbar-width: none;
 }
-.pillbar-fill {
-  position: absolute; top: 0; left: 0; height: 100%; border-radius: 7px;
-}
-.pillbar-lbl {
-  width: 30px; flex-shrink: 0; text-align: right;
-  font-size: 13px; font-weight: 800; color: #374151;
-}
+.pillbar-row::-webkit-scrollbar{ display:none; }
 .pillbar-col {
   position: relative;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 7px;
+  flex: 1 0 auto; min-width: 34px;
+  cursor: pointer;
   border-radius: 10px;
-  transition: transform .12s ease, background-color .12s ease;
+  transition: transform .12s ease;
 }
-.pillbar-col:active {
-  transform: scale(.985);
-  background-color: rgba(140,107,199,.06);
+.pillbar-col:active { transform: scale(.96); }
+.pillbar-bar-wrap {
+  width: 100%; height: 132px;
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.pillbar-bar {
+  position: relative;
+  width: 26px; max-width: 30px;
+  border-radius: 14px 14px 6px 6px;
+  background: linear-gradient(180deg,#FCB2A8,#F5897C);
+  transition: height .6s cubic-bezier(.34,1.15,.64,1);
+}
+.pillbar-bar-hi {
+  background: linear-gradient(180deg,#CBC5F6,#A99DEC);
+}
+.pillbar-bar-over {
+  background: linear-gradient(180deg,#FF9E6D,#E65100);
+}
+.pillbar-val {
+  position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
+  font-size: 11px; font-weight: 800; color: #6b7280; white-space: nowrap;
+}
+.pillbar-bubble {
+  position: absolute; top: -34px; left: 50%; transform: translateX(-50%);
+  background: #DCF6E3; color: #1F9254;
+  font-size: 11px; font-weight: 800;
+  padding: 4px 9px; border-radius: 9999px; white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(16,24,40,.1);
+}
+.pillbar-dot {
+  position: absolute; top: -9px; left: 50%; transform: translate(-50%,-50%);
+  width: 9px; height: 9px; border-radius: 50%;
+  background: #1f2937; border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,.25);
+}
+.pillbar-name {
+  font-size: 11px; font-weight: 700; color: #374151; white-space: nowrap;
 }
 .pillbar-ripple-wrap {
   position: absolute; inset: -4px; overflow: hidden; border-radius: 10px; pointer-events: none;
@@ -474,13 +502,13 @@
   box-shadow: inset 0 2px 5px rgba(16,24,40,.12);
   transform: translate(-50%, -50%) scale(0.96);
 }
-.cl-name { font-size: 11px; font-weight: 700; color:#6b7280; }
+.cl-name { font-size: 11px; font-weight: 600; color:#6b7280; }
 .cl-pct { font-size: 20px; font-weight: 800; color:#1f2937; line-height:1; }
 .center-label.show:active {
   box-shadow: inset 0 2px 5px rgba(16,24,40,.12);
 }
-.center-label .cl-name { display:block; font-size: 11.5px; font-weight: 700; color:#6b7280; }
-.center-label .cl-pct { display:block; font-size: 16px; font-weight: 800; color:#1f2937; margin-top:2px; }
+.center-label .cl-name { display:block; font-size: 11px; font-weight: 600; color:#6b7280; order: 1; }
+.center-label .cl-pct { display:block; font-size: 19px; font-weight: 800; color:#1f2937; margin-top:3px; order: 2; }
     .legend-chip-neu.legend-chip-selected {
       box-shadow: 0 0 0 2px rgba(31,41,55,.12);
       transform: translateY(-1px);
@@ -1999,26 +2027,33 @@ let carouselGrafikSudahInit = false;
         elSubtitleRombel.textContent = `${classes.length} kelas \u00b7 ${totalSiswa} siswa`;
       }
 
+const idxPuncakRombel = window.rombelData.reduce((best, r, i, arr) =>
+  (r.L + r.P) > (arr[best].L + arr[best].P) ? i : best, 0);
+
 document.getElementById('pillbars').innerHTML = window.rombelData.map((r, i) => {
   const total = r.L + r.P;
-  const wPct = (total / maxTotalRombel * 100).toFixed(0);
-  
-  // LOGIC WARNA: Kalau lebih dari 28 siswa, kasih warna merah/oranye gradasi
-  let c;
-  if (total > 28) {
-    c = { top: "#FF7A45", bottom: "#E65100" }; // Warna Over-Kuota (Oranye/Merah)
-  } else {
-    c = { top: "#B49AE8", bottom: "#8C6BC7" }; // Warna Normal (Ungu)
-  }
+  const hPct = Math.max(10, Math.round(total / maxTotalRombel * 100));
+  const isHi = i === idxPuncakRombel;
+  const overKuota = total > 28;
+
+  // LOGIC WARNA: kelas puncak (terbanyak) ditandai ungu, over-kuota ditandai oranye/merah
+  let barClass = '';
+  if (overKuota) barClass = 'pillbar-bar-over';
+  else if (isHi) barClass = 'pillbar-bar-hi';
+
+  const isiAtas = isHi
+    ? `<div class="pillbar-bubble">${total}</div><div class="pillbar-dot"></div>`
+    : `<div class="pillbar-val ${overKuota ? 'text-red-600' : ''}">${total}</div>`;
 
   return `
 <div class="pillbar-col" onclick="bukaPopupRombel(${i}, event)">
   <div class="pillbar-ripple-wrap"></div>
-  <span class="pillbar-name">${r.kelas}</span>
-  <div class="pillbar-track">
-    <div class="pillbar-fill" style="width:${wPct}%;background:linear-gradient(90deg,${c.top},${c.bottom})"></div>
+  <div class="pillbar-bar-wrap">
+    <div class="pillbar-bar ${barClass}" style="height:${hPct}%">
+      ${isiAtas}
+    </div>
   </div>
-  <span class="pillbar-lbl ${total > 28 ? 'text-red-600 font-extrabold' : ''}">${total}</span>
+  <span class="pillbar-name">${r.kelas}</span>
   ${i === 0 ? '<div class="pillbar-hint-tooltip" id="pillbarHintTooltip">Tap untuk lihat detail kelas</div>' : ''}
 </div>`;
 }).join('');
@@ -3237,12 +3272,12 @@ function buatChart(){
 });
 
   const warnaKesejahteraan = [
-  "#5C85E5", // Desil 1
-  "#9871F5", // Desil 2
-  "#DE6B9A", // Desil 3
-  "#E07A5F", // Desil 4
-  "#C29B74", // Desil 5
-  "#7F94A8"  // Desil 6-10
+  "#FFC845", // Desil 1
+  "#4FC3F7", // Desil 2
+  "#FF5C5C", // Desil 3
+  "#EC4899", // Desil 4
+  "#34D399", // Desil 5
+  "#8C6BC7"  // Desil 6-10
 ];
 
   const labelKesejahteraan = Object.keys(desil);
@@ -3260,23 +3295,23 @@ function buatChart(){
     datasets:[{
       data:nilaiKesejahteraan,
       backgroundColor: [
-        "#5C85E5", // Desil 1
-        "#9871F5", // Desil 2
-        "#DE6B9A", // Desil 3
-        "#E07A5F", // Desil 4
-        "#C29B74", // Desil 5
-        "#7F94A8"  // Desil 6-10
+        "#FFC845", // Desil 1
+        "#4FC3F7", // Desil 2
+        "#FF5C5C", // Desil 3
+        "#EC4899", // Desil 4
+        "#34D399", // Desil 5
+        "#8C6BC7"  // Desil 6-10
       ],
       borderWidth: 0,
       borderRadius: 16,
       hoverOffset: 0,
-      spacing: 6
+      spacing: 8
     }]
   },
   options:{
     responsive:true,
     layout:{ padding:0 },
-    cutout:"68%",
+    cutout:"58%",
     onClick:(evt, els, chart)=>{
   const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
   if(points.length) handleChartTap('legendKesejahteraan', points[0].index);
@@ -3360,7 +3395,7 @@ const totalKes = nilaiKesejahteraan.reduce((a,b)=>a+b,0);
 
   });
 
-  const warnaStatusAnak = ["#3EA1EC","#FA7F65","#F7CA41","#4ECA9E","#9871F5"];
+  const warnaStatusAnak = ["#FFC845","#4FC3F7","#FF5C5C","#EC4899","#34D399"];
   const labelStatusAnak = Object.keys(status);
   const nilaiStatusAnak = Object.values(status);
 
@@ -3377,18 +3412,18 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
     labels:labelStatusAnak,
     datasets:[{
       data:nilaiStatusAnak,
-      backgroundColor: ["#5C85E5","#9871F5","#DE6B9A","#E07A5F","#C29B74"],
+      backgroundColor: ["#FFC845","#4FC3F7","#FF5C5C","#EC4899","#34D399"],
       borderWidth: 0,
       borderRadius: 16,
       hoverOffset: 0,
-      spacing: 6
+      spacing: 8
     }]
   },
 
   options:{
     responsive:true,
     layout:{ padding:0 },
-    cutout:"68%",
+    cutout:"58%",
    onClick:(evt, els, chart)=>{
   const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
   if(points.length) handleChartTap('legendStatusAnak', points[0].index);
@@ -3563,7 +3598,7 @@ function buatChartKepegawaian(){
     status[s] = (status[s]||0) + 1;
   });
 
-  const warnaKepegawaian = ["#4FD1C5","#B49AE8","#F5A65C","#5C85E5","#DE6B9A"];
+  const warnaKepegawaian = ["#FFC845","#4FC3F7","#FF5C5C","#EC4899","#34D399"];
   const labelKepegawaian = Object.keys(status);
   const nilaiKepegawaian = Object.values(status);
 
@@ -3584,13 +3619,13 @@ function buatChartKepegawaian(){
         borderWidth: 0,
         borderRadius: 16,
         hoverOffset: 0,
-        spacing: 6
+        spacing: 8
       }]
     },
     options:{
       responsive:true,
       layout:{ padding:0 },
-      cutout:"68%",
+      cutout:"58%",
       onClick:(evt, els, chart)=>{
         const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
         if(points.length) handleChartTap('legendKepegawaian', points[0].index);
@@ -4513,7 +4548,8 @@ document.addEventListener("touchstart", function(e){
     target.closest("select") ||
     target.closest("#switchRentang") ||
     target.closest(".kategori") ||
-    target.closest("#carouselGrafik")
+    target.closest("#carouselGrafik") ||
+    target.closest("#pillbars")
   ){
     swipeAktif = false;
     return;
