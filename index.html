@@ -21,6 +21,46 @@
   <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
+    /* ===== DESIGN TOKENS (dari referensi Health Dashboard) ===== */
+    :root {
+      /* Warna */
+      --color-bg-app:      #DADFE6;
+      --color-bg-card:     #FFFFFF;
+      --color-primary:     #6B5CA5;   /* dulu #2563EB, diganti ungu tua ala grafik steps */
+      --color-primary-soft: rgba(107,92,165,.12);
+
+      --color-accent-blue:    #C9E0F0;
+      --color-accent-purple:  #DCD3F0;
+      --color-accent-green:   #D7E4CE;
+
+      --color-text-primary:   #1A1A1A;
+      --color-text-secondary: #8A8F98;
+      --color-border:         #D8DEE6;
+
+      --color-nav-active-bg: #1A1A1A;
+      --color-nav-inactive:  #A8ADB5;
+
+      /* Spacing */
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+
+      /* Radius */
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 28px;
+      --radius-full: 9999px;
+
+      /* Shadow */
+      --shadow-card: 0px 8px 20px rgba(0,0,0,.06);
+      --shadow-fab:  0px 4px 12px rgba(0,0,0,.15);
+      --shadow-nav:  0px -4px 16px rgba(0,0,0,.05);
+
+      /* Font */
+      --font-family: 'Plus Jakarta Sans', sans-serif;
+    }
     html {
       overflow-x: hidden;
       width: 100%;
@@ -33,10 +73,9 @@
   width: 100%;
   max-width: 100vw;
   touch-action: pan-y;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  background: #F0F2F5;
+  font-family: var(--font-family);
+  background: var(--color-bg-app);
 }
-    body { background: #DADFE6; }
 #app-scroll, #p-home, #p-siswa, #p-download, #p-login {
   width: 100%;
   max-width: 480px;
@@ -46,7 +85,7 @@
   box-sizing: border-box;
 }
 #app-scroll {
-  background: #FFFFFF;
+  background: var(--color-bg-card);
   min-height: 100vh;
   box-shadow: 0 0 40px rgba(0,0,0,.08);
 }
@@ -98,14 +137,14 @@
         inset -0.5px -0.5px 2px rgba(255,255,255,.5) !important;
     }
     .toggle-track.on{
-      background: rgba(37,99,235,0.15) !important;
+      background: var(--color-primary-soft) !important;
     }
     .toggle-knob-neu{
       background:#ffffff !important;
       box-shadow: 0 1px 2px rgba(0,0,0,.15) !important;
     }
     .toggle-knob-neu.on{
-      background: linear-gradient(160deg,#60A5FA,#2563EB) !important;
+      background: linear-gradient(160deg,#9B8DC9,var(--color-primary)) !important;
     }
     #p-siswa{
       overflow-x:hidden;
@@ -163,10 +202,10 @@
     .nav-active .nav-icon-wrap{
       width:46px;
       height:46px;
-      background: #2563EB;
+      background: var(--color-primary);
       box-shadow:
         -4px -4px 10px rgba(255,255,255,.2),
-        6px 6px 16px rgba(37,99,235,.4);
+        6px 6px 16px rgba(107,92,165,.4);
     }
     .skeleton{
       background: #ececec;
@@ -249,26 +288,26 @@
 #p-download.hidden {
   pointer-events: none !important;
 }
-    .neu-bg{ background:#FFFFFF; }
+    .neu-bg{ background: var(--color-bg-card); }
     .neu-card{
-      background:#ffffff;
-      border-radius:16px;
-      border: 1px solid #D8DEE6;
-      box-shadow: 0 2px 6px rgba(16,24,40,.06);
+      background: var(--color-bg-card);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-card);
     }
     .neu-btn{
-      background:#ffffff;
-      border-radius:14px;
-      border: 1px solid #D8DEE6;
-      box-shadow: 0 2px 6px rgba(16,24,40,.06);
+      background: var(--color-bg-card);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-card);
       transition: box-shadow .12s ease;
     }
     .neu-btn:active{
       box-shadow: 0 1px 2px rgba(16,24,40,.08);
     }
     .neu-nav{
-      background:#ffffff;
-      box-shadow: 0 -1px 4px rgba(0,0,0,0.06);
+      background: var(--color-bg-card);
+      box-shadow: var(--shadow-nav);
     }
     .neu-search{
       -webkit-appearance: none !important;
@@ -302,7 +341,7 @@
 .neu-dropdown:focus{
   outline: none;
   border-color: #93A5C4;
-  box-shadow: 0 0 0 3px rgba(37,99,235,.12);
+  box-shadow: 0 0 0 3px var(--color-primary-soft);
 }
        .neu-nav-flat{
       background: #ffffff;
@@ -589,7 +628,7 @@
       display:inline-block;
     }
     .dot-grafik.active{
-      background:#2563EB; width:14px; border-radius:3px;
+      background: var(--color-primary); width:14px; border-radius:3px;
     }
     .swipe-hint-grafik{
       position:absolute;
@@ -678,7 +717,7 @@
         style="width:30px;height:30px;border-radius:50%;background:#ffffff;overflow:hidden;
                box-shadow:-3px -3px 6px rgba(255,255,255,.8), 3px 3px 8px rgba(163,177,198,.35);">
         <span class="material-symbols-rounded" style="font-size:16px;color:#6b7280;">notifications</span>
-        <span id="notifDot" class="hidden" style="position:absolute;top:3px;right:4px;width:7px;height:7px;border-radius:50%;background:#2563EB;border:1.5px solid #fff;"></span>
+        <span id="notifDot" class="hidden" style="position:absolute;top:3px;right:4px;width:7px;height:7px;border-radius:50%;background:var(--color-primary);border:1.5px solid #fff;"></span>
       </button>
       <div id="notifDropdown" class="hidden" style="position:absolute;top:38px;right:0;width:210px;background:#ffffff;border-radius:16px;padding:12px;z-index:50;
              box-shadow:-6px -6px 12px rgba(255,255,255,.8), 6px 6px 16px rgba(163,177,198,.4);">
