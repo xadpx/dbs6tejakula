@@ -26,7 +26,7 @@
     :root {
       /* Warna — Design Token: Soft UI / Neumorphic Blue */
       --color-bg-app:      #EDF1F9;
-      --color-bg-card:     #FFFFFF;
+      --color-bg-card:     #EDF1F9;
       --color-primary:     #4C7DF6;   /* biru neumorphic, sesuai token referensi */
       --color-primary-dark: #2F5FD6;
       --color-primary-light: #8FB0FF;
@@ -121,7 +121,7 @@
   border-bottom:2px solid #2F5FD6;
 }
       .neu-mini-pill{
-      background:#ffffff;
+      background:var(--color-bg-card);
       border-radius:8px;
       padding:4px 8px;
       border: none;
@@ -249,7 +249,7 @@
       width: 28px;
       height: 28px;
       border-radius: 9999px;
-      background: #ffffff;
+      background: var(--color-bg-card);
       border: none;
       box-shadow: -3px -3px 6px rgba(255,255,255,.85), 3px 3px 6px rgba(163,177,198,.4);
       display: flex;
@@ -316,7 +316,7 @@
     .neu-search{
       -webkit-appearance: none !important;
       appearance: none !important;
-      background-color: #ffffff !important;
+      background-color: var(--color-bg-card) !important;
       border: none;
       border-radius: 9999px;
       box-shadow: inset 3px 3px 6px rgba(163,177,198,.35), inset -3px -3px 6px rgba(255,255,255,.85) !important;
@@ -328,16 +328,16 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background:#ffffff;
+      background:var(--color-bg-card);
       box-shadow: -3px -3px 6px rgba(255,255,255,.8), 3px 3px 6px rgba(163,177,198,.4);
     }
       .neu-dropdown-inset{
-  background:#ffffff;
+  background:var(--color-bg-card);
   border: none;
   box-shadow: inset 3px 3px 6px rgba(163,177,198,.35), inset -3px -3px 6px rgba(255,255,255,.85);
 }
 .neu-dropdown{
-  background:#ffffff;
+  background:var(--color-bg-card);
   border: none;
   box-shadow: -3px -3px 6px rgba(255,255,255,.85), 3px 3px 6px rgba(163,177,198,.4);
   transition: box-shadow .15s ease;
@@ -348,7 +348,7 @@
   box-shadow: 0 0 0 3px var(--color-primary-soft);
 }
        .neu-nav-flat{
-      background: #ffffff;
+      background: var(--color-bg-card);
       box-shadow: 0 -1px 4px rgba(0,0,0,0.06);
       padding-bottom: env(safe-area-inset-bottom, 0px);
     }
@@ -455,11 +455,11 @@
       border: none;
       box-shadow: -3px -3px 6px rgba(255,255,255,.85), 3px 3px 6px rgba(163,177,198,.4);
       display: flex; align-items: center; justify-content: center;
-      background: #fff;
+      background: var(--color-bg-card);
     }
     .fab-copy {
   width: 34px; height: 34px; border-radius: 50%;
-  background: #ffffff;
+  background: var(--color-bg-card);
   box-shadow:
     -4px -4px 8px rgba(255,255,255,.8),
     4px 4px 10px rgba(163,177,198,.35);
@@ -482,7 +482,7 @@
   box-shadow:
     inset 3px 3px 7px rgba(163,177,198,.4),
     inset -3px -3px 7px rgba(255,255,255,.8);
-  background: #fff; padding: 0; margin: 0 auto;
+  background: var(--color-bg-card); padding: 0; margin: 0 auto;
   position: relative;
 }
 .ring-center-raised {
@@ -491,7 +491,7 @@
   transform: translate(-50%, -50%);
   width: 136px; height: 136px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--color-bg-card);
   box-shadow:
     -4px -4px 8px rgba(255,255,255,.8),
     4px 4px 10px rgba(163,177,198,.35);
@@ -499,7 +499,7 @@
 }
     .legend-chip-neu {
   display: flex; flex-direction: row; align-items: center; gap: 8px; justify-content: space-between;
-  background: #ffffff; border-radius: 999px; padding: 9px 14px;
+  background: var(--color-bg-card); border-radius: 999px; padding: 9px 14px;
   box-shadow:
     -4px -4px 8px rgba(255,255,255,.8),
     4px 4px 10px rgba(163,177,198,.35);
@@ -621,7 +621,7 @@
     .chart-card-carousel{
       scroll-snap-align:start;
       flex:0 0 100%;
-      background:#fff; border:none;
+      background:var(--color-bg-card); border:none;
       box-shadow:-6px -6px 12px rgba(255,255,255,.9), 6px 6px 12px rgba(163,177,198,.5);
       border-radius:18px;
       padding:16px;
@@ -718,12 +718,12 @@
     <div class="relative" id="notifWrap">
       <button id="btnNotifUpdate" onpointerdown="buatRipple(event)" onclick="toggleNotifUpdate(event)"
         class="relative flex items-center justify-center"
-        style="width:30px;height:30px;border-radius:50%;background:#ffffff;overflow:hidden;
+        style="width:30px;height:30px;border-radius:50%;background:var(--color-bg-card);overflow:hidden;
                box-shadow:-3px -3px 6px rgba(255,255,255,.8), 3px 3px 8px rgba(163,177,198,.35);">
         <span class="material-symbols-rounded" style="font-size:16px;color:#6b7280;">notifications</span>
         <span id="notifDot" class="hidden" style="position:absolute;top:3px;right:4px;width:7px;height:7px;border-radius:50%;background:var(--color-primary);border:1.5px solid #fff;"></span>
       </button>
-      <div id="notifDropdown" class="hidden" style="position:absolute;top:38px;right:0;width:210px;background:#ffffff;border-radius:16px;padding:12px;z-index:50;
+      <div id="notifDropdown" class="hidden" style="position:absolute;top:38px;right:0;width:210px;background:var(--color-bg-card);border-radius:16px;padding:12px;z-index:50;
              box-shadow:-6px -6px 12px rgba(255,255,255,.8), 6px 6px 16px rgba(163,177,198,.4);">
         <p style="font-size:11px;font-weight:700;color:#374151;margin:0 0 8px;">Pembaruan Terakhir</p>
         <div id="notifList" style="display:flex;flex-direction:column;gap:6px;"></div>
@@ -744,7 +744,7 @@
 
   <div class="grid grid-cols-2 gap-3 mb-3">
 
-    <div class="flex flex-col relative overflow-hidden" style="padding:var(--space-md); border-radius:var(--radius-lg); background:linear-gradient(160deg, var(--color-accent-blue) 0%, #E9E4FB 100%);">
+    <div class="flex flex-col relative overflow-hidden" style="padding:var(--space-md); border-radius:var(--radius-lg); background:linear-gradient(160deg, var(--color-accent-blue) 0%, #E9E4FB 100%); box-shadow:-6px -6px 12px rgba(255,255,255,.85), 6px 6px 14px rgba(163,177,198,.45);">
 
       <div class="mb-3" style="width:44px;height:44px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-card);">
         <span class="material-symbols-rounded text-[21px]" style="color:var(--color-primary);">school</span>
@@ -777,7 +777,7 @@
 
     </div>
 
-    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer flex flex-col relative overflow-hidden" style="padding:var(--space-md); border-radius:var(--radius-lg); background:linear-gradient(160deg, var(--color-accent-purple) 0%, #EAF1FF 100%);">
+    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer flex flex-col relative overflow-hidden" style="padding:var(--space-md); border-radius:var(--radius-lg); background:linear-gradient(160deg, var(--color-accent-purple) 0%, #EAF1FF 100%); box-shadow:-6px -6px 12px rgba(255,255,255,.85), 6px 6px 14px rgba(163,177,198,.45);">
 
       <div class="flex items-start justify-between mb-3">
         <div style="width:44px;height:44px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-card);">
@@ -798,7 +798,7 @@
 
   </div>
 
-  <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer flex items-center justify-between mb-3" style="padding:var(--space-lg); border-radius:var(--radius-lg); background:linear-gradient(160deg, var(--color-accent-green) 0%, #D9EFEA 100%);">
+  <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer flex items-center justify-between mb-3" style="padding:var(--space-lg); border-radius:var(--radius-lg); background:linear-gradient(160deg, var(--color-accent-green) 0%, #D9EFEA 100%); box-shadow:-6px -6px 12px rgba(255,255,255,.85), 6px 6px 14px rgba(163,177,198,.45);">
 
     <div class="flex items-center gap-3">
       <div style="width:48px;height:48px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-card); flex-shrink:0;">
@@ -1042,7 +1042,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
       <div id="dataTabTrack" class="flex mb-4" style="background:#EEF0F4;border-radius:9999px;padding:4px;gap:4px;">
         <button id="tabDataSiswa" onclick="switchDataTab('siswa')"
           class="flex-1 flex items-center justify-center gap-1 text-[12.5px] font-semibold py-2 px-1 rounded-full transition-all duration-200"
-          style="background:#ffffff;color:#1f2937;
+          style="background:var(--color-bg-card);color:#1f2937;
                  box-shadow:-4px -4px 10px rgba(255,255,255,.9), 5px 5px 12px rgba(163,177,198,.45);">
           <span class="material-symbols-rounded text-[15px]">group</span>
           Siswa
@@ -1288,7 +1288,7 @@ class="neu-dropdown-inset w-24 min-w-[96px] h-9 rounded-xl px-2 text-sm">
 id="btnUnduh"
 onclick="bukaPINUnduh()"
 class="mt-4 w-full h-[46px] flex items-center justify-center gap-2 text-[#2F5FD6] text-sm font-semibold"
-style="background:#ffffff; border-radius:14px; border: none; box-shadow: -6px -6px 14px rgba(255,255,255,.95), 6px 6px 16px rgba(163,177,198,.5);">
+style="background:var(--color-bg-card); border-radius:14px; border: none; box-shadow: -6px -6px 14px rgba(255,255,255,.95), 6px 6px 16px rgba(163,177,198,.5);">
 
 <span class="material-symbols-rounded text-[#2F5FD6] text-[19px]">
 download
@@ -1527,8 +1527,8 @@ let carouselGrafikSudahInit = false;
         tendik: { btn: document.getElementById('tabDataTendik'),panel: document.getElementById('panelDataTendik') }
       };
 
-      const aktifSiswa  = 'background:#ffffff;color:#1f2937;box-shadow:-4px -4px 10px rgba(255,255,255,.9), 5px 5px 12px rgba(163,177,198,.45);';
-      const aktifGuru   = 'background:#ffffff;color:#1f2937;box-shadow:4px 4px 10px rgba(255,255,255,.9), -5px -5px 12px rgba(163,177,198,.45);';
+      const aktifSiswa  = 'background:var(--color-bg-card);color:#1f2937;box-shadow:-4px -4px 10px rgba(255,255,255,.9), 5px 5px 12px rgba(163,177,198,.45);';
+      const aktifGuru   = 'background:var(--color-bg-card);color:#1f2937;box-shadow:4px 4px 10px rgba(255,255,255,.9), -5px -5px 12px rgba(163,177,198,.45);';
       const aktifTendik = aktifSiswa;
       const nonaktif    = 'background:transparent;color:#9ca3af;';
 
@@ -2304,7 +2304,7 @@ function filterSiswa() {
 
   if (q === "") {
     document.getElementById("list-siswa").innerHTML = `
-      <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:#ffffff; box-shadow: -6px -6px 12px rgba(255,255,255,.9), 6px 6px 12px rgba(163,177,198,.5);">
+      <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:var(--color-bg-card); box-shadow: -6px -6px 12px rgba(255,255,255,.9), 6px 6px 12px rgba(163,177,198,.5);">
         <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">keyboard</span>
         <p class="text-sm text-gray-600 font-medium">Ketik minimal 3 huruf Nama siswa</p>
       </div>
@@ -2314,7 +2314,7 @@ function filterSiswa() {
   if (q.length < 3) {
     const sisa = 3 - q.length;
     document.getElementById("list-siswa").innerHTML = `
-      <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:#ffffff; box-shadow: -6px -6px 12px rgba(255,255,255,.9), 6px 6px 12px rgba(163,177,198,.5);">
+      <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:var(--color-bg-card); box-shadow: -6px -6px 12px rgba(255,255,255,.9), 6px 6px 12px rgba(163,177,198,.5);">
         <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2"> </span>
         <p class="text-sm text-gray-600 font-medium">Ketik ${sisa} huruf lagi</p>
       </div>
