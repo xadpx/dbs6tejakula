@@ -616,16 +616,19 @@
       scroll-snap-type:x mandatory;
       padding-bottom:4px;
       -webkit-overflow-scrolling:touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
     .carousel-grafik::-webkit-scrollbar{ display:none; }
     .chart-card-carousel{
       scroll-snap-align:start;
       flex:0 0 100%;
-      background:var(--color-bg-card); border:none;
-      box-shadow:-6px -6px 12px rgba(255,255,255,.9), 6px 6px 12px rgba(163,177,198,.5);
+      background:#fff; border:1px solid #D8DEE6;
+      box-shadow:0 2px 6px rgba(16,24,40,.06);
       border-radius:18px;
       padding:16px;
       box-sizing:border-box;
+      overflow:hidden;
     }
     .dot-grafik{
       width:5px; height:5px; border-radius:50%; background:#E3E8F2; transition:.2s;
