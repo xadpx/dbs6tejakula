@@ -625,9 +625,9 @@
     .chart-card-carousel{
       scroll-snap-align:start;
       flex:0 0 100%;
-      background: var(--color-bg-card); border:none;
-      box-shadow: var(--shadow-card);
-      border-radius: var(--radius-lg);
+      background:var(--color-bg-card); border:none;
+      box-shadow:var(--shadow-card);
+      border-radius:var(--radius-lg);
       padding:16px;
       box-sizing:border-box;
     }
@@ -1609,7 +1609,7 @@ let carouselGrafikSudahInit = false;
         isi = `<p class="text-center text-gray-500 py-6">Data rombel belum tersedia</p>`;
       }else{
         isi = `
-          <div class="neu-card" style="padding:4px; overflow:hidden;">
+          <div class="neu-card" style="padding:4px;">
             ${data.map((r,i) => {
               const total = r.L + r.P;
               const garis = i === data.length - 1 ? '' : 'border-bottom:1px solid #C3CAD4;';
