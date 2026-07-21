@@ -2224,6 +2224,8 @@ let carouselGrafikSudahInit = false;
       if(elSubtitleRombel){
         elSubtitleRombel.textContent = `${classes.length} kelas \u00b7 ${totalSiswa} siswa`;
       }
+      animasikanAngka('totRombel', classes.length, 900);
+
 
 const idxPuncakRombel = window.rombelData.reduce((best, r, i, arr) =>
   (r.L + r.P) > (arr[best].L + arr[best].P) ? i : best, 0);
