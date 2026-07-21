@@ -1064,7 +1064,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
         Data
       </h1>
 
-      <div id="dataTabTrack" class="flex mb-4" style="background:var(--color-bg-card);border-radius:9999px;padding:4px;gap:4px;">
+      <div id="dataTabTrack" class="flex mb-4" style="background:var(--color-bg-card);border-radius:9999px;padding:0;gap:0;">
         <button id="tabDataSiswa" onclick="switchDataTab('siswa')"
           class="flex-1 flex items-center justify-center gap-1 text-[12.5px] font-semibold py-2 px-1 rounded-full transition-all duration-200"
           style="background:var(--color-bg-card);color:#1f2937;
@@ -1552,10 +1552,10 @@ let carouselGrafikSudahInit = false;
         tendik: { btn: document.getElementById('tabDataTendik'),panel: document.getElementById('panelDataTendik') }
       };
 
-      const aktifSiswa  = 'background:#E4E9F0;color:#1f2937;box-shadow:-4px -4px 10px rgba(255,255,255,.9), 5px 5px 12px rgba(163,177,198,.45);';
-      const aktifGuru   = 'background:#E4E9F0;color:#1f2937;box-shadow:4px 4px 10px rgba(255,255,255,.9), -5px -5px 12px rgba(163,177,198,.45);';
+      const aktifSiswa  = 'background:var(--color-bg-card);color:#1f2937;box-shadow: inset 3px 3px 7px rgba(163,177,198,.4), inset -3px -3px 7px rgba(255,255,255,.7);';
+      const aktifGuru   = aktifSiswa;
       const aktifTendik = aktifSiswa;
-      const nonaktif    = 'background:transparent;color:#9ca3af;';
+      const nonaktif    = 'background:var(--color-bg-card);color:#9ca3af;box-shadow:var(--shadow-card);';
 
       const aktifStyle = { siswa: aktifSiswa, guru: aktifGuru, tendik: aktifTendik };
 
