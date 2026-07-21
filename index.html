@@ -752,8 +752,16 @@
     </div>
   </div>
 
-  <p id="greetingText" class="text-sm text-gray-500 m-0"></p>
-  <h1 id="namaGuruAktif" class="text-2xl font-bold text-gray-800 m-0 mt-0.5"></h1>
+  <div class="flex items-center gap-3">
+    <div id="avatarGuruWrap" style="width:44px;height:44px;border-radius:50%;background:var(--color-bg-card);box-shadow:var(--shadow-card);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;">
+      <img id="avatarGuruImg" src="" class="hidden" style="width:100%;height:100%;object-fit:cover;">
+      <span id="avatarGuruFallback" class="material-symbols-rounded" style="font-size:22px;color:#9ca3af;">person</span>
+    </div>
+    <div>
+      <p id="greetingText" class="text-sm text-gray-500 m-0"></p>
+      <h1 id="namaGuruAktif" class="text-xl font-bold text-gray-800 m-0 mt-0.5"></h1>
+    </div>
+  </div>
 
   <p class="m-0" style="margin-top:var(--space-md); font-size:15px; font-weight:600; line-height:1.3; color:var(--color-text-primary);">
     Ringkasan data
@@ -1990,6 +1998,19 @@ let carouselGrafikSudahInit = false;
       if(elNama){
         elNama.textContent = ambilNamaSingkat(window.guruAktif.nama) + '!';
       }
+      const img = document.getElementById('avatarGuruImg');
+      const fallback = document.getElementById('avatarGuruFallback');
+      if(img && fallback){
+        if(window.guruAktif.foto){
+          img.src = window.guruAktif.foto;
+          img.classList.remove('hidden');
+          fallback.classList.add('hidden');
+          img.onerror = () => { img.classList.add('hidden'); fallback.classList.remove('hidden'); };
+        }else{
+          img.classList.add('hidden');
+          fallback.classList.remove('hidden');
+        }
+      }
     }
 
     function cekSesiLogin(){
@@ -2010,8 +2031,17 @@ let carouselGrafikSudahInit = false;
       return false;
     }
 
+    function decodeJwtPayload(token){
+      try{
+        const base64 = token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');
+        return JSON.parse(decodeURIComponent(atob(base64).split('').map(c => '%' + ('00'+c.charCodeAt(0).toString(16)).slice(-2)).join('')));
+      }catch(e){ return null; }
+    }
+
     function handleGoogleCredential(response){
       const idToken = response.credential;
+      const payloadGoogle = decodeJwtPayload(idToken);
+      const fotoGoogle = payloadGoogle && payloadGoogle.picture ? payloadGoogle.picture : '';
       const errEl = document.getElementById('loginError');
       const spinnerEl = document.getElementById('loginSpinner');
       errEl.classList.add('hidden');
@@ -2027,7 +2057,7 @@ let carouselGrafikSudahInit = false;
           spinnerEl.classList.add('hidden');
 
           if(json.success){
-            window.guruAktif = { nama: json.nama, email: json.email };
+            window.guruAktif = { nama: json.nama, email: json.email, foto: fotoGoogle };
             localStorage.setItem('guruLogin', JSON.stringify(window.guruAktif));
             try{
               selesaiLogin();
