@@ -4594,9 +4594,7 @@ function selesaikanSwipeKeHalaman(p){
   halaman.forEach(id=>{
     const el = document.getElementById(id);
     el.classList.add("hidden");
-    el.style.opacity = "";
-    el.style.transform = "";
-    el.style.display = "";
+    el.style.cssText = "";
   });
 
   const target = document.getElementById("p-"+p);
@@ -4606,14 +4604,11 @@ function selesaikanSwipeKeHalaman(p){
   window.scrollTo(0, 0);
   updateNavAktif(p);
 
-  // Paksa repaint (bukan cuma reflow) - jaga-jaga kalau layer GPU
-  // masih basi dan bikin halaman kelihatan kosong sampai discroll
-  target.style.opacity = "0.999";
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      target.style.opacity = "";
-    });
-  });
+  // Paksa reflow+repaint total dengan toggle display:none sesaat.
+  // Teknik opacity doang kadang belum cukup di Safari/iOS.
+  target.style.display = "none";
+  void target.offsetHeight;
+  target.style.display = (p==="siswa") ? "block" : "";
 
 }
     let sedangTransisiNav = false;
