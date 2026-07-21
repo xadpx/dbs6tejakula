@@ -2324,6 +2324,20 @@ function gantiHalamanFade(pTarget){
   const currentEl = document.getElementById("p-" + pSekarang);
   const targetEl = document.getElementById("p-" + pTarget);
 
+  // Tab Unduh: lewati animasi fade sepenuhnya, langsung tampil.
+  // Ada bug render/compositing browser yang bikin halaman ini
+  // kelihatan kosong sampai discroll kalau dianimasikan.
+  if(pTarget === "download" || pSekarang === "download"){
+    currentEl.classList.add("hidden");
+    currentEl.style.cssText = "";
+    targetEl.classList.remove("hidden");
+    targetEl.style.cssText = "";
+    window.scrollTo(0, 0);
+    updateNavAktif(pTarget);
+    sedangTransisiNav = false;
+    return;
+  }
+
   currentEl.style.transition = "opacity .16s ease, transform .16s ease";
   currentEl.style.opacity = "0";
   currentEl.style.transform = "translateY(6px)";
