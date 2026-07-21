@@ -958,15 +958,15 @@
         <div id="skelKepegawaian" class="w-full flex flex-col items-center justify-center py-6">
           <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
         </div>
-        <div class="flex items-center gap-3">
-          <div class="chart-glass-wrap shrink-0" style="width:130px;height:130px;">
-            <div class="ring-center-raised" style="width:76px;height:76px;"></div>
-            <div class="center-label" id="centerLabelKepegawaian" style="width:76px;height:76px;"></div>
-            <div class="relative" style="width:116px;height:116px;">
+        <div class="flex flex-col items-center gap-3">
+          <div class="chart-glass-wrap shrink-0" style="width:200px;height:200px;">
+            <div class="ring-center-raised" style="width:116px;height:116px;"></div>
+            <div class="center-label" id="centerLabelKepegawaian" style="width:116px;height:116px;"></div>
+            <div class="relative" style="width:178px;height:178px;">
               <canvas id="chartKepegawaian" class="hidden"></canvas>
             </div>
           </div>
-          <div id="legendKepegawaian" class="hidden flex flex-col gap-1 min-w-0" style="width:130px;"></div>
+          <div id="legendKepegawaian" class="hidden grid grid-cols-2 gap-1.5 w-full"></div>
         </div>
       </div>
 
@@ -3521,9 +3521,9 @@ function buatChart(){
         "#6C5DD3"  // Desil 6-10
       ],
       borderWidth: 0,
-      borderRadius: 14,
+      borderRadius: 0,
       hoverOffset: 0,
-      spacing: 6
+      spacing: 0
     }]
   },
   options:{
@@ -3531,8 +3531,8 @@ function buatChart(){
     layout:{ padding:0 },
     cutout:"52%",
     onClick:(evt, els, chart)=>{
-  const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
-  if(points.length) handleChartTap('legendKesejahteraan', points[0].index);
+      const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
+      if(points.length) handleChartTap('legendKesejahteraan', points[0].index);
   clearTimeout(window.tooltipTimerKesejahteraan);
   window.tooltipTimerKesejahteraan = setTimeout(()=>{
     chart.tooltip.setActiveElements([], {x:0,y:0});
@@ -3632,18 +3632,18 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
       data:nilaiStatusAnak,
       backgroundColor: ["#6C5DD3","#A9A0F0","#4ECDC4","#F2545B","#F7A8AC"],
       borderWidth: 0,
-      borderRadius: 14,
+      borderRadius: 0,
       hoverOffset: 0,
-      spacing: 6
+      spacing: 0
     }]
   },
   options:{
     responsive:true,
     layout:{ padding:0 },
     cutout:"52%",
-   onClick:(evt, els, chart)=>{
-  const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
-  if(points.length) handleChartTap('legendStatusAnak', points[0].index);
+    onClick:(evt, els, chart)=>{
+      const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
+      if(points.length) handleChartTap('legendStatusAnak', points[0].index);
   clearTimeout(window.tooltipTimerStatusAnak);
   window.tooltipTimerStatusAnak = setTimeout(()=>{
     chart.tooltip.setActiveElements([], {x:0,y:0});
@@ -3815,7 +3815,7 @@ function buatChartKepegawaian(){
     status[s] = (status[s]||0) + 1;
   });
 
-  const warnaKepegawaian = ["#FFC845","#4FC3F7","#FF5C5C","#EC4899","#34D399"];
+  const warnaKepegawaian = ["#6C5DD3","#A9A0F0","#4ECDC4","#F2545B","#F7A8AC"];
   const labelKepegawaian = Object.keys(status);
   const nilaiKepegawaian = Object.values(status);
 
@@ -3834,15 +3834,15 @@ function buatChartKepegawaian(){
         data: nilaiKepegawaian,
         backgroundColor: warnaKepegawaian,
         borderWidth: 0,
-        borderRadius: 16,
+        borderRadius: 0,
         hoverOffset: 0,
-        spacing: 8
+        spacing: 0
       }]
     },
     options:{
       responsive:true,
       layout:{ padding:0 },
-      cutout:"46%",
+      cutout:"52%",
       onClick:(evt, els, chart)=>{
         const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
         if(points.length) handleChartTap('legendKepegawaian', points[0].index);
