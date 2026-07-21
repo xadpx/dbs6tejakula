@@ -2456,18 +2456,20 @@ hasil.sort((a, b) => {
   }
 
   document.getElementById("list-siswa").innerHTML = `
-<div class="space-y-2">
+<div class="neu-card" style="padding:4px; overflow:hidden;">
 
 ${hasil.map((r,i)=>{
 
 const belumLengkap = r.some(v => !String(v).trim());
+const garis = i === hasil.length - 1 ? '' : 'border-bottom:1px solid #C3CAD4;';
 
 return `
 
 <div
 onpointerdown="buatRipple(event)"
 onclick="showDetailByNIK('${r[8]}')"
-class="neu-card flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect">
+class="flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect"
+style="${garis}">
 
   <div class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 ${belumLengkap ? 'opacity-40' : ''}">
 
@@ -2714,13 +2716,14 @@ function renderListPegawai(tipe){
     return;
   }
 
-  el.innerHTML = `
-<div class="space-y-2">
+ el.innerHTML = `
+<div class="neu-card" style="padding:4px; overflow:hidden;">
 ${sumber.map((r,i)=>`
 <div
 onpointerdown="buatRipple(event)"
 onclick="showDetailPegawai('${tipe}', ${i})"
-class="neu-card flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect">
+class="flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect"
+style="${i === sumber.length - 1 ? '' : 'border-bottom:1px solid #C3CAD4;'}">
   <div class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
     <span class="material-symbols-rounded text-[13px] text-gray-400"
       style="font-variation-settings:'FILL' 1,'wght' 300,'GRAD' 0,'opsz' 24;">
@@ -4009,9 +4012,9 @@ function tampilkanSiswaKategori(kolom, label){
     `;
   }else{
     document.getElementById("list-kategori").innerHTML = `
-      <div class="space-y-2">
+      <div class="neu-card" style="padding:4px; overflow:hidden;">
         ${hasil.map((r,i) => `
-          <div class="neu-card flex items-center px-4 py-2.5">
+          <div class="flex items-center px-4 py-2.5" style="${i === hasil.length - 1 ? '' : 'border-bottom:1px solid #C3CAD4;'}">
             <div class="flex-1 min-w-0">
               <div class="text-[13px] font-semibold text-gray-900 truncate">${r[1]}</div>
               <div class="text-[11px] text-gray-600 mt-0.5">${r[2]}</div>
