@@ -618,6 +618,9 @@
       scrollbar-width: none;
       -ms-overflow-style: none;
     }
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
     .carousel-grafik::-webkit-scrollbar{ display:none; }
     .chart-card-carousel{
       scroll-snap-align:start;
@@ -1097,7 +1100,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
     </div>
 
     <!-- LIST -->
-    <div id="list-siswa" class="flex-1 overflow-y-auto overflow-x-hidden px-5 pb-5 max-w-full">
+    <div id="list-siswa" class="flex-1 overflow-y-auto overflow-x-hidden px-5 pb-5 max-w-full" style="padding-left:28px; padding-right:28px;">
       <div class="flex flex-col items-center justify-center text-center pt-14 px-6">
         <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">manage_search</span>
         <p class="text-sm text-gray-600 font-medium">Ketik minimal 3 huruf</p>
@@ -1107,13 +1110,13 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
 
     </div>
 
-   <div id="panelDataGuru" class="hidden flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-5 pb-5 max-w-full">
+   <div id="panelDataGuru" class="hidden flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-5 pb-5 max-w-full" style="padding-left:28px; padding-right:28px;">
       <div class="flex flex-col items-center justify-center text-center pt-14 px-6">
         <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
       </div>
     </div>
 
-    <div id="panelDataTendik" class="hidden flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-5 pb-5 max-w-full">
+    <div id="panelDataTendik" class="hidden flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-5 pb-5 max-w-full" style="padding-left:28px; padding-right:28px;">
       <div class="flex flex-col items-center justify-center text-center pt-14 px-6">
         <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
       </div>
@@ -1606,14 +1609,16 @@ let carouselGrafikSudahInit = false;
         isi = `<p class="text-center text-gray-500 py-6">Data rombel belum tersedia</p>`;
       }else{
         isi = `
-          <div class="space-y-2">
+          <div class="neu-card" style="padding:4px; overflow:hidden;">
             ${data.map((r,i) => {
               const total = r.L + r.P;
+              const garis = i === data.length - 1 ? '' : 'border-bottom:1px solid #C3CAD4;';
               return `
               <div
                 onpointerdown="buatRipple(event)"
                 onclick="tampilkanSiswaKelas('${r.kelas}')"
-                class="neu-card flex items-center justify-between px-4 py-3 cursor-pointer active:bg-gray-50 transition ripple-effect">
+                class="flex items-center justify-between px-4 py-3 cursor-pointer active:bg-gray-50 transition ripple-effect"
+                style="${garis}">
                 <div class="flex items-center gap-3">
                   <div style="width:32px;height:32px;border-radius:12px;background:rgba(37,99,235,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                     <span style="color:#2563EB;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></span>
@@ -1653,12 +1658,13 @@ let carouselGrafikSudahInit = false;
         isi = `<p class="text-center text-gray-500 py-6">Tidak ada siswa di kelas ini</p>`;
       }else{
         isi = `
-          <div class="space-y-2">
+          <div class="neu-card" style="padding:4px; overflow:hidden;">
             ${hasil.map((r,i) => `
               <div
                 onpointerdown="buatRipple(event)"
                 onclick="showDetailByNIK('${r[8]}')"
-                class="neu-card flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect">
+                class="flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect"
+                style="${i === hasil.length - 1 ? '' : 'border-bottom:1px solid #C3CAD4;'}">
                 <div class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
                   <span class="material-symbols-rounded text-[13px] text-gray-400"
                     style="font-variation-settings:'FILL' 1,'wght' 300,'GRAD' 0,'opsz' 24;">
@@ -1697,12 +1703,13 @@ let carouselGrafikSudahInit = false;
       });
 
       const isi = `
-        <div class="space-y-2">
+        <div class="neu-card" style="padding:4px; overflow:hidden;">
           ${Object.keys(desil).map((label,i,arr) => `
             <div
               onpointerdown="buatRipple(event)"
               onclick="tampilkanSiswaDesil('${label}')"
-              class="neu-card flex items-center justify-between px-4 py-3 cursor-pointer active:bg-gray-50 transition ripple-effect">
+              class="flex items-center justify-between px-4 py-3 cursor-pointer active:bg-gray-50 transition ripple-effect"
+              style="${i === arr.length - 1 ? '' : 'border-bottom:1px solid #C3CAD4;'}">
               <div class="flex items-center gap-3">
                 <div style="width:32px;height:32px;border-radius:12px;background:${WARNA_DESIL[label]}1A;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                   <span style="color:${WARNA_DESIL[label]};"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
@@ -1737,12 +1744,13 @@ let carouselGrafikSudahInit = false;
         isi = `<p class="text-center text-gray-500 py-6">Tidak ada siswa di kategori ini</p>`;
       }else{
         isi = `
-          <div class="space-y-2">
+          <div class="neu-card" style="padding:4px; overflow:hidden;">
             ${hasil.map((r,i) => `
               <div
                 onpointerdown="buatRipple(event)"
                 onclick="showDetailByNIK('${r[8]}')"
-                class="neu-card flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect">
+                class="flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect"
+                style="${i === hasil.length - 1 ? '' : 'border-bottom:1px solid #C3CAD4;'}">
                 <div class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
                   <span class="material-symbols-rounded text-[13px] text-gray-400"
                     style="font-variation-settings:'FILL' 1,'wght' 300,'GRAD' 0,'opsz' 24;">
@@ -1780,12 +1788,13 @@ let carouselGrafikSudahInit = false;
 
       const labels = Object.keys(status);
       const isi = `
-        <div class="space-y-2">
+        <div class="neu-card" style="padding:4px; overflow:hidden;">
           ${labels.map((label,i) => `
             <div
               onpointerdown="buatRipple(event)"
               onclick="tampilkanSiswaStatusAnak('${label}')"
-              class="neu-card flex items-center justify-between px-4 py-3 cursor-pointer active:bg-gray-50 transition ripple-effect">
+              class="flex items-center justify-between px-4 py-3 cursor-pointer active:bg-gray-50 transition ripple-effect"
+              style="${i === labels.length - 1 ? '' : 'border-bottom:1px solid #C3CAD4;'}">
               <div class="flex items-center gap-3">
                 <div style="width:32px;height:32px;border-radius:12px;background:${(WARNA_STATUS_ANAK[label] || '#9871F5')}1A;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                   <span style="color:${WARNA_STATUS_ANAK[label] || '#9871F5'};"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></span>
@@ -1822,14 +1831,14 @@ let carouselGrafikSudahInit = false;
       let isi;
       if(hasil.length === 0){
         isi = `<p class="text-center text-gray-500 py-6">Tidak ada siswa di kategori ini</p>`;
-      }else{
-        isi = `
-          <div class="space-y-2">
+      }else{isi = `
+          <div class="neu-card" style="padding:4px; overflow:hidden;">
             ${hasil.map((r,i) => `
               <div
                 onpointerdown="buatRipple(event)"
                 onclick="showDetailByNIK('${r[8]}')"
-                class="neu-card flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect">
+                class="flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect"
+                style="${i === hasil.length - 1 ? '' : 'border-bottom:1px solid #C3CAD4;'}">
                 <div class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
                   <span class="material-symbols-rounded text-[13px] text-gray-400"
                     style="font-variation-settings:'FILL' 1,'wght' 300,'GRAD' 0,'opsz' 24;">
