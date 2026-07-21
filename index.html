@@ -1706,8 +1706,8 @@ let carouselGrafikSudahInit = false;
       document.getElementById('detail-content').innerHTML = `<div class="text-[13px] w-full max-w-4xl mx-auto">${isi}</div>`;
     }
 
-    const WARNA_DESIL = { "Desil 1":"#00B8D9", "Desil 2":"#94A3B8", "Desil 3":"#00B8D9", "Desil 4":"#94A3B8", "Desil 5":"#00B8D9", "Desil 6-10":"#94A3B8" };
-    const WARNA_STATUS_ANAK = { "Tidak Ada":"#3EA1EC", "Yatim":"#FA7F65", "Piatu":"#F7CA41", "Yatim Piatu":"#4ECA9E" };
+    const WARNA_DESIL = { "Desil 1":"#6C5DD3", "Desil 2":"#A9A0F0", "Desil 3":"#4ECDC4", "Desil 4":"#F2545B", "Desil 5":"#F7A8AC", "Desil 6-10":"#6C5DD3" };
+    const WARNA_STATUS_ANAK = { "Tidak Ada":"#6C5DD3", "Yatim":"#A9A0F0", "Piatu":"#4ECDC4", "Yatim Piatu":"#F2545B" };
 
     function bukaKategoriKesejahteraanDariBeranda(){
       window.modalStack = [];
@@ -3507,30 +3507,29 @@ function buatChart(){
 
   window.chartKesejahteraanInstance = new Chart(document.getElementById("chartKesejahteraan"),{
   type:"doughnut",
-  plugins:[neuShadowPlugin, glossyPlugin, outsideLabelsPlugin, segmentIconPlugin],
+  plugins:[neuShadowPlugin, glossyPlugin, outsideLabelsPlugin],
   data:{
     labels:labelKesejahteraan,
     datasets:[{
       data:nilaiKesejahteraan,
       backgroundColor: [
-        "#00B8D9", // Desil 1
-        "#94A3B8", // Desil 2
-        "#00B8D9", // Desil 3
-        "#94A3B8", // Desil 4
-        "#00B8D9", // Desil 5
-        "#94A3B8"  // Desil 6-10
+        "#6C5DD3", // Desil 1
+        "#A9A0F0", // Desil 2
+        "#4ECDC4", // Desil 3
+        "#F2545B", // Desil 4
+        "#F7A8AC", // Desil 5
+        "#6C5DD3"  // Desil 6-10
       ],
-      icons: ["payments","savings","trending_down","trending_up","account_balance_wallet","workspace_premium"],
       borderWidth: 0,
-      borderRadius: 20,
+      borderRadius: 14,
       hoverOffset: 0,
-      spacing: 10
+      spacing: 6
     }]
   },
   options:{
     responsive:true,
     layout:{ padding:0 },
-    cutout:"46%",
+    cutout:"52%",
     onClick:(evt, els, chart)=>{
   const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
   if(points.length) handleChartTap('legendKesejahteraan', points[0].index);
@@ -3625,24 +3624,23 @@ const totalKes = nilaiKesejahteraan.reduce((a,b)=>a+b,0);
 window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusAnak"),{
 
   type:"doughnut",
-  plugins:[neuShadowPlugin, glossyPlugin, outsideLabelsPlugin, segmentIconPlugin],
+  plugins:[neuShadowPlugin, glossyPlugin, outsideLabelsPlugin],
 
   data:{
     labels:labelStatusAnak,
     datasets:[{
       data:nilaiStatusAnak,
-      backgroundColor: ["#00B8D9","#94A3B8","#00B8D9","#94A3B8","#00B8D9"],
-      icons: ["check_circle","man","woman","family_restroom","group"],
+      backgroundColor: ["#6C5DD3","#A9A0F0","#4ECDC4","#F2545B","#F7A8AC"],
       borderWidth: 0,
-      borderRadius: 20,
+      borderRadius: 14,
       hoverOffset: 0,
-      spacing: 10
+      spacing: 6
     }]
   },
   options:{
     responsive:true,
     layout:{ padding:0 },
-    cutout:"46%",
+    cutout:"52%",
    onClick:(evt, els, chart)=>{
   const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
   if(points.length) handleChartTap('legendStatusAnak', points[0].index);
