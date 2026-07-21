@@ -294,13 +294,13 @@
     .neu-card{
       background: var(--color-bg-card);
       border-radius: var(--radius-md);
-      border: 1px solid var(--color-border);
+      border: none;
       box-shadow: var(--shadow-card);
     }
     .neu-btn{
       background: var(--color-bg-card);
       border-radius: var(--radius-sm);
-      border: 1px solid var(--color-border);
+      border: none;
       box-shadow: var(--shadow-card);
       transition: box-shadow .12s ease;
     }
@@ -619,7 +619,7 @@
     .chart-card-carousel{
       scroll-snap-align:start;
       flex:0 0 100%;
-      background:#EEF0F4; border:none;
+      background: var(--color-bg-card); border:none;
       box-shadow:0 2px 6px rgba(16,24,40,.06);
       border-radius:18px;
       padding:16px;
@@ -742,7 +742,7 @@
 
   <div class="grid grid-cols-2 gap-3 mb-3">
 
-    <div class="flex flex-col relative overflow-hidden" style="padding:var(--space-md); border-radius:var(--radius-lg); background:#EEF0F4;">
+    <div class="flex flex-col relative overflow-hidden" style="padding:var(--space-md); border-radius:var(--radius-lg); background:var(--color-bg-card); box-shadow:var(--shadow-card);">
 
       <div class="mb-3" style="width:44px;height:44px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-card);">
         <span class="material-symbols-rounded text-[21px]" style="color:var(--color-primary);">school</span>
