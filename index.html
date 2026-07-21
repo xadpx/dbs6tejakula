@@ -3584,20 +3584,20 @@ const totalKes = nilaiKesejahteraan.reduce((a,b)=>a+b,0);
 window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusAnak"),{
 
   type:"doughnut",
-  plugins:[neuShadowPlugin, glossyPlugin, outsideLabelsPlugin],
+  plugins:[neuShadowPlugin, glossyPlugin, outsideLabelsPlugin, segmentIconPlugin],
 
   data:{
     labels:labelStatusAnak,
     datasets:[{
       data:nilaiStatusAnak,
-      backgroundColor: ["#FFC845","#4FC3F7","#FF5C5C","#EC4899","#34D399"],
+      backgroundColor: ["#00B8D9","#94A3B8","#00B8D9","#94A3B8","#00B8D9"],
+      icons: ["check_circle","man","woman","family_restroom","group"],
       borderWidth: 0,
       borderRadius: 20,
       hoverOffset: 0,
       spacing: 10
     }]
   },
-
   options:{
     responsive:true,
     layout:{ padding:0 },
