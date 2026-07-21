@@ -782,10 +782,7 @@
         <div id="totSpin" class="spinner-ring-gray"></div>
       </div>
 
-      <div id="siswaTrendBadge" class="hidden items-center gap-1 mb-1" style="width:fit-content;">
-        <span id="siswaTrendIcon" class="material-symbols-rounded" style="font-size:14px;"></span>
-        <span id="siswaTrendText" class="text-[11px] font-semibold"></span>
-      </div>
+      
 
       <div class="flex gap-3 mb-1">
         <div class="flex items-center gap-1.5">
@@ -2111,71 +2108,7 @@ let carouselGrafikSudahInit = false;
       location.reload();
     }
 
-    function tampilkanTrenSiswa(totalHariIni){
-      const KEY = 'snapshotTotalSiswa';
-      const hariIni = new Date().toISOString().slice(0,10); // YYYY-MM-DD
-
-      let riwayat = [];
-      try { riwayat = JSON.parse(localStorage.getItem(KEY)) || []; } catch(e) { riwayat = []; }
-
-      // update/simpan snapshot hari ini (1x per hari, replace kalau sudah ada)
-      riwayat = riwayat.filter(r => r.tanggal !== hariIni);
-      riwayat.push({ tanggal: hariIni, total: totalHariIni });
-
-      // buang data lebih dari setahun biar localStorage tidak membengkak
-      const setahunLalu = Date.now() - 366*24*60*60*1000;
-      riwayat = riwayat.filter(r => new Date(r.tanggal).getTime() >= setahunLalu);
-      riwayat.sort((a,b) => new Date(a.tanggal) - new Date(b.tanggal));
-      localStorage.setItem(KEY, JSON.stringify(riwayat));
-
-      const badge = document.getElementById('siswaTrendBadge');
-      const iconEl = document.getElementById('siswaTrendIcon');
-      const textEl = document.getElementById('siswaTrendText');
-      if(!badge) return;
-
-      // cari snapshot yang umurnya 25-35 hari lalu (target ~30 hari)
-      const targetMs = Date.now() - 30*24*60*60*1000;
-      let terdekat = null, selisihTerkecil = Infinity;
-      riwayat.forEach(r => {
-        const umurHari = (Date.now() - new Date(r.tanggal).getTime()) / (24*60*60*1000);
-        if (umurHari >= 20 && umurHari <= 40) {
-          const selisih = Math.abs(new Date(r.tanggal).getTime() - targetMs);
-          if (selisih < selisihTerkecil) { selisihTerkecil = selisih; terdekat = r; }
-        }
-      });
-
-      badge.classList.remove('hidden');
-      badge.style.display = 'flex';
-
-      if (!terdekat) {
-        // belum cukup histori (fitur baru dipasang) — jangan tampilkan angka palsu
-        iconEl.textContent = 'schedule';
-        iconEl.style.color = 'var(--color-text-secondary)';
-        textEl.style.color = 'var(--color-text-secondary)';
-        textEl.textContent = 'Tren mulai terlacak hari ini';
-        return;
-      }
-
-      const diff = totalHariIni - terdekat.total;
-      const persen = terdekat.total > 0 ? (diff / terdekat.total * 100) : 0;
-
-      if (diff > 0) {
-        iconEl.textContent = 'trending_up';
-        iconEl.style.color = '#0091EA';
-        textEl.style.color = '#0091EA';
-        textEl.textContent = `+${diff} siswa (${persen.toFixed(1)}%) vs 30 hari lalu`;
-      } else if (diff < 0) {
-        iconEl.textContent = 'trending_down';
-        iconEl.style.color = '#E05C5C';
-        textEl.style.color = '#E05C5C';
-        textEl.textContent = `${diff} siswa (${persen.toFixed(1)}%) vs 30 hari lalu`;
-      } else {
-        iconEl.textContent = 'trending_flat';
-        iconEl.style.color = 'var(--color-text-secondary)';
-        textEl.style.color = 'var(--color-text-secondary)';
-        textEl.textContent = 'Stabil vs 30 hari lalu';
-      }
-    }
+  
 
     window.onload = () => {
   const sudahLogin = cekSesiLogin();
@@ -2208,8 +2141,7 @@ let carouselGrafikSudahInit = false;
       animasikanAngka('laki', totalLaki, 900);
       animasikanAngka('perempuan', totalPerempuan, 900);
 
-      tampilkanTrenSiswa(totalSiswa);
-
+      
       const classes = [...new Set(d.map(r => r[2]))].filter(c => c).sort();
       window.rombelData = classes.map(k => {
         const list = d.filter(r => r[2] == k);
