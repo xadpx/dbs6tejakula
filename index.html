@@ -5,7 +5,7 @@
   <meta name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <meta name="color-scheme" content="light only">
-  <meta name="theme-color" content="#eef2f7">
+  <meta name="theme-color" content="#edf1f9">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -24,22 +24,24 @@
     <style>
     /* ===== DESIGN TOKENS (dari referensi Health Dashboard) ===== */
     :root {
-      /* Warna */
-      --color-bg-app:      #DADFE6;
+      /* Warna — Design Token: Soft UI / Neumorphic Blue */
+      --color-bg-app:      #EDF1F9;
       --color-bg-card:     #FFFFFF;
-      --color-primary:     #6B5CA5;   /* dulu #2563EB, diganti ungu tua ala grafik steps */
-      --color-primary-soft: rgba(107,92,165,.12);
+      --color-primary:     #4C7DF6;   /* biru neumorphic, sesuai token referensi */
+      --color-primary-dark: #2F5FD6;
+      --color-primary-light: #8FB0FF;
+      --color-primary-soft: rgba(76,125,246,.12);
 
       --color-accent-blue:    #C9E0F0;
-      --color-accent-purple:  #DCD3F0;
+      --color-accent-purple:  #D7E3FB;
       --color-accent-green:   #D7E4CE;
 
-      --color-text-primary:   #1A1A1A;
-      --color-text-secondary: #8A8F98;
-      --color-border:         #D8DEE6;
+      --color-text-primary:   #2B3350;
+      --color-text-secondary: #8A94A6;
+      --color-border:         #E3E8F2;
 
-      --color-nav-active-bg: #1A1A1A;
-      --color-nav-inactive:  #A8ADB5;
+      --color-nav-active-bg: #2F5FD6;
+      --color-nav-inactive:  #A9B3C7;
 
       /* Spacing */
       --space-xs: 4px;
@@ -55,9 +57,9 @@
       --radius-full: 9999px;
 
       /* Shadow */
-      --shadow-card: 0px 8px 20px rgba(0,0,0,.06);
-      --shadow-fab:  0px 4px 12px rgba(0,0,0,.15);
-      --shadow-nav:  0px -4px 16px rgba(0,0,0,.05);
+      --shadow-card: 0px 8px 20px rgba(76,125,246,.10);
+      --shadow-fab:  0px 4px 12px rgba(76,125,246,.28);
+      --shadow-nav:  0px -4px 16px rgba(76,125,246,.08);
 
       /* Font */
       --font-family: 'Poppins', sans-serif;
@@ -104,8 +106,8 @@
       flex-shrink:0;
     }
     .kategori:checked{
-  background:#e8eaf6;
-  border-color: rgba(62,80,168,.3);
+  background:#E4ECFF;
+  border-color: rgba(76,125,246,.35);
 }
 .kategori:checked::after{
   content:"";
@@ -115,14 +117,14 @@
   width:9px;
   height:6px;
   transform:translate(-50%,-73%) rotate(-45deg);
-  border-left:2px solid #3E50A8;
-  border-bottom:2px solid #3E50A8;
+  border-left:2px solid #2F5FD6;
+  border-bottom:2px solid #2F5FD6;
 }
       .neu-mini-pill{
       background:#ffffff;
       border-radius:8px;
       padding:4px 8px;
-      border: 1px solid #D8DEE6;
+      border: 1px solid #E3E8F2;
       box-shadow: 0 2px 6px rgba(16,24,40,.06);
       transition:.15s;
     }
@@ -145,7 +147,7 @@
       box-shadow: 0 1px 2px rgba(0,0,0,.15) !important;
     }
     .toggle-knob-neu.on{
-      background: linear-gradient(160deg,#9B8DC9,var(--color-primary)) !important;
+      background: linear-gradient(160deg,#8FB0FF,var(--color-primary)) !important;
     }
     #p-siswa{
       overflow-x:hidden;
@@ -248,7 +250,7 @@
       height: 28px;
       border-radius: 9999px;
       background: #ffffff;
-      border: 1px solid #D8DEE6;
+      border: 1px solid #E3E8F2;
       box-shadow: 0 2px 6px rgba(16,24,40,.06);
       display: flex;
       align-items: center;
@@ -315,7 +317,7 @@
       -webkit-appearance: none !important;
       appearance: none !important;
       background-color: #ffffff !important;
-      border: 1px solid #D8DEE6;
+      border: 1px solid #E3E8F2;
       border-radius: 9999px;
       box-shadow: 0 2px 6px rgba(16,24,40,.06) !important;
     }
@@ -331,12 +333,12 @@
     }
       .neu-dropdown-inset{
   background:#ffffff;
-  border: 1px solid #D8DEE6;
+  border: 1px solid #E3E8F2;
   box-shadow: 0 2px 6px rgba(16,24,40,.06);
 }
 .neu-dropdown{
   background:#ffffff;
-  border: 1px solid #D8DEE6;
+  border: 1px solid #E3E8F2;
   box-shadow: 0 2px 6px rgba(16,24,40,.06);
   transition: box-shadow .15s ease;
 }
@@ -360,11 +362,11 @@
     }
     .rombel-row {
       padding: 13px 16px; border-radius: 16px; cursor: pointer;
-      background: #EEF0F4; margin-bottom: 8px;
+      background: #EEF2FA; margin-bottom: 8px;
       transition: background .15s ease;
       display: flex; align-items: center; gap: 10px;
     }
-    .rombel-row.open { background: #E6E9EF; }
+    .rombel-row.open { background: #E3E9F7; }
     .rombel-row:last-child { margin-bottom: 0; }
     .pillbar-row {
   display: flex; align-items: flex-end; gap: 10px;
@@ -393,7 +395,7 @@
   transition: height .6s cubic-bezier(.34,1.15,.64,1);
 }
 .pillbar-bar-hi {
-  background: linear-gradient(180deg,#CBC5F6,#A99DEC);
+  background: linear-gradient(180deg,#AFC8FF,#5B8DFF);
 }
 .pillbar-bar-over {
   background: linear-gradient(180deg,#FF9E6D,#E65100);
@@ -423,7 +425,7 @@
 }
 .pillbar-ripple {
   position: absolute; border-radius: 50%;
-  background: radial-gradient(circle, rgba(140,107,199,.35) 0%, rgba(140,107,199,.15) 60%, rgba(140,107,199,0) 70%);
+  background: radial-gradient(circle, rgba(76,125,246,.35) 0%, rgba(76,125,246,.15) 60%, rgba(76,125,246,0) 70%);
   transform: scale(0); opacity: 1;
   animation: pillbarRippleAnim .6s ease-out forwards;
 }
@@ -450,7 +452,7 @@
 
     .neu-ring-wrap {
       border-radius: 50%; flex-shrink: 0; position: relative;
-      border: 1px solid #D8DEE6;
+      border: 1px solid #E3E8F2;
       box-shadow: 0 2px 6px rgba(16,24,40,.06);
       display: flex; align-items: center; justify-content: center;
       background: #fff;
@@ -472,7 +474,7 @@
     }
     .icon-badge-purple {
       width: 30px; height: 30px; border-radius: 10px;
-      background: linear-gradient(160deg,#B49AE8,#8C6BC7);
+      background: linear-gradient(160deg,#8FB0FF,#4C7DF6);
       display: flex; align-items: center; justify-content: center; color: #fff;
     }
     .chart-glass-wrap {
@@ -619,14 +621,14 @@
     .chart-card-carousel{
       scroll-snap-align:start;
       flex:0 0 100%;
-      background:#fff; border:1px solid #D8DEE6;
+      background:#fff; border:1px solid #E3E8F2;
       box-shadow:0 2px 6px rgba(16,24,40,.06);
       border-radius:18px;
       padding:16px;
       box-sizing:border-box;
     }
     .dot-grafik{
-      width:5px; height:5px; border-radius:50%; background:#D8DEE6; transition:.2s;
+      width:5px; height:5px; border-radius:50%; background:#E3E8F2; transition:.2s;
       display:inline-block;
     }
     .dot-grafik.active{
@@ -775,11 +777,11 @@
 
     </div>
 
-    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer flex flex-col relative overflow-hidden" style="padding:var(--space-md); border-radius:var(--radius-lg); background:linear-gradient(160deg, var(--color-accent-purple) 0%, #F1E4F2 100%);">
+    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer flex flex-col relative overflow-hidden" style="padding:var(--space-md); border-radius:var(--radius-lg); background:linear-gradient(160deg, var(--color-accent-purple) 0%, #EAF1FF 100%);">
 
       <div class="flex items-start justify-between mb-3">
         <div style="width:44px;height:44px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-card);">
-          <span class="material-symbols-rounded text-[21px]" style="color:#8C6BC7;">import_contacts</span>
+          <span class="material-symbols-rounded text-[21px]" style="color:var(--color-primary-dark);">import_contacts</span>
         </div>
         <div style="width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;">
           <span class="material-symbols-rounded text-[13px]" style="color:#4b5563;">north_east</span>
@@ -832,8 +834,8 @@
       <!-- CLONE Kepegawaian (ujung kiri, ilusi loop) -->
       <div class="chart-card-carousel" data-real="3">
         <div class="flex items-center gap-1.5 mb-0.5">
-          <div style="width:22px;height:22px;border-radius:7px;background:rgba(140,107,199,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <span style="color:#8C6BC7;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
+          <div style="width:22px;height:22px;border-radius:7px;background:rgba(76,125,246,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="color:#2F5FD6;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
           </div>
           <p class="font-bold text-[14.5px] text-gray-800 m-0">Status Kepegawaian</p>
         </div>
@@ -917,8 +919,8 @@
       <!-- ASLI: Kepegawaian -->
       <div class="chart-card-carousel" id="cardKepegawaian" data-real="3">
         <div class="flex items-center gap-1.5">
-          <div style="width:22px;height:22px;border-radius:7px;background:rgba(140,107,199,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <span style="color:#8C6BC7;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
+          <div style="width:22px;height:22px;border-radius:7px;background:rgba(76,125,246,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="color:#2F5FD6;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
           </div>
           <p class="font-bold text-[14.5px] text-gray-800 m-0">Status Kepegawaian</p>
         </div>
@@ -1285,10 +1287,10 @@ class="neu-dropdown-inset w-24 min-w-[96px] h-9 rounded-xl px-2 text-sm">
 <button
 id="btnUnduh"
 onclick="bukaPINUnduh()"
-class="mt-4 w-full h-[46px] flex items-center justify-center gap-2 text-[#3E50A8] text-sm font-semibold"
+class="mt-4 w-full h-[46px] flex items-center justify-center gap-2 text-[#2F5FD6] text-sm font-semibold"
 style="background:#ffffff; border-radius:14px; border: none; box-shadow: -6px -6px 14px rgba(255,255,255,.95), 6px 6px 16px rgba(163,177,198,.5);">
 
-<span class="material-symbols-rounded text-[#3E50A8] text-[19px]">
+<span class="material-symbols-rounded text-[#2F5FD6] text-[19px]">
 download
 </span>
 
@@ -1384,7 +1386,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
         oninput="cekIsiPIN()"
         onkeydown="tekanEnterPIN(event)"
         class="w-full h-9 px-4 rounded-xl text-sm outline-none"
-        style="background:#ffffff; border:1px solid #D8DEE6; box-shadow: 0 2px 6px rgba(16,24,40,.06);">
+        style="background:#ffffff; border:1px solid #E3E8F2; box-shadow: 0 2px 6px rgba(16,24,40,.06);">
 
       <div
         id="pinError"
@@ -1398,7 +1400,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
 
       <div
         onclick="batalPIN()"
-        class="flex-1 flex items-center justify-center text-[#3E50A8] text-sm font-medium cursor-pointer active:bg-gray-100">
+        class="flex-1 flex items-center justify-center text-[#2F5FD6] text-sm font-medium cursor-pointer active:bg-gray-100">
         Batal
       </div>
 
@@ -1407,7 +1409,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
       <div
         id="btnPIN"
         onclick="cekPIN()"
-        class="flex-1 flex items-center justify-center text-[#3E50A8] text-sm font-semibold cursor-pointer">
+        class="flex-1 flex items-center justify-center text-[#2F5FD6] text-sm font-semibold cursor-pointer">
         OK
       </div>
     </div>
@@ -2302,7 +2304,7 @@ function filterSiswa() {
 
   if (q === "") {
     document.getElementById("list-siswa").innerHTML = `
-      <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:#ffffff; border: 1px solid #D8DEE6;">
+      <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:#ffffff; border: 1px solid #E3E8F2;">
         <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">keyboard</span>
         <p class="text-sm text-gray-600 font-medium">Ketik minimal 3 huruf Nama siswa</p>
       </div>
@@ -2312,7 +2314,7 @@ function filterSiswa() {
   if (q.length < 3) {
     const sisa = 3 - q.length;
     document.getElementById("list-siswa").innerHTML = `
-      <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:#ffffff; border: 1px solid #D8DEE6;">
+      <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:#ffffff; border: 1px solid #E3E8F2;">
         <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2"> </span>
         <p class="text-sm text-gray-600 font-medium">Ketik ${sisa} huruf lagi</p>
       </div>
@@ -3026,7 +3028,7 @@ function showToast(text, durasi = 1800){
 
   if(isi==""){
 
-    btn.classList.remove("text-[#3E50A8]");
+    btn.classList.remove("text-[#2F5FD6]");
     btn.classList.add("text-gray-400");
 
     btn.style.pointerEvents = "none";
@@ -3034,7 +3036,7 @@ function showToast(text, durasi = 1800){
   }else{
 
     btn.classList.remove("text-gray-400");
-    btn.classList.add("text-[#3E50A8]");
+    btn.classList.add("text-[#2F5FD6]");
 
     btn.style.pointerEvents = "auto";
 
@@ -3064,7 +3066,7 @@ document.querySelectorAll(".kategori").forEach(c=>{
   btn.disabled = true;
   btn.classList.add("btn-unduh-pressed");
   btn.innerHTML = `
-    <span class="material-symbols-rounded animate-spin text-[#3E50A8]">
+    <span class="material-symbols-rounded animate-spin text-[#2F5FD6]">
       autorenew
     </span>
     Mengunduh...
@@ -3105,7 +3107,7 @@ function mulaiLoadingPIN(){
   const btn = document.getElementById("btnPIN");
 
   btn.textContent = "Memeriksa...";
-  btn.classList.remove("text-[#3E50A8]");
+  btn.classList.remove("text-[#2F5FD6]");
   btn.classList.add("text-gray-400");
 
   btn.style.pointerEvents = "none";
@@ -3975,7 +3977,7 @@ function downloadCSV(){
   btn.disabled = true;
 
   btn.innerHTML = `
-    <span class="material-symbols-rounded animate-spin text-[#3E50A8]">
+    <span class="material-symbols-rounded animate-spin text-[#2F5FD6]">
       autorenew
     </span>
     Mengunduh...
@@ -4249,7 +4251,7 @@ XLSX.writeFile(wb, namaFile);
 btn.disabled = false;
 
 btn.innerHTML = `
-<span class="material-symbols-rounded text-[#3E50A8] text-[19px]">
+<span class="material-symbols-rounded text-[#2F5FD6] text-[19px]">
 download
 </span>
 Unduh Data
