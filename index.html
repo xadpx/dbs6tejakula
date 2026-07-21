@@ -1553,12 +1553,10 @@ let carouselGrafikSudahInit = false;
         tendik: { btn: document.getElementById('tabDataTendik'),panel: document.getElementById('panelDataTendik') }
       };
 
-      const aktifSiswa  = 'background:var(--color-bg-card);color:#1f2937;box-shadow: inset 3px 3px 7px rgba(163,177,198,.4), inset -3px -3px 7px rgba(255,255,255,.7);';
-      const aktifGuru   = aktifSiswa;
-      const aktifTendik = aktifSiswa;
-      const nonaktif    = 'background:var(--color-bg-card);color:#9ca3af;box-shadow:var(--shadow-card);';
+      const aktif       = 'background:var(--color-bg-card);color:#1f2937;box-shadow:var(--shadow-card);';
+      const nonaktif    = 'background:transparent;color:#9ca3af;box-shadow:none;';
 
-      const aktifStyle = { siswa: aktifSiswa, guru: aktifGuru, tendik: aktifTendik };
+      const aktifStyle = { siswa: aktif, guru: aktif, tendik: aktif };
 
       Object.keys(tabs).forEach(key => {
         const {btn, panel} = tabs[key];
@@ -1571,6 +1569,8 @@ let carouselGrafikSudahInit = false;
         }
       });
 
+      document.getElementById('divSiswaGuru').style.opacity = (tab === 'siswa' || tab === 'guru') ? '0' : '1';
+      document.getElementById('divGuruTendik').style.opacity = (tab === 'guru' || tab === 'tendik') ? '0' : '1';
       if(tab === 'guru') muatDataGuru();
       if(tab === 'tendik') muatDataTendik();
     }
