@@ -3347,6 +3347,41 @@ function handleChartTap(containerId, i){
 
   window.donutTapTimers[containerId] = setTimeout(baliknormal, 3000);
 }
+const segmentIconPlugin = {
+  id: 'segmentIcon',
+  afterDatasetsDraw(chart) {
+    const {ctx} = chart;
+    const meta = chart.getDatasetMeta(0);
+    const icons = chart.config.data.datasets[0].icons;
+    if(!icons) return;
+    meta.data.forEach((arc, i) => {
+      if(!arc) return;
+      const props = arc.getProps(['x','y','startAngle','endAngle','innerRadius','outerRadius'], true);
+      const midAngle = (props.startAngle + props.endAngle) / 2;
+      const midRadius = (props.innerRadius + props.outerRadius) / 2;
+      const iconX = props.x + Math.cos(midAngle) * midRadius;
+      const iconY = props.y + Math.sin(midAngle) * midRadius;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(iconX, iconY, 14, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(255,255,255,.92)';
+      ctx.shadowColor = 'rgba(0,0,0,.18)';
+      ctx.shadowBlur = 5;
+      ctx.shadowOffsetY = 1;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.shadowOffsetY = 0;
+
+      ctx.font = "18px 'Material Symbols Rounded'";
+      ctx.fillStyle = '#374151';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(icons[i] || 'circle', iconX, iconY);
+      ctx.restore();
+    });
+  }
+};
 const neuShadowPlugin = {
   id: 'neuShadowDonut',
   beforeDatasetsDraw(chart) {
@@ -3431,19 +3466,20 @@ function buatChart(){
 
   window.chartKesejahteraanInstance = new Chart(document.getElementById("chartKesejahteraan"),{
   type:"doughnut",
-  plugins:[neuShadowPlugin, glossyPlugin, outsideLabelsPlugin],
+  plugins:[neuShadowPlugin, glossyPlugin, outsideLabelsPlugin, segmentIconPlugin],
   data:{
     labels:labelKesejahteraan,
     datasets:[{
       data:nilaiKesejahteraan,
       backgroundColor: [
-        "#FFC845", // Desil 1
-        "#4FC3F7", // Desil 2
-        "#FF5C5C", // Desil 3
-        "#EC4899", // Desil 4
-        "#34D399", // Desil 5
-        "#0091EA"  // Desil 6-10
+        "#00B8D9", // Desil 1
+        "#94A3B8", // Desil 2
+        "#00B8D9", // Desil 3
+        "#94A3B8", // Desil 4
+        "#00B8D9", // Desil 5
+        "#94A3B8"  // Desil 6-10
       ],
+      icons: ["payments","savings","trending_down","trending_up","account_balance_wallet","workspace_premium"],
       borderWidth: 0,
       borderRadius: 20,
       hoverOffset: 0,
