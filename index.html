@@ -768,7 +768,7 @@
 
   </div>
 
-  <div class="grid grid-cols-2 gap-3 mb-3">
+    <div class="grid grid-cols-2 gap-3 mb-3">
 
     <div class="flex flex-col relative overflow-hidden" style="padding:var(--space-md); border-radius:var(--radius-lg); background:var(--color-bg-card); box-shadow:var(--shadow-card);">
 
@@ -777,8 +777,8 @@
       </div>
 
       <p class="text-[11px] font-bold m-0" style="color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.03em;">Total Siswa</p>
-      <div class="relative min-h-[36px] flex items-center mb-1.5">
-        <p id="tot" class="hidden text-[30px] font-extrabold tracking-tight tabular-nums leading-8 m-0" style="color:var(--color-text-primary);">0</p>
+      <div class="relative min-h-[30px] flex items-center mb-1.5">
+        <p id="tot" class="hidden text-[26px] font-extrabold tracking-tight tabular-nums leading-7 m-0" style="color:var(--color-text-primary);">0</p>
         <div id="totSpin" class="spinner-ring-gray"></div>
       </div>
 
@@ -820,35 +820,53 @@
       </div>
 
       <p class="text-[11px] font-bold m-0" style="color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.03em;">Guru</p>
-      <div class="relative min-h-[36px] flex items-center">
-        <p id="totGuru" class="hidden text-[30px] font-extrabold tracking-tight tabular-nums leading-8 m-0" style="color:var(--color-text-primary);">0</p>
+      <div class="relative min-h-[30px] flex items-center">
+        <p id="totGuru" class="hidden text-[26px] font-extrabold tracking-tight tabular-nums leading-7 m-0" style="color:var(--color-text-primary);">0</p>
         <div id="totGuruSpin" class="spinner-ring-gray"></div>
       </div>
 
     </div>
 
-  </div>
+    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer flex flex-col relative overflow-hidden" style="padding:var(--space-md); border-radius:var(--radius-lg); background:var(--color-bg-card); box-shadow:var(--shadow-card);">
 
-  <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer flex items-center justify-between mb-3" style="padding:var(--space-lg); border-radius:var(--radius-lg); background:var(--color-bg-card); box-shadow:var(--shadow-card);">
-
-    <div class="flex items-center gap-3">
-      <div style="width:48px;height:48px;border-radius:50%;background:#E4E9F0;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-card); flex-shrink:0;">
-        <span class="material-symbols-rounded text-[22px]" style="color:#0091EA;">badge</span>
-      </div>
-      <div>
-        <p class="text-[11px] font-bold m-0" style="color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.03em;">Tenaga Kependidikan</p>
-        <div class="relative min-h-[30px] flex items-center">
-          <p id="totTendik" class="hidden text-[24px] font-extrabold tracking-tight tabular-nums m-0" style="color:var(--color-text-primary);">0</p>
-          <div id="totTendikSpin" class="spinner-ring-gray"></div>
+      <div class="flex items-start justify-between mb-3">
+        <div style="width:44px;height:44px;border-radius:50%;background:#E4E9F0;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-card);">
+          <span class="material-symbols-rounded text-[21px]" style="color:#0091EA;">badge</span>
+        </div>
+        <div style="width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;">
+          <span class="material-symbols-rounded text-[13px]" style="color:#4b5563;">north_east</span>
         </div>
       </div>
+
+      <p class="text-[11px] font-bold m-0" style="color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.03em;">Tenaga Kependidikan</p>
+      <div class="relative min-h-[30px] flex items-center">
+        <p id="totTendik" class="hidden text-[26px] font-extrabold tracking-tight tabular-nums leading-7 m-0" style="color:var(--color-text-primary);">0</p>
+        <div id="totTendikSpin" class="spinner-ring-gray"></div>
+      </div>
+
     </div>
 
-    <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-      <span class="material-symbols-rounded text-[15px]" style="color:#4b5563;">north_east</span>
+    <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer flex flex-col relative overflow-hidden" style="padding:var(--space-md); border-radius:var(--radius-lg); background:var(--color-bg-card); box-shadow:var(--shadow-card);">
+
+      <div class="flex items-start justify-between mb-3">
+        <div style="width:44px;height:44px;border-radius:50%;background:#E4E9F0;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-card);">
+          <span class="material-symbols-rounded text-[21px]" style="color:#0091EA;">groups</span>
+        </div>
+        <div style="width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;">
+          <span class="material-symbols-rounded text-[13px]" style="color:#4b5563;">north_east</span>
+        </div>
+      </div>
+
+      <p class="text-[11px] font-bold m-0" style="color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.03em;">Total Rombel</p>
+      <div class="relative min-h-[30px] flex items-center">
+        <p id="totRombel" class="hidden text-[26px] font-extrabold tracking-tight tabular-nums leading-7 m-0" style="color:var(--color-text-primary);">0</p>
+        <div id="totRombelSpin" class="spinner-ring-gray"></div>
+      </div>
+
     </div>
 
   </div>
+
     <div class="flex items-center justify-between mb-2">
       <p class="text-[11px] font-bold text-gray-400 uppercase m-0" style="letter-spacing:.04em;">Grafik Data</p>
       <div class="flex gap-1" id="dotsGrafik">
