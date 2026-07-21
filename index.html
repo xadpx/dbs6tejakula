@@ -2000,7 +2000,13 @@ let carouselGrafikSudahInit = false;
           if(json.success){
             window.guruAktif = { nama: json.nama, email: json.email };
             localStorage.setItem('guruLogin', JSON.stringify(window.guruAktif));
-            selesaiLogin();
+            try{
+              selesaiLogin();
+            }catch(errSelesai){
+              console.error('Gagal selesaiLogin:', errSelesai);
+              errEl.textContent = 'Login berhasil tapi gagal membuka beranda: ' + errSelesai.message;
+              errEl.classList.remove('hidden');
+            }
           }else{
             errEl.textContent = json.error || 'Email ini tidak terdaftar';
             errEl.classList.remove('hidden');
