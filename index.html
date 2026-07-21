@@ -4617,6 +4617,31 @@ function jalankanTransisiNav(pTarget){
 
   const pSekarang = halamanAktifSaatIni();
 
+  // Khusus tab Unduh: lewati animasi geser sepenuhnya (langsung tampil),
+  // karena ada bug render/compositing browser yang bikin halaman ini
+  // kelihatan kosong sampai discroll kalau pakai animasi.
+  if(pTarget === "download" || pSekarang === "download"){
+    if(pSekarang === pTarget){
+      updateNavAktif(pTarget);
+      return;
+    }
+    const halaman = ["p-home","p-siswa","p-download"];
+    halaman.forEach(id=>{
+      const el = document.getElementById(id);
+      el.classList.add("hidden");
+      el.style.cssText = "";
+    });
+    const target = document.getElementById("p-" + pTarget);
+    target.classList.remove("hidden");
+    target.style.display = (pTarget === "siswa") ? "block" : "";
+    window.scrollTo(0, 0);
+    updateNavAktif(pTarget);
+    if(pTarget !== "download"){
+      halamanSebelumnya = pTarget;
+    }
+    return;
+  }
+
   if(pSekarang === pTarget){
     updateNavAktif(pTarget);
     return;
