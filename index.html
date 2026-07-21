@@ -1659,7 +1659,7 @@ let carouselGrafikSudahInit = false;
         isi = `<p class="text-center text-gray-500 py-6">Tidak ada siswa di kelas ini</p>`;
       }else{
         isi = `
-          <div class="neu-card" style="padding:4px; overflow:hidden;">
+          <div class="neu-card" style="padding:4px;">
             ${hasil.map((r,i) => `
               <div
                 onpointerdown="buatRipple(event)"
@@ -1704,7 +1704,7 @@ let carouselGrafikSudahInit = false;
       });
 
       const isi = `
-        <div class="neu-card" style="padding:4px; overflow:hidden;">
+        <div class="neu-card" style="padding:4px;">
           ${Object.keys(desil).map((label,i,arr) => `
             <div
               onpointerdown="buatRipple(event)"
@@ -1745,7 +1745,7 @@ let carouselGrafikSudahInit = false;
         isi = `<p class="text-center text-gray-500 py-6">Tidak ada siswa di kategori ini</p>`;
       }else{
         isi = `
-          <div class="neu-card" style="padding:4px; overflow:hidden;">
+          <div class="neu-card" style="padding:4px;">
             ${hasil.map((r,i) => `
               <div
                 onpointerdown="buatRipple(event)"
@@ -1789,7 +1789,7 @@ let carouselGrafikSudahInit = false;
 
       const labels = Object.keys(status);
       const isi = `
-        <div class="neu-card" style="padding:4px; overflow:hidden;">
+        <div class="neu-card" style="padding:4px;">
           ${labels.map((label,i) => `
             <div
               onpointerdown="buatRipple(event)"
@@ -1833,7 +1833,7 @@ let carouselGrafikSudahInit = false;
       if(hasil.length === 0){
         isi = `<p class="text-center text-gray-500 py-6">Tidak ada siswa di kategori ini</p>`;
       }else{isi = `
-          <div class="neu-card" style="padding:4px; overflow:hidden;">
+          <div class="neu-card" style="padding:4px;">
             ${hasil.map((r,i) => `
               <div
                 onpointerdown="buatRipple(event)"
@@ -2466,7 +2466,7 @@ hasil.sort((a, b) => {
   }
 
   document.getElementById("list-siswa").innerHTML = `
-<div class="neu-card" style="padding:4px; overflow:hidden;">
+<div class="neu-card" style="padding:4px;">
 
 ${hasil.map((r,i)=>{
 
@@ -2727,7 +2727,7 @@ function renderListPegawai(tipe){
   }
 
  el.innerHTML = `
-<div class="neu-card" style="padding:4px; overflow:hidden;">
+<div class="neu-card" style="padding:4px;">
 ${sumber.map((r,i)=>`
 <div
 onpointerdown="buatRipple(event)"
@@ -4022,7 +4022,7 @@ function tampilkanSiswaKategori(kolom, label){
     `;
   }else{
     document.getElementById("list-kategori").innerHTML = `
-      <div class="neu-card" style="padding:4px; overflow:hidden;">
+      <div class="neu-card" style="padding:4px;">
         ${hasil.map((r,i) => `
           <div class="flex items-center px-4 py-2.5" style="${i === hasil.length - 1 ? '' : 'border-bottom:1px solid #C3CAD4;'}">
             <div class="flex-1 min-w-0">
