@@ -2710,7 +2710,9 @@ onclick="showDetailPegawai('${tipe}', ${i})"
 class="flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect"
 style="${i === sumber.length - 1 ? '' : 'border-bottom:1px solid #F1F2F4;'}">
   <div
-    onclick="event.stopPropagation(); bukaDriveGuru('${String(r[10] || '').trim().replace(/'/g, "\\'")}')"
+    data-link="${String(r[10] || '').trim().replace(/"/g, '&quot;')}"
+    onpointerdown="event.stopPropagation();"
+    onclick="event.stopPropagation(); bukaDriveGuru(this.dataset.link)"
     class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 avatar-press">
     <span class="material-symbols-rounded text-[13px] text-gray-400"
       style="font-variation-settings:'FILL' 1,'wght' 300,'GRAD' 0,'opsz' 24;">
