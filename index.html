@@ -934,8 +934,8 @@
           <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
         </div><div class="flex flex-col items-center gap-3">
           <div class="chart-glass-wrap shrink-0" style="width:220px;height:220px;">
-            <div class="ring-center-raised" style="width:70px;height:70px;"></div>
-            <div class="center-label" id="centerLabelKesejahteraan" style="width:70px;height:70px;"></div>
+            <div class="ring-center-raised" style="width:80px;height:80px;"></div>
+            <div class="center-label" id="centerLabelKesejahteraan" style="width:80px;height:80px;"></div>
             <div class="relative" style="width:210px;height:210px;">
               <canvas id="chartKesejahteraan" class="hidden"></canvas>
             </div>
@@ -958,8 +958,8 @@
         </div>
        <div class="flex flex-col items-center gap-3">
           <div class="chart-glass-wrap shrink-0" style="width:220px;height:220px;">
-            <div class="ring-center-raised" style="width:70px;height:70px;"></div>
-            <div class="center-label" id="centerLabelStatusAnak" style="width:70px;height:70px;"></div>
+            <div class="ring-center-raised" style="width:80px;height:80px;"></div>
+            <div class="center-label" id="centerLabelStatusAnak" style="width:80px;height:80px;"></div>
             <div class="relative" style="width:210px;height:210px;">
               <canvas id="chartStatusAnak" class="hidden"></canvas>
             </div>
@@ -982,7 +982,7 @@
         </div>
         <div class="flex flex-col items-center gap-3">
           <div class="chart-glass-wrap shrink-0" style="width:220px;height:220px;">
-            <div class="ring-center-raised" style="width:70px;height:70px;"></div>
+            <div class="ring-center-raised" style="width:80px;height:80px;"></div>
             <div class="center-label" id="centerLabelKesejahteraan" style="width:80px;height:80px;"></div>
             <div class="relative" style="width:178px;height:178px;">
               <canvas id="chartKepegawaian" class="hidden"></canvas>
@@ -3387,7 +3387,7 @@ const leaderLinePlugin = {
     });
 
     const cx = items[0].cx, cy = items[0].cy, outerRadius = items[0].outerRadius;
-    const lineLen = 14, stubLen = 16, minGap = 13;
+    const lineLen = 6, stubLen = 8, minGap = 12;
 
     function layoutSide(arr){
       let pts = arr.slice().sort((a,b)=>a.midAngle-b.midAngle).map(it => {
@@ -3574,8 +3574,8 @@ function buatChart(){
   },
   options:{
     responsive:true,
-    layout:{ padding:16 },
-    cutout:"42%",
+    layout:{ padding:12 },
+    cutout:"44%",
     onClick:(evt, els, chart)=>{
       const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
       if(points.length) handleChartTap('legendKesejahteraan', points[0].index);
@@ -3685,8 +3685,8 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
   },
   options:{
     responsive:true,
-    layout:{ padding:16 },
-    cutout:"42%",
+    layout:{ padding:12 },
+    cutout:"44%",
     onClick:(evt, els, chart)=>{
       const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
       if(points.length) handleChartTap('legendStatusAnak', points[0].index);
@@ -3887,8 +3887,8 @@ function buatChartKepegawaian(){
     },
     options:{
       responsive:true,
-      layout:{ padding:16 },
-      cutout:"42%",
+      layout:{ padding:12 },
+      cutout:"44%",
       onClick:(evt, els, chart)=>{
         const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
         if(points.length) handleChartTap('legendKepegawaian', points[0].index);
