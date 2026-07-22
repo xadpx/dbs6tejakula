@@ -3544,7 +3544,10 @@ function buatChart(){
 
   {
     const totalSemua = nilaiStatusAnak.reduce((a,b)=>a+b,0);
-    const perluPerhatian = totalSemua - (status["Tidak Ada"]||0);
+    const perluPerhatian = labelStatusAnak.reduce((sum, lbl) => {
+      const lblLower = lbl.toLowerCase();
+      return (lblLower.includes('yatim') || lblLower.includes('piatu')) ? sum + status[lbl] : sum;
+    }, 0);
     const pct = totalSemua > 0 ? (perluPerhatian/totalSemua*100) : 0;
     const elPct = document.getElementById('pctStatusAnakBeranda');
     const elBadge = document.getElementById('badgeStatusAnakBeranda');
