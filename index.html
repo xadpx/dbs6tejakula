@@ -529,7 +529,7 @@
   position: relative; overflow: hidden;
 }
     .ripple-effect { position: relative; overflow: hidden; }
-    .ripple-span {
+    .ripple-span-global {       position: absolute;       border-radius: 50%;       transform: scale(0);       animation: rippleAnim .55s ease-out;       background: rgba(31,41,55,.14);       pointer-events: none;     }     .ripple-span {
       position: absolute;
       border-radius: 50%;
       transform: scale(0);
@@ -4583,6 +4583,38 @@ function bersihkanElemenSwipe(el){
   // supaya tidak ada layer GPU basi yang bikin tampilan kosong
   void el.offsetHeight;
 }
+document.addEventListener('pointerdown', function(e){
+  const el = e.target.closest(
+    '.cursor-pointer:not(.ripple-effect):not([onpointerdown*="buatRipple"]), ' +
+    'button:not([onpointerdown*="buatRipple"]), ' +
+    '[onclick]:not(.ripple-effect):not([onpointerdown*="buatRipple"]):not(button)'
+  );
+  if(!el) return;
+  if(el.closest('[data-no-ripple]')) return;
+
+  const posisiAsli = getComputedStyle(el).position;
+  if(posisiAsli === 'static') el.style.position = 'relative';
+  if(getComputedStyle(el).overflow !== 'hidden') el.style.overflow = 'hidden';
+
+  const rect = el.getBoundingClientRect();
+  const diameter = Math.max(rect.width, rect.height);
+  const radius = diameter / 2;
+  const x = (e.clientX ?? rect.left + rect.width/2) - rect.left - radius;
+  const y = (e.clientY ?? rect.top + rect.height/2) - rect.top - radius;
+
+  const lama = el.querySelector(':scope > .ripple-span-global');
+  if(lama) lama.remove();
+
+  const span = document.createElement('span');
+  span.className = 'ripple-span-global';
+  span.style.width = span.style.height = diameter + 'px';
+  span.style.left = x + 'px';
+  span.style.top = y + 'px';
+
+  el.appendChild(span);
+  span.addEventListener('animationend', () => span.remove());
+}, { passive: true });
+
 document.addEventListener("touchstart", function(e){
 
   if(modalSedangTerbuka()){
