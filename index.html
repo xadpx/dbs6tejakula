@@ -905,7 +905,7 @@
     </div>
 
 <div id="rombelPopupOverlay"
-onclick="if(event.target===this) tutupPopupRombel()"
+
 class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-6">
   <div id="rombelPopupBox" class="premium-popup-box neu-modal w-[78%] max-w-[260px] rounded-lg overflow-hidden px-4 py-4">
     <button
@@ -1258,7 +1258,7 @@ Unduh Data
 </div>
     </div>
   <div id="modal"
-onclick="if(event.target===this) closeModal()"
+
 class="hidden detail-fullpage-overlay fixed inset-0 z-[60] overflow-y-auto">
     <div id="modalBox" class="detail-fullpage-box relative w-full min-h-full px-5 py-6 sm:px-10 md:px-16" style="max-width:480px; margin-left:auto; margin-right:auto;">
 
@@ -1355,7 +1355,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
   </div>
 <!-- MODAL KATEGORI (daftar siswa per kategori chart) -->
 <div id="modalKategori"
-onclick="if(event.target===this) closeModalKategori()"
+
 class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-6">
   <div id="modalKategoriBox" class="premium-popup-box neu-modal relative w-[93%] max-w-sm max-h-[75vh] rounded-lg flex flex-col overflow-hidden">
     <button
@@ -4586,6 +4586,20 @@ function bersihkanElemenSwipe(el){
   // supaya tidak ada layer GPU basi yang bikin tampilan kosong
   void el.offsetHeight;
 }
+    // Klik di area backdrop (di luar kotak popup) untuk menutup popup.
+// Sengaja pakai addEventListener (bukan atribut onclick="") supaya
+// backdrop overlay ini tidak ikut tertangkap oleh selector ripple
+// global di bawah — sebelumnya ini yang bikin ripple muncul di
+// SEMUA bagian popup, bukan cuma di tombol yang bisa disentuh.
+document.getElementById('rombelPopupOverlay').addEventListener('click', function(e){
+  if(e.target === this) tutupPopupRombel();
+});
+document.getElementById('modal').addEventListener('click', function(e){
+  if(e.target === this) closeModal();
+});
+document.getElementById('modalKategori').addEventListener('click', function(e){
+  if(e.target === this) closeModalKategori();
+});
 document.addEventListener('pointerdown', function(e){
   const el = e.target.closest(
     '.cursor-pointer:not(.ripple-effect):not([onpointerdown*="buatRipple"]), ' +
