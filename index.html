@@ -642,9 +642,9 @@
     .chart-card-carousel{
       scroll-snap-align:start;
       flex:0 0 100%;
-      background:#ffffff; border:none;
-      box-shadow: 0 8px 24px rgba(100,116,139,.12);
-      border-radius:24px;
+      background:var(--color-bg-card); border:none;
+      box-shadow:var(--shadow-card);
+      border-radius:var(--radius-lg);
       padding:16px;
       box-sizing:border-box;
     }
@@ -932,13 +932,13 @@
         <p class="text-[10.5px] text-gray-400 m-0 mb-2" id="previewKesejahteraan"></p>
         <div id="skelKesejahteraan" class="w-full flex flex-col items-center justify-center py-6">
           <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
-       </div><div class="flex flex-col items-center gap-3 w-full">
-          <div class="relative" style="width:190px;height:190px;">
-            <canvas id="chartKesejahteraan" class="hidden"></canvas>
-            <div class="center-label" id="centerLabelKesejahteraan" style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;"></div>
-          </div>
-          <div id="legendKesejahteraan" class="hidden flex flex-col gap-2 w-full"></div>
-        </div>
+        </div><div class="flex flex-col items-center gap-3">
+          <div class="chart-glass-wrap shrink-0" style="width:170px;height:170px;">
+            <div class="ring-center-raised" style="width:78px;height:78px;"></div>
+            <div class="center-label" id="centerLabelKesejahteraan" style="width:78px;height:78px;"></div>
+            <div class="relative" style="width:300px;height:300px;">
+              <canvas id="chartKesejahteraan" class="hidden"></canvas>
+            </div>
           </div>
           <div id="legendKesejahteraan" class="hidden" style="display:none !important;"></div>
         </div>
@@ -956,12 +956,15 @@
         <div id="skelStatusAnak" class="w-full flex flex-col items-center justify-center py-6">
           <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
         </div>
-       <div class="flex flex-col items-center gap-3 w-full">
-          <div class="relative" style="width:190px;height:190px;">
-            <canvas id="chartStatusAnak" class="hidden"></canvas>
-            <div class="center-label" id="centerLabelStatusAnak" style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;"></div>
+       <div class="flex flex-col items-center gap-3">
+          <div class="chart-glass-wrap shrink-0" style="width:170px;height:170px;">
+            <div class="ring-center-raised" style="width:78px;height:78px;"></div>
+            <div class="center-label" id="centerLabelStatusAnak" style="width:78px;height:78px;"></div>
+            <div class="relative" style="width:300px;height:300px;">
+              <canvas id="chartStatusAnak" class="hidden"></canvas>
+            </div>
           </div>
-          <div id="legendStatusAnak" class="hidden flex flex-col gap-2 w-full"></div>
+          <div id="legendStatusAnak" class="hidden" style="display:none !important;"></div>
         </div>
       </div>
 
@@ -978,7 +981,8 @@
           <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
         </div>
         <div class="flex flex-col items-center gap-3">
-          <div class="relative" style="width:190px;height:190px;">
+          <div class="chart-glass-wrap shrink-0" style="width:170px;height:170px;">
+            <div class="ring-center-raised" style="width:78px;height:78px;"></div>
             <div class="center-label" id="centerLabelKesejahteraan" style="width:78px;height:78px;"></div>
             <div class="relative" style="width:300px;height:300px;">
               <canvas id="chartKepegawaian" class="hidden"></canvas>
@@ -3359,25 +3363,73 @@ function handleChartTap(containerId, i){
 
   window.donutTapTimers[containerId] = setTimeout(baliknormal, 3000);
 }
-const segmentDotPlugin = {
-  id: 'segmentDot',
+const leaderLinePlugin = {
+  id: 'leaderLine',
   afterDraw(chart) {
     const {ctx} = chart;
     const meta = chart.getDatasetMeta(0);
+    const labels = chart.config.data.labels;
+    const colors = chart.config.data.datasets[0].backgroundColor;
     if(!meta || !meta.data.length) return;
 
+    const items = meta.data.map((arc, i) => {
+      const props = arc.getProps(['x','y','startAngle','endAngle','outerRadius'], true);
+      const midAngle = (props.startAngle + props.endAngle) / 2;
+      return {
+        i,
+        label: (labels[i] || '').toString().replace('Desil ', 'D'),
+        color: Array.isArray(colors) ? colors[i % colors.length] : colors,
+        cx: props.x, cy: props.y,
+        outerRadius: props.outerRadius,
+        midAngle,
+        side: Math.cos(midAngle) >= 0 ? 'right' : 'left'
+      };
+    });
+
+    const cx = items[0].cx, cy = items[0].cy, outerRadius = items[0].outerRadius;
+    const lineLen = 22, stubLen = 26, minGap = 13;
+
+    function layoutSide(arr){
+      let pts = arr.slice().sort((a,b)=>a.midAngle-b.midAngle).map(it => {
+        const startX = cx + Math.cos(it.midAngle) * outerRadius;
+        const startY = cy + Math.sin(it.midAngle) * outerRadius;
+        const midX = cx + Math.cos(it.midAngle) * (outerRadius + lineLen);
+        const midY = cy + Math.sin(it.midAngle) * (outerRadius + lineLen);
+        return {...it, startX, startY, midX, endY: midY};
+      });
+      pts.sort((a,b)=>a.endY-b.endY);
+      for(let k=1;k<pts.length;k++){
+        if(pts[k].endY - pts[k-1].endY < minGap) pts[k].endY = pts[k-1].endY + minGap;
+      }
+      return pts;
+    }
+
+    const leftPts = layoutSide(items.filter(it=>it.side==='left'));
+    const rightPts = layoutSide(items.filter(it=>it.side==='right'));
+
     ctx.save();
-    meta.data.forEach((arc) => {
-      const props = arc.getProps(['x','y','startAngle','outerRadius'], true);
-      const dotX = props.x + Math.cos(props.startAngle) * props.outerRadius;
-      const dotY = props.y + Math.sin(props.startAngle) * props.outerRadius;
+    ctx.font = "9.5px 'Poppins', sans-serif";
+    ctx.textBaseline = 'middle';
+    [...leftPts, ...rightPts].forEach(p => {
+      const dir = p.side === 'right' ? 1 : -1;
+      const endX = p.midX + dir * stubLen;
+
+      ctx.strokeStyle = 'rgba(163,177,198,.6)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(p.startX, p.startY);
+      ctx.lineTo(p.midX, p.endY);
+      ctx.lineTo(endX, p.endY);
+      ctx.stroke();
 
       ctx.beginPath();
-      ctx.arc(dotX, dotY, 4, 0, Math.PI*2);
-      ctx.fillStyle = '#ffffff';
-      ctx.shadowColor = 'rgba(0,0,0,.15)';
-      ctx.shadowBlur = 2;
+      ctx.arc(p.startX, p.startY, 2.5, 0, Math.PI*2);
+      ctx.fillStyle = p.color;
       ctx.fill();
+
+      ctx.fillStyle = '#4B5563';
+      ctx.textAlign = dir === 1 ? 'left' : 'right';
+      ctx.fillText(p.label, endX + dir*3, p.endY);
     });
     ctx.restore();
   }
@@ -3501,7 +3553,7 @@ function buatChart(){
 
   window.chartKesejahteraanInstance = new Chart(document.getElementById("chartKesejahteraan"),{
   type:"doughnut",
-  plugins:[segmentDotPlugin],
+  plugins:[neuShadowPlugin, glossyPlugin, outsideLabelsPlugin, leaderLinePlugin],
   data:{
     labels:labelKesejahteraan,
     datasets:[{
@@ -3517,13 +3569,13 @@ function buatChart(){
       borderWidth: 0,
       borderRadius: 0,
       hoverOffset: 0,
-      spacing: 3
+      spacing: 0
     }]
   },
   options:{
     responsive:true,
-    layout:{ padding:8 },
-    cutout:"62%",
+    layout:{ padding:68 },
+    cutout:"46%",
     onClick:(evt, els, chart)=>{
       const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
       if(points.length) handleChartTap('legendKesejahteraan', points[0].index);
@@ -3618,7 +3670,7 @@ const totalKes = nilaiKesejahteraan.reduce((a,b)=>a+b,0);
 window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusAnak"),{
 
   type:"doughnut",
-  plugins:[segmentDotPlugin],
+  plugins:[neuShadowPlugin, glossyPlugin, outsideLabelsPlugin, leaderLinePlugin],
 
   data:{
     labels:labelStatusAnak,
@@ -3628,13 +3680,13 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
       borderWidth: 0,
       borderRadius: 0,
       hoverOffset: 0,
-      spacing: 3
+      spacing: 0
     }]
   },
   options:{
     responsive:true,
-    layout:{ padding:8 },
-    cutout:"62%",
+    layout:{ padding:68 },
+    cutout:"46%",
     onClick:(evt, els, chart)=>{
       const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
       if(points.length) handleChartTap('legendStatusAnak', points[0].index);
@@ -3821,7 +3873,7 @@ function buatChartKepegawaian(){
 
   window.chartKepegawaianInstance = new Chart(document.getElementById("chartKepegawaian"),{
     type:"doughnut",
-    plugins:[segmentDotPlugin],
+    plugins:[neuShadowPlugin, glossyPlugin, outsideLabelsPlugin, leaderLinePlugin],
     data:{
       labels: labelKepegawaian,
       datasets:[{
@@ -3830,13 +3882,13 @@ function buatChartKepegawaian(){
         borderWidth: 0,
         borderRadius: 0,
         hoverOffset: 0,
-        spacing: 3
+        spacing: 0
       }]
     },
     options:{
       responsive:true,
-      layout:{ padding:8 },
-      cutout:"62%",
+      layout:{ padding:68 },
+      cutout:"46%",
       onClick:(evt, els, chart)=>{
         const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
         if(points.length) handleChartTap('legendKepegawaian', points[0].index);
