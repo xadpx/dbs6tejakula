@@ -503,7 +503,7 @@
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: 64px; height: 64px;
+  width: 52px; height: 52px;
   border-radius: 50%;
   background: var(--color-bg-card);
   box-shadow: -2px -2px 5px rgba(255,255,255,.7), 2px 2px 6px rgba(163,177,198,.4);
@@ -934,9 +934,9 @@
           <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
         </div><div class="flex flex-col items-center gap-3">
           <div class="chart-glass-wrap shrink-0" style="width:220px;height:220px;">
-            <div class="ring-center-raised" style="width:64px;height:64px;"></div>
-            <div class="center-label" id="centerLabelKesejahteraan" style="width:64px;height:64px;"></div>
-            <div class="relative" style="width:196px;height:196px;">
+            <div class="ring-center-raised" style="width:52px;height:52px;"></div>
+            <div class="center-label" id="centerLabelKesejahteraan" style="width:52px;height:52px;"></div>
+            <div class="relative" style="width:210px;height:210px;">
               <canvas id="chartKesejahteraan" class="hidden"></canvas>
             </div>
           </div>
@@ -958,9 +958,9 @@
         </div>
        <div class="flex flex-col items-center gap-3">
           <div class="chart-glass-wrap shrink-0" style="width:220px;height:220px;">
-            <div class="ring-center-raised" style="width:64px;height:64px;"></div>
-            <div class="center-label" id="centerLabelStatusAnak" style="width:64px;height:64px;"></div>
-            <div class="relative" style="width:196px;height:196px;">
+            <div class="ring-center-raised" style="width:52px;height:52px;"></div>
+            <div class="center-label" id="centerLabelStatusAnak" style="width:52px;height:52px;"></div>
+            <div class="relative" style="width:210px;height:210px;">
               <canvas id="chartStatusAnak" class="hidden"></canvas>
             </div>
           </div>
@@ -982,7 +982,7 @@
         </div>
         <div class="flex flex-col items-center gap-3">
           <div class="chart-glass-wrap shrink-0" style="width:220px;height:220px;">
-            <div class="ring-center-raised" style="width:64px;height:64px;"></div>
+            <div class="ring-center-raised" style="width:52px;height:52px;"></div>
             <div class="center-label" id="centerLabelKesejahteraan" style="width:80px;height:80px;"></div>
             <div class="relative" style="width:178px;height:178px;">
               <canvas id="chartKepegawaian" class="hidden"></canvas>
@@ -3574,8 +3574,8 @@ function buatChart(){
   },
   options:{
     responsive:true,
-    layout:{ padding:30 },
-    cutout:"38%",
+    layout:{ padding:40 },
+    cutout:"42%",
     onClick:(evt, els, chart)=>{
       const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
       if(points.length) handleChartTap('legendKesejahteraan', points[0].index);
@@ -3685,8 +3685,8 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
   },
   options:{
     responsive:true,
-    layout:{ padding:30 },
-    cutout:"38%",
+    layout:{ padding:40 },
+    cutout:"42%",
     onClick:(evt, els, chart)=>{
       const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
       if(points.length) handleChartTap('legendStatusAnak', points[0].index);
@@ -3887,8 +3887,8 @@ function buatChartKepegawaian(){
     },
     options:{
       responsive:true,
-      layout:{ padding:30 },
-      cutout:"38%",
+      layout:{ padding:40 },
+      cutout:"42%",
       onClick:(evt, els, chart)=>{
         const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
         if(points.length) handleChartTap('legendKepegawaian', points[0].index);
