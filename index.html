@@ -703,6 +703,25 @@
   </style>
 </head>
 <body class="text-base">
+  <script>
+    // Anti-flash: cek status login SEBELUM browser sempat menggambar
+    // halaman. Tanpa ini, karena #p-home defaultnya tidak diberi
+    // class "hidden" di HTML (dan baru disembunyikan lewat JS di
+    // cekSesiLogin() saat DOMContentLoaded), ada jeda sesaat di mana
+    // beranda kelihatan dulu sebelum berpindah ke halaman login.
+    // Style ini hanya sementara & dihapus lagi oleh cekSesiLogin().
+    (function(){
+      var sudahLogin = false;
+      try{ sudahLogin = !!localStorage.getItem('guruLogin'); }catch(e){}
+      var css = sudahLogin
+        ? '#p-login{display:none!important}'
+        : '#p-home{display:none!important} nav{display:none!important}';
+      var style = document.createElement('style');
+      style.id = 'antiFlashLogin';
+      style.textContent = css;
+      document.head.appendChild(style);
+    })();
+  </script>
   <div id="app-scroll">
 
   <div id="p-login" class="hidden flex flex-col justify-end" style="min-height:100vh; position:relative; overflow:hidden; background:var(--color-bg-app); padding:32px 24px 44px; box-sizing:border-box;">
@@ -905,7 +924,6 @@
     </div>
 
 <div id="rombelPopupOverlay"
-
 class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-6">
   <div id="rombelPopupBox" class="premium-popup-box neu-modal w-[78%] max-w-[260px] rounded-lg overflow-hidden px-4 py-4">
     <button
@@ -1258,7 +1276,6 @@ Unduh Data
 </div>
     </div>
   <div id="modal"
-
 class="hidden detail-fullpage-overlay fixed inset-0 z-[60] overflow-y-auto">
     <div id="modalBox" class="detail-fullpage-box relative w-full min-h-full px-5 py-6 sm:px-10 md:px-16" style="max-width:480px; margin-left:auto; margin-right:auto;">
 
@@ -1355,7 +1372,6 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
   </div>
 <!-- MODAL KATEGORI (daftar siswa per kategori chart) -->
 <div id="modalKategori"
-
 class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-6">
   <div id="modalKategoriBox" class="premium-popup-box neu-modal relative w-[93%] max-w-sm max-h-[75vh] rounded-lg flex flex-col overflow-hidden">
     <button
@@ -1933,6 +1949,7 @@ let carouselGrafikSudahInit = false;
           window.guruAktif = JSON.parse(sesi);
           document.getElementById('p-login').classList.add('hidden');
           tampilkanNamaGuru();
+          document.getElementById('antiFlashLogin')?.remove();
           return true;
         }catch(err){
           localStorage.removeItem('guruLogin');
@@ -1941,6 +1958,7 @@ let carouselGrafikSudahInit = false;
       document.getElementById('p-login').classList.remove('hidden');
       document.getElementById('p-home').classList.add('hidden');
       document.querySelector('nav').classList.add('hidden');
+      document.getElementById('antiFlashLogin')?.remove();
       return false;
     }
 
@@ -4586,7 +4604,7 @@ function bersihkanElemenSwipe(el){
   // supaya tidak ada layer GPU basi yang bikin tampilan kosong
   void el.offsetHeight;
 }
-    // Klik di area backdrop (di luar kotak popup) untuk menutup popup.
+// Klik di area backdrop (di luar kotak popup) untuk menutup popup.
 // Sengaja pakai addEventListener (bukan atribut onclick="") supaya
 // backdrop overlay ini tidak ikut tertangkap oleh selector ripple
 // global di bawah — sebelumnya ini yang bikin ripple muncul di
@@ -4600,6 +4618,7 @@ document.getElementById('modal').addEventListener('click', function(e){
 document.getElementById('modalKategori').addEventListener('click', function(e){
   if(e.target === this) closeModalKategori();
 });
+
 document.addEventListener('pointerdown', function(e){
   const el = e.target.closest(
     '.cursor-pointer:not(.ripple-effect):not([onpointerdown*="buatRipple"]), ' +
