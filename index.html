@@ -1994,10 +1994,9 @@ let carouselGrafikSudahInit = false;
   const sudahLogin = cekSesiLogin();
   if(sudahLogin){
     nav("home");
-    muatTotalGuruTendik();
   }
 
-  fetch(`${APPS_SCRIPT_URL}?action=getData`)
+  fetch(`${APPS_SCRIPT_URL}?action=getDataGabungan`)
     .then(res => res.json())
     .then(json => {
       if (json.error) {
@@ -2005,8 +2004,36 @@ let carouselGrafikSudahInit = false;
         return;
       }
 
-      const data = json.data;
+      const data = json.siswa;
       d = data.slice(1).filter(r => r[1] && r[1].trim() !== "");
+
+      // ===== GURU =====
+      sudahMuatGuru = true;
+      dataGuru = json.guru.slice(1).filter(r => r[1] && String(r[1]).trim() !== "");
+      renderListPegawai('guru');
+      const elTotGuru = document.getElementById('totGuru');
+      const elSpinGuru = document.getElementById('totGuruSpin');
+      if(elTotGuru){
+        elTotGuru.classList.remove('hidden');
+        elSpinGuru.classList.add('hidden');
+        animasikanAngka('totGuru', dataGuru.length, 700);
+      }
+      guruSiap = true;
+
+      // ===== TENDIK =====
+      sudahMuatTendik = true;
+      dataTendik = json.tendik.slice(1).filter(r => r[1] && String(r[1]).trim() !== "");
+      renderListPegawai('tendik');
+      const elTotTendik = document.getElementById('totTendik');
+      const elSpinTendik = document.getElementById('totTendikSpin');
+      if(elTotTendik){
+        elTotTendik.classList.remove('hidden');
+        elSpinTendik.classList.add('hidden');
+        animasikanAngka('totTendik', dataTendik.length, 700);
+      }
+      tendikSiap = true;
+
+      cobaBuatChartKepegawaian();
 
             ["tot", "laki", "perempuan", "totRombel"].forEach(id => {
         document.getElementById(id).classList.remove("hidden");
