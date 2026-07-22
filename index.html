@@ -1740,7 +1740,11 @@ let carouselGrafikSudahInit = false;
       let hasil = d.filter(r => {
         let s = String(r[14]).trim();
         if(s === "") s = "Tidak Ada";
-        return gabunganSemua ? (s !== "Tidak Ada") : (s === label);
+        if(gabunganSemua){
+          const sLower = s.toLowerCase();
+          return sLower.includes('yatim') || sLower.includes('piatu');
+        }
+        return s === label;
       });
       hasil.sort((a,b) => String(a[1]).localeCompare(String(b[1]), "id", {sensitivity:"base"}));
 
