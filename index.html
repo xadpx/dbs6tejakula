@@ -128,21 +128,27 @@
       box-shadow: inset 0 2px 4px rgba(0,0,0,.1);
     }
       .toggle-track{
-      background:#e2e8f0 !important;
-      border: 1px solid rgba(140,152,175,.15) !important;
+      background:#E4E9F0 !important;
+      border: none !important;
       box-shadow:
-        inset 0.5px 0.5px 2px rgba(140,152,175,.2),
-        inset -0.5px -0.5px 2px rgba(255,255,255,.5) !important;
+        inset 0 2px 4px rgba(163,177,198,.45),
+        inset 0 -1px 1px rgba(255,255,255,.6) !important;
     }
     .toggle-track.on{
-      background: var(--color-primary-soft) !important;
+      background: linear-gradient(135deg, #3CB4F5 0%, #0091EA 100%) !important;
+      box-shadow:
+        inset 0 2px 4px rgba(0,60,110,.35),
+        inset 0 -1px 1px rgba(255,255,255,.15) !important;
     }
     .toggle-knob-neu{
       background:#ffffff !important;
-      box-shadow: 0 1px 2px rgba(0,0,0,.15) !important;
+      box-shadow:
+        0 2px 5px rgba(0,0,0,.25),
+        0 1px 1px rgba(0,0,0,.15),
+        inset 0 1px 1px rgba(255,255,255,.9) !important;
     }
     .toggle-knob-neu.on{
-      background: linear-gradient(160deg,#9B8DC9,var(--color-primary)) !important;
+      background:#ffffff !important;
     }
     #p-siswa{
       overflow-x:hidden;
@@ -1079,21 +1085,20 @@ class="neu-dropdown w-full mt-2 h-10 pl-4 pr-10 rounded-full text-sm outline-non
   <div
   id="switchRentang"
   onclick="toggleRentang()"
-  class="toggle-track relative w-[36px] h-[20px]
+  class="toggle-track relative w-[46px] h-[26px]
          rounded-full
          transition-all duration-200
          cursor-pointer">
 
   <div
     id="switchBulat"
-    class="toggle-knob-neu absolute top-[1px] left-[1px]
-           w-[16px] h-[16px]
+    class="toggle-knob-neu absolute top-[2px] left-[2px]
+           w-[22px] h-[22px]
            rounded-full
            transition-all duration-200">
   </div>
 
 </div>
-
   <span class="text-sm">
     Rentang Kelas
   </span>
@@ -4246,7 +4251,7 @@ function toggleRentang(){
     sw.classList.add("on");
     bulat.classList.add("on");
 
-    bulat.style.transform = "translateX(16px)";
+    bulat.style.transform = "translateX(20px)";
 
     dropdown.classList.add("hidden");
     rentang.classList.remove("hidden");
