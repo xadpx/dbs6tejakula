@@ -1990,7 +1990,7 @@ let carouselGrafikSudahInit = false;
 
   
 
-    window.onload = () => {
+    document.addEventListener('DOMContentLoaded', () => {
   const sudahLogin = cekSesiLogin();
   if(sudahLogin){
     nav("home");
@@ -2101,9 +2101,10 @@ document.getElementById('pillbars').innerHTML = window.rombelData.map((r, i) => 
       }
     })
     .catch(err => {
+      .catch(err => {
       console.error("Gagal ambil tanggal update:", err);
     });
-};
+});
 
 let rombelRowTerbuka = null;
 function toggleRombelRow(i){
@@ -2569,8 +2570,30 @@ function muatDataGuru(){
       cobaBuatChartKepegawaian();
     })
     .catch(err => {
-      console.error(err);
-      showToast("Tidak bisa terhubung ke server data guru", 3000);
+      console.error('Percobaan 1 gagal (guru):', err);
+      fetch(`${APPS_SCRIPT_URL}?action=getDataGuru`)
+        .then(res => res.json())
+        .then(json => {
+          if(json.error){
+            showToast("Gagal memuat data guru: " + json.error, 3000);
+            return;
+          }
+          dataGuru = json.data.slice(1).filter(r => r[1] && String(r[1]).trim() !== "");
+          renderListPegawai('guru');
+          const elTot = document.getElementById('totGuru');
+          const elSpin = document.getElementById('totGuruSpin');
+          if(elTot){
+            elTot.classList.remove('hidden');
+            elSpin.classList.add('hidden');
+            animasikanAngka('totGuru', dataGuru.length, 700);
+          }
+          guruSiap = true;
+          cobaBuatChartKepegawaian();
+        })
+        .catch(err2 => {
+          console.error('Percobaan 2 gagal (guru):', err2);
+          showToast("Tidak bisa terhubung ke server data guru", 3000);
+        });
     });
 }
 
@@ -2597,8 +2620,30 @@ function muatDataTendik(){
       cobaBuatChartKepegawaian();
     })
     .catch(err => {
-      console.error(err);
-      showToast("Tidak bisa terhubung ke server data tendik", 3000);
+      console.error('Percobaan 1 gagal (tendik):', err);
+      fetch(`${APPS_SCRIPT_URL}?action=getDataTendik`)
+        .then(res => res.json())
+        .then(json => {
+          if(json.error){
+            showToast("Gagal memuat data tendik: " + json.error, 3000);
+            return;
+          }
+          dataTendik = json.data.slice(1).filter(r => r[1] && String(r[1]).trim() !== "");
+          renderListPegawai('tendik');
+          const elTot = document.getElementById('totTendik');
+          const elSpin = document.getElementById('totTendikSpin');
+          if(elTot){
+            elTot.classList.remove('hidden');
+            elSpin.classList.add('hidden');
+            animasikanAngka('totTendik', dataTendik.length, 700);
+          }
+          tendikSiap = true;
+          cobaBuatChartKepegawaian();
+        })
+        .catch(err2 => {
+          console.error('Percobaan 2 gagal (tendik):', err2);
+          showToast("Tidak bisa terhubung ke server data tendik", 3000);
+        });
     });
 }
 
