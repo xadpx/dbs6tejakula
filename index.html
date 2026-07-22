@@ -697,6 +697,9 @@
     }
     .chart-card-carousel .legend-chip-lbl{ font-size:9.5px; text-align:left; }
     .chart-card-carousel .legend-chip-val{ font-size:10.5px; }
+      #loginSpinner:not(.hidden){
+      display: flex;
+    }
   </style>
 </head>
 <body class="text-base">
@@ -737,7 +740,7 @@
         </div>
       </div>
 
-      <div id="loginSpinner" class="hidden mt-4" style="display:flex;justify-content:center;"><div class="spinner" style="width:28px;height:28px;border-width:3px;border-color:rgba(163,177,198,.35);border-top-color:#0091EA;"></div></div>
+      <div id="loginSpinner" class="hidden mt-4" style="justify-content:center;"><div class="spinner" style="width:28px;height:28px;border-width:3px;border-color:rgba(163,177,198,.35);border-top-color:#0091EA;"></div></div>
 
       <div id="loginError" class="hidden text-center mt-3" style="color:#DC2626; font-size:12px;"></div>
 
