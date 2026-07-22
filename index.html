@@ -933,10 +933,10 @@
         <div id="skelKesejahteraan" class="w-full flex flex-col items-center justify-center py-6">
           <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
         </div><div class="flex flex-col items-center gap-3">
-          <div class="chart-glass-wrap shrink-0" style="width:220px;height:220px;">
-            <div class="ring-center-raised" style="width:120px;height:120px;"></div>
-            <div class="center-label" id="centerLabelKesejahteraan" style="width:120px;height:120px;"></div>
-            <div class="relative" style="width:210px;height:210px;">
+          <div class="chart-glass-wrap shrink-0" style="width:170px;height:170px;">
+            <div class="ring-center-raised" style="width:78px;height:78px;"></div>
+            <div class="center-label" id="centerLabelKesejahteraan" style="width:78px;height:78px;"></div>
+            <div class="relative" style="width:300px;height:300px;">
               <canvas id="chartKesejahteraan" class="hidden"></canvas>
             </div>
           </div>
@@ -957,10 +957,10 @@
           <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
         </div>
        <div class="flex flex-col items-center gap-3">
-          <div class="chart-glass-wrap shrink-0" style="width:220px;height:220px;">
-            <div class="ring-center-raised" style="width:120px;height:120px;"></div>
-            <div class="center-label" id="centerLabelStatusAnak" style="width:120px;height:120px;"></div>
-            <div class="relative" style="width:210px;height:210px;">
+          <div class="chart-glass-wrap shrink-0" style="width:170px;height:170px;">
+            <div class="ring-center-raised" style="width:78px;height:78px;"></div>
+            <div class="center-label" id="centerLabelStatusAnak" style="width:78px;height:78px;"></div>
+            <div class="relative" style="width:300px;height:300px;">
               <canvas id="chartStatusAnak" class="hidden"></canvas>
             </div>
           </div>
@@ -981,10 +981,10 @@
           <p class="teks-berdenyut text-[12px] text-gray-400 font-semibold m-0">Memuat data...</p>
         </div>
         <div class="flex flex-col items-center gap-3">
-          <div class="chart-glass-wrap shrink-0" style="width:220px;height:220px;">
-            <div class="ring-center-raised" style="width:120px;height:120px;"></div>
-            <div class="center-label" id="centerLabelKesejahteraan" style="width:120px;height:120px;"></div>
-            <div class="relative" style="width:178px;height:178px;">
+          <div class="chart-glass-wrap shrink-0" style="width:170px;height:170px;">
+            <div class="ring-center-raised" style="width:78px;height:78px;"></div>
+            <div class="center-label" id="centerLabelKesejahteraan" style="width:78px;height:78px;"></div>
+            <div class="relative" style="width:300px;height:300px;">
               <canvas id="chartKepegawaian" class="hidden"></canvas>
             </div>
           </div>
@@ -3387,7 +3387,7 @@ const leaderLinePlugin = {
     });
 
     const cx = items[0].cx, cy = items[0].cy, outerRadius = items[0].outerRadius;
-    const lineLen = 6, stubLen = 8, minGap = 12;
+    const lineLen = 22, stubLen = 26, minGap = 13;
 
     function layoutSide(arr){
       let pts = arr.slice().sort((a,b)=>a.midAngle-b.midAngle).map(it => {
@@ -3574,8 +3574,8 @@ function buatChart(){
   },
   options:{
     responsive:true,
-    layout:{ padding:12 },
-    cutout:"60%",
+    layout:{ padding:65 },
+    cutout:"46%",
     onClick:(evt, els, chart)=>{
       const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
       if(points.length) handleChartTap('legendKesejahteraan', points[0].index);
@@ -3685,8 +3685,8 @@ window.chartStatusAnakInstance = new Chart(document.getElementById("chartStatusA
   },
   options:{
     responsive:true,
-    layout:{ padding:12 },
-    cutout:"60%",
+    layout:{ padding:65 },
+    cutout:"46%",
     onClick:(evt, els, chart)=>{
       const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
       if(points.length) handleChartTap('legendStatusAnak', points[0].index);
@@ -3887,8 +3887,8 @@ function buatChartKepegawaian(){
     },
     options:{
       responsive:true,
-      layout:{ padding:12 },
-      cutout:"60%",
+      layout:{ padding:65 },
+      cutout:"46%",
       onClick:(evt, els, chart)=>{
         const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
         if(points.length) handleChartTap('legendKepegawaian', points[0].index);
