@@ -3663,85 +3663,8 @@ function buatLegendKepegawaian(containerId, labels, values, colors){
 }
 
 function buatChartKepegawaian(){
-
-  let status = {};
-  dataGuru.concat(dataTendik).forEach(r=>{
-    let s = String(r[3]).trim();
-    if(s === "") s = "Tidak Diketahui";
-    status[s] = (status[s]||0) + 1;
-  });
-
-  const warnaKepegawaian = ["#6C5DD3","#A9A0F0","#4ECDC4","#F2545B","#F7A8AC"];
-  const labelKepegawaian = Object.keys(status);
-  const nilaiKepegawaian = Object.values(status);
-
-  document.getElementById('skelKepegawaian').classList.add('hidden');
-  document.getElementById('chartKepegawaian').classList.remove('hidden');
-  document.getElementById('legendKepegawaian').classList.remove('hidden');
-  document.getElementById('previewKepegawaian').textContent =
-    (dataGuru.length + dataTendik.length) + ' orang \u00b7 ' + dataGuru.length + ' guru, ' + dataTendik.length + ' tendik';
-
-  window.chartKepegawaianInstance = new Chart(document.getElementById("chartKepegawaian"),{
-    type:"doughnut",
-    plugins:[neuShadowPlugin, glossyPlugin, outsideLabelsPlugin, leaderLinePlugin],
-    data:{
-      labels: labelKepegawaian,
-      datasets:[{
-        data: nilaiKepegawaian,
-        backgroundColor: warnaKepegawaian,
-        borderWidth: 0,
-        borderRadius: 0,
-        hoverOffset: 0,
-        spacing: 0
-      }]
-    },
-    options:{
-      responsive:true,
-      layout:{ padding:68 },
-      cutout:"46%",
-      onClick:(evt, els, chart)=>{
-        const points = chart.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
-        if(points.length) handleChartTap('legendKepegawaian', points[0].index);
-        clearTimeout(window.tooltipTimerKepegawaian);
-        window.tooltipTimerKepegawaian = setTimeout(()=>{
-          chart.tooltip.setActiveElements([], {x:0,y:0});
-          chart.setActiveElements([]);
-          chart.update();
-        }, 3000);
-      },
-      plugins:{
-        legend:{ display:false },
-        tooltip:{
-          titleFont:{ size:14, family: "'Plus Jakarta Sans', sans-serif", weight: '600' },
-          bodyFont:{ size:12, family: "'Plus Jakarta Sans', sans-serif" },
-          boxWidth: 8, boxHeight: 8, usePointStyle: true,
-          callbacks:{
-            label: function(context){
-              const total = context.dataset.data.reduce((a,b)=>a+b,0);
-              const nilai = context.parsed;
-              const persen = total > 0 ? Math.round((nilai/total)*100) : 0;
-              return persen + '%';
-            }
-          },
-          boxPadding: 6
-        }
-      }
-    }
-  });
-
-  buatLegendKepegawaian('legendKepegawaian', labelKepegawaian, nilaiKepegawaian, warnaKepegawaian);
-  window.chartKepegawaianInstance.donutContainerId = 'legendKepegawaian';
-  window.donutState['legendKepegawaian'] = {
-    chart: window.chartKepegawaianInstance,
-    warnaAsli: warnaKepegawaian.slice(),
-    labels: labelKepegawaian,
-    preview: null
-  };
-
-  const totalKepegawaian = nilaiKepegawaian.reduce((a,b)=>a+b,0);
-  const labelKep = document.getElementById('centerLabelKepegawaian');
-  labelKep.innerHTML = `<span class="cl-pct">${totalKepegawaian}</span><span class="cl-name">Orang</span>`;
-  labelKep.classList.add('show');
+  // Chart Kepegawaian sudah dihapus dari beranda, fungsi ini sengaja dikosongkan
+  // supaya tidak error saat dipanggil oleh cobaBuatChartKepegawaian().
 }
 
 function tampilkanPegawaiKategori(label){
