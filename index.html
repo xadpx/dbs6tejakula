@@ -1689,7 +1689,7 @@ let carouselGrafikSudahInit = false;
 
     function bukaKategoriStatusAnakDariBeranda(){
       window.modalStack = [];
-      dorongModalStep({ type: 'daftarStatusAnak' });
+      dorongModalStep({ type: 'siswaStatusAnak', label: '__YATIM_PIATU_SEMUA__' });
     }
 
     function renderDaftarStatusAnak(){
@@ -1735,14 +1735,17 @@ let carouselGrafikSudahInit = false;
     }
 
     function renderSiswaStatusAnak(label){
+      const gabunganSemua = label === '__YATIM_PIATU_SEMUA__';
+
       let hasil = d.filter(r => {
         let s = String(r[14]).trim();
         if(s === "") s = "Tidak Ada";
-        return s === label;
+        return gabunganSemua ? (s !== "Tidak Ada") : (s === label);
       });
       hasil.sort((a,b) => String(a[1]).localeCompare(String(b[1]), "id", {sensitivity:"base"}));
 
-      document.getElementById('modalHeaderTitle').textContent = `${label} (${hasil.length} siswa)`;
+      const judulTampil = gabunganSemua ? 'Yatim/Piatu' : label;
+      document.getElementById('modalHeaderTitle').textContent = `${judulTampil} (${hasil.length} siswa)`;
       document.getElementById('detailDotsWrap').classList.add('hidden');
 
       let isi;
