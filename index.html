@@ -1234,9 +1234,9 @@ Unduh Data
 
 </button>
 
-<div class="mt-4 rounded-2xl bg-orange-50 border border-orange-100 px-4 py-3">
+<div class="mt-4 rounded-2xl px-4 py-3" style="background:#E8F1F8; border:1px solid #D5E5F0;">
 
-  <div class="flex items-center gap-2 text-[#FF7A45] font-semibold text-[12px]">
+  <div class="flex items-center gap-2 font-semibold text-[12px]" style="color:#3E6B96;">
     <span class="material-symbols-rounded text-base">
       info
     </span>
@@ -1260,7 +1260,7 @@ Unduh Data
   <div id="modal"
 onclick="if(event.target===this) closeModal()"
 class="hidden detail-fullpage-overlay fixed inset-0 z-[60] overflow-y-auto">
-    <div id="modalBox" class="detail-fullpage-box relative w-full min-h-full px-5 py-6 sm:px-10 md:px-16">
+    <div id="modalBox" class="detail-fullpage-box relative w-full min-h-full px-5 py-6 sm:px-10 md:px-16" style="max-width:480px; margin-left:auto; margin-right:auto;">
 
       <div class="flex items-center justify-between mb-8">
         <button
@@ -3164,16 +3164,8 @@ document.querySelectorAll(".kategori").forEach(c=>{
     btn.classList.remove("btn-unduh-pressed");
     btn.innerHTML = isiAsli;
 
-    // Buka PIN modal setelah animasi selesai
-    document.getElementById("pinInput").value="";
-    document.getElementById("pinError").classList.add("hidden");
-    setNavDisabled(true);
-    kunciScroll(true);
-    cekIsiPIN();
-    bukaPopupPremium('pinModal', 'pinModalBox');
-    setTimeout(function(){
-      document.getElementById("pinInput").focus();
-    },100);
+    // Langsung unduh, tanpa minta kode unduh lagi
+    downloadCSV();
   }, 1000);
 }
 function tutupPinModalAnimasi(){
