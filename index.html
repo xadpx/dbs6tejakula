@@ -420,12 +420,6 @@
   background: linear-gradient(180deg,#5CC2F7,#0091EA);
   transition: height .6s cubic-bezier(.34,1.15,.64,1);
 }
-.pillbar-bar-hi {
-  background: linear-gradient(180deg,#38BDF8,#0369A1);
-}
-.pillbar-bar-over {
-  background: linear-gradient(180deg,#0369A1,#023E6B);
-}
 .pillbar-val {
   position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
   font-size: 11px; font-weight: 800; color: #6b7280; white-space: nowrap;
@@ -2114,23 +2108,18 @@ document.getElementById('pillbars').innerHTML = window.rombelData.map((r, i) => 
   const total = r.L + r.P;
   const hPct = Math.max(10, Math.round(total / maxTotalRombel * 100));
   const isHi = i === idxPuncakRombel;
-  const overKuota = total > 28;
 
-  // LOGIC WARNA: semua bar biru; kelas puncak (terbanyak) & over-kuota
-  // pakai gradasi biru yang lebih gelap supaya tetap beda tapi tetap satu keluarga warna
-  let barClass = '';
-  if (overKuota) barClass = 'pillbar-bar-over';
-  else if (isHi) barClass = 'pillbar-bar-hi';
-
+  // Semua bar & angka pakai warna yang sama; kelas puncak (terbanyak)
+  // tetap ditandai lewat bubble+dot di atas bar, bukan lewat warna.
   const isiAtas = isHi
     ? `<div class="pillbar-bubble">${total}</div><div class="pillbar-dot"></div>`
-    : `<div class="pillbar-val ${overKuota ? 'text-red-600' : ''}">${total}</div>`;
+    : `<div class="pillbar-val">${total}</div>`;
 
   return `
 <div class="pillbar-col" onclick="bukaPopupRombel(${i}, event)">
   <div class="pillbar-ripple-wrap"></div>
   <div class="pillbar-bar-wrap">
-    <div class="pillbar-bar ${barClass}" style="height:${hPct}%">
+    <div class="pillbar-bar" style="height:${hPct}%">
       ${isiAtas}
     </div>
   </div>
@@ -3544,7 +3533,7 @@ function buatChart(){
     const elBadge = document.getElementById('badgeKesejahteraanBeranda');
     const elSub = document.getElementById('subKesejahteraanBeranda');
     if(elPct) elPct.textContent = pct.toFixed(pct < 10 ? 1 : 0) + '%';
-    if(elSub) elSub.textContent = `${bawah} dari ${totalSemua} siswa \u00b7 Desil 1\u20134`;
+    if(elSub) elSub.textContent = `${bawah} siswa di Desil 1\u20134`;
     if(elBadge){
       if(pct < 20){
         elBadge.textContent = 'Rendah';
@@ -3592,7 +3581,7 @@ function buatChart(){
     const elBadge = document.getElementById('badgeStatusAnakBeranda');
     const elSub = document.getElementById('subStatusAnakBeranda');
     if(elPct) elPct.textContent = pct.toFixed(pct < 10 ? 1 : 0) + '%';
-    if(elSub) elSub.textContent = `${perluPerhatian} dari ${totalSemua} siswa \u00b7 yatim/piatu`;
+    if(elSub) elSub.textContent = `${perluPerhatian} siswa yatim/piatu`;
     if(elBadge){
       if(pct < 5){
         elBadge.textContent = 'Rendah';
