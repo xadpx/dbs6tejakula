@@ -2537,16 +2537,8 @@ function renderDetailSiswaContent(nik){
   <div class="grid grid-cols-2 gap-3">
 
    <div class="neu-card p-3">
-      <div class="flex items-center justify-between mb-1">
-        <div class="flex items-center gap-1.5 text-gray-500 text-[11px] font-semibold">
-          <span class="material-symbols-rounded text-[15px]">assignment_ind</span> NIP
-        </div>
-        <span
-          id="copyNipIcon"
-          class="material-symbols-rounded text-[15px] text-gray-600 cursor-pointer hover:text-blue-600 transition"
-          onclick="event.stopPropagation(); salinTeks('${r[6]}', 'copyNipIcon', 'NIP')">
-          content_copy
-        </span>
+      <div class="flex items-center gap-1.5 text-gray-500 text-[11px] font-semibold mb-1">
+        <span class="material-symbols-rounded text-[15px]">location_on</span> Tempat Lahir
       </div>
       <div class="text-gray-800 font-medium">${r[6] || '-'}</div>
     </div>
@@ -2580,15 +2572,12 @@ function renderDetailSiswaContent(nik){
         <span
           id="copyNikIcon"
           class="material-symbols-rounded text-[15px] text-gray-600 cursor-pointer hover:text-blue-600 transition"
-          onclick="event.stopPropagation(); salinTeks('${r[7]}', 'copyNikIcon', 'NIK')">
+          onclick="event.stopPropagation(); salinTeks('${r[8]}', 'copyNikIcon', 'NIK')">
           content_copy
         </span>
       </div>
       <div class="text-gray-800 font-medium">${r[8]}</div>
     </div>
-      <div class="text-gray-800 font-medium">${r[6] || '-'}</div>
-    </div>
-
     <div class="neu-card p-3">
       <div class="flex items-center gap-1.5 text-gray-500 text-[11px] font-semibold mb-1">
         <span class="material-symbols-rounded text-[15px]">woman</span> Ibu
@@ -3026,19 +3015,6 @@ Status Anak: ${r[14]}`;
       },1000);
 
     }
-
-    const notif = document.createElement("div");
-
-    notif.textContent = "NIK disalin";
-
-    notif.className =
-      "fixed top-5 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs px-3 py-1.5 rounded-full shadow-lg z-[9999] opacity-90";
-
-    document.body.appendChild(notif);
-
-    setTimeout(function(){
-      notif.remove();
-    },1000);
 
   }catch(err){
 
