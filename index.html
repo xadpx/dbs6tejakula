@@ -374,7 +374,10 @@
     }
            .neu-modal{
       background:#ffffff !important;
-      box-shadow: 0 8px 24px rgba(0,0,0,.25) !important;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.14),
+        0 20px 45px rgba(0,0,0,.45),
+        0 8px 18px rgba(0,0,0,.3) !important;
     }
     .neu-modal-close{
       background:#ffffff !important;
@@ -405,6 +408,7 @@
 }
 .pillbar-col:active { transform: scale(.96); }
 .pillbar-bar-wrap {
+  position: relative;
   width: 100%; height: 132px;
   display: flex; align-items: flex-end; justify-content: center;
   background: var(--color-bg-card);
@@ -415,6 +419,7 @@
 }
 .pillbar-bar {
   position: relative;
+  z-index: 1;
   width: 26px; max-width: 30px;
   border-radius: 20px;
   background: linear-gradient(180deg,#5CC2F7,#0091EA);
@@ -441,11 +446,11 @@
   font-size: 11px; font-weight: 700; color: #374151; white-space: nowrap;
 }
 .pillbar-ripple-wrap {
-  position: absolute; inset: -4px; overflow: hidden; border-radius: 10px; pointer-events: none;
+  position: absolute; inset: 0; overflow: hidden; border-radius: 20px; pointer-events: none; z-index: 0;
 }
 .pillbar-ripple {
   position: absolute; border-radius: 50%;
-  background: radial-gradient(circle, rgba(140,107,199,.35) 0%, rgba(140,107,199,.15) 60%, rgba(140,107,199,0) 70%);
+  background: radial-gradient(circle, rgba(0,145,234,.35) 0%, rgba(0,145,234,.15) 60%, rgba(0,145,234,0) 70%);
   transform: scale(0); opacity: 1;
   animation: pillbarRippleAnim .6s ease-out forwards;
 }
@@ -2117,8 +2122,8 @@ document.getElementById('pillbars').innerHTML = window.rombelData.map((r, i) => 
 
   return `
 <div class="pillbar-col" onclick="bukaPopupRombel(${i}, event)">
-  <div class="pillbar-ripple-wrap"></div>
   <div class="pillbar-bar-wrap">
+    <div class="pillbar-ripple-wrap"></div>
     <div class="pillbar-bar" style="height:${hPct}%">
       ${isiAtas}
     </div>
@@ -2175,9 +2180,10 @@ function toggleRombelRow(i){
 }
 function pillbarRipple(el, evt){
   if(!el) return;
+  const trackEl = el.querySelector('.pillbar-bar-wrap');
   const wrap = el.querySelector('.pillbar-ripple-wrap');
-  if(!wrap) return;
-  const rect = el.getBoundingClientRect();
+  if(!trackEl || !wrap) return;
+  const rect = trackEl.getBoundingClientRect();
   const size = Math.max(rect.width, rect.height) * 1.8;
   const clientX = evt && (evt.touches ? evt.touches[0].clientX : evt.clientX);
   const clientY = evt && (evt.touches ? evt.touches[0].clientY : evt.clientY);
