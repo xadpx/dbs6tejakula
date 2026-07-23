@@ -373,7 +373,7 @@
       padding-bottom: env(safe-area-inset-bottom, 0px);
     }
            .neu-modal{
-      background:#ffffff !important;
+      background: var(--color-bg-card) !important;
       box-shadow:
         0 0 0 1px rgba(255,255,255,.14),
         0 20px 45px rgba(0,0,0,.45),
@@ -2139,9 +2139,7 @@ document.getElementById('pillbars').innerHTML = window.rombelData.map((r, i) => 
 
   // Semua bar & angka pakai warna yang sama; kelas puncak (terbanyak)
   // tetap ditandai lewat bubble+dot di atas bar, bukan lewat warna.
-  const isiAtas = isHi
-    ? `<div class="pillbar-bubble">${total}</div><div class="pillbar-dot"></div>`
-    : `<div class="pillbar-val">${total}</div>`;
+  const isiAtas = `<div class="pillbar-val">${total}</div>`;
 
   return `
 <div class="pillbar-col" onclick="bukaPopupRombel(${i}, event)">
@@ -2538,11 +2536,19 @@ function renderDetailSiswaContent(nik){
 
   <div class="grid grid-cols-2 gap-3">
 
-    <div class="neu-card p-3">
-      <div class="flex items-center gap-1.5 text-gray-500 text-[11px] font-semibold mb-1">
-        <span class="material-symbols-rounded text-[15px]">location_on</span> Tempat Lahir
+   <div class="neu-card p-3">
+      <div class="flex items-center justify-between mb-1">
+        <div class="flex items-center gap-1.5 text-gray-500 text-[11px] font-semibold">
+          <span class="material-symbols-rounded text-[15px]">assignment_ind</span> NIP
+        </div>
+        <span
+          id="copyNipIcon"
+          class="material-symbols-rounded text-[15px] text-gray-600 cursor-pointer hover:text-blue-600 transition"
+          onclick="event.stopPropagation(); salinTeks('${r[6]}', 'copyNipIcon', 'NIP')">
+          content_copy
+        </span>
       </div>
-      <div class="text-gray-800 font-medium">${r[6]}</div>
+      <div class="text-gray-800 font-medium">${r[6] || '-'}</div>
     </div>
 
     <div class="neu-card p-3">
@@ -2574,7 +2580,7 @@ function renderDetailSiswaContent(nik){
         <span
           id="copyNikIcon"
           class="material-symbols-rounded text-[15px] text-gray-600 cursor-pointer hover:text-blue-600 transition"
-          onclick="event.stopPropagation(); salinNIK('${r[8]}')">
+          onclick="event.stopPropagation(); salinTeks('${r[7]}', 'copyNikIcon', 'NIK')">
           content_copy
         </span>
       </div>
@@ -2582,10 +2588,18 @@ function renderDetailSiswaContent(nik){
     </div>
 
     <div class="neu-card p-3">
-      <div class="flex items-center gap-1.5 text-gray-500 text-[11px] font-semibold mb-1">
-        <span class="material-symbols-rounded text-[15px]">man</span> Ayah
+      <div class="flex items-center justify-between mb-1">
+        <div class="flex items-center gap-1.5 text-gray-500 text-[11px] font-semibold">
+          <span class="material-symbols-rounded text-[15px]">assignment_ind</span> NIP
+        </div>
+        <span
+          id="copyNipIcon"
+          class="material-symbols-rounded text-[15px] text-gray-600 cursor-pointer hover:text-blue-600 transition"
+          onclick="event.stopPropagation(); salinTeks('${r[6]}', 'copyNipIcon', 'NIP')">
+          content_copy
+        </span>
       </div>
-      <div class="text-gray-800 font-medium">${r[11]}</div>
+      <div class="text-gray-800 font-medium">${r[6] || '-'}</div>
     </div>
 
     <div class="neu-card p-3">
@@ -2874,15 +2888,31 @@ function renderDetailPegawaiContent(tipe, idx){
     </div>
 
     <div class="neu-card p-3">
-      <div class="flex items-center gap-1.5 text-gray-500 text-[11px] font-semibold mb-1">
-        <span class="material-symbols-rounded text-[15px]">fingerprint</span> NUPTK
+      <div class="flex items-center justify-between mb-1">
+        <div class="flex items-center gap-1.5 text-gray-500 text-[11px] font-semibold">
+          <span class="material-symbols-rounded text-[15px]">fingerprint</span> NUPTK
+        </div>
+        <span
+          id="copyNuptkIcon"
+          class="material-symbols-rounded text-[15px] text-gray-600 cursor-pointer hover:text-blue-600 transition"
+          onclick="event.stopPropagation(); salinTeks('${r[8]}', 'copyNuptkIcon', 'NUPTK')">
+          content_copy
+        </span>
       </div>
       <div class="text-gray-800 font-medium">${r[8] || '-'}</div>
     </div>
 
     <div class="neu-card p-3">
-      <div class="flex items-center gap-1.5 text-gray-500 text-[11px] font-semibold mb-1">
-        <span class="material-symbols-rounded text-[15px]">receipt_long</span> NPWP
+      <div class="flex items-center justify-between mb-1">
+        <div class="flex items-center gap-1.5 text-gray-500 text-[11px] font-semibold">
+          <span class="material-symbols-rounded text-[15px]">receipt_long</span> NPWP
+        </div>
+        <span
+          id="copyNpwpIcon"
+          class="material-symbols-rounded text-[15px] text-gray-600 cursor-pointer hover:text-blue-600 transition"
+          onclick="event.stopPropagation(); salinTeks('${r[9]}', 'copyNpwpIcon', 'NPWP')">
+          content_copy
+        </span>
       </div>
       <div class="text-gray-800 font-medium">${r[9] || '-'}</div>
     </div>
@@ -2985,13 +3015,14 @@ Status Anak: ${r[14]}`;
       }
     }
 
-    async function salinNIK(nik){
+    async function salinTeks(teks, iconId, labelToast){
 
   try{
 
-    await navigator.clipboard.writeText(nik);
+    await navigator.clipboard.writeText(teks);
+    showToast(`${labelToast} disalin`, 1800);
 
-    const icon = document.getElementById("copyNikIcon");
+    const icon = document.getElementById(iconId);
 
     if(icon){
 
@@ -3006,8 +3037,6 @@ Status Anak: ${r[14]}`;
         icon.classList.add("text-gray-600");
 
       },1000);
-
-    }
 
     const notif = document.createElement("div");
 
