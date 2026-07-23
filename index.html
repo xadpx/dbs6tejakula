@@ -394,7 +394,8 @@
     .pillbar-row {
   position: relative;
   display: flex; align-items: flex-end; gap: 10px;
-  padding: 40px 20px 0; overflow-x: auto; scrollbar-width: none;
+  padding: 48px 20px 0; overflow-x: auto; scrollbar-width: none;
+  overflow-y: visible;
 }
 .pillbar-row::-webkit-scrollbar{ display:none; }
 .pillbar-col {
@@ -405,6 +406,7 @@
   cursor: pointer;
   border-radius: 10px;
   transition: transform .12s ease;
+  overflow: visible;
 }
 .pillbar-col:active { transform: scale(.96); }
 .pillbar-bar-wrap {
@@ -424,6 +426,7 @@
   border-radius: 20px;
   background: linear-gradient(180deg,#5CC2F7,#0091EA);
   transition: height .6s cubic-bezier(.34,1.15,.64,1);
+  overflow: visible;
 }
 .pillbar-val {
   position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
