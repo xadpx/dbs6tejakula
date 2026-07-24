@@ -810,7 +810,7 @@
   <div id="p-home" class="p-5 pb-24">
   <div class="mb-6">
 
-  <div>
+  <div id="greetingBlock">
 
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-3">
@@ -844,6 +844,8 @@
 
   </div>
 
+  <p id="searchModeTitle" class="hidden" style="font-size:18px; font-weight:700; color:#1f2937; margin:0 0 16px;">Cari Siswa</p>
+
   <div class="search-row" style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
     <div class="neu-search relative" style="flex:1;">
       <span class="neu-search-icon absolute left-2 top-1/2 -translate-y-1/2">
@@ -853,6 +855,7 @@
         type="text"
         id="srch"
         onkeyup="filterSiswa()"
+        onfocus="masukModeCariBeranda()"
         placeholder="Cari Nama/NIK/NISN"
         class="w-full h-[44px] pl-[46px] pr-10 rounded-full text-sm outline-none bg-transparent border-none">
       <span
@@ -862,7 +865,7 @@
         cancel
       </span>
     </div>
-    <span id="btnBatalCari" class="hidden" onclick="batalCariBeranda()" style="font-size:13px; font-weight:600; color:#0091EA; white-space:nowrap; cursor:pointer;">Batal</span>
+    <span id="btnBatalCari" class="hidden" onclick="keluarModeCariBeranda()" style="font-size:13px; font-weight:600; color:#0091EA; white-space:nowrap; cursor:pointer;">Batal</span>
   </div>
 
   <div id="list-siswa" class="hidden"></div>
@@ -2367,10 +2370,24 @@ style="${i === hasil.length - 1 ? '' : 'border-bottom:1px solid #F1F2F4;'}">
 `;
 }
 
-function batalCariBeranda(){
+function masukModeCariBeranda(){
+  document.getElementById('greetingBlock').classList.add('hidden');
+  document.getElementById('searchModeTitle').classList.remove('hidden');
+  document.getElementById('homeNormalContent').classList.add('hidden');
+  document.getElementById('btnBatalCari').classList.remove('hidden');
+  document.getElementById('list-siswa').classList.remove('hidden');
+  filterSiswa();
+}
+
+function keluarModeCariBeranda(){
   document.getElementById('srch').value = '';
   document.getElementById('srch').blur();
-  filterSiswa();
+  document.getElementById('greetingBlock').classList.remove('hidden');
+  document.getElementById('searchModeTitle').classList.add('hidden');
+  document.getElementById('homeNormalContent').classList.remove('hidden');
+  document.getElementById('btnBatalCari').classList.add('hidden');
+  document.getElementById('list-siswa').classList.add('hidden');
+  document.getElementById('btnHapusSrch').classList.add('hidden');
 }
 
 function filterSiswa() {
@@ -2378,21 +2395,18 @@ function filterSiswa() {
   const q = document.getElementById("srch").value.trim().toLowerCase();
 
   const btnHapus = document.getElementById("btnHapusSrch");
-  const btnBatal = document.getElementById("btnBatalCari");
-  const listEl = document.getElementById("list-siswa");
-  const normalContent = document.getElementById("homeNormalContent");
 
   if(q === ""){
     btnHapus.classList.add("hidden");
-    btnBatal.classList.add("hidden");
-    listEl.classList.add("hidden");
-    if(normalContent) normalContent.classList.remove("hidden");
+    document.getElementById("list-siswa").innerHTML = `
+      <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:#E4E9F0; border: 1px solid #D8DEE6;">
+        <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">keyboard</span>
+        <p class="text-sm text-gray-600 font-medium">Ketik minimal 3 huruf Nama siswa</p>
+      </div>
+    `;
     return;
   }else{
     btnHapus.classList.remove("hidden");
-    btnBatal.classList.remove("hidden");
-    listEl.classList.remove("hidden");
-    if(normalContent) normalContent.classList.add("hidden");
   }
   if (q.length < 3) {
     const sisa = 3 - q.length;
