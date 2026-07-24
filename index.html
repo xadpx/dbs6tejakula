@@ -844,12 +844,30 @@
 
   </div>
 
-  <div class="hero-card">
-    <img src="logo-sekolah.png" alt="" class="hero-watermark">
-    <p class="hero-eyebrow">Tahun Ajaran 2026/2027</p>
-    <p class="hero-title">Dashboard<br>SD Negeri 6 Tejakula</p>
-    <p class="hero-sub">Kelola data sekolah dalam satu tempat</p>
+  <div class="search-row" style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
+    <div class="neu-search relative" style="flex:1;">
+      <span class="neu-search-icon absolute left-2 top-1/2 -translate-y-1/2">
+        <span class="material-symbols-rounded text-gray-600 text-[17px]">search</span>
+      </span>
+      <input
+        type="text"
+        id="srch"
+        onkeyup="filterSiswa()"
+        placeholder="Cari Nama/NIK/NISN"
+        class="w-full h-[44px] pl-[46px] pr-10 rounded-full text-sm outline-none bg-transparent border-none">
+      <span
+        id="btnHapusSrch"
+        onclick="hapusPencarianSiswa()"
+        class="material-symbols-rounded hidden absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 text-[22px] cursor-pointer">
+        cancel
+      </span>
+    </div>
+    <span id="btnBatalCari" class="hidden" onclick="batalCariBeranda()" style="font-size:13px; font-weight:600; color:#0091EA; white-space:nowrap; cursor:pointer;">Batal</span>
   </div>
+
+  <div id="list-siswa" class="hidden"></div>
+
+  <div id="homeNormalContent">
 
   <p style="font-size:15px; font-weight:600; color:#1A1A1A; margin:0 0 10px 4px;">Ringkasan data</p>
 
@@ -1025,6 +1043,9 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
     <p class="m-0">© 2026 Ari Darma Putra</p>
 
 </div>
+
+  </div>
+
 </div>
 
 <div id="p-siswa" class="hidden fixed inset-0 z-10 overflow-x-hidden w-full max-w-[100vw]">
@@ -1068,33 +1089,8 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
 
     <div id="panelDataSiswa" class="flex-1 min-h-0 flex flex-col overflow-x-hidden">
 
-     <div class="shrink-0 px-5">
-
-     <div class="neu-search relative mb-3">
-
-  <span class="neu-search-icon absolute left-2 top-1/2 -translate-y-1/2">
-    <span class="material-symbols-rounded text-gray-600 text-[17px]">search</span>
-  </span>
-
-  <input
-  type="text"
-  id="srch"
-  onkeyup="filterSiswa()"
-  placeholder="Cari Nama/NIK/NISN"
-  class="w-full h-[44px] pl-[46px] pr-10 rounded-full text-sm outline-none bg-transparent border-none">
-        <span
-          id="btnHapusSrch"
-          onclick="hapusPencarianSiswa()"
-          class="material-symbols-rounded hidden absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 text-[22px] cursor-pointer">
-          cancel
-        </span>
-
-      </div>
-
-    </div>
-
     <!-- LIST -->
-    <div id="list-siswa" class="flex-1 overflow-y-auto overflow-x-hidden px-5 pb-5 pt-3 max-w-full" style="padding-left:28px; padding-right:28px;">
+    <div id="list-siswa-tab" class="flex-1 overflow-y-auto overflow-x-hidden px-5 pb-5 pt-3 max-w-full" style="padding-left:28px; padding-right:28px;">
       <div class="flex flex-col items-center justify-center text-center pt-14 px-6">
         <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">manage_search</span>
         <p class="text-sm text-gray-600 font-medium">Ketik minimal 3 huruf</p>
@@ -1550,6 +1546,7 @@ let carouselGrafikSudahInit = false;
       document.getElementById('divSiswaGuru').style.opacity = (tab === 'siswa' || tab === 'guru') ? '0' : '1';
       document.getElementById('divGuruTendik').style.opacity = (tab === 'guru' || tab === 'tendik') ? '0' : '1';
       if(tab === 'guru') muatDataGuru();
+      if(tab === 'siswa') renderSemuaSiswaTab();
       if(tab === 'tendik') muatDataTendik();
     }
 
@@ -2112,6 +2109,7 @@ let carouselGrafikSudahInit = false;
 
       const data = json.siswa;
       d = data.slice(1).filter(r => r[1] && r[1].trim() !== "");
+      renderSemuaSiswaTab();
 
       // ===== GURU =====
       sudahMuatGuru = true;
@@ -2398,25 +2396,62 @@ function gantiHalamanFade(pTarget){
   return { berurutan: false, posisi: posisiPertama === -1 ? 999 : posisiPertama };
 
 }
+function renderSemuaSiswaTab(){
+  const el = document.getElementById('list-siswa-tab');
+  if(!el || !d || d.length === 0) return;
+
+  const hasil = d.slice().sort((a,b) => String(a[1]).localeCompare(String(b[1]), "id", {sensitivity:"base"}));
+
+  el.innerHTML = `
+<div class="neu-card" style="padding:4px;">
+${hasil.map((r,i)=>`
+<div
+onpointerdown="buatRipple(event)"
+onclick="showDetailByNIK('${r[8]}')"
+class="flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect"
+style="${i === hasil.length - 1 ? '' : 'border-bottom:1px solid #F1F2F4;'}">
+  <div class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
+    <span class="material-symbols-rounded text-[13px] text-gray-400"
+      style="font-variation-settings:'FILL' 1,'wght' 300,'GRAD' 0,'opsz' 24;">
+      account_circle
+    </span>
+  </div>
+  <div class="ml-3 flex-1 min-w-0">
+    <div class="text-[13px] font-semibold text-gray-900 truncate">${r[1]}</div>
+    <div class="text-[11px] text-gray-600 mt-0.5">${r[2]}</div>
+  </div>
+</div>
+`).join("")}
+</div>
+`;
+}
+
+function batalCariBeranda(){
+  document.getElementById('srch').value = '';
+  document.getElementById('srch').blur();
+  filterSiswa();
+}
+
 function filterSiswa() {
 
   const q = document.getElementById("srch").value.trim().toLowerCase();
 
   const btnHapus = document.getElementById("btnHapusSrch");
+  const btnBatal = document.getElementById("btnBatalCari");
+  const listEl = document.getElementById("list-siswa");
+  const normalContent = document.getElementById("homeNormalContent");
+
   if(q === ""){
     btnHapus.classList.add("hidden");
+    btnBatal.classList.add("hidden");
+    listEl.classList.add("hidden");
+    if(normalContent) normalContent.classList.remove("hidden");
+    return;
   }else{
     btnHapus.classList.remove("hidden");
-  }
-
-  if (q === "") {
-    document.getElementById("list-siswa").innerHTML = `
-      <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:#E4E9F0; border: 1px solid #D8DEE6;">
-        <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">keyboard</span>
-        <p class="text-sm text-gray-600 font-medium">Ketik minimal 3 huruf Nama siswa</p>
-      </div>
-    `;
-    return;
+    btnBatal.classList.remove("hidden");
+    listEl.classList.remove("hidden");
+    if(normalContent) normalContent.classList.add("hidden");
   }
   if (q.length < 3) {
     const sisa = 3 - q.length;
