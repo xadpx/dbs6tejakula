@@ -345,6 +345,13 @@
       box-shadow: inset 3px 3px 6px rgba(163,177,198,.45), inset -3px -3px 6px rgba(255,255,255,.6);
       transform: scale(0.98);
     }
+    #searchStickyWrap{
+      position: relative;
+    }
+    #searchStickyWrap.search-mode-sticky{
+      position: sticky;
+      top: 0;
+    }
     .neu-search-icon{
       width: 30px;
       height: 30px;
@@ -850,7 +857,7 @@
 
   </div>
 
-  <div id="searchStickyWrap" style="position:sticky; top:0; z-index:30; background:var(--color-bg-card); padding-top:4px; margin-left:-20px; margin-right:-20px; padding-left:20px; padding-right:20px;">
+  <div id="searchStickyWrap" style="z-index:30; background:var(--color-bg-card); padding-top:4px; margin-left:-20px; margin-right:-20px; padding-left:20px; padding-right:20px;">
 
   <p id="searchModeTitle" class="hidden" style="font-size:18px; font-weight:700; color:#1f2937; margin:0 0 16px;">Cari Siswa</p>
 
@@ -2437,6 +2444,7 @@ function masukModeCariBeranda(){
   document.getElementById('searchModeTitle').classList.remove('hidden');
   document.getElementById('homeNormalContent').classList.add('hidden');
   document.getElementById('list-siswa').classList.remove('hidden');
+  document.getElementById('searchStickyWrap').classList.add('search-mode-sticky');
   filterSiswa();
 
   if(!modeCariHistoryAktif){
@@ -2453,6 +2461,7 @@ function keluarModeCariBerandaVisual(){
   document.getElementById('homeNormalContent').classList.remove('hidden');
   document.getElementById('list-siswa').classList.add('hidden');
   document.getElementById('btnHapusSrch').classList.add('hidden');
+  document.getElementById('searchStickyWrap').classList.remove('search-mode-sticky');
   modeCariHistoryAktif = false;
 }
 
