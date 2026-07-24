@@ -82,8 +82,14 @@
   max-width: 480px;
   margin-left: auto;
   margin-right: auto;
-  overflow-x: hidden;
   box-sizing: border-box;
+}
+#p-home {
+  overflow-y: visible;
+  overflow-x: clip;
+}
+#p-siswa, #p-download, #p-login {
+  overflow-x: hidden;
 }
 #app-scroll {
   background: var(--color-bg-card);
@@ -860,14 +866,13 @@
         onfocus="masukModeCariBeranda()"
         placeholder="Cari Nama/NIK/NISN"
         class="w-full h-[44px] pl-[46px] pr-10 rounded-full text-sm outline-none bg-transparent border-none">
-      <span
+     <span
         id="btnHapusSrch"
         onclick="hapusPencarianSiswa()"
         class="material-symbols-rounded hidden absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 text-[22px] cursor-pointer">
         cancel
       </span>
     </div>
-    <span id="btnBatalCari" class="hidden" onclick="keluarModeCariBeranda()" style="font-size:13px; font-weight:600; color:#0091EA; white-space:nowrap; cursor:pointer;">Batal</span>
   </div>
 
   </div>
