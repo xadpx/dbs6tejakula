@@ -352,6 +352,20 @@
       position: sticky;
       top: 0;
     }
+    .neu-icon-pill{
+      width: 64px;
+      height: 38px;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #4FC3F7 0%, #0091EA 100%);
+      box-shadow: inset 3px 3px 6px rgba(0,55,110,.45), inset -3px -3px 6px rgba(255,255,255,.35);
+    }
+    .neu-icon-pill .material-symbols-rounded{
+      color: #ffffff !important;
+    }
     .neu-search-icon{
       width: 30px;
       height: 30px;
@@ -894,8 +908,8 @@
 
    <div class="flex flex-col relative overflow-hidden" style="padding:var(--space-md); border-radius:var(--radius-lg); background:var(--color-bg-card); box-shadow:var(--shadow-card);">
 
-      <div class="mb-3" style="width:44px;height:44px;border-radius:50%;background:#E4E9F0;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-card);">
-        <span class="material-symbols-rounded text-[21px]" style="color:#0091EA; font-variation-settings:'FILL' 1,'wght' 500,'GRAD' 0,'opsz' 24;">school</span>
+      <div class="mb-3 neu-icon-pill">
+        <span class="material-symbols-rounded text-[21px]" style="font-variation-settings:'FILL' 1,'wght' 500,'GRAD' 0,'opsz' 24;">school</span>
       </div>
 
       <p class="text-[11px] font-bold m-0" style="color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.03em;">Total Siswa</p>
@@ -928,8 +942,8 @@
     <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer flex flex-col relative overflow-hidden" style="padding:var(--space-md); border-radius:var(--radius-lg); background:var(--color-bg-card); box-shadow:var(--shadow-card);">
 
       <div class="flex items-start justify-between mb-3">
-        <div style="width:44px;height:44px;border-radius:50%;background:#E4E9F0;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-card);">
-          <span class="material-symbols-rounded text-[21px]" style="color:#0091EA; font-variation-settings:'FILL' 1,'wght' 500,'GRAD' 0,'opsz' 24;">import_contacts</span>
+        <div class="neu-icon-pill">
+          <span class="material-symbols-rounded text-[21px]" style="font-variation-settings:'FILL' 1,'wght' 500,'GRAD' 0,'opsz' 24;">import_contacts</span>
         </div>
         <div style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;">
           <span class="material-symbols-rounded text-[15px]" style="color:#4b5563;">chevron_right</span>
@@ -948,8 +962,8 @@
     <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer flex flex-col relative overflow-hidden" style="padding:var(--space-md); border-radius:var(--radius-lg); background:var(--color-bg-card); box-shadow:var(--shadow-card);">
 
       <div class="flex items-start justify-between mb-3">
-        <div style="width:44px;height:44px;border-radius:50%;background:#E4E9F0;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-card);">
-          <span class="material-symbols-rounded text-[21px]" style="color:#0091EA; font-variation-settings:'FILL' 1,'wght' 500,'GRAD' 0,'opsz' 24;">badge</span>
+        <div class="neu-icon-pill">
+          <span class="material-symbols-rounded text-[21px]" style="font-variation-settings:'FILL' 1,'wght' 500,'GRAD' 0,'opsz' 24;">badge</span>
         </div>
         <div style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;">
           <span class="material-symbols-rounded text-[15px]" style="color:#4b5563;">chevron_right</span>
@@ -968,8 +982,8 @@
     <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer flex flex-col relative overflow-hidden" style="padding:var(--space-md); border-radius:var(--radius-lg); background:var(--color-bg-card); box-shadow:var(--shadow-card);">
 
       <div class="flex items-start justify-between mb-3">
-        <div style="width:44px;height:44px;border-radius:50%;background:#E4E9F0;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-card);">
-          <span class="material-symbols-rounded text-[21px]" style="color:#0091EA; font-variation-settings:'FILL' 1,'wght' 500,'GRAD' 0,'opsz' 24;">groups</span>
+        <div class="neu-icon-pill">
+          <span class="material-symbols-rounded text-[21px]" style="font-variation-settings:'FILL' 1,'wght' 500,'GRAD' 0,'opsz' 24;">groups</span>
         </div>
         <div style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;">
           <span class="material-symbols-rounded text-[15px]" style="color:#4b5563;">chevron_right</span>
