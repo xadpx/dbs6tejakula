@@ -2270,14 +2270,32 @@ function nav(p){
     !document.getElementById("modal").classList.contains("hidden") ||
     !document.getElementById("pinModal").classList.contains("hidden") ||
     !document.getElementById("modalKategori").classList.contains("hidden") ||
-    !document.getElementById("rombelPopupOverlay").classList.contains("hidden") ||
-    modeCariHistoryAktif
+    !document.getElementById("rombelPopupOverlay").classList.contains("hidden")
   ){
     return;
   }
 
   if(p!="download"){
     halamanSebelumnya=p;
+  }
+
+  // Nav bawah harus tetap berfungsi walau sedang di mode pencarian.
+  // Tutup dulu mode carinya (tanpa menunggu animasi/popstate), gabungkan
+  // entry history-nya jadi satu lewat replaceState supaya tidak ada
+  // entry history "hantu" yang tertinggal.
+  if(modeCariHistoryAktif){
+    keluarModeCariBerandaVisual();
+
+    if(p === "home"){
+      historyTabAktif = false;
+      history.replaceState({}, '');
+      return;
+    }else{
+      historyTabAktif = true;
+      history.replaceState({ tabAktif: p }, '');
+      gantiHalamanFade(p);
+      return;
+    }
   }
 
   if(p === "home"){
@@ -4561,15 +4579,6 @@ window.addEventListener('load', resetZoomPaksa);
 // GESTUR SWIPE ANTAR-HALAMAN DENGAN EFEK MENGIKUTI JARI
 // ======================================================
 const urutanHalamanSwipe = ["home", "siswa", "download"];
-let swipeStartX = 0;
-let swipeStartY = 0;
-let swipeAktif = false;
-let swipeLockedAxis = null;
-let swipeCurrentEl = null;
-let swipeTargetEl = null;
-let swipeArah = 0;
-let swipeIdxSekarang = 0;
-let swipeIdxTarget = -1;
 
 function halamanAktifSaatIni(){
   return urutanHalamanSwipe.find(id => !document.getElementById("p-"+id).classList.contains("hidden"));
@@ -4799,82 +4808,14 @@ document.addEventListener('pointerdown', function(e){
   span.addEventListener('animationend', () => span.remove());
 }, { passive: true });
 
-document.addEventListener("touchstart", function(e){
-
-  if(modalSedangTerbuka()){
-    swipeAktif = false;
-    return;
-  }
-
-  const target = e.target;
-
-  if(
-    target.closest("#srch") ||
-    target.closest("select") ||
-    target.closest("#switchRentang") ||
-    target.closest(".kategori") ||
-    target.closest("#carouselGrafik") ||
-    target.closest("#pillbars")
-  ){
-    swipeAktif = false;
-    return;
-  }
-
-  swipeStartX = e.touches[0].clientX;
-  swipeStartY = e.touches[0].clientY;
-  swipeAktif = true;
-  swipeLockedAxis = null;
-
-}, {passive:true});
-
-document.addEventListener("touchmove", function(e){
-
-  if(!swipeAktif) return;
-
-  const x = e.touches[0].clientX;
-  const y = e.touches[0].clientY;
-  const dx = x - swipeStartX;
-  const dy = y - swipeStartY;
-
-  if(!swipeLockedAxis){
-    if(Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
-    swipeLockedAxis = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
-  }
-
-  if(swipeLockedAxis === "x"){
-    e.preventDefault();
-  }
-
-}, {passive:false});
-
-document.addEventListener("touchend", function(e){
-
-  if(!swipeAktif) return;
-  swipeAktif = false;
-
-  if(swipeLockedAxis !== "x"){
-    swipeLockedAxis = null;
-    return;
-  }
-
-  const endX = e.changedTouches[0].clientX;
-  const dx = endX - swipeStartX;
-  const ambangBatas = 60;
-
-  swipeLockedAxis = null;
-
-  if(Math.abs(dx) < ambangBatas) return;
-
-  const halamanSekarang = halamanAktifSaatIni();
-  const idxSekarang = urutanHalamanSwipe.indexOf(halamanSekarang);
-  const arah = dx < 0 ? -1 : 1;
-  const idxTarget = idxSekarang + (arah === -1 ? 1 : -1);
-
-  if(idxTarget < 0 || idxTarget >= urutanHalamanSwipe.length) return;
-
-  nav(urutanHalamanSwipe[idxTarget]);
-
-}, {passive:true});
+// ======================================================
+// GESTUR SWIPE ANTAR-HALAMAN — DINONAKTIFKAN
+// (dulu di sini ada touchstart/touchmove/touchend yang mendeteksi
+// swipe kiri-kanan untuk pindah tab Beranda/Data/Unduh. Sengaja
+// dihapus total, supaya gesture back bawaan HP tidak pernah
+// tertahan/tertangkap oleh kode ini di halaman manapun. Pindah tab
+// sekarang murni lewat tap tombol nav bawah.)
+// ======================================================
     function animasikanAngka(id, nilaiAkhir, durasi, callbackSelesai){
   const el = document.getElementById(id);
   if(!el) return;
