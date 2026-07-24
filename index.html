@@ -1511,6 +1511,8 @@ let pinPercobaan = 0;
 let halamanSebelumnya = "home";
 let modeRentang = false;
 let carouselGrafikSudahInit = false;
+let modeCariHistoryAktif = false;
+let historyTabAktif = false;
 
     function switchDataTab(tab){
       const tabs = {
@@ -2246,8 +2248,9 @@ function bukaPopupRombel(i, evt){
       box.style.opacity = '1';
     });
   });
+  history.pushState({ rombelPopup: true }, '');
 }
-function tutupPopupRombel(){
+function tutupPopupRombelVisual(){
   const overlay = document.getElementById('rombelPopupOverlay');
   const box = document.getElementById('rombelPopupBox');
   overlay.style.opacity = '0';
@@ -2259,17 +2262,37 @@ function tutupPopupRombel(){
     overlay.classList.add('hidden');
   }, 260);
 }
+function tutupPopupRombel(){
+  history.back();
+}
 function nav(p){
   if(
     !document.getElementById("modal").classList.contains("hidden") ||
     !document.getElementById("pinModal").classList.contains("hidden") ||
-    !document.getElementById("modalKategori").classList.contains("hidden")
+    !document.getElementById("modalKategori").classList.contains("hidden") ||
+    !document.getElementById("rombelPopupOverlay").classList.contains("hidden") ||
+    modeCariHistoryAktif
   ){
     return;
   }
+
   if(p!="download"){
     halamanSebelumnya=p;
   }
+
+  if(p === "home"){
+    if(historyTabAktif){
+      historyTabAktif = false;
+      history.back();
+      return;
+    }
+  }else{
+    if(!historyTabAktif){
+      historyTabAktif = true;
+      history.pushState({ tabAktif: p }, '');
+    }
+  }
+
   gantiHalamanFade(p);
 }
 
@@ -2395,20 +2418,32 @@ function masukModeCariBeranda(){
   document.getElementById('greetingBlock').classList.add('hidden');
   document.getElementById('searchModeTitle').classList.remove('hidden');
   document.getElementById('homeNormalContent').classList.add('hidden');
-  document.getElementById('btnBatalCari').classList.remove('hidden');
   document.getElementById('list-siswa').classList.remove('hidden');
   filterSiswa();
+
+  if(!modeCariHistoryAktif){
+    modeCariHistoryAktif = true;
+    history.pushState({ modeCari: true }, '');
+  }
 }
 
-function keluarModeCariBeranda(){
+function keluarModeCariBerandaVisual(){
   document.getElementById('srch').value = '';
   document.getElementById('srch').blur();
   document.getElementById('greetingBlock').classList.remove('hidden');
   document.getElementById('searchModeTitle').classList.add('hidden');
   document.getElementById('homeNormalContent').classList.remove('hidden');
-  document.getElementById('btnBatalCari').classList.add('hidden');
   document.getElementById('list-siswa').classList.add('hidden');
   document.getElementById('btnHapusSrch').classList.add('hidden');
+  modeCariHistoryAktif = false;
+}
+
+function keluarModeCariBeranda(){
+  if(modeCariHistoryAktif){
+    history.back();
+  }else{
+    keluarModeCariBerandaVisual();
+  }
 }
 
 function filterSiswa() {
@@ -3159,8 +3194,32 @@ Status Anak: ${r[14]}`;
       }
     }
     window.addEventListener('popstate', function(){
+      // 1) Modal detail (siswa/pegawai/rombel/kategori berjenjang)
       if(!document.getElementById('modal').classList.contains('hidden')){
         tutupModalVisual();
+        return;
+      }
+      // 2) Modal daftar siswa per kategori chart
+      if(!document.getElementById('modalKategori').classList.contains('hidden')){
+        closeModalKategoriVisual();
+        return;
+      }
+      // 3) Popup kecil rekap per rombel
+      if(!document.getElementById('rombelPopupOverlay').classList.contains('hidden')){
+        tutupPopupRombelVisual();
+        return;
+      }
+      // 4) Mode pencarian di beranda
+      if(modeCariHistoryAktif){
+        keluarModeCariBerandaVisual();
+        return;
+      }
+      // 5) Tab selain Beranda -> kembali ke Beranda
+      if(historyTabAktif){
+        historyTabAktif = false;
+        halamanSebelumnya = 'home';
+        gantiHalamanFade('home');
+        return;
       }
     });
     async function copyRekap(){
@@ -4024,12 +4083,17 @@ function tampilkanSiswaKategori(kolom, label){
   kunciScroll(true);
   document.getElementById('list-kategori').scrollTop = 0;
   bukaPopupPremium('modalKategori', 'modalKategoriBox');
+  history.pushState({ modalKategori: true }, '');
 }
 
-function closeModalKategori(){
+function closeModalKategoriVisual(){
   setNavDisabled(false);
   kunciScroll(false);
   tutupPopupPremium('modalKategori', 'modalKategoriBox');
+}
+
+function closeModalKategori(){
+  history.back();
 }
 function downloadCSV(){
 
