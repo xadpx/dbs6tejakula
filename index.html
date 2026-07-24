@@ -844,6 +844,8 @@
 
   </div>
 
+  <div id="searchStickyWrap" style="position:sticky; top:0; z-index:30; background:var(--color-bg-card); padding-top:4px; margin-left:-20px; margin-right:-20px; padding-left:20px; padding-right:20px;">
+
   <p id="searchModeTitle" class="hidden" style="font-size:18px; font-weight:700; color:#1f2937; margin:0 0 16px;">Cari Siswa</p>
 
   <div class="search-row" style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
@@ -866,6 +868,8 @@
       </span>
     </div>
     <span id="btnBatalCari" class="hidden" onclick="keluarModeCariBeranda()" style="font-size:13px; font-weight:600; color:#0091EA; white-space:nowrap; cursor:pointer;">Batal</span>
+  </div>
+
   </div>
 
   <div id="list-siswa" class="hidden"></div>
@@ -1930,11 +1934,23 @@ let carouselGrafikSudahInit = false;
       return kata.slice(0, 2).join(' ');
     }
 
+    function tentukanSapaan(){
+      const jam = new Date().getHours();
+      if(jam >= 4 && jam < 11) return "Selamat Pagi";
+      if(jam >= 11 && jam < 15) return "Selamat Siang";
+      if(jam >= 15 && jam < 18) return "Selamat Sore";
+      return "Selamat Malam";
+    }
+
     function tampilkanNamaGuru(){
       const elNama = document.getElementById('namaGuruAktif');
       if(!window.guruAktif) return;
       if(elNama){
         elNama.textContent = ambilNamaSingkat(window.guruAktif.nama) + '!';
+      }
+      const elGreeting = document.getElementById('greetingText');
+      if(elGreeting){
+        elGreeting.textContent = tentukanSapaan();
       }
       const img = document.getElementById('avatarGuruImg');
       const fallback = document.getElementById('avatarGuruFallback');
