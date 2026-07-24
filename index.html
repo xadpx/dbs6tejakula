@@ -4555,7 +4555,14 @@ function resetZoomPaksa(){
 }
 
 // Panggil tiap kali selesai sentuh layar
-document.addEventListener('touchend', function(){
+document.addEventListener('touchend', function(e){
+  // Jangan paksa reset zoom kalau sentuhan mengarah ke input/textarea
+  // (mis. search bar), karena keyboard mobile yang sedang muncul akan
+  // bentrok dengan perubahan viewport ini dan membuat halaman terasa freeze.
+  const target = e.target;
+  const sedangDiInput = target && target.closest && target.closest('input, textarea, [contenteditable="true"]');
+  if(sedangDiInput) return;
+
   setTimeout(resetZoomPaksa, 60);
 }, false);
 
