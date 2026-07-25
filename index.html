@@ -1728,7 +1728,7 @@ let historyTabAktif = false;
             <div
               onpointerdown="buatRipple(event)"
               onclick="tampilkanSiswaDesil('${label}')"
-              class="flex flex-col px-4 py-3 cursor-pointer active:bg-gray-50 transition ripple-effect"
+              class="flex flex-col px-7 py-3.5 cursor-pointer active:bg-gray-50 transition ripple-effect"
               style="${i === arr.length - 1 ? '' : 'border-bottom:1px solid #F1F2F4;'}">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
@@ -1739,11 +1739,11 @@ let historyTabAktif = false;
                 </div>
                 <div class="flex items-center gap-2">
                   <span class="text-[13px] font-bold text-gray-700">${desil[label]}</span>
-                  <span class="material-symbols-rounded text-[16px]" style="color:#4b5563;">chevron_right</span>
+                  <span class="material-symbols-rounded text-[16px]" style="color:#9ca3af;">chevron_right</span>
                 </div>
               </div>
-              <div style="width:100%; height:5px; border-radius:999px; background:${WARNA_DESIL[label]}30; margin-top:8px; overflow:hidden;">
-                <div style="width:${persenBar}%; height:100%; border-radius:999px; background:${WARNA_DESIL[label]};"></div>
+              <div style="width:100%; height:4px; border-radius:999px; background:#DDE1E8; margin-top:10px; overflow:hidden;">
+                <div style="width:${persenBar}%; height:100%; border-radius:999px; background:linear-gradient(90deg, ${warnaTerang(WARNA_DESIL[label])}, ${WARNA_DESIL[label]});"></div>
               </div>
             </div>
           `;}).join('')}
@@ -3586,6 +3586,15 @@ function warnaPekat(hex, faktor){
   const r = Math.round(parseInt(hex.substring(0,2),16) * faktor);
   const g = Math.round(parseInt(hex.substring(2,4),16) * faktor);
   const b = Math.round(parseInt(hex.substring(4,6),16) * faktor);
+  return '#' + [r,g,b].map(v => Math.max(0,Math.min(255,v)).toString(16).padStart(2,'0')).join('');
+}
+
+function warnaTerang(hex, faktor){
+  faktor = faktor || 0.5;
+  hex = hex.replace('#','');
+  const r = Math.round(parseInt(hex.substring(0,2),16) + (255 - parseInt(hex.substring(0,2),16)) * faktor);
+  const g = Math.round(parseInt(hex.substring(2,4),16) + (255 - parseInt(hex.substring(2,4),16)) * faktor);
+  const b = Math.round(parseInt(hex.substring(4,6),16) + (255 - parseInt(hex.substring(4,6),16)) * faktor);
   return '#' + [r,g,b].map(v => Math.max(0,Math.min(255,v)).toString(16).padStart(2,'0')).join('');
 }
 
