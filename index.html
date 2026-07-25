@@ -365,9 +365,26 @@
       -webkit-appearance: none !important;
       appearance: none !important;
       background-color: rgba(255,255,255,.5) !important;
+      backdrop-filter: var(--blur-glass-sm) !important;
+      -webkit-backdrop-filter: var(--blur-glass-sm) !important;
       border: 1px solid var(--glass-border) !important;
       border-radius: 9999px;
       box-shadow: inset 0 2px 6px rgba(107,92,165,.14) !important;
+    }
+    /* Fallback global: pastikan SEMUA permukaan kaca (baik lewat class maupun inline style)
+       benar-benar menampilkan efek blur, bukan cuma warna transparan datar. */
+    [style*="var(--color-bg-card)"],
+    [style*="rgba(255,255,255,.5)"],
+    [style*="rgba(255,255,255,.45)"],
+    [style*="rgba(255,255,255,.4)"],
+    [style*="rgba(255,255,255,.35)"],
+    [style*="rgba(255,255,255,.55)"],
+    [style*="rgba(255,255,255,.6)"],
+    [style*="rgba(255,255,255,.65)"],
+    [style*="rgba(255,255,255,.22)"],
+    [style*="rgba(255,255,255,.28)"]{
+      backdrop-filter: var(--blur-glass-sm);
+      -webkit-backdrop-filter: var(--blur-glass-sm);
     }
     .btn-unduh-neu{
       background: rgba(255,255,255,.45);
@@ -948,8 +965,8 @@
 
   <p style="font-size:15px; font-weight:600; color:#23213A; margin:0 0 10px 4px;">Ringkasan data</p>
 
-  <div style="background:linear-gradient(160deg, #8B85D6, #6B63C4); border-radius:20px; box-shadow:0 8px 20px rgba(90,80,180,.22); padding:18px; position:relative; margin-bottom:12px;">
-    <div style="position:absolute; top:18px; right:18px; width:36px; height:36px; border-radius:11px; background:rgba(255,255,255,.22); display:flex; align-items:center; justify-content:center;">
+  <div style="background:linear-gradient(160deg, rgba(139,133,214,.78), rgba(107,92,165,.85)); backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px); border:1px solid rgba(255,255,255,.35); border-radius:22px; box-shadow:0 16px 34px rgba(90,80,180,.3), inset 0 1px 1px rgba(255,255,255,.3); padding:18px; position:relative; margin-bottom:12px; overflow:hidden;">
+    <div style="position:absolute; top:18px; right:18px; width:36px; height:36px; border-radius:11px; background:rgba(255,255,255,.22); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.3); display:flex; align-items:center; justify-content:center;">
       <span class="material-symbols-rounded text-[18px]" style="color:#fff;">school</span>
     </div>
     <p style="font-size:11px; font-weight:700; color:rgba(255,255,255,.85); margin:0; text-transform:uppercase; letter-spacing:.03em;">Total Siswa</p>
