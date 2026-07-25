@@ -916,10 +916,10 @@
 
   <p style="font-size:15px; font-weight:600; color:#1A1A1A; margin:0 0 10px 4px;">Ringkasan data</p>
 
-  <div id="carouselRingkasan" onscroll="updateDotsRingkasan()" style="display:flex; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; scrollbar-width:none; gap:10px; margin-bottom:8px;">
+  <div id="carouselRingkasan" onscroll="updateDotsRingkasan()" style="display:flex; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; scrollbar-width:none; gap:14px; margin:0 -20px 8px; padding:0 16px;">
 
-    <div style="min-width:88%; scroll-snap-align:start; box-sizing:border-box;">
-      <div style="background:linear-gradient(160deg, #4FC3F7, #0091EA); border-radius:20px; box-shadow:0 8px 20px rgba(0,120,190,.3); padding:18px; height:128px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between;">
+    <div style="min-width:80%; scroll-snap-align:center; box-sizing:border-box;">
+      <div style="background:linear-gradient(160deg, #4FC3F7, #0091EA); border-radius:20px; box-shadow:0 6px 14px rgba(0,120,190,.25); padding:18px; height:128px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between;">
         <div style="display:flex; align-items:flex-start; justify-content:space-between;">
           <p style="font-size:11px; font-weight:700; color:rgba(255,255,255,.85); margin:0; text-transform:uppercase; letter-spacing:.02em;">Total Siswa</p>
           <div style="width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
@@ -951,8 +951,8 @@
       </div>
     </div>
 
-    <div onclick="bukaDataPegawaiDariBeranda('guru')" style="min-width:88%; scroll-snap-align:start; box-sizing:border-box; cursor:pointer;">
-      <div style="background:linear-gradient(160deg, #9A8FE8, #7B6FD6); border-radius:20px; box-shadow:0 8px 20px rgba(110,90,190,.3); padding:18px; height:128px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; position:relative;">
+    <div onclick="bukaDataPegawaiDariBeranda('guru')" style="min-width:80%; scroll-snap-align:center; box-sizing:border-box; cursor:pointer;">
+      <div style="background:linear-gradient(160deg, #9A8FE8, #7B6FD6); border-radius:20px; box-shadow:0 6px 14px rgba(110,90,190,.25); padding:18px; height:128px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; position:relative;">
         <div style="display:flex; align-items:flex-start; justify-content:space-between;">
           <p style="font-size:11px; font-weight:700; color:rgba(255,255,255,.85); margin:0; text-transform:uppercase; letter-spacing:.02em;">Guru</p>
           <div style="width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
@@ -973,8 +973,8 @@
       </div>
     </div>
 
-    <div onclick="bukaDataPegawaiDariBeranda('tendik')" style="min-width:88%; scroll-snap-align:start; box-sizing:border-box; cursor:pointer;">
-      <div style="background:linear-gradient(160deg, #F2A65A, #E08A38); border-radius:20px; box-shadow:0 8px 20px rgba(200,130,50,.3); padding:18px; height:128px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; position:relative;">
+    <div onclick="bukaDataPegawaiDariBeranda('tendik')" style="min-width:80%; scroll-snap-align:center; box-sizing:border-box; cursor:pointer;">
+      <div style="background:linear-gradient(160deg, #F2A65A, #E08A38); border-radius:20px; box-shadow:0 6px 14px rgba(200,130,50,.25); padding:18px; height:128px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; position:relative;">
         <div style="display:flex; align-items:flex-start; justify-content:space-between;">
           <p style="font-size:11px; font-weight:700; color:rgba(255,255,255,.85); margin:0; text-transform:uppercase; letter-spacing:.02em;">Tendik</p>
           <div style="width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
@@ -995,8 +995,8 @@
       </div>
     </div>
 
-    <div onclick="bukaDataRombelDariBeranda()" style="min-width:88%; scroll-snap-align:start; box-sizing:border-box; cursor:pointer;">
-      <div style="background:linear-gradient(160deg, #F0A0C0, #DE7BA3); border-radius:20px; box-shadow:0 8px 20px rgba(200,110,150,.3); padding:18px; height:128px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; position:relative;">
+    <div onclick="bukaDataRombelDariBeranda()" style="min-width:80%; scroll-snap-align:center; box-sizing:border-box; cursor:pointer;">
+      <div style="background:linear-gradient(160deg, #F0A0C0, #DE7BA3); border-radius:20px; box-shadow:0 6px 14px rgba(200,110,150,.25); padding:18px; height:128px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; position:relative;">
         <div style="display:flex; align-items:flex-start; justify-content:space-between;">
           <p style="font-size:11px; font-weight:700; color:rgba(255,255,255,.85); margin:0; text-transform:uppercase; letter-spacing:.02em;">Total Rombel</p>
           <div style="width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
@@ -3750,7 +3750,7 @@ let scrollTimerRingkasan;
 function updateDotsRingkasan(){
   const el = document.getElementById('carouselRingkasan');
   if(!el || el.children.length < 6) return;
-  const unit = el.children[1].offsetWidth + 10;
+  const unit = el.children[1].offsetWidth + 14;
   const idx = Math.round(el.scrollLeft / unit);
   const totalReal = el.children.length - 2;
   let dotIdx = idx - 1;
@@ -3786,7 +3786,7 @@ function initCarouselRingkasan(){
   const klonAkhir = klonTanpaId(slides[0]);
   el.insertBefore(klonAwal, el.firstChild);
   el.appendChild(klonAkhir);
-  const unit = slides[0].offsetWidth + 10;
+  const unit = slides[0].offsetWidth + 14;
   el.scrollLeft = unit;
 }
 window.addEventListener('load', initCarouselRingkasan);
