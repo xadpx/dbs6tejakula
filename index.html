@@ -49,9 +49,9 @@
       --space-xl: 32px;
 
       /* Radius */
-      --radius-sm: 16px;
-      --radius-md: 24px;
-      --radius-lg: 32px;
+      --radius-sm: 10px;
+      --radius-md: 14px;
+      --radius-lg: 18px;
       --radius-full: 9999px;
 
       /* Shadow */
@@ -60,7 +60,7 @@
       --shadow-nav:  0px -2px 10px rgba(163,177,198,.3), 0px -1px 3px rgba(255,255,255,.7);
 
       /* Font */
-      --font-family: 'Poppins', sans-serif;
+      --font-family: 'Plus Jakarta Sans', sans-serif;
     }
     html {
       overflow-x: clip;
@@ -3789,7 +3789,7 @@ const leaderLinePlugin = {
     const rightPts = layoutSide(items.filter(it=>it.side==='right'));
 
     ctx.save();
-    ctx.font = "9.5px 'Poppins', sans-serif";
+    ctx.font = "9.5px 'Plus Jakarta Sans', sans-serif";
     ctx.textBaseline = 'middle';
     [...leftPts, ...rightPts].forEach(p => {
       const dir = p.side === 'right' ? 1 : -1;
