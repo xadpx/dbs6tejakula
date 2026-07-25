@@ -916,115 +916,66 @@
 
   <p style="font-size:15px; font-weight:600; color:#1A1A1A; margin:0 0 10px 4px;">Ringkasan data</p>
 
-  <div id="carouselRingkasan" onscroll="updateDotsRingkasan()" style="display:flex; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; scrollbar-width:none; gap:14px; margin:0 -20px 8px; padding:0 16px;">
-
-    <div style="min-width:80%; scroll-snap-align:center; box-sizing:border-box;">
-      <div style="background:linear-gradient(160deg, #4FC3F7, #0091EA); border-radius:20px; box-shadow:0 6px 14px rgba(0,120,190,.25); padding:18px; height:128px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between;">
-        <div style="display:flex; align-items:flex-start; justify-content:space-between;">
-          <p style="font-size:11px; font-weight:700; color:rgba(255,255,255,.85); margin:0; text-transform:uppercase; letter-spacing:.02em;">Total Siswa</p>
-          <div style="width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <span class="material-symbols-rounded text-[17px]" style="color:#fff;">school</span>
-          </div>
+  <div style="background:linear-gradient(160deg, #8B85D6, #6B63C4); border-radius:20px; box-shadow:0 8px 20px rgba(90,80,180,.22); padding:18px; position:relative; margin-bottom:12px;">
+    <div style="position:absolute; top:18px; right:18px; width:36px; height:36px; border-radius:11px; background:rgba(255,255,255,.22); display:flex; align-items:center; justify-content:center;">
+      <span class="material-symbols-rounded text-[18px]" style="color:#fff;">school</span>
+    </div>
+    <p style="font-size:11px; font-weight:700; color:rgba(255,255,255,.85); margin:0; text-transform:uppercase; letter-spacing:.03em;">Total Siswa</p>
+    <div class="relative min-h-[38px] flex items-center">
+      <p id="tot" class="hidden text-[32px] font-extrabold tracking-tight tabular-nums leading-8 m-0" style="color:#fff;">0</p>
+      <div id="totSpin" class="spinner-ring-gray"></div>
+    </div>
+    <div class="flex gap-3.5 mt-2">
+      <div class="flex items-center gap-1.5">
+        <span style="width:7px;height:7px;border-radius:50%;background:#7DD3FC;flex-shrink:0;"></span>
+        <div class="relative min-h-[15px] flex items-center">
+          <span id="laki" class="hidden text-[12px]" style="color:rgba(255,255,255,.9);">0</span>
+          <div id="lakiSpin" class="spinner-ring-gray" style="width:12px;height:12px;"></div>
         </div>
-        <div>
-          <div class="relative min-h-[30px] flex items-center">
-            <p id="tot" class="hidden text-[28px] font-extrabold tracking-tight tabular-nums leading-8 m-0" style="color:#fff;">0</p>
-            <div id="totSpin" class="spinner-ring-gray"></div>
-          </div>
-          <div class="flex items-center gap-3 mt-1">
-            <div class="flex items-center gap-1">
-              <div class="relative min-h-[15px] flex items-center">
-                <span id="laki" class="hidden text-[11px]" style="color:rgba(255,255,255,.85);">0</span>
-                <div id="lakiSpin" class="spinner-ring-gray" style="width:12px;height:12px;"></div>
-              </div>
-              <span class="text-[11px]" style="color:rgba(255,255,255,.85);">L</span>
-            </div>
-            <div class="flex items-center gap-1">
-              <div class="relative min-h-[15px] flex items-center">
-                <span id="perempuan" class="hidden text-[11px]" style="color:rgba(255,255,255,.85);">0</span>
-                <div id="perempuanSpin" class="spinner-ring-gray" style="width:12px;height:12px;"></div>
-              </div>
-              <span class="text-[11px]" style="color:rgba(255,255,255,.85);">P</span>
-            </div>
-          </div>
+        <span class="text-[12px]" style="color:rgba(255,255,255,.9);">L</span>
+        <span id="pctL" class="text-[12px]" style="color:rgba(255,255,255,.75);"></span>
+      </div>
+      <div class="flex items-center gap-1.5">
+        <span style="width:7px;height:7px;border-radius:50%;background:#F9A8D4;flex-shrink:0;"></span>
+        <div class="relative min-h-[15px] flex items-center">
+          <span id="perempuan" class="hidden text-[12px]" style="color:rgba(255,255,255,.9);">0</span>
+          <div id="perempuanSpin" class="spinner-ring-gray" style="width:12px;height:12px;"></div>
         </div>
+        <span class="text-[12px]" style="color:rgba(255,255,255,.9);">P</span>
+        <span id="pctP" class="text-[12px]" style="color:rgba(255,255,255,.75);"></span>
       </div>
     </div>
+    <div style="width:100%; height:5px; border-radius:999px; overflow:hidden; display:flex; margin-top:10px;">
+      <div id="barLPL" style="width:50%; height:100%; background:#7DD3FC; transition:width .5s ease;"></div>
+      <div id="barLPP" style="width:50%; height:100%; background:#F9A8D4; transition:width .5s ease;"></div>
+    </div>
+  </div>
 
-    <div onclick="bukaDataPegawaiDariBeranda('guru')" style="min-width:80%; scroll-snap-align:center; box-sizing:border-box; cursor:pointer;">
-      <div style="background:linear-gradient(160deg, #9A8FE8, #7B6FD6); border-radius:20px; box-shadow:0 6px 14px rgba(110,90,190,.25); padding:18px; height:128px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; position:relative;">
-        <div style="display:flex; align-items:flex-start; justify-content:space-between;">
-          <p style="font-size:11px; font-weight:700; color:rgba(255,255,255,.85); margin:0; text-transform:uppercase; letter-spacing:.02em;">Guru</p>
-          <div style="width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <span class="material-symbols-rounded text-[17px]" style="color:#fff;">import_contacts</span>
-          </div>
-        </div>
-        <div>
-          <div class="relative min-h-[30px] flex items-center">
-            <p id="totGuru" class="hidden text-[28px] font-extrabold tracking-tight tabular-nums leading-8 m-0" style="color:#fff;">0</p>
-            <div id="totGuruSpin" class="spinner-ring-gray"></div>
-          </div>
-          <p style="font-size:10.5px; color:rgba(255,255,255,.85); margin:6px 0 0;">Guru Kelas &amp; Guru Mapel</p>
-        </div>
-        <div style="position:absolute; bottom:18px; right:18px; display:flex; align-items:center; gap:2px;">
-          <span style="font-size:9.5px; font-weight:700; color:rgba(255,255,255,.9);">Detail</span>
-          <span class="material-symbols-rounded" style="font-size:12px; color:rgba(255,255,255,.9);">chevron_right</span>
-        </div>
-      </div>
+  <div class="flex gap-2 mb-3">
+
+    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer flex-1 flex items-center justify-center gap-1.5" style="background:var(--color-bg-card); border-radius:999px; box-shadow:var(--shadow-card); padding:10px;">
+      <span class="material-symbols-rounded text-[15px]" style="color:#7B81BE;">import_contacts</span>
+      <span class="text-[12px] font-bold" style="color:var(--color-text-primary);">Guru</span>
     </div>
 
-    <div onclick="bukaDataPegawaiDariBeranda('tendik')" style="min-width:80%; scroll-snap-align:center; box-sizing:border-box; cursor:pointer;">
-      <div style="background:linear-gradient(160deg, #F2A65A, #E08A38); border-radius:20px; box-shadow:0 6px 14px rgba(200,130,50,.25); padding:18px; height:128px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; position:relative;">
-        <div style="display:flex; align-items:flex-start; justify-content:space-between;">
-          <p style="font-size:11px; font-weight:700; color:rgba(255,255,255,.85); margin:0; text-transform:uppercase; letter-spacing:.02em;">Tendik</p>
-          <div style="width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <span class="material-symbols-rounded text-[17px]" style="color:#fff;">badge</span>
-          </div>
-        </div>
-        <div>
-          <div class="relative min-h-[30px] flex items-center">
-            <p id="totTendik" class="hidden text-[28px] font-extrabold tracking-tight tabular-nums leading-8 m-0" style="color:#fff;">0</p>
-            <div id="totTendikSpin" class="spinner-ring-gray"></div>
-          </div>
-          <p style="font-size:10.5px; color:rgba(255,255,255,.85); margin:6px 0 0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Kepsek, TU, Perpustakaan, Kebun</p>
-        </div>
-        <div style="position:absolute; bottom:18px; right:18px; display:flex; align-items:center; gap:2px;">
-          <span style="font-size:9.5px; font-weight:700; color:rgba(255,255,255,.9);">Detail</span>
-          <span class="material-symbols-rounded" style="font-size:12px; color:rgba(255,255,255,.9);">chevron_right</span>
-        </div>
-      </div>
+    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer flex-1 flex items-center justify-center gap-1.5" style="background:var(--color-bg-card); border-radius:999px; box-shadow:var(--shadow-card); padding:10px;">
+      <span class="material-symbols-rounded text-[15px]" style="color:#c07729;">badge</span>
+      <span class="text-[12px] font-bold" style="color:var(--color-text-primary);">Tendik</span>
     </div>
 
-    <div onclick="bukaDataRombelDariBeranda()" style="min-width:80%; scroll-snap-align:center; box-sizing:border-box; cursor:pointer;">
-      <div style="background:linear-gradient(160deg, #F0A0C0, #DE7BA3); border-radius:20px; box-shadow:0 6px 14px rgba(200,110,150,.25); padding:18px; height:128px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between; position:relative;">
-        <div style="display:flex; align-items:flex-start; justify-content:space-between;">
-          <p style="font-size:11px; font-weight:700; color:rgba(255,255,255,.85); margin:0; text-transform:uppercase; letter-spacing:.02em;">Total Rombel</p>
-          <div style="width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <span class="material-symbols-rounded text-[17px]" style="color:#fff;">groups</span>
-          </div>
-        </div>
-        <div>
-          <div class="relative min-h-[30px] flex items-center">
-            <p id="totRombel" class="hidden text-[28px] font-extrabold tracking-tight tabular-nums leading-8 m-0" style="color:#fff;">0</p>
-            <div id="totRombelSpin" class="spinner-ring-gray"></div>
-          </div>
-          <p style="font-size:10.5px; color:rgba(255,255,255,.85); margin:6px 0 0;">Kelas 1 - Kelas 6</p>
-        </div>
-        <div style="position:absolute; bottom:18px; right:18px; display:flex; align-items:center; gap:2px;">
-          <span style="font-size:9.5px; font-weight:700; color:rgba(255,255,255,.9);">Detail</span>
-          <span class="material-symbols-rounded" style="font-size:12px; color:rgba(255,255,255,.9);">chevron_right</span>
-        </div>
-      </div>
+    <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer flex-1 flex items-center justify-center gap-1.5" style="background:var(--color-bg-card); border-radius:999px; box-shadow:var(--shadow-card); padding:10px;">
+      <span class="material-symbols-rounded text-[15px]" style="color:#c2447a;">groups</span>
+      <span class="text-[12px] font-bold" style="color:var(--color-text-primary);">Rombel</span>
     </div>
 
   </div>
 
-  <div id="dotsRingkasan" class="mb-3" style="display:flex; justify-content:center; gap:6px;">
-    <span class="dotRingkasan" style="width:6px;height:6px;border-radius:50%;background:#1A1A1A;"></span>
-    <span class="dotRingkasan" style="width:6px;height:6px;border-radius:50%;background:#c9ced7;"></span>
-    <span class="dotRingkasan" style="width:6px;height:6px;border-radius:50%;background:#c9ced7;"></span>
-    <span class="dotRingkasan" style="width:6px;height:6px;border-radius:50%;background:#c9ced7;"></span>
-  </div>
+  <p id="totGuru" class="hidden" style="display:none !important;">0</p>
+  <div id="totGuruSpin" class="hidden" style="display:none !important;"></div>
+  <p id="totTendik" class="hidden" style="display:none !important;">0</p>
+  <div id="totTendikSpin" class="hidden" style="display:none !important;"></div>
+  <p id="totRombel" class="hidden" style="display:none !important;">0</p>
+  <div id="totRombelSpin" class="hidden" style="display:none !important;"></div>
 
 
 
@@ -2327,6 +2278,18 @@ let historyTabAktif = false;
       animasikanAngka('tot', totalSiswa, 900);
       animasikanAngka('laki', totalLaki, 900);
       animasikanAngka('perempuan', totalPerempuan, 900);
+
+      const totalLP = (totalLaki + totalPerempuan) || 1;
+      const pctLaki = Math.round((totalLaki / totalLP) * 100);
+      const pctPerempuan = 100 - pctLaki;
+      const elPctL = document.getElementById('pctL');
+      const elPctP = document.getElementById('pctP');
+      if(elPctL) elPctL.textContent = `(${pctLaki}%)`;
+      if(elPctP) elPctP.textContent = `(${pctPerempuan}%)`;
+      const elBarL = document.getElementById('barLPL');
+      const elBarP = document.getElementById('barLPP');
+      if(elBarL) elBarL.style.width = pctLaki + '%';
+      if(elBarP) elBarP.style.width = pctPerempuan + '%';
 
       
       const classes = [...new Set(d.map(r => r[2]))].filter(c => c).sort();
@@ -3745,54 +3708,6 @@ function warnaTerang(hex, faktor){
   const b = Math.round(parseInt(hex.substring(4,6),16) + (255 - parseInt(hex.substring(4,6),16)) * faktor);
   return '#' + [r,g,b].map(v => Math.max(0,Math.min(255,v)).toString(16).padStart(2,'0')).join('');
 }
-
-let scrollTimerRingkasan;
-function updateDotsRingkasan(){
-  const el = document.getElementById('carouselRingkasan');
-  if(!el || el.children.length < 6) return;
-  const unit = el.children[1].offsetWidth + 14;
-  const idx = Math.round(el.scrollLeft / unit);
-  const totalReal = el.children.length - 2;
-  let dotIdx = idx - 1;
-  if(dotIdx < 0) dotIdx = totalReal - 1;
-  if(dotIdx >= totalReal) dotIdx = 0;
-  document.querySelectorAll('.dotRingkasan').forEach((d,i)=>{
-    d.style.background = i === dotIdx ? '#1A1A1A' : '#c9ced7';
-  });
-
-  clearTimeout(scrollTimerRingkasan);
-  scrollTimerRingkasan = setTimeout(function(){
-    if(idx === 0){
-      el.scrollLeft = totalReal * unit;
-    }else if(idx === totalReal + 1){
-      el.scrollLeft = unit;
-    }
-  }, 120);
-}
-
-function initCarouselRingkasan(){
-  const el = document.getElementById('carouselRingkasan');
-  if(!el || el.dataset.loopInit) return;
-  const slides = Array.from(el.children);
-  if(slides.length < 2) return;
-  el.dataset.loopInit = '1';
-  function klonTanpaId(node){
-    const c = node.cloneNode(true);
-    c.removeAttribute('id');
-    c.querySelectorAll('[id]').forEach(function(n){ n.removeAttribute('id'); });
-    return c;
-  }
-  const klonAwal = klonTanpaId(slides[slides.length - 1]);
-  const klonAkhir = klonTanpaId(slides[0]);
-  el.insertBefore(klonAwal, el.firstChild);
-  el.appendChild(klonAkhir);
-  const unit = slides[0].offsetWidth + 14;
-  el.scrollLeft = unit;
-}
-window.addEventListener('load', initCarouselRingkasan);
-setTimeout(initCarouselRingkasan, 300);
-setTimeout(initCarouselRingkasan, 1200);
-initCarouselRingkasan();
 
 window.donutState = {};
 
