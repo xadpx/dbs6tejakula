@@ -1696,7 +1696,9 @@ let historyTabAktif = false;
       const totalSemuaDesil = Object.values(desil).reduce((a,b)=>a+b,0) || 1;
 
       const bawahDesil = (desil["Desil 1"]||0) + (desil["Desil 2"]||0) + (desil["Desil 3"]||0) + (desil["Desil 4"]||0);
+      const atasDesil = totalSemuaDesil - bawahDesil;
       const pctBawah = Math.round((bawahDesil / totalSemuaDesil) * 100);
+      const pctAtas = 100 - pctBawah;
       const statusPerhatian = pctBawah >= 30;
       const warnaStatusBg = statusPerhatian ? '#F5C4B3' : '#C0DD97';
       const warnaStatusTeks = statusPerhatian ? '#993C1D' : '#3B6D11';
@@ -1704,17 +1706,32 @@ let historyTabAktif = false;
       const warnaAksenDonat = statusPerhatian ? '#F2545B' : '#4ECDC4';
 
       const kartuRingkasan = `
-        <div class="neu-card" style="padding:18px; margin-bottom:12px; display:flex; align-items:center; gap:16px;">
-          <div style="position:relative; width:80px; height:80px; flex-shrink:0;">
-            <div style="width:100%; height:100%; border-radius:50%; background:conic-gradient(${warnaAksenDonat} 0% ${pctBawah}%, #E4E9F0 ${pctBawah}% 100%);"></div>
-            <div style="position:absolute; inset:10px; border-radius:50%; background:var(--color-bg-card); display:flex; align-items:center; justify-content:center; box-shadow: inset 2px 2px 5px rgba(163,177,198,.45), inset -2px -2px 5px rgba(255,255,255,.8);">
-              <span style="font-size:16px; font-weight:800; color:#1f2937;">${pctBawah}%</span>
+        <div class="neu-card" style="padding:18px; margin-bottom:12px;">
+          <div style="display:flex; align-items:center; gap:16px;">
+            <div style="position:relative; width:80px; height:80px; flex-shrink:0;">
+              <div style="width:100%; height:100%; border-radius:50%; background:conic-gradient(${warnaAksenDonat} 0% ${pctBawah}%, #E4E9F0 ${pctBawah}% 100%);"></div>
+              <div style="position:absolute; inset:10px; border-radius:50%; background:var(--color-bg-card); display:flex; align-items:center; justify-content:center; box-shadow: inset 2px 2px 5px rgba(163,177,198,.45), inset -2px -2px 5px rgba(255,255,255,.8);">
+                <span style="font-size:16px; font-weight:800; color:#1f2937;">${pctBawah}%</span>
+              </div>
+            </div>
+            <div style="flex:1; min-width:0;">
+              <p style="font-size:13px; font-weight:700; color:#1f2937; margin:0 0 3px;">${bawahDesil} siswa di Desil 1&ndash;4</p>
+              <p style="font-size:11.5px; color:#6b7280; margin:0; line-height:1.4;">dari total ${totalSemuaDesil} siswa terdata</p>
+              <span style="display:inline-flex; align-items:center; gap:5px; margin-top:8px; font-size:10px; font-weight:700; color:${warnaStatusTeks}; background:${warnaStatusBg}; padding:3px 9px; border-radius:999px;"><span style="width:5px; height:5px; border-radius:50%; background:${warnaStatusTeks}; flex-shrink:0;"></span>${labelStatus}</span>
             </div>
           </div>
-          <div style="flex:1; min-width:0;">
-            <p style="font-size:13px; font-weight:700; color:#1f2937; margin:0 0 3px;">${bawahDesil} siswa di Desil 1&ndash;4</p>
-            <p style="font-size:11.5px; color:#6b7280; margin:0; line-height:1.4;">dari total ${totalSemuaDesil} siswa terdata</p>
-            <span style="display:inline-block; margin-top:8px; font-size:10px; font-weight:700; color:${warnaStatusTeks}; background:${warnaStatusBg}; padding:3px 9px; border-radius:999px;">${labelStatus}</span>
+          <div style="display:flex; gap:14px; margin-top:16px; padding-top:14px; border-top:1px solid #E1E5EB;">
+            <div style="flex:1; min-width:0;">
+              <p style="font-size:11.5px; font-weight:700; color:#1f2937; margin:0 0 2px;">Desil 1&ndash;4</p>
+              <p style="font-size:11px; color:#6b7280; margin:0 0 6px;">${pctBawah}% <span style="color:#9ca3af;">(${bawahDesil} siswa)</span></p>
+              <div style="width:100%; height:4px; border-radius:999px; background:#DDE1E8; overflow:hidden;"><div style="width:${pctBawah}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #F7A8AC, #F2545B);"></div></div>
+            </div>
+            <div style="width:1px; background:#E1E5EB;"></div>
+            <div style="flex:1; min-width:0;">
+              <p style="font-size:11.5px; font-weight:700; color:#1f2937; margin:0 0 2px;">Desil 5&ndash;10</p>
+              <p style="font-size:11px; color:#6b7280; margin:0 0 6px;">${pctAtas}% <span style="color:#9ca3af;">(${atasDesil} siswa)</span></p>
+              <div style="width:100%; height:4px; border-radius:999px; background:#DDE1E8; overflow:hidden;"><div style="width:${pctAtas}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #A9A0F0, #6C5DD3);"></div></div>
+            </div>
           </div>
         </div>
       `;
@@ -1722,6 +1739,13 @@ let historyTabAktif = false;
       const isi = `
         ${kartuRingkasan}
         <div class="neu-card" style="padding:4px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-bottom:1px solid #F1F2F4;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="material-symbols-rounded text-[16px]" style="color:#6C5DD3;">bar_chart</span>
+              <span style="font-size:13px; font-weight:700; color:#1f2937;">Distribusi Kesejahteraan</span>
+            </div>
+            <span style="font-size:11px; font-weight:700; color:#4b5563; background:#E4E9F0; padding:5px 10px; border-radius:999px;">Desil 1&ndash;10</span>
+          </div>
           ${Object.keys(desil).map((label,i,arr) => {
             const persenBar = Math.round((desil[label] / totalSemuaDesil) * 100);
             return `
