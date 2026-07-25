@@ -975,38 +975,38 @@
 
   <p style="font-size:15px; font-weight:600; color:#23213A; margin:0 0 10px 4px;">Ringkasan data</p>
 
-  <div style="background:linear-gradient(160deg, rgba(139,133,214,.78), rgba(107,92,165,.85)); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter:blur(20px) saturate(180%); border:1px solid rgba(255,255,255,.35); border-radius:22px; box-shadow:0 16px 34px rgba(90,80,180,.32), inset 0 0 80px rgba(255,255,255,.08), inset 0 0 3px 1px rgba(255,255,255,.3); padding:18px; position:relative; margin-bottom:12px; overflow:hidden;">
-    <div style="position:absolute; top:18px; right:18px; width:36px; height:36px; border-radius:11px; background:rgba(255,255,255,.22); -webkit-backdrop-filter: blur(8px) saturate(160%); backdrop-filter: blur(8px) saturate(160%); -webkit-backdrop-filter:blur(8px) saturate(160%); border:1px solid rgba(255,255,255,.3); display:flex; align-items:center; justify-content:center;">
-      <span class="material-symbols-rounded text-[18px]" style="color:#fff;">school</span>
+  <div style="background:var(--color-bg-card); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); border:1px solid var(--glass-border); border-radius:22px; box-shadow:var(--shadow-card); padding:18px; position:relative; margin-bottom:12px; overflow:hidden;">
+    <div style="position:absolute; top:18px; right:18px; width:36px; height:36px; border-radius:11px; background:rgba(107,92,165,.12); -webkit-backdrop-filter: blur(8px) saturate(160%); backdrop-filter: blur(8px) saturate(160%); border:1px solid var(--glass-border); display:flex; align-items:center; justify-content:center;">
+      <span class="material-symbols-rounded text-[18px]" style="color:var(--color-primary);">school</span>
     </div>
-    <p style="font-size:11px; font-weight:700; color:rgba(255,255,255,.85); margin:0; text-transform:uppercase; letter-spacing:.03em;">Total Siswa</p>
+    <p style="font-size:11px; font-weight:700; color:#6C757D; margin:0; text-transform:uppercase; letter-spacing:.03em;">Total Siswa</p>
     <div class="relative min-h-[38px] flex items-center">
-      <p id="tot" class="hidden text-[32px] font-extrabold tracking-tight tabular-nums leading-8 m-0" style="color:#fff;">0</p>
+      <p id="tot" class="hidden text-[32px] font-extrabold tracking-tight tabular-nums leading-8 m-0" style="color:#23213A;">0</p>
       <div id="totSpin" class="spinner-ring-gray"></div>
     </div>
     <div class="flex gap-3.5 mt-2">
       <div class="flex items-center gap-1.5">
-        <span style="width:7px;height:7px;border-radius:50%;background:#7DD3FC;flex-shrink:0;"></span>
+        <span style="width:7px;height:7px;border-radius:50%;background:#5B93D6;flex-shrink:0;"></span>
         <div class="relative min-h-[15px] flex items-center">
-          <span id="laki" class="hidden text-[12px]" style="color:rgba(255,255,255,.9);">0</span>
+          <span id="laki" class="hidden text-[12px]" style="color:#4b5a72;">0</span>
           <div id="lakiSpin" class="spinner-ring-gray" style="width:12px;height:12px;"></div>
         </div>
-        <span class="text-[12px]" style="color:rgba(255,255,255,.9);">L</span>
-        <span id="pctL" class="text-[12px]" style="color:rgba(255,255,255,.75);"></span>
+        <span class="text-[12px]" style="color:#4b5a72;">L</span>
+        <span id="pctL" class="text-[12px]" style="color:#8a94a3;"></span>
       </div>
       <div class="flex items-center gap-1.5">
-        <span style="width:7px;height:7px;border-radius:50%;background:#F9A8D4;flex-shrink:0;"></span>
+        <span style="width:7px;height:7px;border-radius:50%;background:#D66BA0;flex-shrink:0;"></span>
         <div class="relative min-h-[15px] flex items-center">
-          <span id="perempuan" class="hidden text-[12px]" style="color:rgba(255,255,255,.9);">0</span>
+          <span id="perempuan" class="hidden text-[12px]" style="color:#4b5a72;">0</span>
           <div id="perempuanSpin" class="spinner-ring-gray" style="width:12px;height:12px;"></div>
         </div>
-        <span class="text-[12px]" style="color:rgba(255,255,255,.9);">P</span>
-        <span id="pctP" class="text-[12px]" style="color:rgba(255,255,255,.75);"></span>
+        <span class="text-[12px]" style="color:#4b5a72;">P</span>
+        <span id="pctP" class="text-[12px]" style="color:#8a94a3;"></span>
       </div>
     </div>
-    <div style="width:100%; height:5px; border-radius:999px; overflow:hidden; display:flex; margin-top:10px;">
-      <div id="barLPL" style="width:50%; height:100%; background:#7DD3FC; transition:width .5s ease;"></div>
-      <div id="barLPP" style="width:50%; height:100%; background:#F9A8D4; transition:width .5s ease;"></div>
+    <div style="width:100%; height:5px; border-radius:999px; overflow:hidden; display:flex; margin-top:10px; background:rgba(107,92,165,.12);">
+      <div id="barLPL" style="width:50%; height:100%; background:#5B93D6; transition:width .5s ease;"></div>
+      <div id="barLPP" style="width:50%; height:100%; background:#D66BA0; transition:width .5s ease;"></div>
     </div>
   </div>
 
@@ -1371,7 +1371,7 @@ Unduh Data
     </div>
   <div id="modal"
 class="hidden detail-fullpage-overlay fixed inset-0 z-[60] overflow-y-auto">
-    <div id="modalBox" class="detail-fullpage-box relative w-full min-h-full px-5 py-6 sm:px-10 md:px-16" style="max-width:480px; margin-left:auto; margin-right:auto; background:var(--color-bg-card); box-shadow: 0 20px 50px rgba(0,0,0,.25); border-radius: 20px;">
+    <div id="modalBox" class="detail-fullpage-box relative w-full min-h-full px-5 py-6 sm:px-10 md:px-16" style="max-width:480px; margin-left:auto; margin-right:auto; background:transparent; box-shadow: none; border-radius: 20px;">
 
      <div style="position:sticky; top:0; z-index:20; margin-left:-20px; margin-right:-20px;">
      <div class="flex items-center justify-between mb-8" style="background:var(--color-bg-card); padding-top:8px; padding-bottom:8px; padding-left:20px; padding-right:20px;">
@@ -1640,13 +1640,13 @@ let historyTabAktif = false;
               <div style="flex:1; min-width:0;">
                 <p style="font-size:11.5px; font-weight:700; color:#7C93C7; margin:0 0 2px;">Laki-laki</p>
                 <p style="font-size:11px; color:#6D6F8F; margin:0 0 6px;">${pctL}% <span style="color:#9ca3af;">(${totalL} siswa)</span></p>
-                <div style="width:100%; height:4px; border-radius:999px; background:#DDE1E8; overflow:hidden;"><div style="width:${pctL}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #AEC0E3, #7C93C7);"></div></div>
+                <div style="width:100%; height:4px; border-radius:999px; background:rgba(107,92,165,.12); overflow:hidden;"><div style="width:${pctL}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #AEC0E3, #7C93C7);"></div></div>
               </div>
               <div style="width:1px; background:rgba(255,255,255,.35);"></div>
               <div style="flex:1; min-width:0;">
                 <p style="font-size:11.5px; font-weight:700; color:#D48A9A; margin:0 0 2px;">Perempuan</p>
                 <p style="font-size:11px; color:#6D6F8F; margin:0 0 6px;">${pctP}% <span style="color:#9ca3af;">(${totalP} siswa)</span></p>
-                <div style="width:100%; height:4px; border-radius:999px; background:#DDE1E8; overflow:hidden;"><div style="width:${pctP}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #E8B9C4, #D48A9A);"></div></div>
+                <div style="width:100%; height:4px; border-radius:999px; background:rgba(107,92,165,.12); overflow:hidden;"><div style="width:${pctP}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #E8B9C4, #D48A9A);"></div></div>
               </div>
             </div>
           </div>
@@ -1796,13 +1796,13 @@ let historyTabAktif = false;
             <div style="flex:1; min-width:0;">
               <p style="font-size:11.5px; font-weight:700; color:#23213A; margin:0 0 2px;">Desil 1&ndash;4</p>
               <p style="font-size:11px; color:#6D6F8F; margin:0 0 6px;">${pctBawah}% <span style="color:#9ca3af;">(${bawahDesil} siswa)</span></p>
-              <div style="width:100%; height:4px; border-radius:999px; background:#DDE1E8; overflow:hidden;"><div style="width:${pctBawah}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #F7A8AC, #F2545B);"></div></div>
+              <div style="width:100%; height:4px; border-radius:999px; background:rgba(107,92,165,.12); overflow:hidden;"><div style="width:${pctBawah}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #F7A8AC, #F2545B);"></div></div>
             </div>
             <div style="width:1px; background:rgba(255,255,255,.35);"></div>
             <div style="flex:1; min-width:0;">
               <p style="font-size:11.5px; font-weight:700; color:#23213A; margin:0 0 2px;">Desil 5&ndash;10</p>
               <p style="font-size:11px; color:#6D6F8F; margin:0 0 6px;">${pctAtas}% <span style="color:#9ca3af;">(${atasDesil} siswa)</span></p>
-              <div style="width:100%; height:4px; border-radius:999px; background:#DDE1E8; overflow:hidden;"><div style="width:${pctAtas}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #A9A0F0, #6C5DD3);"></div></div>
+              <div style="width:100%; height:4px; border-radius:999px; background:rgba(107,92,165,.12); overflow:hidden;"><div style="width:${pctAtas}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #A9A0F0, #6C5DD3);"></div></div>
             </div>
           </div>
         </div>
@@ -1838,7 +1838,7 @@ let historyTabAktif = false;
                   <span class="material-symbols-rounded text-[16px]" style="color:#9ca3af;">chevron_right</span>
                 </div>
               </div>
-              <div style="width:100%; height:4px; border-radius:999px; background:#DDE1E8; margin-top:10px; overflow:hidden;">
+              <div style="width:100%; height:4px; border-radius:999px; background:rgba(107,92,165,.12); margin-top:10px; overflow:hidden;">
                 <div style="width:${persenBar}%; height:100%; border-radius:999px; background:linear-gradient(90deg, ${warnaTerang(WARNA_DESIL[label])}, ${WARNA_DESIL[label]});"></div>
               </div>
             </div>
@@ -1999,7 +1999,7 @@ let historyTabAktif = false;
                 <div style="flex:1; min-width:0;">
                   <p style="font-size:11px; font-weight:700; color:#23213A; margin:0 0 2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${label2}</p>
                   <p style="font-size:10.5px; color:#9ca3af; margin:0 0 6px;">${hitungKategori[label2]} siswa</p>
-                  <div style="width:100%; height:4px; border-radius:999px; background:#DDE1E8; overflow:hidden;"><div style="width:${Math.round((hitungKategori[label2]/totalRincian)*100)}%; height:100%; border-radius:999px; background:linear-gradient(90deg, ${gradasiKategori[label2][0]}, ${gradasiKategori[label2][1]});"></div></div>
+                  <div style="width:100%; height:4px; border-radius:999px; background:rgba(107,92,165,.12); overflow:hidden;"><div style="width:${Math.round((hitungKategori[label2]/totalRincian)*100)}%; height:100%; border-radius:999px; background:linear-gradient(90deg, ${gradasiKategori[label2][0]}, ${gradasiKategori[label2][1]});"></div></div>
                 </div>
               `).join('')}
             </div>
