@@ -1893,6 +1893,14 @@ let historyTabAktif = false;
                 <span style="flex-shrink:0; margin-left:8px; font-size:9.5px; font-weight:700; background:${warnaStatusR}26; color:${warnaPekat(warnaStatusR)}; padding:3px 9px; border-radius:999px; white-space:nowrap;">${statusR}</span>
               </div>
             `;}).join('')}
+          </div>
+        `;
+      }
+
+      document.getElementById('detail-content').innerHTML = `<div class="text-[13px] w-full max-w-4xl mx-auto">${isi}</div>`;
+    }
+
+    function bukaDataPegawaiDariBeranda(tipe){
       nav('siswa');
       setTimeout(function(){
         switchDataTab(tipe);
