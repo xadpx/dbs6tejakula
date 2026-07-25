@@ -2987,6 +2987,15 @@ function muatDataTendik(){
     });
 }
 
+function warnaJabatanTendik(jabatan){
+  const j = String(jabatan).toLowerCase();
+  if(j.includes('kepala')) return ['#5b4fa8','#7B81BE33'];
+  if(j.includes('usaha') || j.includes(' tu') || j === 'tu') return ['#0d7d70','#4ECDC433'];
+  if(j.includes('pustaka') || j.includes('perpustakaan')) return ['#c07729','#F2A65A33'];
+  if(j.includes('kebun') || j.includes('bersih') || j.includes('jaga') || j.includes('satpam') || j.includes('keamanan')) return ['#a3282e','#F2545B33'];
+  return ['#5b4fa8','#7B81BE33'];
+}
+
 function renderListPegawai(tipe){
   const sumber = tipe === 'guru' ? dataGuru : dataTendik;
   const el = document.getElementById(tipe === 'guru' ? 'panelDataGuru' : 'panelDataTendik');
@@ -3020,6 +3029,13 @@ function renderListPegawai(tipe){
     <div><p style="font-size:16px; font-weight:800; color:#1f2937; margin:0;">${guruMapelCount}</p><p style="font-size:10px; color:#6b7280; margin:1px 0 0;">Guru Mapel</p></div>
   </div>
 </div>`;
+ } else if(tipe === 'tendik'){
+   const jenisJabatanUnik = new Set(sumber.map(r => String(r[2] || '').trim()).filter(j => j !== '')).size;
+   kartuRingkasanGuru = `
+<div class="neu-card" style="padding:16px; margin-bottom:16px; display:flex; align-items:center; gap:12px;">
+  <div style="width:42px;height:42px;border-radius:12px;background:#F2A65A22;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span class="material-symbols-rounded text-[20px]" style="color:#c07729;">badge</span></div>
+  <div><p style="font-size:18px; font-weight:800; color:#1f2937; margin:0;">${sumber.length} Tendik</p><p style="font-size:11px; color:#6b7280; margin:2px 0 0;">${jenisJabatanUnik} jenis jabatan berbeda</p></div>
+</div>`;
  }
 
  el.innerHTML = `
@@ -3028,8 +3044,8 @@ ${kartuRingkasanGuru}
 ${sumber.map((r,i)=>{
   const jabatanR = String(r[2] || '').trim();
   const isGuruKelas = jabatanR === 'Guru Kelas';
-  const kategoriBadge = tipe === 'guru' ? (isGuruKelas ? 'Guru Kelas' : 'Guru Mapel') : '';
-  const warnaBadge = isGuruKelas ? ['#0d7d70','#4ECDC433'] : ['#c07729','#F2A65A33'];
+  const kategoriBadge = tipe === 'guru' ? (isGuruKelas ? 'Guru Kelas' : 'Guru Mapel') : jabatanR;
+  const warnaBadge = tipe === 'guru' ? (isGuruKelas ? ['#0d7d70','#4ECDC433'] : ['#c07729','#F2A65A33']) : warnaJabatanTendik(jabatanR);
   return `
 <div
 onpointerdown="buatRipple(event)"
@@ -3053,7 +3069,7 @@ style="${i === sumber.length - 1 ? '' : 'border-bottom:1px solid #F1F2F4;'}">
     </div>
   </div>
   <div class="flex items-center gap-2 flex-shrink-0 ml-2">
-    ${tipe === 'guru' ? `<span style="font-size:9.5px; font-weight:700; color:${warnaBadge[0]}; background:${warnaBadge[1]}; padding:3px 9px; border-radius:999px; white-space:nowrap;">${kategoriBadge}</span>` : ''}
+    ${kategoriBadge ? `<span style="font-size:9.5px; font-weight:700; color:${warnaBadge[0]}; background:${warnaBadge[1]}; padding:3px 9px; border-radius:999px; white-space:nowrap;">${kategoriBadge}</span>` : ''}
     <span class="material-symbols-rounded text-[16px]" style="color:#9ca3af;">chevron_right</span>
   </div>
 </div>
