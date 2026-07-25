@@ -67,12 +67,12 @@
       --radius-lg: 26px;
       --radius-full: 9999px;
 
-      /* Shadow ala glass (soft, berwarna, tanpa efek emboss neumorphic) */
-      --shadow-card: 0 10px 30px rgba(107,92,165,.16), 0 2px 8px rgba(74,111,194,.08), inset 0 1px 0 rgba(255,255,255,.55);
-      --shadow-fab:  0 12px 28px rgba(107,92,165,.24), inset 0 1px 0 rgba(255,255,255,.6);
-      --shadow-nav:  0 -10px 34px rgba(107,92,165,.14);
-      --blur-glass: blur(22px);
-      --blur-glass-sm: blur(12px);
+      /* Shadow ala glass — dengan inset glow berwarna + inner highlight ring (resep glassmorphism yang lebih meyakinkan) */
+      --shadow-card: 0 12px 36px rgba(107,92,165,.2), 0 2px 8px rgba(74,111,194,.1), inset 0 0 60px rgba(107,92,165,.07), inset 0 0 3px 1px rgba(255,255,255,.5);
+      --shadow-fab:  0 14px 30px rgba(107,92,165,.28), inset 0 0 40px rgba(107,92,165,.1), inset 0 0 3px 1px rgba(255,255,255,.55);
+      --shadow-nav:  0 -10px 34px rgba(107,92,165,.14), inset 0 0 3px 1px rgba(255,255,255,.4);
+      --blur-glass: blur(20px) saturate(180%);
+      --blur-glass-sm: blur(12px) saturate(160%);
 
       /* Font */
       --font-family: 'Plus Jakarta Sans', sans-serif;
@@ -474,7 +474,9 @@
       border: 1px solid var(--glass-border) !important;
       box-shadow:
         0 0 0 1px rgba(255,255,255,.2),
-        0 25px 55px rgba(35,33,58,.35) !important;
+        0 25px 55px rgba(35,33,58,.35),
+        inset 0 0 60px rgba(107,92,165,.08),
+        inset 0 0 3px 1px rgba(255,255,255,.5) !important;
     }
     .neu-modal-close{
       background:#ffffff !important;
@@ -965,8 +967,8 @@
 
   <p style="font-size:15px; font-weight:600; color:#23213A; margin:0 0 10px 4px;">Ringkasan data</p>
 
-  <div style="background:linear-gradient(160deg, rgba(139,133,214,.78), rgba(107,92,165,.85)); backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px); border:1px solid rgba(255,255,255,.35); border-radius:22px; box-shadow:0 16px 34px rgba(90,80,180,.3), inset 0 1px 1px rgba(255,255,255,.3); padding:18px; position:relative; margin-bottom:12px; overflow:hidden;">
-    <div style="position:absolute; top:18px; right:18px; width:36px; height:36px; border-radius:11px; background:rgba(255,255,255,.22); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.3); display:flex; align-items:center; justify-content:center;">
+  <div style="background:linear-gradient(160deg, rgba(139,133,214,.78), rgba(107,92,165,.85)); backdrop-filter:blur(20px) saturate(180%); -webkit-backdrop-filter:blur(20px) saturate(180%); border:1px solid rgba(255,255,255,.35); border-radius:22px; box-shadow:0 16px 34px rgba(90,80,180,.32), inset 0 0 80px rgba(255,255,255,.08), inset 0 0 3px 1px rgba(255,255,255,.3); padding:18px; position:relative; margin-bottom:12px; overflow:hidden;">
+    <div style="position:absolute; top:18px; right:18px; width:36px; height:36px; border-radius:11px; background:rgba(255,255,255,.22); backdrop-filter:blur(8px) saturate(160%); -webkit-backdrop-filter:blur(8px) saturate(160%); border:1px solid rgba(255,255,255,.3); display:flex; align-items:center; justify-content:center;">
       <span class="material-symbols-rounded text-[18px]" style="color:#fff;">school</span>
     </div>
     <p style="font-size:11px; font-weight:700; color:rgba(255,255,255,.85); margin:0; text-transform:uppercase; letter-spacing:.03em;">Total Siswa</p>
