@@ -940,7 +940,8 @@
 
   </div>
 
-  <div id="searchStickyWrap" style="z-index:30; background:var(--color-bg-card); padding-top:4px; margin-left:-20px; margin-right:-20px; padding-left:20px; padding-right:20px;">
+  <div id="searchStickyWrap" style="z-index:30; margin-left:-20px; margin-right:-20px;">
+  <div id="searchStickyInner" style="background:var(--color-bg-card); padding-top:4px; padding-left:20px; padding-right:20px;">
 
   <p id="searchModeTitle" class="hidden" style="font-size:18px; font-weight:700; color:#23213A; margin:0 0 16px;">Cari Siswa</p>
 
@@ -965,6 +966,7 @@
     </div>
   </div>
 
+  </div>
   </div>
 
   <div id="list-siswa" class="hidden"></div>
@@ -1371,7 +1373,8 @@ Unduh Data
 class="hidden detail-fullpage-overlay fixed inset-0 z-[60] overflow-y-auto">
     <div id="modalBox" class="detail-fullpage-box relative w-full min-h-full px-5 py-6 sm:px-10 md:px-16" style="max-width:480px; margin-left:auto; margin-right:auto; background:var(--color-bg-card); box-shadow: 0 20px 50px rgba(0,0,0,.25); border-radius: 20px;">
 
-     <div class="flex items-center justify-between mb-8" style="position:sticky; top:0; z-index:20; background:var(--color-bg-card); padding-top:8px; padding-bottom:8px; margin-left:-20px; margin-right:-20px; padding-left:20px; padding-right:20px;">
+     <div style="position:sticky; top:0; z-index:20; margin-left:-20px; margin-right:-20px;">
+     <div class="flex items-center justify-between mb-8" style="background:var(--color-bg-card); padding-top:8px; padding-bottom:8px; padding-left:20px; padding-right:20px;">
         <button
           onclick="mundurModal()"
           class="flex items-center justify-center shrink-0"
@@ -1410,6 +1413,7 @@ class="hidden detail-fullpage-overlay fixed inset-0 z-[60] overflow-y-auto">
             </div>
           </div>
         </div>
+      </div>
       </div>
 
             <div id="detail-content" class="text-sm space-y-2 text-gray-600"></div>
