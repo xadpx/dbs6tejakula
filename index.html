@@ -1589,22 +1589,67 @@ let historyTabAktif = false;
       if(data.length === 0){
         isi = `<p class="text-center text-gray-500 py-6">Data rombel belum tersedia</p>`;
       }else{
+        const totalL = data.reduce((a,r)=>a+r.L, 0);
+        const totalP = data.reduce((a,r)=>a+r.P, 0);
+        const totalSemua = (totalL + totalP) || 1;
+        const pctL = Math.round((totalL / totalSemua) * 100);
+        const pctP = 100 - pctL;
+
+        const kartuRingkasanRombel = `
+          <div class="neu-card" style="padding:18px; margin-bottom:16px;">
+            <div style="display:flex; align-items:center; gap:16px;">
+              <div style="position:relative; width:80px; height:80px; flex-shrink:0;">
+                <div style="width:100%; height:100%; border-radius:50%; background:conic-gradient(#7C93C7 0% ${pctL}%, #D48A9A ${pctL}% 100%);"></div>
+                <div style="position:absolute; inset:10px; border-radius:50%; background:var(--color-bg-card); display:flex; align-items:center; justify-content:center; box-shadow: inset 2px 2px 5px rgba(163,177,198,.45), inset -2px -2px 5px rgba(255,255,255,.8);">
+                  <span style="font-size:16px; font-weight:800; color:#1f2937;">${totalSemua}</span>
+                </div>
+              </div>
+              <div style="flex:1; min-width:0;">
+                <p style="font-size:13px; font-weight:700; color:#1f2937; margin:0 0 3px;">${totalSemua} siswa dalam ${data.length} rombel</p>
+                <p style="font-size:11.5px; color:#6b7280; margin:0; line-height:1.4;">tersebar di ${data[0].kelas}&ndash;${data[data.length-1].kelas.replace('Kelas ','')}</p>
+              </div>
+            </div>
+            <div style="display:flex; gap:14px; margin-top:16px; padding-top:14px; border-top:1px solid #E1E5EB;">
+              <div style="flex:1; min-width:0;">
+                <p style="font-size:11.5px; font-weight:700; color:#7C93C7; margin:0 0 2px;">Laki-laki</p>
+                <p style="font-size:11px; color:#6b7280; margin:0 0 6px;">${pctL}% <span style="color:#9ca3af;">(${totalL} siswa)</span></p>
+                <div style="width:100%; height:4px; border-radius:999px; background:#DDE1E8; overflow:hidden;"><div style="width:${pctL}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #AEC0E3, #7C93C7);"></div></div>
+              </div>
+              <div style="width:1px; background:#E1E5EB;"></div>
+              <div style="flex:1; min-width:0;">
+                <p style="font-size:11.5px; font-weight:700; color:#D48A9A; margin:0 0 2px;">Perempuan</p>
+                <p style="font-size:11px; color:#6b7280; margin:0 0 6px;">${pctP}% <span style="color:#9ca3af;">(${totalP} siswa)</span></p>
+                <div style="width:100%; height:4px; border-radius:999px; background:#DDE1E8; overflow:hidden;"><div style="width:${pctP}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #E8B9C4, #D48A9A);"></div></div>
+              </div>
+            </div>
+          </div>
+        `;
+
         isi = `
+          ${kartuRingkasanRombel}
           <div class="neu-card" style="padding:4px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-bottom:1px solid #F1F2F4;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span class="material-symbols-rounded text-[16px]" style="color:#7C93C7;">groups</span>
+                <span style="font-size:13px; font-weight:700; color:#1f2937;">Distribusi Rombel</span>
+              </div>
+              <span style="font-size:11px; font-weight:700; color:#4b5563; background:#E4E9F0; padding:5px 10px; border-radius:999px;">${data.length} kelas</span>
+            </div>
             ${data.map((r,i) => {
               const total = r.L + r.P;
               const garis = i === data.length - 1 ? '' : 'border-bottom:1px solid #F1F2F4;';
               const persenL = total > 0 ? Math.round((r.L / total) * 100) : 50;
+              const nomorKelas = r.kelas.replace('Kelas ','');
               return `
               <div
                 onpointerdown="buatRipple(event)"
                 onclick="tampilkanSiswaKelas('${r.kelas}')"
-                class="flex flex-col px-4 py-3 cursor-pointer active:bg-gray-50 transition ripple-effect"
+                class="flex flex-col px-7 py-3.5 cursor-pointer active:bg-gray-50 transition ripple-effect"
                 style="${garis}">
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-3">
-                    <div style="width:32px;height:32px;border-radius:12px;background:rgba(37,99,235,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                      <span style="color:#0091EA;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></span>
+                    <div style="width:32px;height:32px;border-radius:12px;background:#7C93C71A;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                      <span style="font-size:13px; font-weight:800; color:#7C93C7;">${nomorKelas}</span>
                     </div>
                     <div>
                       <div class="text-[13px] font-semibold text-gray-900">${r.kelas}</div>
@@ -1612,16 +1657,16 @@ let historyTabAktif = false;
                   </div>
                   <div class="flex items-center gap-2">
                     <span class="text-[13px] font-bold text-gray-700">${total}</span>
-                    <span class="material-symbols-rounded text-[16px]" style="color:#4b5563;">chevron_right</span>
+                    <span class="material-symbols-rounded text-[16px]" style="color:#9ca3af;">chevron_right</span>
                   </div>
                 </div>
-                <div class="flex items-center justify-between" style="margin-top:8px; font-size:11px; font-weight:600;">
+                <div class="flex items-center justify-between" style="margin-top:8px; font-size:10px; font-weight:700;">
                   <span style="color:#7C93C7;">L (${r.L})</span>
                   <span style="color:#D48A9A;">P (${r.P})</span>
                 </div>
-                <div style="width:100%; height:5px; border-radius:999px; overflow:hidden; display:flex; margin-top:3px;">
-                  <div style="width:${persenL}%; height:100%; background:#7C93C7;"></div>
-                  <div style="width:${100-persenL}%; height:100%; background:#D48A9A;"></div>
+                <div style="width:100%; height:4px; border-radius:999px; overflow:hidden; display:flex; margin-top:4px;">
+                  <div style="width:${persenL}%; height:100%; background:linear-gradient(90deg, #AEC0E3, #7C93C7);"></div>
+                  <div style="width:${100-persenL}%; height:100%; background:linear-gradient(90deg, #E8B9C4, #D48A9A);"></div>
                 </div>
               </div>
               `;
