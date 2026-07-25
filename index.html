@@ -90,13 +90,22 @@
       max-width: 100vw;
       touch-action: pan-y;
       font-family: var(--font-family);
+      background: var(--color-bg-app-3);
+      position: relative;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
       background:
         radial-gradient(circle at 12% 8%, rgba(159,195,242,.55) 0%, transparent 45%),
         radial-gradient(circle at 88% 18%, rgba(198,182,240,.5) 0%, transparent 50%),
         radial-gradient(circle at 20% 85%, rgba(240,184,206,.4) 0%, transparent 50%),
         radial-gradient(circle at 82% 90%, rgba(191,227,208,.4) 0%, transparent 45%),
         linear-gradient(160deg, var(--color-bg-app-1) 0%, var(--color-bg-app-2) 50%, var(--color-bg-app-3) 100%);
-      background-attachment: fixed;
     }
     #app-scroll, #p-home, #p-siswa, #p-download, #p-login {
       width: 100%;
@@ -149,7 +158,7 @@
     }
     .neu-mini-pill{
       background: rgba(255,255,255,.22);
-      backdrop-filter: var(--blur-glass-sm);
+      -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm);
       -webkit-backdrop-filter: var(--blur-glass-sm);
       border-radius:10px;
       padding:4px 8px;
@@ -333,7 +342,7 @@
     .neu-bg{ background: transparent; }
     .neu-card{
       background: var(--color-bg-card);
-      backdrop-filter: var(--blur-glass);
+      -webkit-backdrop-filter: var(--blur-glass); backdrop-filter: var(--blur-glass);
       -webkit-backdrop-filter: var(--blur-glass);
       border-radius: var(--radius-md);
       border: 1px solid var(--glass-border);
@@ -341,7 +350,7 @@
     }
     .neu-btn{
       background: rgba(255,255,255,.22);
-      backdrop-filter: var(--blur-glass-sm);
+      -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm);
       -webkit-backdrop-filter: var(--blur-glass-sm);
       border-radius: var(--radius-sm);
       border: 1px solid var(--glass-border);
@@ -353,7 +362,7 @@
     }
     .neu-nav{
       background: rgba(255,255,255,.22);
-      backdrop-filter: var(--blur-glass);
+      -webkit-backdrop-filter: var(--blur-glass); backdrop-filter: var(--blur-glass);
       -webkit-backdrop-filter: var(--blur-glass);
       box-shadow: var(--shadow-nav);
       border-top: 1px solid var(--glass-border);
@@ -362,7 +371,7 @@
       -webkit-appearance: none !important;
       appearance: none !important;
       background-color: rgba(255,255,255,.22) !important;
-      backdrop-filter: var(--blur-glass-sm) !important;
+      -webkit-backdrop-filter: var(--blur-glass-sm) !important; backdrop-filter: var(--blur-glass-sm) !important;
       -webkit-backdrop-filter: var(--blur-glass-sm) !important;
       border: 1px solid var(--glass-border) !important;
       border-radius: 9999px;
@@ -380,12 +389,12 @@
     [style*="rgba(255,255,255,.65)"],
     [style*="rgba(255,255,255,.22)"],
     [style*="rgba(255,255,255,.28)"]{
-      backdrop-filter: var(--blur-glass-sm);
+      -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm);
       -webkit-backdrop-filter: var(--blur-glass-sm);
     }
     .btn-unduh-neu{
       background: rgba(255,255,255,.22);
-      backdrop-filter: var(--blur-glass-sm);
+      -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm);
       -webkit-backdrop-filter: var(--blur-glass-sm);
       border: 1px solid var(--glass-border);
       box-shadow: 0 4px 14px rgba(107,92,165,.12);
@@ -458,7 +467,7 @@
     }
     .neu-nav-flat{
       background: rgba(255,255,255,.4);
-      backdrop-filter: var(--blur-glass);
+      -webkit-backdrop-filter: var(--blur-glass); backdrop-filter: var(--blur-glass);
       -webkit-backdrop-filter: var(--blur-glass);
       box-shadow: 0 -4px 20px rgba(107,92,165,.12);
       border-top: 1px solid var(--glass-border);
@@ -466,7 +475,7 @@
     }
     .neu-modal{
       background: rgba(255,255,255,.65) !important;
-      backdrop-filter: var(--blur-glass) !important;
+      -webkit-backdrop-filter: var(--blur-glass) !important; backdrop-filter: var(--blur-glass) !important;
       -webkit-backdrop-filter: var(--blur-glass) !important;
       border: 1px solid var(--glass-border) !important;
       box-shadow:
@@ -511,7 +520,7 @@
       width: 100%; height: 132px;
       display: flex; align-items: flex-end; justify-content: center;
       background: rgba(255,255,255,.35);
-      backdrop-filter: var(--blur-glass-sm);
+      -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm);
       -webkit-backdrop-filter: var(--blur-glass-sm);
       border: 1px solid var(--glass-border);
       border-radius: 20px;
@@ -536,7 +545,7 @@
     .pillbar-bubble {
       position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
       background: rgba(191,227,208,.85); color: #1F7A4F;
-      backdrop-filter: var(--blur-glass-sm);
+      -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm);
       font-size: 11px; font-weight: 800;
       padding: 3px 8px; border-radius: 9999px; white-space: nowrap;
       box-shadow: 0 3px 10px rgba(31,122,79,.15);
@@ -565,7 +574,7 @@
     .pillbar-hint-tooltip {
       position: absolute; left: 50%; top: 5px;
       transform: translateX(-50%) translateY(-4px);
-      background: rgba(35,33,58,.85); backdrop-filter: var(--blur-glass-sm); color: #fff; font-size: 9.5px; font-weight: 600;
+      background: rgba(35,33,58,.85); -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm); color: #fff; font-size: 9.5px; font-weight: 600;
       padding: 5px 9px; border-radius: 8px; white-space: nowrap;
       opacity: 0; pointer-events: none; z-index: 5;
       box-shadow: 0 4px 12px rgba(0,0,0,.18);
@@ -589,7 +598,7 @@
     .fab-copy {
       width: 34px; height: 34px; border-radius: 50%;
       background: rgba(255,255,255,.22);
-      backdrop-filter: var(--blur-glass-sm);
+      -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm);
       border: 1px solid var(--glass-border);
       box-shadow: 0 6px 16px rgba(107,92,165,.18);
       display: flex; align-items: center; justify-content: center;
@@ -610,7 +619,7 @@
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
       box-shadow: inset 0 2px 8px rgba(107,92,165,.14);
       background: rgba(255,255,255,.4);
-      backdrop-filter: var(--blur-glass-sm);
+      -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm);
       border: 1px solid var(--glass-border);
       padding: 0; margin: 0 auto;
       position: relative;
@@ -622,7 +631,7 @@
       width: 70px; height: 70px;
       border-radius: 50%;
       background: rgba(255,255,255,.55);
-      backdrop-filter: var(--blur-glass-sm);
+      -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm);
       border: 1px solid var(--glass-border);
       box-shadow: 0 4px 12px rgba(107,92,165,.14);
       z-index: 0;
@@ -660,7 +669,7 @@
       height: 136px;
       border-radius: 50%;
       background: rgba(255,255,255,.6);
-      backdrop-filter: var(--blur-glass);
+      -webkit-backdrop-filter: var(--blur-glass); backdrop-filter: var(--blur-glass);
       border: 1px solid var(--glass-border);
       box-shadow: var(--shadow-card);
       display: flex;
@@ -709,14 +718,14 @@
     .btn-unduh-pressed {
       box-shadow: inset 0 3px 8px rgba(107,92,165,.22) !important;
     }
-    .premium-popup-overlay { opacity: 0; transition: opacity .3s cubic-bezier(.16,1,.3,1); background: rgba(35,33,58,.25); backdrop-filter: var(--blur-glass-sm); }
+    .premium-popup-overlay { opacity: 0; transition: opacity .3s cubic-bezier(.16,1,.3,1); background: rgba(35,33,58,.25); -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm); }
     .premium-popup-overlay.show { opacity: 1; }
     .premium-popup-box {
       transform: scale(.92) translateY(12px); opacity: 0;
       transition: transform .35s cubic-bezier(.16,1,.3,1), opacity .3s cubic-bezier(.16,1,.3,1);
     }
     .premium-popup-overlay.show .premium-popup-box { transform: scale(1) translateY(0); opacity: 1; }
-    .detail-fullpage-overlay { opacity: 0; background: rgba(238,241,249,.28); backdrop-filter: var(--blur-glass); transition: opacity .3s cubic-bezier(.16,1,.3,1); }
+    .detail-fullpage-overlay { opacity: 0; background: rgba(238,241,249,.28); -webkit-backdrop-filter: var(--blur-glass); backdrop-filter: var(--blur-glass); transition: opacity .3s cubic-bezier(.16,1,.3,1); }
     .detail-fullpage-overlay.show { opacity: 1; }
     .detail-fullpage-box { transform: translateY(14px); opacity: 0; transition: transform .3s cubic-bezier(.16,1,.3,1), opacity .3s cubic-bezier(.16,1,.3,1); }
     .detail-fullpage-overlay.show .detail-fullpage-box { transform: translateY(0); opacity: 1; }
@@ -740,7 +749,7 @@
       scroll-snap-align:start;
       flex:0 0 100%;
       background: var(--color-bg-card);
-      backdrop-filter: var(--blur-glass);
+      -webkit-backdrop-filter: var(--blur-glass); backdrop-filter: var(--blur-glass);
       -webkit-backdrop-filter: var(--blur-glass);
       border: 1px solid var(--glass-border);
       box-shadow:var(--shadow-card);
@@ -754,7 +763,7 @@
       padding: 22px 20px;
       margin-bottom: 16px;
       background: linear-gradient(135deg, rgba(159,195,242,.85) 0%, rgba(107,92,165,.9) 100%);
-      backdrop-filter: var(--blur-glass);
+      -webkit-backdrop-filter: var(--blur-glass); backdrop-filter: var(--blur-glass);
       -webkit-backdrop-filter: var(--blur-glass);
       border: 1px solid rgba(255,255,255,.35);
       box-shadow:
@@ -799,7 +808,7 @@
       left:50%; bottom:8px;
       transform:translateX(-50%);
       display:flex; align-items:center; gap:5px;
-      background: rgba(35,33,58,.85); backdrop-filter: var(--blur-glass-sm); color:#fff;
+      background: rgba(35,33,58,.85); -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm); color:#fff;
       font-size:10.5px; font-weight:600;
       padding:6px 12px; border-radius:999px;
       box-shadow:0 4px 12px rgba(0,0,0,.18);
@@ -964,8 +973,8 @@
 
   <p style="font-size:15px; font-weight:600; color:#23213A; margin:0 0 10px 4px;">Ringkasan data</p>
 
-  <div style="background:linear-gradient(160deg, rgba(139,133,214,.78), rgba(107,92,165,.85)); backdrop-filter:blur(20px) saturate(180%); -webkit-backdrop-filter:blur(20px) saturate(180%); border:1px solid rgba(255,255,255,.35); border-radius:22px; box-shadow:0 16px 34px rgba(90,80,180,.32), inset 0 0 80px rgba(255,255,255,.08), inset 0 0 3px 1px rgba(255,255,255,.3); padding:18px; position:relative; margin-bottom:12px; overflow:hidden;">
-    <div style="position:absolute; top:18px; right:18px; width:36px; height:36px; border-radius:11px; background:rgba(255,255,255,.22); backdrop-filter:blur(8px) saturate(160%); -webkit-backdrop-filter:blur(8px) saturate(160%); border:1px solid rgba(255,255,255,.3); display:flex; align-items:center; justify-content:center;">
+  <div style="background:linear-gradient(160deg, rgba(139,133,214,.78), rgba(107,92,165,.85)); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter:blur(20px) saturate(180%); border:1px solid rgba(255,255,255,.35); border-radius:22px; box-shadow:0 16px 34px rgba(90,80,180,.32), inset 0 0 80px rgba(255,255,255,.08), inset 0 0 3px 1px rgba(255,255,255,.3); padding:18px; position:relative; margin-bottom:12px; overflow:hidden;">
+    <div style="position:absolute; top:18px; right:18px; width:36px; height:36px; border-radius:11px; background:rgba(255,255,255,.22); -webkit-backdrop-filter: blur(8px) saturate(160%); backdrop-filter: blur(8px) saturate(160%); -webkit-backdrop-filter:blur(8px) saturate(160%); border:1px solid rgba(255,255,255,.3); display:flex; align-items:center; justify-content:center;">
       <span class="material-symbols-rounded text-[18px]" style="color:#fff;">school</span>
     </div>
     <p style="font-size:11px; font-weight:700; color:rgba(255,255,255,.85); margin:0; text-transform:uppercase; letter-spacing:.03em;">Total Siswa</p>
