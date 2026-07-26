@@ -22,18 +22,18 @@
   <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-    /* ===== DESIGN TOKENS — GLASSMORPHISM (tema biru-ungu) ===== */
+    /* ===== DESIGN TOKENS — GLASSMORPHISM (tema netral abu-abu) ===== */
     :root {
       /* Warna dasar */
       --color-bg-app-1:   #EAF0FB;
       --color-bg-app-2:   #ECE7F9;
       --color-bg-app-3:   #F3ECF4;
-      --color-bg-card:    rgba(255,255,255,.22);
+      --color-bg-card:    rgba(255,255,255,.32);
       --color-bg-card-solid: #EEF1F9;
 
-      --color-primary:      #6B5CA5;
-      --color-primary-deep: #463D82;
-      --color-primary-soft: rgba(107,92,165,.14);
+      --color-primary:      #6B7280;
+      --color-primary-deep: #374151;
+      --color-primary-soft: rgba(110,110,118,.14);
 
       --color-accent-blue:    #9FC3F2;
       --color-accent-blue-deep: #4A6FC2;
@@ -47,7 +47,13 @@
       --color-text-secondary: #6D6F8F;
       --color-border:         rgba(255,255,255,.6);
 
-      --glass-border:     rgba(255,255,255,.65);
+      --glass-border:     rgba(200,190,255,.4);
+      --glass-border-warm: rgba(255,200,220,.45);
+      --blur-glass: blur(24px) saturate(240%);
+      --blur-glass-sm: blur(12px) saturate(200%);
+      --blur-hero: blur(40px) saturate(260%);
+      --blur-nav: blur(34px) saturate(250%);
+      --blur-chip: blur(8px) saturate(180%);
       --glass-highlight:  rgba(255,255,255,.85);
       --glass-shadow-col: 107,92,165;
 
@@ -68,11 +74,10 @@
       --radius-full: 9999px;
 
       /* Shadow ala glass — dengan inset glow berwarna + inner highlight ring (resep glassmorphism yang lebih meyakinkan) */
-      --shadow-card: 0 8px 24px rgba(107,92,165,.16);
-      --shadow-fab:  0 10px 26px rgba(107,92,165,.22);
-      --shadow-nav:  0 -6px 20px rgba(107,92,165,.12);
-      --blur-glass: blur(14px) saturate(200%);
-      --blur-glass-sm: blur(9px) saturate(180%);
+      --shadow-card: 0 14px 34px rgba(80,90,140,.18), 0 2px 6px rgba(80,90,140,.1), inset 0 1.5px 0 rgba(255,255,255,.9), inset 0 -8px 20px rgba(150,170,255,.06);
+      --shadow-fab:  0 16px 36px rgba(80,90,140,.24), inset 0 1.5px 0 rgba(255,255,255,.9), inset 0 -6px 16px rgba(255,180,210,.08);
+      --shadow-nav:  0 -14px 40px rgba(80,90,140,.2), inset 0 1.5px 0 rgba(255,255,255,.8);
+      --shadow-hero: 0 20px 46px rgba(80,90,140,.22), 0 3px 10px rgba(120,150,240,.12), inset 0 1.5px 0 rgba(255,255,255,.95), inset 0 -10px 26px rgba(160,180,255,.1);
 
       /* Font */
       --font-family: 'Plus Jakarta Sans', sans-serif;
@@ -101,10 +106,15 @@
       height: 100vh;
       z-index: -1;
       background:
-        radial-gradient(circle at 12% 8%, rgba(159,195,242,.55) 0%, transparent 45%),
-        radial-gradient(circle at 88% 18%, rgba(198,182,240,.5) 0%, transparent 50%),
-        radial-gradient(circle at 20% 85%, rgba(240,184,206,.4) 0%, transparent 50%),
-        radial-gradient(circle at 82% 90%, rgba(191,227,208,.4) 0%, transparent 45%),
+        radial-gradient(ellipse 72% 55% at 8% 4%, rgba(100,160,245,.85) 0%, transparent 68%),
+        radial-gradient(ellipse 60% 75% at 92% 10%, rgba(120,200,235,.75) 0%, transparent 68%),
+        radial-gradient(ellipse 55% 65% at 28% 26%, rgba(245,155,195,.6) 0%, transparent 62%),
+        radial-gradient(ellipse 78% 48% at 72% 42%, rgba(130,225,195,.6) 0%, transparent 62%),
+        radial-gradient(ellipse 58% 70% at 12% 58%, rgba(250,195,130,.55) 0%, transparent 62%),
+        radial-gradient(ellipse 66% 55% at 90% 62%, rgba(140,190,250,.7) 0%, transparent 62%),
+        radial-gradient(ellipse 85% 50% at 20% 90%, rgba(245,145,185,.65) 0%, transparent 68%),
+        radial-gradient(ellipse 62% 72% at 84% 94%, rgba(140,220,180,.65) 0%, transparent 68%),
+        radial-gradient(ellipse 90% 60% at 50% 50%, rgba(150,190,240,.4) 0%, transparent 70%),
         linear-gradient(160deg, var(--color-bg-app-1) 0%, var(--color-bg-app-2) 50%, var(--color-bg-app-3) 100%);
     }
     #app-scroll, #p-home, #p-siswa, #p-download, #p-login {
@@ -135,7 +145,7 @@
       border: 1px solid var(--glass-border);
       border-radius:7px;
       background:rgba(255,255,255,.45);
-      box-shadow: inset 0 1px 3px rgba(107,92,165,.18);
+      box-shadow: inset 0 1px 3px rgba(110,110,118,.18);
       cursor:pointer;
       transition:.15s;
       position:relative;
@@ -163,17 +173,17 @@
       border-radius:10px;
       padding:4px 8px;
       border: 1px solid var(--glass-border);
-      box-shadow: 0 3px 10px rgba(107,92,165,.1);
+      box-shadow: 0 3px 10px rgba(110,110,118,.1);
       transition:.15s;
     }
     .neu-mini-pill:active,
     .neu-mini-pill.pressed{
-      box-shadow: inset 0 2px 5px rgba(107,92,165,.18);
+      box-shadow: inset 0 2px 5px rgba(110,110,118,.18);
     }
     .toggle-track{
       background: rgba(255,255,255,.4) !important;
       border: 1px solid var(--glass-border) !important;
-      box-shadow: inset 0 1px 4px rgba(107,92,165,.16) !important;
+      box-shadow: inset 0 1px 4px rgba(110,110,118,.16) !important;
     }
     .toggle-track.on{
       background: linear-gradient(135deg, var(--color-accent-blue-deep) 0%, var(--color-primary) 100%) !important;
@@ -246,7 +256,7 @@
       height:40px;
       background: linear-gradient(135deg, var(--color-accent-blue-deep), var(--color-primary));
       color: #fff;
-      box-shadow: 0 6px 16px rgba(107,92,165,.4);
+      box-shadow: 0 6px 16px rgba(110,110,118,.4);
       transform: scale(1.15);
     }
     .nav-active .nav-icon-wrap .nav-icon{
@@ -262,7 +272,7 @@
     }
     .avatar-press:active{
       transform: scale(0.85);
-      background-color: rgba(107,92,165,.15);
+      background-color: rgba(110,110,118,.15);
     }
     .spinner-ring-gray{
       width: 20px;
@@ -299,7 +309,7 @@
       border-radius: 9999px;
       background: rgba(255,255,255,.22);
       border: 1px solid var(--glass-border);
-      box-shadow: 0 2px 8px rgba(107,92,165,.1);
+      box-shadow: 0 2px 8px rgba(110,110,118,.1);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -313,7 +323,7 @@
     }
     .btn-unduh-chart-icon:active,
     .btn-unduh-chart-icon.sedang-unduh{
-      box-shadow: inset 0 2px 5px rgba(107,92,165,.18);
+      box-shadow: inset 0 2px 5px rgba(110,110,118,.18);
     }
     .btn-unduh-chart-icon:active .material-symbols-rounded,
     .btn-unduh-chart-icon.sedang-unduh .material-symbols-rounded{
@@ -341,7 +351,7 @@
     }
     .neu-bg{ background: transparent; }
     .neu-card{
-      background: var(--color-bg-card);
+      background-color: var(--color-bg-card);
       -webkit-backdrop-filter: var(--blur-glass); backdrop-filter: var(--blur-glass);
       -webkit-backdrop-filter: var(--blur-glass);
       border-radius: var(--radius-md);
@@ -349,23 +359,23 @@
       box-shadow: var(--shadow-card);
     }
     .neu-btn{
-      background: rgba(255,255,255,.22);
-      -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm);
-      -webkit-backdrop-filter: var(--blur-glass-sm);
+      background-color: rgba(255,255,255,.16);
+      -webkit-backdrop-filter: var(--blur-chip); backdrop-filter: var(--blur-chip);
       border-radius: var(--radius-sm);
-      border: 1px solid var(--glass-border);
-      box-shadow: 0 4px 14px rgba(107,92,165,.12);
+      border: 1px solid var(--glass-border-warm);
+      box-shadow: 0 3px 10px rgba(80,90,140,.08);
       transition: box-shadow .12s ease;
     }
     .neu-btn:active{
-      box-shadow: inset 0 2px 5px rgba(107,92,165,.18);
+      box-shadow: inset 0 2px 5px rgba(110,110,118,.18);
     }
     .neu-nav{
-      background: rgba(255,255,255,.22);
-      -webkit-backdrop-filter: var(--blur-glass); backdrop-filter: var(--blur-glass);
-      -webkit-backdrop-filter: var(--blur-glass);
+      background-color: rgba(255,255,255,.5);
+      -webkit-backdrop-filter: var(--blur-nav); backdrop-filter: var(--blur-nav);
       box-shadow: var(--shadow-nav);
       border-top: 1px solid var(--glass-border);
+      border-left: 1px solid var(--glass-border);
+      border-right: 1px solid var(--glass-border);
     }
     .neu-search{
       -webkit-appearance: none !important;
@@ -375,7 +385,7 @@
       -webkit-backdrop-filter: var(--blur-glass-sm) !important;
       border: 1px solid var(--glass-border) !important;
       border-radius: 9999px;
-      box-shadow: inset 0 2px 6px rgba(107,92,165,.14) !important;
+      box-shadow: inset 0 2px 6px rgba(110,110,118,.14) !important;
     }
     /* Fallback global: pastikan SEMUA permukaan kaca (baik lewat class maupun inline style)
        benar-benar menampilkan efek blur, bukan cuma warna transparan datar. */
@@ -391,17 +401,23 @@
     [style*="rgba(255,255,255,.28)"]{
       -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm);
       -webkit-backdrop-filter: var(--blur-glass-sm);
+      background-image: linear-gradient(135deg, rgba(255,255,255,.45) 0%, rgba(255,255,255,.08) 35%, rgba(255,255,255,0) 60%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+      background-blend-mode: overlay, overlay;
+    }
+    .neu-card, .neu-btn, .neu-nav, .neu-search, .neu-mini-pill, .btn-unduh-neu{
+      background-image: linear-gradient(135deg, rgba(255,255,255,.5) 0%, rgba(255,255,255,.1) 35%, rgba(255,255,255,0) 60%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n2)' opacity='0.05'/%3E%3C/svg%3E");
+      background-blend-mode: overlay, overlay;
     }
     .btn-unduh-neu{
       background: rgba(255,255,255,.22);
       -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm);
       -webkit-backdrop-filter: var(--blur-glass-sm);
       border: 1px solid var(--glass-border);
-      box-shadow: 0 4px 14px rgba(107,92,165,.12);
+      box-shadow: 0 4px 14px rgba(110,110,118,.12);
       transition: box-shadow .1s ease, transform .1s ease;
     }
     .btn-unduh-neu:active{
-      box-shadow: inset 0 2px 6px rgba(107,92,165,.2);
+      box-shadow: inset 0 2px 6px rgba(110,110,118,.2);
       transform: scale(0.98);
     }
     #searchStickyWrap{
@@ -424,7 +440,7 @@
     }
     .neu-icon-pill.neu-icon-pill--purple{
       background: linear-gradient(135deg, #C6B6F0 0%, #6B5CA5 100%);
-      box-shadow: 0 6px 16px rgba(107,92,165,.4), inset 0 1px 1px rgba(255,255,255,.35);
+      box-shadow: 0 6px 16px rgba(110,110,118,.4), inset 0 1px 1px rgba(255,255,255,.35);
     }
     .neu-icon-pill.neu-icon-pill--orange{
       background: linear-gradient(135deg, #F6C99A 0%, #E8A566 100%);
@@ -457,7 +473,7 @@
       background: rgba(255,255,255,.22);
       border: 1px solid var(--glass-border);
       border-radius: 9999px !important;
-      box-shadow: 0 4px 14px rgba(107,92,165,.1);
+      box-shadow: 0 4px 14px rgba(110,110,118,.1);
       transition: box-shadow .15s ease;
     }
     .neu-dropdown:focus{
@@ -469,7 +485,7 @@
       background: rgba(255,255,255,.4);
       -webkit-backdrop-filter: var(--blur-glass); backdrop-filter: var(--blur-glass);
       -webkit-backdrop-filter: var(--blur-glass);
-      box-shadow: 0 -4px 20px rgba(107,92,165,.12);
+      box-shadow: 0 -4px 20px rgba(110,110,118,.12);
       border-top: 1px solid var(--glass-border);
       padding-bottom: env(safe-area-inset-bottom, 0px);
     }
@@ -481,7 +497,7 @@
       box-shadow:
         0 0 0 1px rgba(255,255,255,.2),
         0 25px 55px rgba(35,33,58,.35),
-        inset 0 0 60px rgba(107,92,165,.08),
+        inset 0 0 60px rgba(110,110,118,.08),
         inset 0 0 3px 1px rgba(255,255,255,.5) !important;
     }
     .neu-modal-close{
@@ -524,7 +540,7 @@
       -webkit-backdrop-filter: var(--blur-glass-sm);
       border: 1px solid var(--glass-border);
       border-radius: 20px;
-      box-shadow: inset 0 2px 6px rgba(107,92,165,.12);
+      box-shadow: inset 0 2px 6px rgba(110,110,118,.12);
       padding: 4px 3px;
       box-sizing: border-box;
     }
@@ -564,7 +580,7 @@
     }
     .pillbar-ripple {
       position: absolute; border-radius: 50%;
-      background: radial-gradient(circle, rgba(107,92,165,.35) 0%, rgba(107,92,165,.15) 60%, rgba(107,92,165,0) 70%);
+      background: radial-gradient(circle, rgba(110,110,118,.35) 0%, rgba(110,110,118,.15) 60%, rgba(110,110,118,0) 70%);
       transform: scale(0); opacity: 1;
       animation: pillbarRippleAnim .6s ease-out forwards;
     }
@@ -591,7 +607,7 @@
     .neu-ring-wrap {
       border-radius: 50%; flex-shrink: 0; position: relative;
       border: 1px solid var(--glass-border);
-      box-shadow: 0 3px 10px rgba(107,92,165,.1);
+      box-shadow: 0 3px 10px rgba(110,110,118,.1);
       display: flex; align-items: center; justify-content: center;
       background: rgba(255,255,255,.22);
     }
@@ -600,7 +616,7 @@
       background: rgba(255,255,255,.22);
       -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm);
       border: 1px solid var(--glass-border);
-      box-shadow: 0 6px 16px rgba(107,92,165,.18);
+      box-shadow: 0 6px 16px rgba(110,110,118,.18);
       display: flex; align-items: center; justify-content: center;
       color: var(--color-text-secondary);
     }
@@ -617,7 +633,7 @@
     }
     .chart-glass-wrap {
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      box-shadow: inset 0 2px 8px rgba(107,92,165,.14);
+      box-shadow: inset 0 2px 8px rgba(110,110,118,.14);
       background: rgba(255,255,255,.4);
       -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm);
       border: 1px solid var(--glass-border);
@@ -633,24 +649,24 @@
       background: rgba(255,255,255,.55);
       -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm);
       border: 1px solid var(--glass-border);
-      box-shadow: 0 4px 12px rgba(107,92,165,.14);
+      box-shadow: 0 4px 12px rgba(110,110,118,.14);
       z-index: 0;
     }
     .legend-chip-neu {
       display: flex; flex-direction: row; align-items: center; gap: 8px; justify-content: space-between;
       background: rgba(255,255,255,.22); border-radius: 999px; padding: 9px 14px;
       border: 1px solid var(--glass-border);
-      box-shadow: 0 4px 14px rgba(107,92,165,.1);
+      box-shadow: 0 4px 14px rgba(110,110,118,.1);
       position: relative; overflow: hidden;
     }
     .ripple-effect { position: relative; overflow: hidden; }
-    .ripple-span-global { position: absolute; border-radius: 50%; transform: scale(0); animation: rippleAnim .55s ease-out; background: rgba(107,92,165,.16); pointer-events: none; }
+    .ripple-span-global { position: absolute; border-radius: 50%; transform: scale(0); animation: rippleAnim .55s ease-out; background: rgba(110,110,118,.16); pointer-events: none; }
     .ripple-span {
       position: absolute;
       border-radius: 50%;
       transform: scale(0);
       animation: rippleAnim .55s ease-out;
-      background: rgba(107,92,165,.2);
+      background: rgba(110,110,118,.2);
       pointer-events: none;
     }
     @keyframes rippleAnim {
@@ -683,7 +699,7 @@
       z-index: 10;
     }
     .center-label.show:active {
-      box-shadow: inset 0 2px 6px rgba(107,92,165,.2);
+      box-shadow: inset 0 2px 6px rgba(110,110,118,.2);
       transform: translate(-50%, -50%) scale(0.96);
     }
     .cl-name { font-size: 11px; font-weight: 600; color: var(--color-text-secondary); }
@@ -691,12 +707,12 @@
     .center-label .cl-name { display:block; font-size: 11px; font-weight: 600; color: var(--color-text-secondary); order: 1; }
     .center-label .cl-pct { display:block; font-size: 19px; font-weight: 800; color: var(--color-text-primary); margin-top:3px; order: 2; }
     .legend-chip-neu.legend-chip-selected {
-      box-shadow: 0 0 0 2px rgba(107,92,165,.3);
+      box-shadow: 0 0 0 2px rgba(110,110,118,.3);
       transform: translateY(-1px);
     }
     .legend-chip-neu.legend-chip-pressed {
       transform: scale(0.94);
-      box-shadow: inset 0 2px 6px rgba(107,92,165,.18);
+      box-shadow: inset 0 2px 6px rgba(110,110,118,.18);
     }
     .card-collapse-head { cursor: pointer; position: relative; }
     .card-collapse-chev {
@@ -716,7 +732,7 @@
     .chart-preview-text { display: block; }
     .card-collapse-head.open .chart-preview-text { display: none; }
     .btn-unduh-pressed {
-      box-shadow: inset 0 3px 8px rgba(107,92,165,.22) !important;
+      box-shadow: inset 0 3px 8px rgba(110,110,118,.22) !important;
     }
     .premium-popup-overlay { opacity: 0; transition: opacity .3s cubic-bezier(.16,1,.3,1); background: rgba(35,33,58,.25); -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm); }
     .premium-popup-overlay.show { opacity: 1; }
@@ -748,7 +764,7 @@
     .chart-card-carousel{
       scroll-snap-align:start;
       flex:0 0 100%;
-      background: var(--color-bg-card);
+      background-color: var(--color-bg-card);
       -webkit-backdrop-filter: var(--blur-glass); backdrop-filter: var(--blur-glass);
       -webkit-backdrop-filter: var(--blur-glass);
       border: 1px solid var(--glass-border);
@@ -762,7 +778,7 @@
       border-radius: 26px;
       padding: 22px 20px;
       margin-bottom: 16px;
-      background: linear-gradient(135deg, rgba(159,195,242,.85) 0%, rgba(107,92,165,.9) 100%);
+      background: linear-gradient(135deg, rgba(159,195,242,.85) 0%, rgba(110,110,118,.9) 100%);
       -webkit-backdrop-filter: var(--blur-glass); backdrop-filter: var(--blur-glass);
       -webkit-backdrop-filter: var(--blur-glass);
       border: 1px solid rgba(255,255,255,.35);
@@ -797,7 +813,7 @@
       position: relative; z-index: 1;
     }
     .dot-grafik{
-      width:5px; height:5px; border-radius:50%; background: rgba(107,92,165,.3); transition:.2s;
+      width:5px; height:5px; border-radius:50%; background: rgba(110,110,118,.3); transition:.2s;
       display:inline-block;
     }
     .dot-grafik.active{
@@ -863,13 +879,13 @@
 
   <div id="p-login" class="hidden flex flex-col justify-center" style="min-height:100vh; min-height:100dvh; position:relative; overflow-y:auto; background:radial-gradient(circle at 15% 10%, rgba(159,195,242,.55) 0%, transparent 45%), radial-gradient(circle at 85% 20%, rgba(198,182,240,.5) 0%, transparent 50%), radial-gradient(circle at 20% 90%, rgba(240,184,206,.4) 0%, transparent 50%), linear-gradient(160deg, #EAF0FB 0%, #ECE7F9 50%, #F3ECF4 100%); padding:32px 24px 44px; box-sizing:border-box;">
 
-    <div style="position:absolute; top:-60px; right:-60px; width:220px; height:220px; border-radius:50%; box-shadow: inset 0 2px 8px rgba(107,92,165,.18);"></div>
-    <div style="position:absolute; top:140px; left:-80px; width:180px; height:180px; border-radius:50%; box-shadow: inset 0 2px 8px rgba(107,92,165,.15);"></div>
-    <div style="position:absolute; bottom:220px; right:-40px; width:160px; height:160px; border-radius:50%; box-shadow: inset 0 2px 8px rgba(107,92,165,.16);"></div>
+    <div style="position:absolute; top:-60px; right:-60px; width:220px; height:220px; border-radius:50%; box-shadow: inset 0 2px 8px rgba(110,110,118,.18);"></div>
+    <div style="position:absolute; top:140px; left:-80px; width:180px; height:180px; border-radius:50%; box-shadow: inset 0 2px 8px rgba(110,110,118,.15);"></div>
+    <div style="position:absolute; bottom:220px; right:-40px; width:160px; height:160px; border-radius:50%; box-shadow: inset 0 2px 8px rgba(110,110,118,.16);"></div>
 
     <div style="position:relative; z-index:1;">
 
-      <div style="width:56px;height:56px;border-radius:50%;background:var(--color-bg-card);box-shadow:var(--shadow-card);display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:16px;">
+      <div style="width:56px;height:56px;border-radius:50%;background-color:var(--color-bg-card);box-shadow:var(--shadow-card);display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:16px;">
         <img src="logo-sekolah.png" alt="Logo SD Negeri 6 Tejakula" style="width:40px;height:40px;object-fit:contain;">
       </div>
 
@@ -881,9 +897,9 @@
       </p>
 
       <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
-        <div style="flex:1; height:1px; background:rgba(107,92,165,.4);"></div>
+        <div style="flex:1; height:1px; background:rgba(110,110,118,.4);"></div>
         <span style="color:var(--color-text-secondary); font-size:11px; white-space:nowrap;">Silakan login</span>
-        <div style="flex:1; height:1px; background:rgba(107,92,165,.4);"></div>
+        <div style="flex:1; height:1px; background:rgba(110,110,118,.4);"></div>
       </div>
 
      <div style="display:flex; justify-content:center;">
@@ -891,12 +907,12 @@
           data-client_id="183272939624-9hm3c0ruqm5s5uo73vkk16v2lvu2cr6b.apps.googleusercontent.com"
           data-callback="handleGoogleCredential">
         </div>
-        <div style="border-radius:9999px; background:var(--color-bg-card); box-shadow:var(--shadow-card); padding:3px;">
+        <div style="border-radius:9999px; background-color:var(--color-bg-card); box-shadow:var(--shadow-card); padding:3px;">
           <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="filled_white" data-size="large" data-text="continue_with" data-logo_alignment="left" data-width="300"></div>
         </div>
       </div>
 
-      <div id="loginSpinner" class="hidden mt-4" style="justify-content:center;"><div class="spinner" style="width:28px;height:28px;border-width:3px;border-color:rgba(107,92,165,.35);border-top-color:var(--color-accent-blue-deep, #4A6FC2);"></div></div>
+      <div id="loginSpinner" class="hidden mt-4" style="justify-content:center;"><div class="spinner" style="width:28px;height:28px;border-width:3px;border-color:rgba(110,110,118,.35);border-top-color:var(--color-accent-blue-deep, #4A6FC2);"></div></div>
 
       <div id="loginError" class="hidden text-center mt-3" style="color:#DC2626; font-size:12px;"></div>
 
@@ -910,7 +926,7 @@
 
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-3">
-      <div id="avatarGuruWrap" style="width:44px;height:44px;border-radius:50%;background:var(--color-bg-card);box-shadow:var(--shadow-card);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;">
+      <div id="avatarGuruWrap" style="width:44px;height:44px;border-radius:50%;background-color:var(--color-bg-card);box-shadow:var(--shadow-card);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;">
         <img id="avatarGuruImg" src="" class="hidden" style="width:100%;height:100%;object-fit:cover;">
         <span id="avatarGuruFallback" class="material-symbols-rounded" style="font-size:22px;color:#9ca3af;">person</span>
       </div>
@@ -924,12 +940,12 @@
       <button id="btnNotifUpdate" onpointerdown="buatRipple(event)" onclick="toggleNotifUpdate(event)"
         class="relative flex items-center justify-center"
         style="width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.5);overflow:hidden;
-               box-shadow: 0 4px 12px rgba(107,92,165,.28);">
+               box-shadow: 0 4px 12px rgba(110,110,118,.28);">
         <span class="material-symbols-rounded" style="font-size:16px;color:#6D6F8F;">notifications</span>
         <span id="notifDot" class="hidden" style="position:absolute;top:3px;right:4px;width:7px;height:7px;border-radius:50%;background:var(--color-primary);border:1.5px solid #fff;"></span>
       </button>
       <div id="notifDropdown" class="hidden" style="position:absolute;top:38px;right:0;width:210px;background:rgba(255,255,255,.5);border-radius:16px;padding:12px;z-index:50;
-             box-shadow: 0 6px 18px rgba(107,92,165,.3);">
+             box-shadow: 0 6px 18px rgba(110,110,118,.3);">
         <p style="font-size:11px;font-weight:700;color:#374151;margin:0 0 8px;">Pembaruan Terakhir</p>
         <div id="notifList" style="display:flex;flex-direction:column;gap:6px;"></div>
       </div>
@@ -941,7 +957,7 @@
   </div>
 
   <div id="searchStickyWrap" style="z-index:30; margin-left:-20px; margin-right:-20px;">
-  <div id="searchStickyInner" style="background:var(--color-bg-card); padding-top:4px; padding-left:20px; padding-right:20px;">
+  <div id="searchStickyInner" style="background-color:var(--color-bg-card); padding-top:4px; padding-left:20px; padding-right:20px;">
 
   <p id="searchModeTitle" class="hidden" style="font-size:18px; font-weight:700; color:#23213A; margin:0 0 16px;">Cari Siswa</p>
 
@@ -975,8 +991,8 @@
 
   <p style="font-size:15px; font-weight:600; color:#23213A; margin:0 0 10px 4px;">Ringkasan data</p>
 
-  <div style="background:var(--color-bg-card); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); border:1px solid var(--glass-border); border-radius:22px; box-shadow:var(--shadow-card); padding:18px; position:relative; margin-bottom:12px; overflow:hidden;">
-    <div style="position:absolute; top:18px; right:18px; width:36px; height:36px; border-radius:11px; background:rgba(107,92,165,.12); -webkit-backdrop-filter: blur(8px) saturate(160%); backdrop-filter: blur(8px) saturate(160%); border:1px solid var(--glass-border); display:flex; align-items:center; justify-content:center;">
+  <div style="background-color:rgba(255,255,255,.32); -webkit-backdrop-filter: var(--blur-hero); backdrop-filter: var(--blur-hero); border:1px solid var(--glass-border); border-radius:22px; box-shadow:var(--shadow-hero); padding:18px; position:relative; margin-bottom:12px; overflow:hidden;">
+    <div style="position:absolute; top:18px; right:18px; width:36px; height:36px; border-radius:11px; background-color:rgba(255,255,255,.28); -webkit-backdrop-filter: var(--blur-chip); backdrop-filter: var(--blur-chip); border:1px solid var(--glass-border); box-shadow:0 4px 12px rgba(80,90,140,.12), inset 0 1px 0 rgba(255,255,255,.85); display:flex; align-items:center; justify-content:center;">
       <span class="material-symbols-rounded text-[18px]" style="color:var(--color-primary);">school</span>
     </div>
     <p style="font-size:11px; font-weight:700; color:#6C757D; margin:0; text-transform:uppercase; letter-spacing:.03em;">Total Siswa</p>
@@ -1004,7 +1020,7 @@
         <span id="pctP" class="text-[12px]" style="color:#8a94a3;"></span>
       </div>
     </div>
-    <div style="width:100%; height:5px; border-radius:999px; overflow:hidden; display:flex; margin-top:10px; background:rgba(107,92,165,.12);">
+    <div style="width:100%; height:5px; border-radius:999px; overflow:hidden; display:flex; margin-top:10px; background:rgba(110,110,118,.12);">
       <div id="barLPL" style="width:50%; height:100%; background:#5B93D6; transition:width .5s ease;"></div>
       <div id="barLPP" style="width:50%; height:100%; background:#D66BA0; transition:width .5s ease;"></div>
     </div>
@@ -1012,17 +1028,17 @@
 
   <div class="flex gap-2 mb-3">
 
-    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer flex-1 flex items-center justify-center gap-1.5" style="background:var(--color-bg-card); border-radius:999px; box-shadow:var(--shadow-card); padding:10px;">
+    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer flex-1 flex items-center justify-center gap-1.5" style="background-color:var(--color-bg-card); border-radius:999px; box-shadow:var(--shadow-card); padding:10px;">
       <span class="material-symbols-rounded text-[15px]" style="color:#7B81BE;">import_contacts</span>
       <span class="text-[12px] font-bold" style="color:var(--color-text-primary);">Guru</span>
     </div>
 
-    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer flex-1 flex items-center justify-center gap-1.5" style="background:var(--color-bg-card); border-radius:999px; box-shadow:var(--shadow-card); padding:10px;">
+    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer flex-1 flex items-center justify-center gap-1.5" style="background-color:var(--color-bg-card); border-radius:999px; box-shadow:var(--shadow-card); padding:10px;">
       <span class="material-symbols-rounded text-[15px]" style="color:#c07729;">badge</span>
       <span class="text-[12px] font-bold" style="color:var(--color-text-primary);">Tendik</span>
     </div>
 
-    <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer flex-1 flex items-center justify-center gap-1.5" style="background:var(--color-bg-card); border-radius:999px; box-shadow:var(--shadow-card); padding:10px;">
+    <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer flex-1 flex items-center justify-center gap-1.5" style="background-color:var(--color-bg-card); border-radius:999px; box-shadow:var(--shadow-card); padding:10px;">
       <span class="material-symbols-rounded text-[15px]" style="color:#c2447a;">groups</span>
       <span class="text-[12px] font-bold" style="color:var(--color-text-primary);">Rombel</span>
     </div>
@@ -1079,7 +1095,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
 
     <p class="text-[11px] font-bold text-gray-600 uppercase m-0 mt-5 mb-3" style="letter-spacing:.04em;">Kategori</p>
 
-    <div onclick="bukaKategoriKesejahteraanDariBeranda()" class="cursor-pointer flex items-center gap-3.5" style="background:var(--color-bg-card); border-radius:var(--radius-lg); box-shadow:var(--shadow-card); padding:16px; margin-bottom:12px;">
+    <div onclick="bukaKategoriKesejahteraanDariBeranda()" class="cursor-pointer flex items-center gap-3.5" style="background-color:var(--color-bg-card); border-radius:var(--radius-lg); box-shadow:var(--shadow-card); padding:16px; margin-bottom:12px;">
       <div style="width:46px;height:46px;border-radius:16px;background:rgba(224,122,47,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
         <span class="material-symbols-rounded text-[22px]" style="color:#E07A2F;">volunteer_activism</span>
       </div>
@@ -1094,7 +1110,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
       <span class="material-symbols-rounded text-[20px]" style="color:#4b5563; flex-shrink:0;">chevron_right</span>
     </div>
 
-    <div onclick="bukaKategoriStatusAnakDariBeranda()" class="cursor-pointer flex items-center gap-3.5" style="background:var(--color-bg-card); border-radius:var(--radius-lg); box-shadow:var(--shadow-card); padding:16px; margin-bottom:12px;">
+    <div onclick="bukaKategoriStatusAnakDariBeranda()" class="cursor-pointer flex items-center gap-3.5" style="background-color:var(--color-bg-card); border-radius:var(--radius-lg); box-shadow:var(--shadow-card); padding:16px; margin-bottom:12px;">
       <div style="width:46px;height:46px;border-radius:16px;background:rgba(44,156,143,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
         <span style="color:var(--color-accent-blue-deep, #4A6FC2);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></span>
       </div>
@@ -1132,10 +1148,10 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
         Data
       </h1>
 
-      <div id="dataTabTrack" data-no-ripple class="flex items-center mb-4" style="background:var(--color-bg-card);border-radius:9999px;padding:3px;gap:0;box-shadow: inset 0 1px 4px rgba(107,92,165,.15);">
+      <div id="dataTabTrack" data-no-ripple class="flex items-center mb-4" style="background-color:var(--color-bg-card);border-radius:9999px;padding:3px;gap:0;box-shadow: inset 0 1px 4px rgba(110,110,118,.15);">
         <button id="tabDataGuru" onclick="switchDataTab('guru')"
           class="flex-1 flex items-center justify-center gap-1 text-[12.5px] font-semibold py-2 px-1 rounded-full transition-all duration-200"
-          style="background:var(--color-bg-card);color:#23213A;box-shadow:var(--shadow-card);">
+          style="background-color:var(--color-bg-card);color:#23213A;box-shadow:var(--shadow-card);">
           <span class="material-symbols-rounded text-[15px]">school</span>
           Guru
         </button>
@@ -1374,12 +1390,12 @@ class="hidden detail-fullpage-overlay fixed inset-0 z-[60] overflow-y-auto">
     <div id="modalBox" class="detail-fullpage-box relative w-full min-h-full px-5 py-6 sm:px-10 md:px-16" style="max-width:480px; margin-left:auto; margin-right:auto; background:transparent; box-shadow: none; border-radius: 20px;">
 
      <div style="position:sticky; top:0; z-index:20; margin-left:-20px; margin-right:-20px;">
-     <div class="flex items-center justify-between mb-8" style="background:var(--color-bg-card); padding-top:8px; padding-bottom:8px; padding-left:20px; padding-right:20px;">
+     <div class="flex items-center justify-between mb-8" style="background-color:var(--color-bg-card); padding-top:8px; padding-bottom:8px; padding-left:20px; padding-right:20px;">
         <button
           onclick="mundurModal()"
           class="flex items-center justify-center shrink-0"
           style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.5);border:none;
-                 box-shadow: 0 6px 16px rgba(107,92,165,.32);">
+                 box-shadow: 0 6px 16px rgba(110,110,118,.32);">
           <span class="material-symbols-rounded text-[20px]" style="color:#5f6368;">chevron_left</span>
         </button>
 
@@ -1391,7 +1407,7 @@ class="hidden detail-fullpage-overlay fixed inset-0 z-[60] overflow-y-auto">
             onclick="toggleDetailMenu(event)"
             class="flex items-center justify-center"
             style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.5);border:none;
-                   box-shadow: 0 6px 16px rgba(107,92,165,.32);">
+                   box-shadow: 0 6px 16px rgba(110,110,118,.32);">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
               <circle cx="7" cy="7" r="3" stroke="#5f6368" stroke-width="1.6"/>
               <circle cx="17" cy="7" r="3" fill="#5f6368"/>
@@ -1401,7 +1417,7 @@ class="hidden detail-fullpage-overlay fixed inset-0 z-[60] overflow-y-auto">
           </button>
 
           <div id="detailDotsMenu" class="hidden" style="position:absolute;right:0;top:44px;width:190px;background:rgba(255,255,255,.5);border-radius:14px;padding:6px;z-index:20;
-               box-shadow: 0 6px 18px rgba(107,92,165,.3);">
+               box-shadow: 0 6px 18px rgba(110,110,118,.3);">
             <div onclick="salinDataSiswa()" class="cursor-pointer flex items-center gap-2 px-3 py-2 rounded-[10px] text-[13px] text-gray-700 hover:bg-gray-100">
               <span class="material-symbols-rounded text-[16px]">content_copy</span> Salin data
             </div>
@@ -1580,7 +1596,7 @@ let historyTabAktif = false;
         tendik: { btn: document.getElementById('tabDataTendik'),panel: document.getElementById('panelDataTendik') }
       };
 
-      const aktif       = 'background:var(--color-bg-card);color:#23213A;box-shadow:var(--shadow-card);';
+      const aktif       = 'background-color:var(--color-bg-card);color:#23213A;box-shadow:var(--shadow-card);';
       const nonaktif    = 'background:transparent;color:#6D6F8F;box-shadow:none;';
 
       const aktifStyle = { guru: aktif, tendik: aktif };
@@ -1627,7 +1643,7 @@ let historyTabAktif = false;
             <div style="display:flex; align-items:center; gap:16px;">
               <div style="position:relative; width:80px; height:80px; flex-shrink:0;">
                 <div style="width:100%; height:100%; border-radius:50%; background:conic-gradient(#7C93C7 0% ${pctL}%, #D48A9A ${pctL}% 100%);"></div>
-                <div style="position:absolute; inset:10px; border-radius:50%; background:var(--color-bg-card); display:flex; align-items:center; justify-content:center; box-shadow: inset 0 1px 4px rgba(107,92,165,.18);">
+                <div style="position:absolute; inset:10px; border-radius:50%; background-color:var(--color-bg-card); display:flex; align-items:center; justify-content:center; box-shadow: inset 0 1px 4px rgba(110,110,118,.18);">
                   <span style="font-size:16px; font-weight:800; color:#23213A;">${totalSemua}</span>
                 </div>
               </div>
@@ -1640,13 +1656,13 @@ let historyTabAktif = false;
               <div style="flex:1; min-width:0;">
                 <p style="font-size:11.5px; font-weight:700; color:#7C93C7; margin:0 0 2px;">Laki-laki</p>
                 <p style="font-size:11px; color:#6D6F8F; margin:0 0 6px;">${pctL}% <span style="color:#9ca3af;">(${totalL} siswa)</span></p>
-                <div style="width:100%; height:4px; border-radius:999px; background:rgba(107,92,165,.12); overflow:hidden;"><div style="width:${pctL}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #AEC0E3, #7C93C7);"></div></div>
+                <div style="width:100%; height:4px; border-radius:999px; background:rgba(110,110,118,.12); overflow:hidden;"><div style="width:${pctL}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #AEC0E3, #7C93C7);"></div></div>
               </div>
               <div style="width:1px; background:rgba(255,255,255,.35);"></div>
               <div style="flex:1; min-width:0;">
                 <p style="font-size:11.5px; font-weight:700; color:#D48A9A; margin:0 0 2px;">Perempuan</p>
                 <p style="font-size:11px; color:#6D6F8F; margin:0 0 6px;">${pctP}% <span style="color:#9ca3af;">(${totalP} siswa)</span></p>
-                <div style="width:100%; height:4px; border-radius:999px; background:rgba(107,92,165,.12); overflow:hidden;"><div style="width:${pctP}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #E8B9C4, #D48A9A);"></div></div>
+                <div style="width:100%; height:4px; border-radius:999px; background:rgba(110,110,118,.12); overflow:hidden;"><div style="width:${pctP}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #E8B9C4, #D48A9A);"></div></div>
               </div>
             </div>
           </div>
@@ -1782,7 +1798,7 @@ let historyTabAktif = false;
           <div style="display:flex; align-items:center; gap:16px;">
             <div style="position:relative; width:80px; height:80px; flex-shrink:0;">
               <div style="width:100%; height:100%; border-radius:50%; background:conic-gradient(${warnaAksenDonat} 0% ${pctBawah}%, rgba(255,255,255,.5) ${pctBawah}% 100%);"></div>
-              <div style="position:absolute; inset:10px; border-radius:50%; background:var(--color-bg-card); display:flex; align-items:center; justify-content:center; box-shadow: inset 0 1px 4px rgba(107,92,165,.18);">
+              <div style="position:absolute; inset:10px; border-radius:50%; background-color:var(--color-bg-card); display:flex; align-items:center; justify-content:center; box-shadow: inset 0 1px 4px rgba(110,110,118,.18);">
                 <span style="font-size:16px; font-weight:800; color:#23213A;">${pctBawah}%</span>
               </div>
             </div>
@@ -1796,13 +1812,13 @@ let historyTabAktif = false;
             <div style="flex:1; min-width:0;">
               <p style="font-size:11.5px; font-weight:700; color:#23213A; margin:0 0 2px;">Desil 1&ndash;4</p>
               <p style="font-size:11px; color:#6D6F8F; margin:0 0 6px;">${pctBawah}% <span style="color:#9ca3af;">(${bawahDesil} siswa)</span></p>
-              <div style="width:100%; height:4px; border-radius:999px; background:rgba(107,92,165,.12); overflow:hidden;"><div style="width:${pctBawah}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #F7A8AC, #F2545B);"></div></div>
+              <div style="width:100%; height:4px; border-radius:999px; background:rgba(110,110,118,.12); overflow:hidden;"><div style="width:${pctBawah}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #F7A8AC, #F2545B);"></div></div>
             </div>
             <div style="width:1px; background:rgba(255,255,255,.35);"></div>
             <div style="flex:1; min-width:0;">
               <p style="font-size:11.5px; font-weight:700; color:#23213A; margin:0 0 2px;">Desil 5&ndash;10</p>
               <p style="font-size:11px; color:#6D6F8F; margin:0 0 6px;">${pctAtas}% <span style="color:#9ca3af;">(${atasDesil} siswa)</span></p>
-              <div style="width:100%; height:4px; border-radius:999px; background:rgba(107,92,165,.12); overflow:hidden;"><div style="width:${pctAtas}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #A9A0F0, #6C5DD3);"></div></div>
+              <div style="width:100%; height:4px; border-radius:999px; background:rgba(110,110,118,.12); overflow:hidden;"><div style="width:${pctAtas}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #A9A0F0, #6C5DD3);"></div></div>
             </div>
           </div>
         </div>
@@ -1838,7 +1854,7 @@ let historyTabAktif = false;
                   <span class="material-symbols-rounded text-[16px]" style="color:#9ca3af;">chevron_right</span>
                 </div>
               </div>
-              <div style="width:100%; height:4px; border-radius:999px; background:rgba(107,92,165,.12); margin-top:10px; overflow:hidden;">
+              <div style="width:100%; height:4px; border-radius:999px; background:rgba(110,110,118,.12); margin-top:10px; overflow:hidden;">
                 <div style="width:${persenBar}%; height:100%; border-radius:999px; background:linear-gradient(90deg, ${warnaTerang(WARNA_DESIL[label])}, ${WARNA_DESIL[label]});"></div>
               </div>
             </div>
@@ -1984,7 +2000,7 @@ let historyTabAktif = false;
             <div style="display:flex; align-items:center; gap:16px;">
               <div style="position:relative; width:80px; height:80px; flex-shrink:0;">
                 <div style="width:100%; height:100%; border-radius:50%; background:conic-gradient(${stopDonatStatus});"></div>
-                <div style="position:absolute; inset:10px; border-radius:50%; background:var(--color-bg-card); display:flex; align-items:center; justify-content:center; box-shadow: inset 0 1px 4px rgba(107,92,165,.18);">
+                <div style="position:absolute; inset:10px; border-radius:50%; background-color:var(--color-bg-card); display:flex; align-items:center; justify-content:center; box-shadow: inset 0 1px 4px rgba(110,110,118,.18);">
                   <span style="font-size:16px; font-weight:800; color:#23213A;">${hasil.length}</span>
                 </div>
               </div>
@@ -1999,7 +2015,7 @@ let historyTabAktif = false;
                 <div style="flex:1; min-width:0;">
                   <p style="font-size:11px; font-weight:700; color:#23213A; margin:0 0 2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${label2}</p>
                   <p style="font-size:10.5px; color:#9ca3af; margin:0 0 6px;">${hitungKategori[label2]} siswa</p>
-                  <div style="width:100%; height:4px; border-radius:999px; background:rgba(107,92,165,.12); overflow:hidden;"><div style="width:${Math.round((hitungKategori[label2]/totalRincian)*100)}%; height:100%; border-radius:999px; background:linear-gradient(90deg, ${gradasiKategori[label2][0]}, ${gradasiKategori[label2][1]});"></div></div>
+                  <div style="width:100%; height:4px; border-radius:999px; background:rgba(110,110,118,.12); overflow:hidden;"><div style="width:${Math.round((hitungKategori[label2]/totalRincian)*100)}%; height:100%; border-radius:999px; background:linear-gradient(90deg, ${gradasiKategori[label2][0]}, ${gradasiKategori[label2][1]});"></div></div>
                 </div>
               `).join('')}
             </div>
@@ -2863,7 +2879,7 @@ function renderDetailSiswaContent(nik){
       data-link="${String(r[10] || '').trim().replace(/"/g, '&quot;')}"
       onclick="bukaDriveGuru(this.dataset.link)"
       class="w-[52px] h-[52px] sm:w-[92px] sm:h-[92px] rounded-full overflow-hidden flex items-center justify-center shrink-0 avatar-press cursor-pointer"
-      style="background:#eef1f4; box-shadow: 0 6px 16px rgba(107,92,165,.35);">
+      style="background:#eef1f4; box-shadow: 0 6px 16px rgba(110,110,118,.35);">
       <span class="material-symbols-rounded" style="font-size:28px; color:#aab3bd; font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;">person</span>
     </div>
     <div class="text-left sm:text-center">
@@ -3199,7 +3215,7 @@ function renderDetailPegawaiContent(tipe, idx){
       data-link="${String(r[10] || '').trim().replace(/"/g, '&quot;')}"
       onclick="bukaDriveGuru(this.dataset.link)"
       class="w-[52px] h-[52px] sm:w-[92px] sm:h-[92px] rounded-full overflow-hidden flex items-center justify-center shrink-0 avatar-press cursor-pointer"
-      style="background:#eef1f4; box-shadow: 0 6px 16px rgba(107,92,165,.35);">
+      style="background:#eef1f4; box-shadow: 0 6px 16px rgba(110,110,118,.35);">
       <span class="material-symbols-rounded" style="font-size:28px; color:#aab3bd; font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;">person</span>
     </div>
 
@@ -3856,7 +3872,7 @@ const leaderLinePlugin = {
       const dir = p.side === 'right' ? 1 : -1;
       const endX = p.midX + dir * stubLen;
 
-      ctx.strokeStyle = 'rgba(107,92,165,.6)';
+      ctx.strokeStyle = 'rgba(110,110,118,.6)';
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.moveTo(p.startX, p.startY);
