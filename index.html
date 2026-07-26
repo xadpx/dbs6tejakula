@@ -25,10 +25,10 @@
     /* ===== DESIGN TOKENS — GLASSMORPHISM (tema netral abu-abu) ===== */
     :root {
       /* Warna dasar */
-      --color-bg-app-1:   #EAF0FB;
-      --color-bg-app-2:   #ECE7F9;
-      --color-bg-app-3:   #F3ECF4;
-      --color-bg-card:    rgba(255,255,255,.32);
+      --color-bg-app-1:   #F4F5F7;
+      --color-bg-app-2:   #F4F5F7;
+      --color-bg-app-3:   #F4F5F7;
+      --color-bg-card:    #FFFFFF;
       --color-bg-card-solid: #EEF1F9;
 
       --color-primary:      #6B7280;
@@ -74,10 +74,10 @@
       --radius-full: 9999px;
 
       /* Shadow ala glass — dengan inset glow berwarna + inner highlight ring (resep glassmorphism yang lebih meyakinkan) */
-      --shadow-card: 0 14px 34px rgba(80,90,140,.18), 0 2px 6px rgba(80,90,140,.1), inset 0 1.5px 0 rgba(255,255,255,.9), inset 0 -8px 20px rgba(150,170,255,.06);
-      --shadow-fab:  0 16px 36px rgba(80,90,140,.24), inset 0 1.5px 0 rgba(255,255,255,.9), inset 0 -6px 16px rgba(255,180,210,.08);
-      --shadow-nav:  0 -14px 40px rgba(80,90,140,.2), inset 0 1.5px 0 rgba(255,255,255,.8);
-      --shadow-hero: 0 20px 46px rgba(80,90,140,.22), 0 3px 10px rgba(120,150,240,.12), inset 0 1.5px 0 rgba(255,255,255,.95), inset 0 -10px 26px rgba(160,180,255,.1);
+      --shadow-card: 0 2px 8px rgba(20,20,30,.06);
+      --shadow-fab:  0 4px 14px rgba(20,20,30,.12);
+      --shadow-nav:  0 -2px 12px rgba(20,20,30,.06);
+      --shadow-hero: 0 4px 16px rgba(20,20,30,.1);
 
       /* Font */
       --font-family: 'Plus Jakarta Sans', sans-serif;
@@ -98,25 +98,7 @@
       background: var(--color-bg-app-3);
       position: relative;
     }
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -1;
-      background:
-        radial-gradient(ellipse 72% 55% at 8% 4%, rgba(100,160,245,.85) 0%, transparent 68%),
-        radial-gradient(ellipse 60% 75% at 92% 10%, rgba(120,200,235,.75) 0%, transparent 68%),
-        radial-gradient(ellipse 55% 65% at 28% 26%, rgba(245,155,195,.6) 0%, transparent 62%),
-        radial-gradient(ellipse 78% 48% at 72% 42%, rgba(130,225,195,.6) 0%, transparent 62%),
-        radial-gradient(ellipse 58% 70% at 12% 58%, rgba(250,195,130,.55) 0%, transparent 62%),
-        radial-gradient(ellipse 66% 55% at 90% 62%, rgba(140,190,250,.7) 0%, transparent 62%),
-        radial-gradient(ellipse 85% 50% at 20% 90%, rgba(245,145,185,.65) 0%, transparent 68%),
-        radial-gradient(ellipse 62% 72% at 84% 94%, rgba(140,220,180,.65) 0%, transparent 68%),
-        radial-gradient(ellipse 90% 60% at 50% 50%, rgba(150,190,240,.4) 0%, transparent 70%),
-        linear-gradient(160deg, var(--color-bg-app-1) 0%, var(--color-bg-app-2) 50%, var(--color-bg-app-3) 100%);
-    }
+
     #app-scroll, #p-home, #p-siswa, #p-download, #p-login {
       width: 100%;
       max-width: 480px;
@@ -352,62 +334,36 @@
     .neu-bg{ background: transparent; }
     .neu-card{
       background-color: var(--color-bg-card);
-      -webkit-backdrop-filter: var(--blur-glass); backdrop-filter: var(--blur-glass);
-      -webkit-backdrop-filter: var(--blur-glass);
       border-radius: var(--radius-md);
-      border: 1px solid var(--glass-border);
-      box-shadow: var(--shadow-card);
+      border: none;
+      box-shadow: 0 2px 8px rgba(20,20,30,.06);
     }
     .neu-btn{
-      background-color: rgba(255,255,255,.16);
-      -webkit-backdrop-filter: var(--blur-chip); backdrop-filter: var(--blur-chip);
+      background-color: #FFFFFF;
       border-radius: var(--radius-sm);
-      border: 1px solid var(--glass-border-warm);
-      box-shadow: 0 3px 10px rgba(80,90,140,.08);
+      border: none;
+      box-shadow: 0 2px 6px rgba(20,20,30,.05);
       transition: box-shadow .12s ease;
     }
     .neu-btn:active{
       box-shadow: inset 0 2px 5px rgba(110,110,118,.18);
     }
     .neu-nav{
-      background-color: rgba(255,255,255,.5);
-      -webkit-backdrop-filter: var(--blur-nav); backdrop-filter: var(--blur-nav);
-      box-shadow: var(--shadow-nav);
-      border-top: 1px solid var(--glass-border);
-      border-left: 1px solid var(--glass-border);
-      border-right: 1px solid var(--glass-border);
+      background-color: #FFFFFF;
+      box-shadow: 0 -2px 12px rgba(20,20,30,.06);
+      border-top: 1px solid #ECEDF0;
     }
     .neu-search{
       -webkit-appearance: none !important;
       appearance: none !important;
-      background-color: rgba(255,255,255,.22) !important;
-      -webkit-backdrop-filter: var(--blur-glass-sm) !important; backdrop-filter: var(--blur-glass-sm) !important;
-      -webkit-backdrop-filter: var(--blur-glass-sm) !important;
-      border: 1px solid var(--glass-border) !important;
+      background-color: #FFFFFF !important;
+      border: 1px solid #ECEDF0 !important;
       border-radius: 9999px;
-      box-shadow: inset 0 2px 6px rgba(110,110,118,.14) !important;
+      box-shadow: 0 2px 8px rgba(20,20,30,.05) !important;
     }
     /* Fallback global: pastikan SEMUA permukaan kaca (baik lewat class maupun inline style)
        benar-benar menampilkan efek blur, bukan cuma warna transparan datar. */
-    [style*="var(--color-bg-card)"],
-    [style*="rgba(255,255,255,.5)"],
-    [style*="rgba(255,255,255,.45)"],
-    [style*="rgba(255,255,255,.4)"],
-    [style*="rgba(255,255,255,.35)"],
-    [style*="rgba(255,255,255,.55)"],
-    [style*="rgba(255,255,255,.6)"],
-    [style*="rgba(255,255,255,.65)"],
-    [style*="rgba(255,255,255,.22)"],
-    [style*="rgba(255,255,255,.28)"]{
-      -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm);
-      -webkit-backdrop-filter: var(--blur-glass-sm);
-      background-image: linear-gradient(135deg, rgba(255,255,255,.45) 0%, rgba(255,255,255,.08) 35%, rgba(255,255,255,0) 60%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
-      background-blend-mode: overlay, overlay;
-    }
-    .neu-card, .neu-btn, .neu-nav, .neu-search, .neu-mini-pill, .btn-unduh-neu{
-      background-image: linear-gradient(135deg, rgba(255,255,255,.5) 0%, rgba(255,255,255,.1) 35%, rgba(255,255,255,0) 60%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n2)' opacity='0.05'/%3E%3C/svg%3E");
-      background-blend-mode: overlay, overlay;
-    }
+
     .btn-unduh-neu{
       background: rgba(255,255,255,.22);
       -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm);
@@ -741,7 +697,7 @@
       transition: transform .35s cubic-bezier(.16,1,.3,1), opacity .3s cubic-bezier(.16,1,.3,1);
     }
     .premium-popup-overlay.show .premium-popup-box { transform: scale(1) translateY(0); opacity: 1; }
-    .detail-fullpage-overlay { opacity: 0; background: rgba(238,241,249,.28); -webkit-backdrop-filter: var(--blur-glass); backdrop-filter: var(--blur-glass); transition: opacity .3s cubic-bezier(.16,1,.3,1); }
+    .detail-fullpage-overlay { opacity: 0; background: var(--color-bg-app-3); transition: opacity .3s cubic-bezier(.16,1,.3,1); }
     .detail-fullpage-overlay.show { opacity: 1; }
     .detail-fullpage-box { transform: translateY(14px); opacity: 0; transition: transform .3s cubic-bezier(.16,1,.3,1), opacity .3s cubic-bezier(.16,1,.3,1); }
     .detail-fullpage-overlay.show .detail-fullpage-box { transform: translateY(0); opacity: 1; }
@@ -991,66 +947,78 @@
 
   <p style="font-size:15px; font-weight:600; color:#23213A; margin:0 0 10px 4px;">Ringkasan data</p>
 
-  <div style="background-color:rgba(255,255,255,.32); -webkit-backdrop-filter: var(--blur-hero); backdrop-filter: var(--blur-hero); border:1px solid var(--glass-border); border-radius:22px; box-shadow:var(--shadow-hero); padding:18px; position:relative; margin-bottom:12px; overflow:hidden;">
-    <div style="position:absolute; top:18px; right:18px; width:36px; height:36px; border-radius:11px; background-color:rgba(255,255,255,.28); -webkit-backdrop-filter: var(--blur-chip); backdrop-filter: var(--blur-chip); border:1px solid var(--glass-border); box-shadow:0 4px 12px rgba(80,90,140,.12), inset 0 1px 0 rgba(255,255,255,.85); display:flex; align-items:center; justify-content:center;">
-      <span class="material-symbols-rounded text-[18px]" style="color:var(--color-primary);">school</span>
-    </div>
-    <p style="font-size:11px; font-weight:700; color:#6C757D; margin:0; text-transform:uppercase; letter-spacing:.03em;">Total Siswa</p>
-    <div class="relative min-h-[38px] flex items-center">
-      <p id="tot" class="hidden text-[32px] font-extrabold tracking-tight tabular-nums leading-8 m-0" style="color:#23213A;">0</p>
-      <div id="totSpin" class="spinner-ring-gray"></div>
-    </div>
-    <div class="flex gap-3.5 mt-2">
-      <div class="flex items-center gap-1.5">
-        <span style="width:7px;height:7px;border-radius:50%;background:#5B93D6;flex-shrink:0;"></span>
-        <div class="relative min-h-[15px] flex items-center">
-          <span id="laki" class="hidden text-[12px]" style="color:#4b5a72;">0</span>
-          <div id="lakiSpin" class="spinner-ring-gray" style="width:12px;height:12px;"></div>
-        </div>
-        <span class="text-[12px]" style="color:#4b5a72;">L</span>
-        <span id="pctL" class="text-[12px]" style="color:#8a94a3;"></span>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+
+    <div style="grid-column:1 / 3; background:#0091EA; border-radius:20px; padding:18px; position:relative; overflow:hidden;">
+      <div style="position:absolute; top:14px; right:14px; width:34px; height:34px; border-radius:10px; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center;">
+        <span class="material-symbols-rounded text-[18px]" style="color:#fff;">school</span>
       </div>
-      <div class="flex items-center gap-1.5">
-        <span style="width:7px;height:7px;border-radius:50%;background:#D66BA0;flex-shrink:0;"></span>
-        <div class="relative min-h-[15px] flex items-center">
-          <span id="perempuan" class="hidden text-[12px]" style="color:#4b5a72;">0</span>
-          <div id="perempuanSpin" class="spinner-ring-gray" style="width:12px;height:12px;"></div>
+      <p style="font-size:11px; font-weight:700; color:rgba(255,255,255,.8); margin:0; text-transform:uppercase; letter-spacing:.03em;">Total Siswa</p>
+      <div class="relative min-h-[38px] flex items-center">
+        <p id="tot" class="hidden text-[32px] font-extrabold tracking-tight tabular-nums leading-8 m-0" style="color:#fff;">0</p>
+        <div id="totSpin" class="spinner-ring-gray"></div>
+      </div>
+      <div class="flex gap-3.5 mt-2">
+        <div class="flex items-center gap-1.5">
+          <div class="relative min-h-[15px] flex items-center">
+            <span id="laki" class="hidden text-[12px]" style="color:rgba(255,255,255,.9);">0</span>
+            <div id="lakiSpin" class="spinner-ring-gray" style="width:12px;height:12px;"></div>
+          </div>
+          <span class="text-[12px]" style="color:rgba(255,255,255,.9);">L</span>
+          <span id="pctL" class="text-[12px]" style="color:rgba(255,255,255,.7);"></span>
         </div>
-        <span class="text-[12px]" style="color:#4b5a72;">P</span>
-        <span id="pctP" class="text-[12px]" style="color:#8a94a3;"></span>
+        <div class="flex items-center gap-1.5">
+          <div class="relative min-h-[15px] flex items-center">
+            <span id="perempuan" class="hidden text-[12px]" style="color:rgba(255,255,255,.9);">0</span>
+            <div id="perempuanSpin" class="spinner-ring-gray" style="width:12px;height:12px;"></div>
+          </div>
+          <span class="text-[12px]" style="color:rgba(255,255,255,.9);">P</span>
+          <span id="pctP" class="text-[12px]" style="color:rgba(255,255,255,.7);"></span>
+        </div>
+      </div>
+      <div style="width:100%; height:5px; border-radius:999px; overflow:hidden; display:flex; margin-top:10px; background:rgba(255,255,255,.25);">
+        <div id="barLPL" style="width:50%; height:100%; background:#fff; transition:width .5s ease;"></div>
+        <div id="barLPP" style="width:50%; height:100%; background:rgba(255,255,255,.55); transition:width .5s ease;"></div>
       </div>
     </div>
-    <div style="width:100%; height:5px; border-radius:999px; overflow:hidden; display:flex; margin-top:10px; background:rgba(110,110,118,.12);">
-      <div id="barLPL" style="width:50%; height:100%; background:#5B93D6; transition:width .5s ease;"></div>
-      <div id="barLPP" style="width:50%; height:100%; background:#D66BA0; transition:width .5s ease;"></div>
+
+    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="background:#7B81BE; border-radius:18px; padding:14px; display:flex; flex-direction:column; justify-content:space-between; min-height:96px;">
+      <span class="material-symbols-rounded text-[20px]" style="color:#fff;">import_contacts</span>
+      <div>
+        <div class="relative min-h-[26px] flex items-center">
+          <p id="totGuru" class="hidden text-[22px] font-extrabold tracking-tight tabular-nums leading-6 m-0" style="color:#fff;">0</p>
+          <div id="totGuruSpin" class="spinner-ring-gray" style="width:16px;height:16px;"></div>
+        </div>
+        <p style="font-size:11px; color:rgba(255,255,255,.85); margin:2px 0 0;">Guru</p>
+      </div>
     </div>
+
+    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer" style="background:#F2A65A; border-radius:18px; padding:14px; display:flex; flex-direction:column; justify-content:space-between; min-height:96px;">
+      <span class="material-symbols-rounded text-[20px]" style="color:#fff;">badge</span>
+      <div>
+        <div class="relative min-h-[26px] flex items-center">
+          <p id="totTendik" class="hidden text-[22px] font-extrabold tracking-tight tabular-nums leading-6 m-0" style="color:#fff;">0</p>
+          <div id="totTendikSpin" class="spinner-ring-gray" style="width:16px;height:16px;"></div>
+        </div>
+        <p style="font-size:11px; color:rgba(255,255,255,.85); margin:2px 0 0;">Tendik</p>
+      </div>
+    </div>
+
+    <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="grid-column:1 / 3; background:#F88AB0; border-radius:18px; padding:14px 16px; display:flex; align-items:center; justify-content:space-between;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span class="material-symbols-rounded text-[20px]" style="color:#fff;">groups</span>
+        <div>
+          <p style="font-size:11px; color:rgba(255,255,255,.85); margin:0;">Total Rombel</p>
+          <div class="relative min-h-[22px] flex items-center">
+            <p id="totRombel" class="hidden text-[18px] font-extrabold tracking-tight tabular-nums leading-5 m-0" style="color:#fff;">0</p>
+            <div id="totRombelSpin" class="spinner-ring-gray" style="width:14px;height:14px;"></div>
+          </div>
+        </div>
+      </div>
+      <span class="material-symbols-rounded text-[16px]" style="color:rgba(255,255,255,.85);">chevron_right</span>
+    </div>
+
   </div>
-
-  <div class="flex gap-2 mb-3">
-
-    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer flex-1 flex items-center justify-center gap-1.5" style="background-color:var(--color-bg-card); border-radius:999px; box-shadow:var(--shadow-card); padding:10px;">
-      <span class="material-symbols-rounded text-[15px]" style="color:#7B81BE;">import_contacts</span>
-      <span class="text-[12px] font-bold" style="color:var(--color-text-primary);">Guru</span>
-    </div>
-
-    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer flex-1 flex items-center justify-center gap-1.5" style="background-color:var(--color-bg-card); border-radius:999px; box-shadow:var(--shadow-card); padding:10px;">
-      <span class="material-symbols-rounded text-[15px]" style="color:#c07729;">badge</span>
-      <span class="text-[12px] font-bold" style="color:var(--color-text-primary);">Tendik</span>
-    </div>
-
-    <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer flex-1 flex items-center justify-center gap-1.5" style="background-color:var(--color-bg-card); border-radius:999px; box-shadow:var(--shadow-card); padding:10px;">
-      <span class="material-symbols-rounded text-[15px]" style="color:#c2447a;">groups</span>
-      <span class="text-[12px] font-bold" style="color:var(--color-text-primary);">Rombel</span>
-    </div>
-
-  </div>
-
-  <p id="totGuru" class="hidden" style="display:none !important;">0</p>
-  <div id="totGuruSpin" class="hidden" style="display:none !important;"></div>
-  <p id="totTendik" class="hidden" style="display:none !important;">0</p>
-  <div id="totTendikSpin" class="hidden" style="display:none !important;"></div>
-  <p id="totRombel" class="hidden" style="display:none !important;">0</p>
-  <div id="totRombelSpin" class="hidden" style="display:none !important;"></div>
 
 
 
