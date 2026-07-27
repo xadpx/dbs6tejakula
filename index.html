@@ -383,32 +383,6 @@
       position: sticky;
       top: 0;
     }
-    .neu-icon-pill{
-      width: 64px;
-      height: 38px;
-      border-radius: 9999px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      background: linear-gradient(135deg, #9FC3F2 0%, #4A6FC2 100%);
-      box-shadow: 0 6px 16px rgba(74,111,194,.35), inset 0 1px 1px rgba(255,255,255,.35);
-    }
-    .neu-icon-pill.neu-icon-pill--purple{
-      background: linear-gradient(135deg, #C6B6F0 0%, #6B5CA5 100%);
-      box-shadow: 0 6px 16px rgba(110,110,118,.4), inset 0 1px 1px rgba(255,255,255,.35);
-    }
-    .neu-icon-pill.neu-icon-pill--orange{
-      background: linear-gradient(135deg, #F6C99A 0%, #E8A566 100%);
-      box-shadow: 0 6px 16px rgba(200,140,60,.35), inset 0 1px 1px rgba(255,255,255,.35);
-    }
-    .neu-icon-pill.neu-icon-pill--pink{
-      background: linear-gradient(135deg, #F0B8CE 0%, #E288AC 100%);
-      box-shadow: 0 6px 16px rgba(200,60,120,.32), inset 0 1px 1px rgba(255,255,255,.35);
-    }
-    .neu-icon-pill .material-symbols-rounded{
-      color: #ffffff !important;
-    }
     .neu-search-icon{
       width: 30px;
       height: 30px;
@@ -883,7 +857,7 @@
     <div class="flex items-center gap-3">
       <div id="avatarGuruWrap" style="width:44px;height:44px;border-radius:50%;background-color:var(--color-bg-card);box-shadow:var(--shadow-card);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;">
         <img id="avatarGuruImg" src="" class="hidden" style="width:100%;height:100%;object-fit:cover;">
-        <span id="avatarGuruFallback" class="material-symbols-rounded" style="font-size:22px;color:#9ca3af;">person</span>
+        <span id="avatarGuruFallback" class="material-symbols-rounded" style="font-size:22px;color:#6b7280;">person</span>
       </div>
       <div>
         <p id="greetingText" class="text-sm text-gray-500 m-0"></p>
@@ -981,40 +955,37 @@
       </div>
     </div>
 
-    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="background:#7B81BE; border-radius:18px; padding:14px; display:flex; flex-direction:column; justify-content:space-between; min-height:96px;">
-      <span class="material-symbols-rounded text-[20px]" style="color:#fff;">import_contacts</span>
-      <div>
-        <div class="relative min-h-[26px] flex items-center">
-          <p id="totGuru" class="hidden text-[22px] font-extrabold tracking-tight tabular-nums leading-6 m-0" style="color:#fff;">0</p>
-          <div id="totGuruSpin" class="spinner-ring-gray" style="width:16px;height:16px;"></div>
-        </div>
-        <p style="font-size:11px; color:rgba(255,255,255,.85); margin:2px 0 0;">Guru</p>
+    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="background:#7B81BE; border-radius:18px; padding:14px 38px 14px 14px; position:relative; min-height:96px;">
+      <span class="material-symbols-rounded text-[20px]" style="position:absolute; top:14px; right:14px; color:#fff;">import_contacts</span>
+      <span class="material-symbols-rounded text-[18px]" style="position:absolute; top:50%; right:12px; transform:translateY(-50%); color:rgba(255,255,255,.95);">chevron_right</span>
+      <p style="font-size:12px; font-weight:700; color:#fff; margin:0;">Guru</p>
+      <div class="relative min-h-[26px] flex items-center" style="margin-top:4px;">
+        <p id="totGuru" class="hidden text-[24px] font-extrabold tracking-tight tabular-nums leading-6 m-0" style="color:#fff;">0</p>
+        <div id="totGuruSpin" class="spinner-ring-gray" style="width:16px;height:16px;"></div>
       </div>
+      <p style="font-size:11.5px; font-weight:600; color:#fff; margin:3px 0 0;">Guru Kelas &amp; Mapel</p>
     </div>
 
-    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer" style="background:#F2A65A; border-radius:18px; padding:14px; display:flex; flex-direction:column; justify-content:space-between; min-height:96px;">
-      <span class="material-symbols-rounded text-[20px]" style="color:#fff;">badge</span>
-      <div>
-        <div class="relative min-h-[26px] flex items-center">
-          <p id="totTendik" class="hidden text-[22px] font-extrabold tracking-tight tabular-nums leading-6 m-0" style="color:#fff;">0</p>
-          <div id="totTendikSpin" class="spinner-ring-gray" style="width:16px;height:16px;"></div>
-        </div>
-        <p style="font-size:11px; color:rgba(255,255,255,.85); margin:2px 0 0;">Tendik</p>
+    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer" style="background:#F2A65A; border-radius:18px; padding:14px 38px 14px 14px; position:relative; min-height:96px;">
+      <span class="material-symbols-rounded text-[20px]" style="position:absolute; top:14px; right:14px; color:#fff;">badge</span>
+      <span class="material-symbols-rounded text-[18px]" style="position:absolute; top:50%; right:12px; transform:translateY(-50%); color:rgba(255,255,255,.95);">chevron_right</span>
+      <p style="font-size:12px; font-weight:700; color:#fff; margin:0;">Tendik</p>
+      <div class="relative min-h-[26px] flex items-center" style="margin-top:4px;">
+        <p id="totTendik" class="hidden text-[24px] font-extrabold tracking-tight tabular-nums leading-6 m-0" style="color:#fff;">0</p>
+        <div id="totTendikSpin" class="spinner-ring-gray" style="width:16px;height:16px;"></div>
       </div>
+      <p style="font-size:11.5px; font-weight:600; color:#fff; margin:3px 0 0;">Tenaga Kependidikan</p>
     </div>
 
-    <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="grid-column:1 / 3; background:#F88AB0; border-radius:18px; padding:14px 16px; display:flex; align-items:center; justify-content:space-between;">
-      <div style="display:flex; align-items:center; gap:10px;">
-        <span class="material-symbols-rounded text-[20px]" style="color:#fff;">groups</span>
-        <div>
-          <p style="font-size:11px; color:rgba(255,255,255,.85); margin:0;">Total Rombel</p>
-          <div class="relative min-h-[22px] flex items-center">
-            <p id="totRombel" class="hidden text-[18px] font-extrabold tracking-tight tabular-nums leading-5 m-0" style="color:#fff;">0</p>
-            <div id="totRombelSpin" class="spinner-ring-gray" style="width:14px;height:14px;"></div>
-          </div>
-        </div>
+    <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="grid-column:1 / 3; background:#F88AB0; border-radius:18px; padding:14px 38px 14px 14px; position:relative; min-height:96px;">
+      <span class="material-symbols-rounded text-[20px]" style="position:absolute; top:14px; right:14px; color:#fff;">groups</span>
+      <span class="material-symbols-rounded text-[18px]" style="position:absolute; top:50%; right:12px; transform:translateY(-50%); color:rgba(255,255,255,.95);">chevron_right</span>
+      <p style="font-size:12px; font-weight:700; color:#fff; margin:0;">Total Rombel</p>
+      <div class="relative min-h-[26px] flex items-center" style="margin-top:4px;">
+        <p id="totRombel" class="hidden text-[24px] font-extrabold tracking-tight tabular-nums leading-6 m-0" style="color:#fff;">0</p>
+        <div id="totRombelSpin" class="spinner-ring-gray" style="width:14px;height:14px;"></div>
       </div>
-      <span class="material-symbols-rounded text-[16px]" style="color:rgba(255,255,255,.85);">chevron_right</span>
+      <p style="font-size:11.5px; font-weight:600; color:#fff; margin:3px 0 0;">Kelas 1 - Kelas 6</p>
     </div>
 
   </div>
@@ -1118,7 +1089,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
       <div id="dataTabTrack" data-no-ripple class="flex items-center mb-4" style="background-color:var(--color-bg-card);border-radius:9999px;padding:3px;gap:0;box-shadow: inset 0 1px 4px rgba(110,110,118,.15);">
         <button id="tabDataGuru" onclick="switchDataTab('guru')"
           class="flex-1 flex items-center justify-center gap-1 text-[12.5px] font-semibold py-2 px-1 rounded-full transition-all duration-200"
-          style="background-color:var(--color-bg-card);color:#23213A;box-shadow:var(--shadow-card);">
+          style="background-color:var(--color-bg-app-3);color:#23213A;box-shadow:-2px -2px 5px rgba(255,255,255,.9), 2px 2px 5px rgba(190,190,200,.4);">
           <span class="material-symbols-rounded text-[15px]">school</span>
           Guru
         </button>
@@ -1563,7 +1534,7 @@ let historyTabAktif = false;
         tendik: { btn: document.getElementById('tabDataTendik'),panel: document.getElementById('panelDataTendik') }
       };
 
-      const aktif       = 'background-color:var(--color-bg-card);color:#23213A;box-shadow:var(--shadow-card);';
+      const aktif       = 'background-color:var(--color-bg-app-3);color:#23213A;box-shadow:-2px -2px 5px rgba(255,255,255,.9), 2px 2px 5px rgba(190,190,200,.4);';
       const nonaktif    = 'background:transparent;color:#6D6F8F;box-shadow:none;';
 
       const aktifStyle = { guru: aktif, tendik: aktif };
@@ -1610,7 +1581,7 @@ let historyTabAktif = false;
             <div style="display:flex; align-items:center; gap:16px;">
               <div style="position:relative; width:80px; height:80px; flex-shrink:0;">
                 <div style="width:100%; height:100%; border-radius:50%; background:conic-gradient(#7C93C7 0% ${pctL}%, #D48A9A ${pctL}% 100%);"></div>
-                <div style="position:absolute; inset:10px; border-radius:50%; background-color:var(--color-bg-card); display:flex; align-items:center; justify-content:center; box-shadow: inset 0 1px 4px rgba(110,110,118,.18);">
+                <div style="position:absolute; inset:10px; border-radius:50%; background-color:var(--color-bg-card); display:flex; align-items:center; justify-content:center;">
                   <span style="font-size:16px; font-weight:800; color:#23213A;">${totalSemua}</span>
                 </div>
               </div>
@@ -1621,15 +1592,15 @@ let historyTabAktif = false;
             </div>
             <div style="display:flex; gap:14px; margin-top:16px; padding-top:14px; border-top:1px solid #ECEDF0;">
               <div style="flex:1; min-width:0;">
-                <p style="font-size:11.5px; font-weight:700; color:#7C93C7; margin:0 0 2px;">Laki-laki</p>
-                <p style="font-size:11px; color:#6D6F8F; margin:0 0 6px;">${pctL}% <span style="color:#9ca3af;">(${totalL} siswa)</span></p>
-                <div style="width:100%; height:4px; border-radius:999px; background:rgba(110,110,118,.12); overflow:hidden;"><div style="width:${pctL}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #AEC0E3, #7C93C7);"></div></div>
+                <p style="font-size:11.5px; font-weight:700; color:#0091EA; margin:0 0 2px;">Laki-laki</p>
+                <p style="font-size:11px; color:#6D6F8F; margin:0 0 6px;">${pctL}% <span style="color:#6b7280;">(${totalL} siswa)</span></p>
+                <div style="width:100%; height:4px; border-radius:999px; background:#EEF0F3; overflow:hidden;"><div style="width:${pctL}%; height:100%; border-radius:999px; background:#0091EA;"></div></div>
               </div>
               <div style="width:1px; background:#ECEDF0;"></div>
               <div style="flex:1; min-width:0;">
-                <p style="font-size:11.5px; font-weight:700; color:#D48A9A; margin:0 0 2px;">Perempuan</p>
-                <p style="font-size:11px; color:#6D6F8F; margin:0 0 6px;">${pctP}% <span style="color:#9ca3af;">(${totalP} siswa)</span></p>
-                <div style="width:100%; height:4px; border-radius:999px; background:rgba(110,110,118,.12); overflow:hidden;"><div style="width:${pctP}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #E8B9C4, #D48A9A);"></div></div>
+                <p style="font-size:11.5px; font-weight:700; color:#D4537E; margin:0 0 2px;">Perempuan</p>
+                <p style="font-size:11px; color:#6D6F8F; margin:0 0 6px;">${pctP}% <span style="color:#6b7280;">(${totalP} siswa)</span></p>
+                <div style="width:100%; height:4px; border-radius:999px; background:#EEF0F3; overflow:hidden;"><div style="width:${pctP}%; height:100%; border-radius:999px; background:#F88AB0;"></div></div>
               </div>
             </div>
           </div>
@@ -1640,7 +1611,7 @@ let historyTabAktif = false;
           <div class="neu-card" style="padding:4px;">
             <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-bottom:1px solid #ECEDF0;">
               <div style="display:flex; align-items:center; gap:8px;">
-                <span class="material-symbols-rounded text-[16px]" style="color:#7C93C7;">groups</span>
+                <span class="material-symbols-rounded text-[16px]" style="color:#0091EA;">groups</span>
                 <span style="font-size:13px; font-weight:700; color:#23213A;">Distribusi Rombel</span>
               </div>
               <span style="font-size:11px; font-weight:700; color:#4b5563; background:#FFFFFF; padding:5px 10px; border-radius:999px;">${data.length} kelas</span>
@@ -1659,7 +1630,7 @@ let historyTabAktif = false;
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-3">
                     <div style="width:32px;height:32px;border-radius:12px;background:#7C93C71A;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                      <span style="font-size:13px; font-weight:800; color:#7C93C7;">${nomorKelas}</span>
+                      <span style="font-size:13px; font-weight:800; color:#0091EA;">${nomorKelas}</span>
                     </div>
                     <div>
                       <div class="text-[13px] font-semibold text-gray-900">${r.kelas}</div>
@@ -1667,16 +1638,16 @@ let historyTabAktif = false;
                   </div>
                   <div class="flex items-center gap-2">
                     <span class="text-[13px] font-bold text-gray-700">${total}</span>
-                    <span class="material-symbols-rounded text-[16px]" style="color:#9ca3af;">chevron_right</span>
+                    <span class="material-symbols-rounded text-[16px]" style="color:#6b7280;">chevron_right</span>
                   </div>
                 </div>
                 <div class="flex items-center justify-between" style="margin-top:8px; font-size:10px; font-weight:700;">
-                  <span style="color:#7C93C7;">L (${r.L})</span>
-                  <span style="color:#D48A9A;">P (${r.P})</span>
+                  <span style="color:#0091EA;">L (${r.L})</span>
+                  <span style="color:#D4537E;">P (${r.P})</span>
                 </div>
                 <div style="width:100%; height:4px; border-radius:999px; overflow:hidden; display:flex; margin-top:4px;">
-                  <div style="width:${persenL}%; height:100%; background:linear-gradient(90deg, #AEC0E3, #7C93C7);"></div>
-                  <div style="width:${100-persenL}%; height:100%; background:linear-gradient(90deg, #E8B9C4, #D48A9A);"></div>
+                  <div style="width:${persenL}%; height:100%; background:#0091EA;"></div>
+                  <div style="width:${100-persenL}%; height:100%; background:#F88AB0;"></div>
                 </div>
               </div>
               `;
@@ -1765,7 +1736,7 @@ let historyTabAktif = false;
           <div style="display:flex; align-items:center; gap:16px;">
             <div style="position:relative; width:80px; height:80px; flex-shrink:0;">
               <div style="width:100%; height:100%; border-radius:50%; background:conic-gradient(${warnaAksenDonat} 0% ${pctBawah}%, #E5E7EB ${pctBawah}% 100%);"></div>
-              <div style="position:absolute; inset:10px; border-radius:50%; background-color:var(--color-bg-card); display:flex; align-items:center; justify-content:center; box-shadow: inset 0 1px 4px rgba(110,110,118,.18);">
+              <div style="position:absolute; inset:10px; border-radius:50%; background-color:var(--color-bg-card); display:flex; align-items:center; justify-content:center;">
                 <span style="font-size:16px; font-weight:800; color:#23213A;">${pctBawah}%</span>
               </div>
             </div>
@@ -1778,14 +1749,14 @@ let historyTabAktif = false;
           <div style="display:flex; gap:14px; margin-top:16px; padding-top:14px; border-top:1px solid #ECEDF0;">
             <div style="flex:1; min-width:0;">
               <p style="font-size:11.5px; font-weight:700; color:#23213A; margin:0 0 2px;">Desil 1&ndash;4</p>
-              <p style="font-size:11px; color:#6D6F8F; margin:0 0 6px;">${pctBawah}% <span style="color:#9ca3af;">(${bawahDesil} siswa)</span></p>
-              <div style="width:100%; height:4px; border-radius:999px; background:rgba(110,110,118,.12); overflow:hidden;"><div style="width:${pctBawah}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #F7A8AC, #F2545B);"></div></div>
+              <p style="font-size:11px; color:#6D6F8F; margin:0 0 6px;">${pctBawah}% <span style="color:#6b7280;">(${bawahDesil} siswa)</span></p>
+              <div style="width:100%; height:4px; border-radius:999px; background:#EEF0F3; overflow:hidden;"><div style="width:${pctBawah}%; height:100%; border-radius:999px; background:#F2545B;"></div></div>
             </div>
             <div style="width:1px; background:#ECEDF0;"></div>
             <div style="flex:1; min-width:0;">
               <p style="font-size:11.5px; font-weight:700; color:#23213A; margin:0 0 2px;">Desil 5&ndash;10</p>
-              <p style="font-size:11px; color:#6D6F8F; margin:0 0 6px;">${pctAtas}% <span style="color:#9ca3af;">(${atasDesil} siswa)</span></p>
-              <div style="width:100%; height:4px; border-radius:999px; background:rgba(110,110,118,.12); overflow:hidden;"><div style="width:${pctAtas}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #A9A0F0, #6C5DD3);"></div></div>
+              <p style="font-size:11px; color:#6D6F8F; margin:0 0 6px;">${pctAtas}% <span style="color:#6b7280;">(${atasDesil} siswa)</span></p>
+              <div style="width:100%; height:4px; border-radius:999px; background:#EEF0F3; overflow:hidden;"><div style="width:${pctAtas}%; height:100%; border-radius:999px; background:#7B81BE;"></div></div>
             </div>
           </div>
         </div>
@@ -1818,10 +1789,10 @@ let historyTabAktif = false;
                 </div>
                 <div class="flex items-center gap-2">
                   <span class="text-[13px] font-bold text-gray-700">${desil[label]}</span>
-                  <span class="material-symbols-rounded text-[16px]" style="color:#9ca3af;">chevron_right</span>
+                  <span class="material-symbols-rounded text-[16px]" style="color:#6b7280;">chevron_right</span>
                 </div>
               </div>
-              <div style="width:100%; height:4px; border-radius:999px; background:rgba(110,110,118,.12); margin-top:10px; overflow:hidden;">
+              <div style="width:100%; height:4px; border-radius:999px; background:#EEF0F3; margin-top:10px; overflow:hidden;">
                 <div style="width:${persenBar}%; height:100%; border-radius:999px; background:linear-gradient(90deg, ${warnaTerang(WARNA_DESIL[label])}, ${WARNA_DESIL[label]});"></div>
               </div>
             </div>
@@ -1967,7 +1938,7 @@ let historyTabAktif = false;
             <div style="display:flex; align-items:center; gap:16px;">
               <div style="position:relative; width:80px; height:80px; flex-shrink:0;">
                 <div style="width:100%; height:100%; border-radius:50%; background:conic-gradient(${stopDonatStatus});"></div>
-                <div style="position:absolute; inset:10px; border-radius:50%; background-color:var(--color-bg-card); display:flex; align-items:center; justify-content:center; box-shadow: inset 0 1px 4px rgba(110,110,118,.18);">
+                <div style="position:absolute; inset:10px; border-radius:50%; background-color:var(--color-bg-card); display:flex; align-items:center; justify-content:center;">
                   <span style="font-size:16px; font-weight:800; color:#23213A;">${hasil.length}</span>
                 </div>
               </div>
@@ -1981,8 +1952,8 @@ let historyTabAktif = false;
               ${kategoriRincian.map((label2,idx) => `
                 <div style="flex:1; min-width:0;">
                   <p style="font-size:11px; font-weight:700; color:#23213A; margin:0 0 2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${label2}</p>
-                  <p style="font-size:10.5px; color:#9ca3af; margin:0 0 6px;">${hitungKategori[label2]} siswa</p>
-                  <div style="width:100%; height:4px; border-radius:999px; background:rgba(110,110,118,.12); overflow:hidden;"><div style="width:${Math.round((hitungKategori[label2]/totalRincian)*100)}%; height:100%; border-radius:999px; background:linear-gradient(90deg, ${gradasiKategori[label2][0]}, ${gradasiKategori[label2][1]});"></div></div>
+                  <p style="font-size:10.5px; color:#6b7280; margin:0 0 6px;">${hitungKategori[label2]} siswa</p>
+                  <div style="width:100%; height:4px; border-radius:999px; background:#EEF0F3; overflow:hidden;"><div style="width:${Math.round((hitungKategori[label2]/totalRincian)*100)}%; height:100%; border-radius:999px; background:linear-gradient(90deg, ${gradasiKategori[label2][0]}, ${gradasiKategori[label2][1]});"></div></div>
                 </div>
               `).join('')}
             </div>
@@ -3101,7 +3072,7 @@ function renderListPegawai(tipe){
    kartuRingkasanGuru = `
 <div class="neu-card" style="padding:16px; margin-bottom:16px; display:flex; align-items:center; gap:12px;">
   <div style="width:42px;height:42px;border-radius:12px;background:#F2A65A22;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span class="material-symbols-rounded text-[20px]" style="color:#c07729;">badge</span></div>
-  <div><p style="font-size:11px; font-weight:700; color:#6D6F8F; margin:0; text-transform:uppercase; letter-spacing:.02em;">Total Tendik</p><p style="font-size:20px; font-weight:800; color:#23213A; margin:2px 0 0; line-height:1;">${sumber.length}</p><p style="font-size:10.5px; color:#9ca3af; margin:3px 0 0;">${jenisJabatanUnik} jenis jabatan berbeda</p></div>
+  <div><p style="font-size:11px; font-weight:700; color:#6D6F8F; margin:0; text-transform:uppercase; letter-spacing:.02em;">Total Tendik</p><p style="font-size:20px; font-weight:800; color:#23213A; margin:2px 0 0; line-height:1;">${sumber.length}</p><p style="font-size:10.5px; color:#6b7280; margin:3px 0 0;">${jenisJabatanUnik} jenis jabatan berbeda</p></div>
 </div>`;
  }
 
@@ -3137,7 +3108,7 @@ style="${i === sumber.length - 1 ? '' : 'border-bottom:1px solid #ECEDF0;'}">
   </div>
   <div class="flex items-center gap-2 flex-shrink-0 ml-2">
     ${kategoriBadge ? `<span style="font-size:9.5px; font-weight:700; color:${warnaBadge[0]}; background:${warnaBadge[1]}; padding:3px 9px; border-radius:999px; white-space:nowrap;">${kategoriBadge}</span>` : ''}
-    <span class="material-symbols-rounded text-[16px]" style="color:#9ca3af;">chevron_right</span>
+    <span class="material-symbols-rounded text-[16px]" style="color:#6b7280;">chevron_right</span>
   </div>
 </div>
 `;}).join('')}
