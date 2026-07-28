@@ -35,6 +35,10 @@
       /* Dual Shadows untuk Efek Melekuk ke Dalam (Inset/Pressed) */
       --neu-inset: inset 3px 3px 6px rgba(166, 180, 200, 0.6),
                    inset -3px -3px 6px rgba(255, 255, 255, 0.85);
+      /* Versi inset berskala besar, memakai bobot/warna yang sama dengan --neu-extruded
+         (offset & blur senada) supaya kartu melekuk terasa satu keluarga dengan kartu timbul di atasnya */
+      --neu-inset-lg: inset 6px 6px 14px rgba(166, 180, 200, 0.5),
+                      inset -6px -6px 14px rgba(255, 255, 255, 0.8);
       /* Aksesibilitas & Teks */
       --text-main: #1E293B;
       --text-sub: #64748B;
@@ -362,7 +366,7 @@
       background: var(--bg-card) !important;
       border-radius: var(--radius-md);
       border: 1px solid rgba(255, 255, 255, 0.6);
-      box-shadow: var(--neu-extruded) !important;
+      box-shadow: var(--neu-inset-lg) !important;
     }
     .neu-btn{
       background: var(--bg-card) !important;
