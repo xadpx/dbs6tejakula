@@ -862,12 +862,6 @@
       border: none !important;
       box-shadow: 0 14px 34px rgba(166,175,195,.25) !important;
     }
-    /* 5. Icon nav aktif — gradient */
-    .nav-active .nav-icon-wrap {
-      background: var(--grad2) !important;
-      color: #fff !important;
-      box-shadow: 0 6px 16px rgba(123,97,224,.3) !important;
-    }
   </style>
 </head>
 <body class="text-base">
@@ -1181,34 +1175,39 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
 
     <p class="text-[11px] font-bold text-gray-600 uppercase m-0 mt-5 mb-3" style="letter-spacing:.04em;">Kategori</p>
 
-    <div onclick="bukaKategoriKesejahteraanDariBeranda()" class="cursor-pointer flex items-center gap-3.5" style="background:#FFFFFF; border-radius:var(--radius-lg); box-shadow:12px 16px 32px rgba(166,175,195,.15), -8px -8px 20px rgba(255,255,255,.9); padding:16px; margin-bottom:12px;">
-      <div style="width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg, #F5B37A, #E07A2F);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-        <span class="material-symbols-rounded text-[22px]" style="color:#fff;">volunteer_activism</span>
+    <div onclick="nav('download')" class="cursor-pointer" style="background:var(--grad2); border-radius:22px; padding:16px 18px; display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span class="material-symbols-rounded text-[18px]" style="color:#fff;">download</span>
+        <div>
+          <p style="font-size:12.5px; font-weight:700; color:#fff; margin:0;">Unduh Data</p>
+          <p style="font-size:10px; color:rgba(255,255,255,.85); margin:1px 0 0;">Ekspor data siswa</p>
+        </div>
       </div>
-      <div class="flex-1 min-w-0">
-        <p class="text-[15px] font-bold m-0" style="color:var(--ink);">Kesejahteraan</p>
-        <p class="text-[11.5px] m-0 mt-0.5" style="color:var(--sub);" id="subKesejahteraanBeranda">Memuat data&hellip;</p>
-      </div>
-      <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
-        <span id="pctKesejahteraanBeranda" style="font-size:22px; font-weight:800; color:var(--ink); line-height:1;">&ndash;</span>
-        <span id="badgeKesejahteraanBeranda" style="font-size:9px; font-weight:700; padding:3px 9px; border-radius:999px; text-transform:uppercase; letter-spacing:.02em; white-space:nowrap;"></span>
-      </div>
-      <span class="material-symbols-rounded text-[20px]" style="color:var(--sub); flex-shrink:0;">chevron_right</span>
+      <span class="material-symbols-rounded text-[16px]" style="color:#fff;">arrow_forward</span>
     </div>
 
-    <div onclick="bukaKategoriStatusAnakDariBeranda()" class="cursor-pointer flex items-center gap-3.5" style="background:#FFFFFF; border-radius:var(--radius-lg); box-shadow:12px 16px 32px rgba(166,175,195,.15), -8px -8px 20px rgba(255,255,255,.9); padding:16px; margin-bottom:12px;">
-      <div style="width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg, #9B7FE8, #5CC7E8);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-        <span style="color:#fff;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></span>
+    <div class="neu-card" style="padding:16px 18px; margin-bottom:16px;">
+      <p class="text-[13px] font-bold m-0 mb-3" style="color:var(--ink);">Kategori</p>
+      <div onclick="bukaKategoriKesejahteraanDariBeranda()" class="cursor-pointer flex items-center gap-3" style="padding:7px 0;">
+        <span style="width:8px;height:8px;border-radius:50%;background:#D85A30;flex-shrink:0;"></span>
+        <span class="flex-1 min-w-0 text-[12.5px] truncate" style="color:var(--sub);">Kesejahteraan</span>
+        <div style="width:70px; height:5px; border-radius:3px; background:#F1EFE8; overflow:hidden; flex-shrink:0;">
+          <div id="barKesejahteraanBeranda" style="width:0%; height:100%; background:#D85A30; transition:width .5s ease;"></div>
+        </div>
       </div>
-      <div class="flex-1 min-w-0">
-        <p class="text-[15px] font-bold m-0" style="color:var(--ink);">Status Anak</p>
-        <p class="text-[11.5px] m-0 mt-0.5" style="color:var(--sub);" id="subStatusAnakBeranda">Memuat data&hellip;</p>
+      <div onclick="bukaKategoriStatusAnakDariBeranda()" class="cursor-pointer flex items-center gap-3" style="padding:7px 0;">
+        <span style="width:8px;height:8px;border-radius:50%;background:#378ADD;flex-shrink:0;"></span>
+        <span class="flex-1 min-w-0 text-[12.5px] truncate" style="color:var(--sub);">Status Anak</span>
+        <div style="width:70px; height:5px; border-radius:3px; background:#F1EFE8; overflow:hidden; flex-shrink:0;">
+          <div id="barStatusAnakBeranda" style="width:0%; height:100%; background:#378ADD; transition:width .5s ease;"></div>
+        </div>
       </div>
-      <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
-        <span id="pctStatusAnakBeranda" style="font-size:22px; font-weight:800; color:var(--ink); line-height:1;">&ndash;</span>
-        <span id="badgeStatusAnakBeranda" style="font-size:9px; font-weight:700; padding:3px 9px; border-radius:999px; text-transform:uppercase; letter-spacing:.02em; white-space:nowrap;"></span>
-      </div>
-      <span class="material-symbols-rounded text-[20px]" style="color:var(--sub); flex-shrink:0;">chevron_right</span>
+      <span id="pctKesejahteraanBeranda" class="hidden"></span>
+      <span id="badgeKesejahteraanBeranda" class="hidden"></span>
+      <span id="subKesejahteraanBeranda" class="hidden"></span>
+      <span id="pctStatusAnakBeranda" class="hidden"></span>
+      <span id="badgeStatusAnakBeranda" class="hidden"></span>
+      <span id="subStatusAnakBeranda" class="hidden"></span>
     </div>
 <div class="mt-5 mb-3 text-center text-[10px] text-gray-400">
 
@@ -4117,6 +4116,8 @@ function buatChart(){
     const elSub = document.getElementById('subKesejahteraanBeranda');
     if(elPct) elPct.textContent = pct.toFixed(pct < 10 ? 1 : 0) + '%';
     if(elSub) elSub.textContent = `${bawah} siswa di Desil 1\u20134`;
+    const elBarKesejahteraan = document.getElementById('barKesejahteraanBeranda');
+    if(elBarKesejahteraan) elBarKesejahteraan.style.width = Math.min(100, pct) + '%';
     if(elBadge){
       if(pct < 20){
         elBadge.textContent = 'Rendah';
@@ -4165,6 +4166,8 @@ function buatChart(){
     const elSub = document.getElementById('subStatusAnakBeranda');
     if(elPct) elPct.textContent = pct.toFixed(pct < 10 ? 1 : 0) + '%';
     if(elSub) elSub.textContent = `${perluPerhatian} siswa yatim/piatu`;
+    const elBarStatusAnak = document.getElementById('barStatusAnakBeranda');
+    if(elBarStatusAnak) elBarStatusAnak.style.width = Math.min(100, pct) + '%';
     if(elBadge){
       if(pct < 5){
         elBadge.textContent = 'Rendah';
