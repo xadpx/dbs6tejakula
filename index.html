@@ -335,10 +335,10 @@
     }
     .neu-bg{ background: transparent; }
     .neu-card{
-      background-color: var(--color-bg-card);
+      background-color: var(--color-bg-app-3);
       border-radius: var(--radius-md);
-      border: none;
-      box-shadow: 0 2px 8px rgba(20,20,30,.06);
+      border: 1.5px solid rgba(255,255,255,.9);
+      box-shadow: -4px -4px 10px rgba(255,255,255,.9), 4px 4px 12px rgba(163,177,198,.4);
     }
     .neu-btn{
       background-color: #FFFFFF;
@@ -358,24 +358,22 @@
     .neu-search{
       -webkit-appearance: none !important;
       appearance: none !important;
-      background-color: #FFFFFF !important;
-      border: 1px solid #ECEDF0 !important;
+      background-color: var(--color-bg-app-3) !important;
+      border: 1.5px solid rgba(255,255,255,.9) !important;
       border-radius: 9999px;
-      box-shadow: 0 2px 8px rgba(20,20,30,.05) !important;
+      box-shadow: -4px -4px 10px rgba(255,255,255,.9), 4px 4px 12px rgba(163,177,198,.4) !important;
     }
     /* Fallback global: pastikan SEMUA permukaan kaca (baik lewat class maupun inline style)
        benar-benar menampilkan efek blur, bukan cuma warna transparan datar. */
 
     .btn-unduh-neu{
-      background: rgba(255,255,255,.22);
-      -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm);
-      -webkit-backdrop-filter: var(--blur-glass-sm);
-      border: 1px solid var(--glass-border);
-      box-shadow: 0 4px 14px rgba(110,110,118,.12);
+      background: #0091EA;
+      border: 1.5px solid rgba(255,255,255,.9);
+      box-shadow: -4px -4px 10px rgba(120,180,240,.5), 4px 4px 12px rgba(0,50,90,.45);
       transition: box-shadow .1s ease, transform .1s ease;
     }
     .btn-unduh-neu:active{
-      box-shadow: inset 0 2px 6px rgba(110,110,118,.2);
+      box-shadow: inset 2px 2px 5px rgba(0,50,90,.4), inset -2px -2px 5px rgba(120,180,240,.3);
       transform: scale(0.98);
     }
     #searchStickyWrap{
@@ -392,7 +390,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #FFFFFF;
+      background: var(--color-bg-app-3);
       border: 1.5px solid rgba(255,255,255,.9);
       box-shadow: -2px -2px 5px rgba(255,255,255,.9), 2px 2px 5px rgba(190,190,200,.35);
     }
@@ -400,16 +398,16 @@
       color: #0091EA !important;
     }
     .neu-dropdown-inset{
-      background: rgba(255,255,255,.22);
-      border: 1px solid var(--glass-border);
+      background: var(--color-bg-app-3);
+      border: 1.5px solid rgba(255,255,255,.9);
       border-radius: 9999px;
-      box-shadow: var(--shadow-card);
+      box-shadow: inset 2px 2px 5px rgba(163,177,198,.45), inset -2px -2px 5px rgba(255,255,255,.8);
     }
     .neu-dropdown{
-      background: rgba(255,255,255,.22);
-      border: 1px solid var(--glass-border);
+      background: var(--color-bg-app-3);
+      border: 1.5px solid rgba(255,255,255,.9);
       border-radius: 9999px !important;
-      box-shadow: 0 4px 14px rgba(110,110,118,.1);
+      box-shadow: -4px -4px 10px rgba(255,255,255,.9), 4px 4px 12px rgba(163,177,198,.4);
       transition: box-shadow .15s ease;
     }
     .neu-dropdown:focus{
@@ -696,11 +694,9 @@
     .chart-card-carousel{
       scroll-snap-align:start;
       flex:0 0 100%;
-      background-color: var(--color-bg-card);
-      -webkit-backdrop-filter: var(--blur-glass); backdrop-filter: var(--blur-glass);
-      -webkit-backdrop-filter: var(--blur-glass);
-      border: 1px solid var(--glass-border);
-      box-shadow:var(--shadow-card);
+      background-color: var(--color-bg-app-3);
+      border: 1.5px solid rgba(255,255,255,.9);
+      box-shadow: -4px -4px 10px rgba(255,255,255,.9), 4px 4px 12px rgba(163,177,198,.4);
       border-radius:var(--radius-lg);
       padding:12px;
       box-sizing:border-box;
@@ -958,37 +954,37 @@
       </div>
     </div>
 
-    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="background:#7B81BE; border:1.5px solid rgba(255,255,255,.9); border-radius:18px; padding:14px 38px 14px 14px; position:relative; min-height:96px; box-shadow:-4px -4px 10px rgba(190,195,230,.5), 4px 4px 12px rgba(45,45,85,.4);">
-      <span class="material-symbols-rounded text-[20px]" style="position:absolute; top:14px; right:14px; color:#fff;">import_contacts</span>
-      <span class="material-symbols-rounded text-[18px]" style="position:absolute; top:50%; right:12px; transform:translateY(-50%); color:rgba(255,255,255,.95);">chevron_right</span>
-      <p style="font-size:12px; font-weight:700; color:#fff; margin:0;">Guru</p>
+    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="background:#E4E5F5; border:1.5px solid rgba(255,255,255,.9); border-radius:18px; padding:14px 38px 14px 14px; position:relative; min-height:96px; box-shadow:-4px -4px 10px rgba(255,255,255,.9), 4px 4px 12px rgba(163,177,198,.45);">
+      <span class="material-symbols-rounded text-[20px]" style="position:absolute; top:14px; right:14px; color:#534AB7;">import_contacts</span>
+      <span class="material-symbols-rounded text-[18px]" style="position:absolute; top:50%; right:12px; transform:translateY(-50%); color:#534AB7;">chevron_right</span>
+      <p style="font-size:12px; font-weight:700; color:#3C3489; margin:0;">Guru</p>
       <div class="relative min-h-[26px] flex items-center" style="margin-top:4px;">
-        <p id="totGuru" class="hidden text-[24px] font-extrabold tracking-tight tabular-nums leading-6 m-0" style="color:#fff;">0</p>
+        <p id="totGuru" class="hidden text-[24px] font-extrabold tracking-tight tabular-nums leading-6 m-0" style="color:#26215C;">0</p>
         <div id="totGuruSpin" class="spinner-ring-gray" style="width:16px;height:16px;"></div>
       </div>
-      <p style="font-size:11.5px; font-weight:600; color:#fff; margin:3px 0 0;">Guru Kelas &amp; Mapel</p>
+      <p style="font-size:11.5px; font-weight:600; color:#534AB7; margin:3px 0 0;">Guru Kelas &amp; Mapel</p>
     </div>
 
-    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer" style="background:#F2A65A; border:1.5px solid rgba(255,255,255,.9); border-radius:18px; padding:14px 38px 14px 14px; position:relative; min-height:96px; box-shadow:-4px -4px 10px rgba(250,210,150,.5), 4px 4px 12px rgba(140,75,20,.4);">
-      <span class="material-symbols-rounded text-[20px]" style="position:absolute; top:14px; right:14px; color:#fff;">badge</span>
-      <span class="material-symbols-rounded text-[18px]" style="position:absolute; top:50%; right:12px; transform:translateY(-50%); color:rgba(255,255,255,.95);">chevron_right</span>
-      <p style="font-size:12px; font-weight:700; color:#fff; margin:0;">Tendik</p>
+    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer" style="background:#FBEADA; border:1.5px solid rgba(255,255,255,.9); border-radius:18px; padding:14px 38px 14px 14px; position:relative; min-height:96px; box-shadow:-4px -4px 10px rgba(255,255,255,.9), 4px 4px 12px rgba(163,177,198,.45);">
+      <span class="material-symbols-rounded text-[20px]" style="position:absolute; top:14px; right:14px; color:#854F0B;">badge</span>
+      <span class="material-symbols-rounded text-[18px]" style="position:absolute; top:50%; right:12px; transform:translateY(-50%); color:#854F0B;">chevron_right</span>
+      <p style="font-size:12px; font-weight:700; color:#633806; margin:0;">Tendik</p>
       <div class="relative min-h-[26px] flex items-center" style="margin-top:4px;">
-        <p id="totTendik" class="hidden text-[24px] font-extrabold tracking-tight tabular-nums leading-6 m-0" style="color:#fff;">0</p>
+        <p id="totTendik" class="hidden text-[24px] font-extrabold tracking-tight tabular-nums leading-6 m-0" style="color:#412402;">0</p>
         <div id="totTendikSpin" class="spinner-ring-gray" style="width:16px;height:16px;"></div>
       </div>
-      <p style="font-size:11.5px; font-weight:600; color:#fff; margin:3px 0 0;">Tenaga Kependidikan</p>
+      <p style="font-size:11.5px; font-weight:600; color:#854F0B; margin:3px 0 0;">Tenaga Kependidikan</p>
     </div>
 
-    <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="grid-column:1 / 3; background:#F88AB0; border:1.5px solid rgba(255,255,255,.9); border-radius:18px; padding:14px 38px 14px 14px; position:relative; min-height:96px; box-shadow:-4px -4px 10px rgba(250,190,210,.5), 4px 4px 12px rgba(145,40,80,.4);">
-      <span class="material-symbols-rounded text-[20px]" style="position:absolute; top:14px; right:14px; color:#fff;">groups</span>
-      <span class="material-symbols-rounded text-[18px]" style="position:absolute; top:50%; right:12px; transform:translateY(-50%); color:rgba(255,255,255,.95);">chevron_right</span>
-      <p style="font-size:12px; font-weight:700; color:#fff; margin:0;">Total Rombel</p>
+    <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="grid-column:1 / 3; background:#FBEAF0; border:1.5px solid rgba(255,255,255,.9); border-radius:18px; padding:14px 38px 14px 14px; position:relative; min-height:96px; box-shadow:-4px -4px 10px rgba(255,255,255,.9), 4px 4px 12px rgba(163,177,198,.45);">
+      <span class="material-symbols-rounded text-[20px]" style="position:absolute; top:14px; right:14px; color:#993556;">groups</span>
+      <span class="material-symbols-rounded text-[18px]" style="position:absolute; top:50%; right:12px; transform:translateY(-50%); color:#993556;">chevron_right</span>
+      <p style="font-size:12px; font-weight:700; color:#72243E; margin:0;">Total Rombel</p>
       <div class="relative min-h-[26px] flex items-center" style="margin-top:4px;">
-        <p id="totRombel" class="hidden text-[24px] font-extrabold tracking-tight tabular-nums leading-6 m-0" style="color:#fff;">0</p>
+        <p id="totRombel" class="hidden text-[24px] font-extrabold tracking-tight tabular-nums leading-6 m-0" style="color:#4B1528;">0</p>
         <div id="totRombelSpin" class="spinner-ring-gray" style="width:14px;height:14px;"></div>
       </div>
-      <p style="font-size:11.5px; font-weight:600; color:#fff; margin:3px 0 0;">Kelas 1 - Kelas 6</p>
+      <p style="font-size:11.5px; font-weight:600; color:#993556; margin:3px 0 0;">Kelas 1 - Kelas 6</p>
     </div>
 
   </div>
@@ -1292,10 +1288,10 @@ class="neu-dropdown-inset w-24 min-w-[96px] h-9 rounded-xl px-2 text-sm">
 <button
 id="btnUnduh"
 onclick="bukaPINUnduh()"
-class="btn-unduh-neu mt-4 w-full h-[46px] flex items-center justify-center gap-2 text-[#3E50A8] text-sm font-semibold"
+class="btn-unduh-neu mt-4 w-full h-[46px] flex items-center justify-center gap-2 text-white text-sm font-semibold"
 style="border-radius:9999px; border: none;">
 
-<span class="material-symbols-rounded text-[#3E50A8] text-[19px]">
+<span class="material-symbols-rounded text-white text-[19px]">
 download
 </span>
 
@@ -3574,7 +3570,7 @@ document.querySelectorAll(".kategori").forEach(c=>{
   btn.disabled = true;
   btn.classList.add("btn-unduh-pressed");
   btn.innerHTML = `
-    <span class="material-symbols-rounded animate-spin text-[#3E50A8]">
+    <span class="material-symbols-rounded animate-spin text-white">
       autorenew
     </span>
     Mengunduh...
@@ -4387,7 +4383,7 @@ function downloadCSV(){
   btn.disabled = true;
 
   btn.innerHTML = `
-    <span class="material-symbols-rounded animate-spin text-[#3E50A8]">
+    <span class="material-symbols-rounded animate-spin text-white">
       autorenew
     </span>
     Mengunduh...
@@ -4661,7 +4657,7 @@ XLSX.writeFile(wb, namaFile);
 btn.disabled = false;
 
 btn.innerHTML = `
-<span class="material-symbols-rounded text-[#3E50A8] text-[19px]">
+<span class="material-symbols-rounded text-white text-[19px]">
 download
 </span>
 Unduh Data
