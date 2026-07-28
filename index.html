@@ -5,7 +5,7 @@
   <meta name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <meta name="color-scheme" content="light only">
-  <meta name="theme-color" content="#ECE7F9">
+  <meta name="theme-color" content="#E6ECF5">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -22,18 +22,40 @@
   <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-    /* ===== DESIGN TOKENS — GLASSMORPHISM (tema netral abu-abu) ===== */
+    /* ===== DESIGN TOKENS — NEUMORPHISM 2.0 (SOFT UI) ===== */
     :root {
-      /* Warna dasar */
-      --color-bg-app-1:   #F4F5F7;
-      --color-bg-app-2:   #F4F5F7;
-      --color-bg-app-3:   #F4F5F7;
-      --color-bg-card:    #FFFFFF;
-      --color-bg-card-solid: #EEF1F9;
+      /* Warna Dasar Soft Background */
+      --bg-color: #E6ECF5;
+      --bg-card: #E6ECF5;
 
-      --color-primary:      #6B7280;
-      --color-primary-deep: #374151;
-      --color-primary-soft: rgba(110,110,118,.14);
+      /* Dual Shadows untuk Efek Timbul (Extruded) */
+      --neu-shadow-light: -6px -6px 14px rgba(255, 255, 255, 0.85);
+      --neu-shadow-dark: 6px 6px 14px rgba(166, 180, 200, 0.6);
+      --neu-extruded: var(--neu-shadow-light), var(--neu-shadow-dark);
+      /* Dual Shadows untuk Efek Melekuk ke Dalam (Inset/Pressed) */
+      --neu-inset: inset 3px 3px 6px rgba(166, 180, 200, 0.6),
+                   inset -3px -3px 6px rgba(255, 255, 255, 0.85);
+      /* Aksesibilitas & Teks */
+      --text-main: #1E293B;
+      --text-sub: #64748B;
+      --primary-accent: #2563EB;
+      --primary-glow: 4px 4px 12px rgba(37, 99, 235, 0.35);
+      /* Corner Radius yang Seimbang */
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 28px;
+      --radius-full: 9999px;
+
+      /* ---- Alias variabel lama agar seluruh komponen ikut bertema ---- */
+      --color-bg-app-1:   var(--bg-color);
+      --color-bg-app-2:   var(--bg-color);
+      --color-bg-app-3:   var(--bg-color);
+      --color-bg-card:    var(--bg-card);
+      --color-bg-card-solid: var(--bg-card);
+
+      --color-primary:      var(--primary-accent);
+      --color-primary-deep: #1D4ED8;
+      --color-primary-soft: rgba(37,99,235,.14);
 
       --color-accent-blue:    #9FC3F2;
       --color-accent-blue-deep: #4A6FC2;
@@ -43,11 +65,11 @@
       --color-accent-orange:  #F6C99A;
       --color-accent-pink:    #F0B8CE;
 
-      --color-text-primary:   #23213A;
-      --color-text-secondary: #6D6F8F;
+      --color-text-primary:   var(--text-main);
+      --color-text-secondary: var(--text-sub);
       --color-border:         rgba(255,255,255,.6);
 
-      --glass-border:     rgba(200,190,255,.4);
+      --glass-border:     rgba(166,180,200,.35);
       --glass-border-warm: rgba(255,200,220,.45);
       --blur-glass: blur(24px) saturate(240%);
       --blur-glass-sm: blur(12px) saturate(200%);
@@ -55,10 +77,10 @@
       --blur-nav: blur(34px) saturate(250%);
       --blur-chip: blur(8px) saturate(180%);
       --glass-highlight:  rgba(255,255,255,.85);
-      --glass-shadow-col: 107,92,165;
+      --glass-shadow-col: 166,180,200;
 
-      --color-nav-active-bg: #423A6B;
-      --color-nav-inactive:  #A6A9CC;
+      --color-nav-active-bg: #1D4ED8;
+      --color-nav-inactive:  #94A3B8;
 
       /* Spacing */
       --space-xs: 4px;
@@ -67,17 +89,11 @@
       --space-lg: 24px;
       --space-xl: 32px;
 
-      /* Radius — lebih besar & lembut khas glass */
-      --radius-sm: 12px;
-      --radius-md: 18px;
-      --radius-lg: 26px;
-      --radius-full: 9999px;
-
-      /* Shadow ala glass — dengan inset glow berwarna + inner highlight ring (resep glassmorphism yang lebih meyakinkan) */
-      --shadow-card: 0 2px 8px rgba(20,20,30,.06);
-      --shadow-fab:  0 4px 14px rgba(20,20,30,.12);
-      --shadow-nav:  0 -2px 12px rgba(20,20,30,.06);
-      --shadow-hero: 0 4px 16px rgba(20,20,30,.1);
+      /* Shadow — dipetakan ke resep neumorphism (extruded/inset) */
+      --shadow-card: var(--neu-shadow-dark);
+      --shadow-fab:  var(--neu-extruded);
+      --shadow-nav:  0 -6px 16px rgba(166, 180, 200, 0.4), 0 -2px 6px rgba(255, 255, 255, 0.8);
+      --shadow-hero: var(--neu-extruded);
 
       /* Font */
       --font-family: 'Plus Jakarta Sans', sans-serif;
@@ -95,7 +111,8 @@
       max-width: 100vw;
       touch-action: pan-y;
       font-family: var(--font-family);
-      background: var(--color-bg-app-3);
+      background-color: var(--bg-color) !important;
+      color: var(--text-main);
       position: relative;
     }
 
@@ -133,7 +150,7 @@
       flex-shrink:0;
     }
     .kategori:checked{
-      background: #0091EA;
+      background: var(--primary-accent);
       border-color: transparent;
     }
     .kategori:checked::after{
@@ -164,10 +181,10 @@
     .toggle-track{
       background: var(--color-bg-app-3) !important;
       border: none !important;
-      box-shadow: inset 2px 2px 5px rgba(190,190,200,.45), inset -2px -2px 5px rgba(255,255,255,.8) !important;
+      box-shadow: inset 2px 2px 5px rgba(166,180,200,.45), inset -2px -2px 5px rgba(255,255,255,.8) !important;
     }
     .toggle-track.on{
-      background: #0091EA !important;
+      background: var(--primary-accent) !important;
       border-color: transparent !important;
       box-shadow: inset 0 1px 4px rgba(0,60,110,.3) !important;
     }
@@ -176,7 +193,7 @@
       border: 1px solid rgba(255,255,255,.9) !important;
       box-shadow:
         -2px -2px 4px rgba(255,255,255,.9),
-        2px 2px 4px rgba(190,190,200,.5) !important;
+        2px 2px 4px rgba(166,180,200,.5) !important;
     }
     .toggle-knob-neu.on{
       background:#ffffff !important;
@@ -233,17 +250,17 @@
       color: var(--color-nav-inactive);
       transition:.25s;
     }
-    .nav-active .nav-icon-wrap{
+    /* 5. Icon Wrapper Navigasi Aktif */
+    .nav-active .nav-icon-wrap {
       width:40px;
       height:40px;
-      background: #FFFFFF;
-      border: 1.5px solid rgba(255,255,255,.9);
-      color: #0091EA;
-      box-shadow: -3px -3px 6px rgba(255,255,255,.9), 3px 3px 6px rgba(190,190,200,.4);
+      background: var(--bg-card) !important;
+      box-shadow: var(--neu-inset) !important;
+      color: var(--primary-accent) !important;
       transform: scale(1.08);
     }
     .nav-active .nav-icon-wrap .nav-icon{
-      color: #0091EA;
+      color: var(--primary-accent);
     }
     .skeleton{
       background: rgba(255,255,255,.4);
@@ -333,52 +350,59 @@
       pointer-events: none !important;
     }
     .neu-bg{ background: transparent; }
-    .neu-card{
-      background-color: #D6DDE8;
-      border-radius: var(--radius-md);
-      border: 1.5px solid rgba(255,255,255,.9);
-      box-shadow: -4px -4px 10px rgba(255,255,255,.9), 4px 4px 12px rgba(163,177,198,.4);
+    /* 1. Kartu Utama Timbul */
+    .neu-card {
+      background: var(--bg-card) !important;
+      border-radius: var(--radius-md) !important;
+      border: 1px solid rgba(255, 255, 255, 0.6) !important;
+      box-shadow: var(--neu-extruded) !important;
     }
     .neu-card-flat{
-      background-color: #FFFFFF;
+      background: var(--bg-card) !important;
       border-radius: var(--radius-md);
-      border: none;
-      box-shadow: 0 2px 8px rgba(20,20,30,.06);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: var(--neu-inset) !important;
     }
     .neu-btn{
-      background-color: #FFFFFF;
+      background: var(--bg-card) !important;
       border-radius: var(--radius-sm);
-      border: none;
-      box-shadow: 0 2px 6px rgba(20,20,30,.05);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: var(--neu-extruded) !important;
       transition: box-shadow .12s ease;
     }
     .neu-btn:active{
-      box-shadow: inset 0 2px 5px rgba(110,110,118,.18);
+      box-shadow: var(--neu-inset) !important;
     }
     .neu-nav{
-      background-color: #FFFFFF;
-      box-shadow: 0 -2px 12px rgba(20,20,30,.06);
-      border-top: 1px solid #ECEDF0;
+      background: var(--bg-card) !important;
+      box-shadow: 0 -6px 16px rgba(166, 180, 200, 0.4), 0 -2px 6px rgba(255, 255, 255, 0.8) !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.8);
+    }
+    /* 2. Input / Search Bar Melekuk Ke Dalam (Inset) */
+    .neu-search, select.neu-dropdown-inset {
+      background: var(--bg-card) !important;
+      border: 1px solid rgba(255, 255, 255, 0.4) !important;
+      box-shadow: var(--neu-inset) !important;
+      color: var(--text-main) !important;
     }
     .neu-search{
       -webkit-appearance: none !important;
       appearance: none !important;
-      background-color: #FFFFFF !important;
-      border: 1px solid #ECEDF0 !important;
       border-radius: 9999px;
-      box-shadow: 0 2px 8px rgba(20,20,30,.05) !important;
     }
     /* Fallback global: pastikan SEMUA permukaan kaca (baik lewat class maupun inline style)
        benar-benar menampilkan efek blur, bukan cuma warna transparan datar. */
 
-    .btn-unduh-neu{
-      background: #0091EA;
-      border: 1.5px solid rgba(255,255,255,.9);
-      box-shadow: -4px -4px 10px rgba(120,180,240,.5), 4px 4px 12px rgba(0,50,90,.45);
-      transition: box-shadow .1s ease, transform .1s ease;
+    /* 3. Tombol Aksi Utama (Accent Button) */
+    .btn-unduh-neu {
+      background: var(--primary-accent) !important;
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      box-shadow: 4px 6px 14px rgba(37, 99, 235, 0.3), -3px -3px 8px rgba(255, 255, 255, 0.7) !important;
+      color: #FFFFFF !important;
+      transition: all 0.15s ease-in-out;
     }
-    .btn-unduh-neu:active{
-      box-shadow: inset 2px 2px 5px rgba(0,50,90,.4), inset -2px -2px 5px rgba(120,180,240,.3);
+    .btn-unduh-neu:active {
+      box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.25) !important;
       transform: scale(0.98);
     }
     #searchStickyWrap{
@@ -395,24 +419,25 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #FFFFFF;
-      border: 1.5px solid rgba(255,255,255,.9);
-      box-shadow: -2px -2px 5px rgba(255,255,255,.9), 2px 2px 5px rgba(190,190,200,.35);
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.6);
+      box-shadow: var(--neu-extruded);
     }
     .neu-search-icon .material-symbols-rounded{
-      color: #0091EA !important;
+      color: var(--primary-accent) !important;
     }
     .neu-dropdown-inset{
-      background: var(--color-bg-app-3);
-      border: 1.5px solid rgba(255,255,255,.9);
+      background: var(--bg-card) !important;
+      border: 1px solid rgba(255,255,255,.4) !important;
       border-radius: 9999px;
-      box-shadow: inset 2px 2px 5px rgba(163,177,198,.45), inset -2px -2px 5px rgba(255,255,255,.8);
+      box-shadow: var(--neu-inset) !important;
+      color: var(--text-main) !important;
     }
     .neu-dropdown{
-      background: var(--color-bg-app-3);
-      border: 1.5px solid rgba(255,255,255,.9);
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.6);
       border-radius: 9999px !important;
-      box-shadow: -4px -4px 10px rgba(255,255,255,.9), 4px 4px 12px rgba(163,177,198,.4);
+      box-shadow: var(--neu-extruded);
       transition: box-shadow .15s ease;
     }
     .neu-dropdown:focus{
@@ -420,20 +445,20 @@
       border-color: var(--color-primary);
       box-shadow: 0 0 0 3px var(--color-primary-soft);
     }
-    .neu-nav-flat{
-      background: #FFFFFF;
-      box-shadow: 0 -2px 12px rgba(20,20,30,.06);
-      border-top: 1px solid #ECEDF0;
+    /* 4. Navigasi Bawah (Bottom Bar) Soft Float */
+    .neu-nav-flat {
+      background: var(--bg-card) !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.8) !important;
+      box-shadow: 0 -6px 16px rgba(166, 180, 200, 0.4), 0 -2px 6px rgba(255, 255, 255, 0.8) !important;
       padding-bottom: env(safe-area-inset-bottom, 0px);
     }
     .neu-modal{
-      background: #FFFFFF !important;
-      border: 1px solid #ECEDF0 !important;
+      background: var(--bg-card) !important;
+      border: 1px solid rgba(255,255,255,.6) !important;
       box-shadow:
         0 0 0 1px rgba(255,255,255,.2),
-        0 25px 55px rgba(35,33,58,.35),
-        inset 0 0 60px rgba(110,110,118,.08),
-        inset 0 0 3px 1px rgba(255,255,255,.5) !important;
+        0 25px 55px rgba(35,33,58,.25),
+        var(--neu-extruded) !important;
     }
     .neu-modal-close{
       background:#ffffff !important;
@@ -470,7 +495,7 @@
       position: relative;
       width: 100%; height: 132px;
       display: flex; align-items: flex-end; justify-content: center;
-      background: #D6DDE8;
+      background: var(--bg-card);
       border: 1.5px solid rgba(255,255,255,.9);
       border: 1px solid var(--glass-border);
       border-radius: 20px;
@@ -541,15 +566,15 @@
     .neu-ring-wrap {
       border-radius: 50%; flex-shrink: 0; position: relative;
       border: 1.5px solid rgba(255,255,255,.9);
-      box-shadow: -3px -3px 8px rgba(255,255,255,.9), 3px 3px 10px rgba(190,190,200,.4);
+      box-shadow: -3px -3px 8px rgba(255,255,255,.9), 3px 3px 10px rgba(166,180,200,.4);
       display: flex; align-items: center; justify-content: center;
-      background: #D6DDE8;
+      background: var(--bg-card);
     }
     .fab-copy {
       width: 34px; height: 34px; border-radius: 50%;
-      background: #D6DDE8;
+      background: var(--bg-card);
       border: 1.5px solid rgba(255,255,255,.9);
-      box-shadow: -3px -3px 6px rgba(255,255,255,.9), 3px 3px 6px rgba(190,190,200,.4);
+      box-shadow: -3px -3px 6px rgba(255,255,255,.9), 3px 3px 6px rgba(166,180,200,.4);
       display: flex; align-items: center; justify-content: center;
       color: var(--color-text-secondary);
     }
@@ -579,16 +604,16 @@
       transform: translate(-50%, -50%);
       width: 70px; height: 70px;
       border-radius: 50%;
-      background: #D6DDE8;
+      background: var(--bg-card);
       border: 1.5px solid rgba(255,255,255,.9);
-      box-shadow: -2px -2px 6px rgba(255,255,255,.9), 2px 2px 6px rgba(190,190,200,.4);
+      box-shadow: -2px -2px 6px rgba(255,255,255,.9), 2px 2px 6px rgba(166,180,200,.4);
       z-index: 0;
     }
     .legend-chip-neu {
       display: flex; flex-direction: row; align-items: center; gap: 8px; justify-content: space-between;
-      background: #D6DDE8; border-radius: 999px; padding: 9px 14px;
+      background: var(--bg-card); border-radius: 999px; padding: 9px 14px;
       border: 1.5px solid rgba(255,255,255,.9);
-      box-shadow: -2px -2px 6px rgba(255,255,255,.9), 2px 2px 6px rgba(190,190,200,.4);
+      box-shadow: -2px -2px 6px rgba(255,255,255,.9), 2px 2px 6px rgba(166,180,200,.4);
       position: relative; overflow: hidden;
     }
     .ripple-effect { position: relative; overflow: hidden; }
@@ -616,9 +641,9 @@
       width: 136px;
       height: 136px;
       border-radius: 50%;
-      background: #D6DDE8;
+      background: var(--bg-card);
       border: 1.5px solid rgba(255,255,255,.9);
-      box-shadow: -3px -3px 8px rgba(255,255,255,.9), 3px 3px 10px rgba(190,190,200,.4);
+      box-shadow: -3px -3px 8px rgba(255,255,255,.9), 3px 3px 10px rgba(166,180,200,.4);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -695,9 +720,9 @@
     .chart-card-carousel{
       scroll-snap-align:start;
       flex:0 0 100%;
-      background-color: #D6DDE8;
+      background-color: var(--bg-card);
       border: 1.5px solid rgba(255,255,255,.9);
-      box-shadow: -4px -4px 10px rgba(255,255,255,.9), 4px 4px 12px rgba(163,177,198,.4);
+      box-shadow: -4px -4px 10px rgba(255,255,255,.9), 4px 4px 12px rgba(166,180,200,.4);
       border-radius:var(--radius-lg);
       padding:12px;
       box-sizing:border-box;
@@ -855,7 +880,7 @@
 
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-3">
-      <div id="avatarGuruWrap" style="width:44px;height:44px;border-radius:50%;background-color:#D6DDE8;border:1.5px solid rgba(255,255,255,.95);box-shadow:-3px -3px 6px rgba(255,255,255,1), 4px 4px 9px rgba(140,150,175,.55);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;">
+      <div id="avatarGuruWrap" style="width:44px;height:44px;border-radius:50%;background-color:var(--bg-card);border:1.5px solid rgba(255,255,255,.95);box-shadow:-3px -3px 6px rgba(255,255,255,1), 4px 4px 9px rgba(140,150,175,.55);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;">
         <img id="avatarGuruImg" src="" class="hidden" style="width:100%;height:100%;object-fit:cover;">
         <span id="avatarGuruFallback" class="material-symbols-rounded" style="font-size:22px;color:#6b7280;">person</span>
       </div>
@@ -868,7 +893,7 @@
     <div class="relative" id="notifWrap">
       <button id="btnNotifUpdate" onpointerdown="buatRipple(event)" onclick="toggleNotifUpdate(event)"
         class="relative flex items-center justify-center"
-        style="width:30px;height:30px;border-radius:50%;background:#D6DDE8;overflow:hidden;border:1.5px solid rgba(255,255,255,.95);
+        style="width:30px;height:30px;border-radius:50%;background:var(--bg-card);overflow:hidden;border:1.5px solid rgba(255,255,255,.95);
                box-shadow: -3px -3px 6px rgba(255,255,255,1), 4px 4px 9px rgba(140,150,175,.55);">
         <span class="material-symbols-rounded" style="font-size:16px;color:#6D6F8F;">notifications</span>
         <span id="notifDot" class="hidden" style="position:absolute;top:3px;right:4px;width:7px;height:7px;border-radius:50%;background:var(--color-primary);border:1.5px solid #fff;"></span>
@@ -922,7 +947,7 @@
 
   <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
 
-    <div style="grid-column:1 / 3; background:#0091EA; border:1.5px solid rgba(255,255,255,.9); border-radius:20px; padding:18px; position:relative; overflow:hidden; box-shadow:-4px -4px 10px rgba(120,180,240,.5), 4px 4px 12px rgba(0,50,90,.45);">
+    <div style="grid-column:1 / 3; background:var(--primary-accent); border:1.5px solid rgba(255,255,255,.9); border-radius:20px; padding:18px; position:relative; overflow:hidden; box-shadow:-4px -4px 10px rgba(120,180,240,.5), 4px 4px 12px rgba(0,50,90,.45);">
       <div style="position:absolute; top:14px; right:14px; width:34px; height:34px; border-radius:10px; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center;">
         <span class="material-symbols-rounded text-[18px]" style="color:#fff;">school</span>
       </div>
@@ -955,7 +980,7 @@
       </div>
     </div>
 
-    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="background:#E4E5F5; border:1.5px solid rgba(255,255,255,.9); border-radius:18px; padding:14px 38px 14px 14px; position:relative; min-height:96px; box-shadow:-4px -4px 10px rgba(255,255,255,.9), 4px 4px 12px rgba(163,177,198,.45);">
+    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="background:#E4E5F5; border:1.5px solid rgba(255,255,255,.9); border-radius:18px; padding:14px 38px 14px 14px; position:relative; min-height:96px; box-shadow:-4px -4px 10px rgba(255,255,255,.9), 4px 4px 12px rgba(166,180,200,.45);">
       <span class="material-symbols-rounded text-[20px]" style="position:absolute; top:14px; right:14px; color:#534AB7;">import_contacts</span>
       <span class="material-symbols-rounded text-[18px]" style="position:absolute; top:50%; right:12px; transform:translateY(-50%); color:#534AB7;">chevron_right</span>
       <p style="font-size:12px; font-weight:700; color:#3C3489; margin:0;">Guru</p>
@@ -966,7 +991,7 @@
       <p style="font-size:11.5px; font-weight:600; color:#534AB7; margin:3px 0 0;">Guru Kelas &amp; Mapel</p>
     </div>
 
-    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer" style="background:#FBEADA; border:1.5px solid rgba(255,255,255,.9); border-radius:18px; padding:14px 38px 14px 14px; position:relative; min-height:96px; box-shadow:-4px -4px 10px rgba(255,255,255,.9), 4px 4px 12px rgba(163,177,198,.45);">
+    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer" style="background:#FBEADA; border:1.5px solid rgba(255,255,255,.9); border-radius:18px; padding:14px 38px 14px 14px; position:relative; min-height:96px; box-shadow:-4px -4px 10px rgba(255,255,255,.9), 4px 4px 12px rgba(166,180,200,.45);">
       <span class="material-symbols-rounded text-[20px]" style="position:absolute; top:14px; right:14px; color:#854F0B;">badge</span>
       <span class="material-symbols-rounded text-[18px]" style="position:absolute; top:50%; right:12px; transform:translateY(-50%); color:#854F0B;">chevron_right</span>
       <p style="font-size:12px; font-weight:700; color:#633806; margin:0;">Tendik</p>
@@ -977,7 +1002,7 @@
       <p style="font-size:11.5px; font-weight:600; color:#854F0B; margin:3px 0 0;">Tenaga Kependidikan</p>
     </div>
 
-    <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="grid-column:1 / 3; background:#FBEAF0; border:1.5px solid rgba(255,255,255,.9); border-radius:18px; padding:14px 38px 14px 14px; position:relative; min-height:96px; box-shadow:-4px -4px 10px rgba(255,255,255,.9), 4px 4px 12px rgba(163,177,198,.45);">
+    <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="grid-column:1 / 3; background:#FBEAF0; border:1.5px solid rgba(255,255,255,.9); border-radius:18px; padding:14px 38px 14px 14px; position:relative; min-height:96px; box-shadow:-4px -4px 10px rgba(255,255,255,.9), 4px 4px 12px rgba(166,180,200,.45);">
       <span class="material-symbols-rounded text-[20px]" style="position:absolute; top:14px; right:14px; color:#993556;">groups</span>
       <span class="material-symbols-rounded text-[18px]" style="position:absolute; top:50%; right:12px; transform:translateY(-50%); color:#993556;">chevron_right</span>
       <p style="font-size:12px; font-weight:700; color:#72243E; margin:0;">Total Rombel</p>
@@ -1086,10 +1111,10 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
         Data
       </h1>
 
-      <div id="dataTabTrack" data-no-ripple class="flex items-center mb-4" style="background-color:var(--color-bg-app-3);border-radius:9999px;padding:3px;gap:0;box-shadow: inset 2px 2px 5px rgba(163,177,198,.35), inset -2px -2px 5px rgba(255,255,255,.7);">
+      <div id="dataTabTrack" data-no-ripple class="flex items-center mb-4" style="background-color:var(--color-bg-app-3);border-radius:9999px;padding:3px;gap:0;box-shadow: inset 2px 2px 5px rgba(166,180,200,.35), inset -2px -2px 5px rgba(255,255,255,.7);">
         <button id="tabDataGuru" onclick="switchDataTab('guru')"
           class="flex-1 flex items-center justify-center gap-1 text-[12.5px] font-semibold py-2 px-1 rounded-full transition-all duration-200"
-          style="background-color:var(--color-bg-app-3);color:#23213A;border:1.5px solid rgba(255,255,255,.9);box-shadow:-2px -2px 5px rgba(255,255,255,.9), 2px 2px 5px rgba(190,190,200,.4);">
+          style="background-color:var(--color-bg-app-3);color:#23213A;border:1.5px solid rgba(255,255,255,.9);box-shadow:-2px -2px 5px rgba(255,255,255,.9), 2px 2px 5px rgba(166,180,200,.4);">
           <span class="material-symbols-rounded text-[15px]">school</span>
           Guru
         </button>
@@ -1332,7 +1357,7 @@ class="hidden detail-fullpage-overlay fixed inset-0 z-[60] overflow-y-auto">
         <button
           onclick="mundurModal()"
           class="flex items-center justify-center shrink-0"
-          style="width:36px;height:36px;border-radius:50%;background:#D6DDE8;border:1.5px solid rgba(255,255,255,.95);
+          style="width:36px;height:36px;border-radius:50%;background:var(--bg-card);border:1.5px solid rgba(255,255,255,.95);
                  box-shadow: -3px -3px 6px rgba(255,255,255,1), 4px 4px 9px rgba(140,150,175,.55);">
           <span class="material-symbols-rounded text-[20px]" style="color:#5f6368;">chevron_left</span>
         </button>
@@ -1344,7 +1369,7 @@ class="hidden detail-fullpage-overlay fixed inset-0 z-[60] overflow-y-auto">
             id="detailDotsBtn"
             onclick="toggleDetailMenu(event)"
             class="flex items-center justify-center"
-            style="width:36px;height:36px;border-radius:50%;background:#D6DDE8;border:1.5px solid rgba(255,255,255,.95);
+            style="width:36px;height:36px;border-radius:50%;background:var(--bg-card);border:1.5px solid rgba(255,255,255,.95);
                    box-shadow: -3px -3px 6px rgba(255,255,255,1), 4px 4px 9px rgba(140,150,175,.55);">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
               <circle cx="7" cy="7" r="3" stroke="#5f6368" stroke-width="1.6"/>
@@ -1534,7 +1559,7 @@ let historyTabAktif = false;
         tendik: { btn: document.getElementById('tabDataTendik'),panel: document.getElementById('panelDataTendik') }
       };
 
-      const aktif       = 'background-color:var(--color-bg-app-3);color:#23213A;border:1.5px solid rgba(255,255,255,.9);box-shadow:-2px -2px 5px rgba(255,255,255,.9), 2px 2px 5px rgba(190,190,200,.4);';
+      const aktif       = 'background-color:var(--color-bg-app-3);color:#23213A;border:1.5px solid rgba(255,255,255,.9);box-shadow:-2px -2px 5px rgba(255,255,255,.9), 2px 2px 5px rgba(166,180,200,.4);';
       const nonaktif    = 'background:transparent;color:#6D6F8F;box-shadow:none;';
 
       const aktifStyle = { guru: aktif, tendik: aktif };
@@ -1592,9 +1617,9 @@ let historyTabAktif = false;
             </div>
             <div style="display:flex; gap:14px; margin-top:16px; padding-top:14px; border-top:1px solid #ECEDF0;">
               <div style="flex:1; min-width:0;">
-                <p style="font-size:11.5px; font-weight:700; color:#0091EA; margin:0 0 2px;">Laki-laki</p>
+                <p style="font-size:11.5px; font-weight:700; color:var(--primary-accent); margin:0 0 2px;">Laki-laki</p>
                 <p style="font-size:11px; color:#6D6F8F; margin:0 0 6px;">${pctL}% <span style="color:#6b7280;">(${totalL} siswa)</span></p>
-                <div style="width:100%; height:4px; border-radius:999px; background:#EEF0F3; overflow:hidden;"><div style="width:${pctL}%; height:100%; border-radius:999px; background:#0091EA;"></div></div>
+                <div style="width:100%; height:4px; border-radius:999px; background:#EEF0F3; overflow:hidden;"><div style="width:${pctL}%; height:100%; border-radius:999px; background:var(--primary-accent);"></div></div>
               </div>
               <div style="width:1px; background:#ECEDF0;"></div>
               <div style="flex:1; min-width:0;">
@@ -1611,7 +1636,7 @@ let historyTabAktif = false;
           <div class="neu-card-flat" style="padding:4px;">
             <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-bottom:1px solid #ECEDF0;">
               <div style="display:flex; align-items:center; gap:8px;">
-                <span class="material-symbols-rounded text-[16px]" style="color:#0091EA;">groups</span>
+                <span class="material-symbols-rounded text-[16px]" style="color:var(--primary-accent);">groups</span>
                 <span style="font-size:13px; font-weight:700; color:#23213A;">Distribusi Rombel</span>
               </div>
               <span style="font-size:11px; font-weight:700; color:#4b5563; background:#FFFFFF; padding:5px 10px; border-radius:999px;">${data.length} kelas</span>
@@ -1630,7 +1655,7 @@ let historyTabAktif = false;
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-3">
                     <div style="width:32px;height:32px;border-radius:12px;background:#7C93C71A;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                      <span style="font-size:13px; font-weight:800; color:#0091EA;">${nomorKelas}</span>
+                      <span style="font-size:13px; font-weight:800; color:var(--primary-accent);">${nomorKelas}</span>
                     </div>
                     <div>
                       <div class="text-[13px] font-semibold text-gray-900">${r.kelas}</div>
@@ -1642,11 +1667,11 @@ let historyTabAktif = false;
                   </div>
                 </div>
                 <div class="flex items-center justify-between" style="margin-top:8px; font-size:10px; font-weight:700;">
-                  <span style="color:#0091EA;">L (${r.L})</span>
+                  <span style="color:var(--primary-accent);">L (${r.L})</span>
                   <span style="color:#D4537E;">P (${r.P})</span>
                 </div>
                 <div style="width:100%; height:4px; border-radius:999px; overflow:hidden; display:flex; margin-top:4px;">
-                  <div style="width:${persenL}%; height:100%; background:#0091EA;"></div>
+                  <div style="width:${persenL}%; height:100%; background:var(--primary-accent);"></div>
                   <div style="width:${100-persenL}%; height:100%; background:#F88AB0;"></div>
                 </div>
               </div>
