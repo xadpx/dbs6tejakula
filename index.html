@@ -340,6 +340,12 @@
       border: 1.5px solid rgba(255,255,255,.9);
       box-shadow: -4px -4px 10px rgba(255,255,255,.9), 4px 4px 12px rgba(163,177,198,.4);
     }
+    .neu-card-flat{
+      background-color: #FFFFFF;
+      border-radius: var(--radius-md);
+      border: none;
+      box-shadow: 0 2px 8px rgba(20,20,30,.06);
+    }
     .neu-btn{
       background-color: #FFFFFF;
       border-radius: var(--radius-sm);
@@ -1607,7 +1613,7 @@ let historyTabAktif = false;
 
         isi = `
           ${kartuRingkasanRombel}
-          <div class="neu-card" style="padding:4px;">
+          <div class="neu-card-flat" style="padding:4px;">
             <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-bottom:1px solid #ECEDF0;">
               <div style="display:flex; align-items:center; gap:8px;">
                 <span class="material-symbols-rounded text-[16px]" style="color:#0091EA;">groups</span>
@@ -1674,7 +1680,7 @@ let historyTabAktif = false;
         isi = `<p class="text-center text-gray-500 py-6">Tidak ada siswa di kelas ini</p>`;
       }else{
         isi = `
-          <div class="neu-card" style="padding:4px;">
+          <div class="neu-card-flat" style="padding:4px;">
             ${hasil.map((r,i) => `
               <div
                 onpointerdown="buatRipple(event)"
@@ -1763,7 +1769,7 @@ let historyTabAktif = false;
 
       const isi = `
         ${kartuRingkasan}
-        <div class="neu-card" style="padding:4px;">
+        <div class="neu-card-flat" style="padding:4px;">
           <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-bottom:1px solid #ECEDF0;">
             <div style="display:flex; align-items:center; gap:8px;">
               <span class="material-symbols-rounded text-[16px]" style="color:#6C5DD3;">bar_chart</span>
@@ -1818,7 +1824,7 @@ let historyTabAktif = false;
         isi = `<p class="text-center text-gray-500 py-6">Tidak ada siswa di kategori ini</p>`;
       }else{
         isi = `
-          <div class="neu-card" style="padding:4px;">
+          <div class="neu-card-flat" style="padding:4px;">
             ${hasil.map((r,i) => `
               <div
                 onpointerdown="buatRipple(event)"
@@ -1865,7 +1871,7 @@ let historyTabAktif = false;
 
       const labels = Object.keys(status);
       const isi = `
-        <div class="neu-card" style="padding:4px;">
+        <div class="neu-card-flat" style="padding:4px;">
           ${labels.map((label,i) => `
             <div
               onpointerdown="buatRipple(event)"
@@ -1965,7 +1971,7 @@ let historyTabAktif = false;
         isi = `<p class="text-center text-gray-500 py-6">Tidak ada siswa di kategori ini</p>`;
       }else{isi = `
           ${kartuRingkasanStatus}
-          <div class="neu-card" style="padding:4px;">
+          <div class="neu-card-flat" style="padding:4px;">
             <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-bottom:1px solid #ECEDF0;">
               <div style="display:flex; align-items:center; gap:8px;">
                 <span class="material-symbols-rounded text-[16px]" style="color:#6C5DD3;">groups</span>
@@ -2594,7 +2600,7 @@ function renderSemuaSiswaTab(){
   const hasil = d.slice().sort((a,b) => String(a[1]).localeCompare(String(b[1]), "id", {sensitivity:"base"}));
 
   el.innerHTML = `
-<div class="neu-card" style="padding:4px;">
+<div class="neu-card-flat" style="padding:4px;">
 ${hasil.map((r,i)=>`
 <div
 onpointerdown="buatRipple(event)"
@@ -2734,7 +2740,7 @@ hasil.sort((a, b) => {
   }
 
   document.getElementById("list-siswa").innerHTML = `
-<div class="neu-card" style="padding:4px;">
+<div class="neu-card-flat" style="padding:4px;">
 
 ${hasil.map((r,i)=>{
 
@@ -3077,7 +3083,7 @@ function renderListPegawai(tipe){
 
  el.innerHTML = `
 ${kartuRingkasanGuru}
-<div class="neu-card" style="padding:4px;">
+<div class="neu-card-flat" style="padding:4px;">
 ${sumber.map((r,i)=>{
   const jabatanR = String(r[2] || '').trim();
   const isGuruKelas = jabatanR === 'Guru Kelas';
@@ -4330,7 +4336,7 @@ function tampilkanSiswaKategori(kolom, label){
     `;
   }else{
     document.getElementById("list-kategori").innerHTML = `
-      <div class="neu-card" style="padding:4px;">
+      <div class="neu-card-flat" style="padding:4px;">
         ${hasil.map((r,i) => `
           <div class="flex items-center px-4 py-2.5" style="${i === hasil.length - 1 ? '' : 'border-bottom:1px solid #ECEDF0;'}">
             <div class="flex-1 min-w-0">
