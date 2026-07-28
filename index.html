@@ -124,17 +124,16 @@
       -webkit-appearance:none;
       width:20px;
       height:20px;
-      border: 1px solid var(--glass-border);
+      border: 1.5px solid #D1D5DB;
       border-radius:7px;
-      background:rgba(255,255,255,.45);
-      box-shadow: inset 0 1px 3px rgba(110,110,118,.18);
+      background:#FFFFFF;
       cursor:pointer;
       transition:.15s;
       position:relative;
       flex-shrink:0;
     }
     .kategori:checked{
-      background: linear-gradient(135deg, var(--color-accent-blue-deep), var(--color-primary));
+      background: #0091EA;
       border-color: transparent;
     }
     .kategori:checked::after{
@@ -1091,7 +1090,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
         Data
       </h1>
 
-      <div id="dataTabTrack" data-no-ripple class="flex items-center mb-4" style="background-color:var(--color-bg-card);border-radius:9999px;padding:3px;gap:0;box-shadow: inset 0 1px 4px rgba(110,110,118,.15);">
+      <div id="dataTabTrack" data-no-ripple class="flex items-center mb-4" style="background-color:var(--color-bg-app-3);border-radius:9999px;padding:3px;gap:0;box-shadow: inset 2px 2px 5px rgba(163,177,198,.35), inset -2px -2px 5px rgba(255,255,255,.7);">
         <button id="tabDataGuru" onclick="switchDataTab('guru')"
           class="flex-1 flex items-center justify-center gap-1 text-[12.5px] font-semibold py-2 px-1 rounded-full transition-all duration-200"
           style="background-color:var(--color-bg-app-3);color:#23213A;border:1.5px solid rgba(255,255,255,.9);box-shadow:-2px -2px 5px rgba(255,255,255,.9), 2px 2px 5px rgba(190,190,200,.4);">
@@ -1295,7 +1294,7 @@ class="neu-dropdown-inset w-24 min-w-[96px] h-9 rounded-xl px-2 text-sm">
 id="btnUnduh"
 onclick="bukaPINUnduh()"
 class="btn-unduh-neu mt-4 w-full h-[46px] flex items-center justify-center gap-2 text-white text-sm font-semibold"
-style="border-radius:9999px; border: none;">
+style="border-radius:9999px;">
 
 <span class="material-symbols-rounded text-white text-[19px]">
 download
