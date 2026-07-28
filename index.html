@@ -39,6 +39,7 @@
       --text-main: #1E293B;
       --text-sub: #64748B;
       --primary-accent: #2563EB;
+      --primary-accent-muted: #3E67C7;
       --primary-glow: 4px 4px 12px rgba(37, 99, 235, 0.35);
       /* Corner Radius yang Seimbang */
       --radius-sm: 12px;
@@ -361,7 +362,7 @@
       background: var(--bg-card) !important;
       border-radius: var(--radius-md);
       border: 1px solid rgba(255, 255, 255, 0.6);
-      box-shadow: var(--neu-inset) !important;
+      box-shadow: var(--neu-extruded) !important;
     }
     .neu-btn{
       background: var(--bg-card) !important;
@@ -947,7 +948,7 @@
 
   <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
 
-    <div style="grid-column:1 / 3; background:var(--primary-accent); border:1.5px solid rgba(255,255,255,.9); border-radius:20px; padding:18px; position:relative; overflow:hidden; box-shadow:-4px -4px 10px rgba(120,180,240,.5), 4px 4px 12px rgba(0,50,90,.45);">
+    <div style="grid-column:1 / 3; background:var(--primary-accent-muted); border:1.5px solid rgba(255,255,255,.9); border-radius:20px; padding:18px; position:relative; overflow:hidden; box-shadow:-4px -4px 10px rgba(120,180,240,.5), 4px 4px 12px rgba(0,50,90,.45);">
       <div style="position:absolute; top:14px; right:14px; width:34px; height:34px; border-radius:10px; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center;">
         <span class="material-symbols-rounded text-[18px]" style="color:#fff;">school</span>
       </div>
@@ -3113,7 +3114,7 @@ ${sumber.map((r,i)=>{
 <div
 onpointerdown="buatRipple(event)"
 onclick="showDetailPegawai('${tipe}', ${i})"
-class="flex items-center justify-between px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect"
+class="flex items-center justify-between px-4 py-2.5 pr-3 cursor-pointer active:bg-gray-50 transition ripple-effect"
 style="${i === sumber.length - 1 ? '' : 'border-bottom:1px solid #ECEDF0;'}">
   <div class="flex items-center min-w-0 flex-1">
     <div
@@ -3131,9 +3132,9 @@ style="${i === sumber.length - 1 ? '' : 'border-bottom:1px solid #ECEDF0;'}">
       <div class="text-[11px] text-gray-600 mt-0.5 truncate">${jabatanR || '-'}</div>
     </div>
   </div>
-  <div class="flex items-center gap-2 flex-shrink-0 ml-2">
-    ${kategoriBadge ? `<span style="font-size:9.5px; font-weight:700; color:${warnaBadge[0]}; background:${warnaBadge[1]}; padding:3px 9px; border-radius:999px; white-space:nowrap;">${kategoriBadge}</span>` : ''}
-    <span class="material-symbols-rounded text-[16px]" style="color:#6b7280;">chevron_right</span>
+  <div class="flex items-center gap-2 flex-shrink-0 ml-2" style="max-width:42%;">
+    ${kategoriBadge ? `<span style="font-size:9.5px; font-weight:700; color:${warnaBadge[0]}; background:${warnaBadge[1]}; padding:3px 9px; border-radius:999px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:112px; display:inline-block;">${kategoriBadge}</span>` : ''}
+    <span class="material-symbols-rounded text-[16px] flex-shrink-0" style="color:#6b7280;">chevron_right</span>
   </div>
 </div>
 `;}).join('')}
@@ -3981,11 +3982,11 @@ function buatChart(){
       if(pct < 20){
         elBadge.textContent = 'Rendah';
         elBadge.style.background = 'rgba(62,142,110,.15)';
-        elBadge.style.color = '#2E7057';
+        elBadge.style.color = '#245A41';
       }else if(pct < 40){
         elBadge.textContent = 'Sedang';
         elBadge.style.background = 'rgba(201,150,62,.15)';
-        elBadge.style.color = '#9C7A2E';
+        elBadge.style.color = '#6B4F17';
       }else{
         elBadge.textContent = 'Tinggi';
         elBadge.style.background = 'rgba(220,38,38,.12)';
@@ -4029,11 +4030,11 @@ function buatChart(){
       if(pct < 5){
         elBadge.textContent = 'Rendah';
         elBadge.style.background = 'rgba(62,142,110,.15)';
-        elBadge.style.color = '#2E7057';
+        elBadge.style.color = '#245A41';
       }else if(pct < 10){
         elBadge.textContent = 'Sedang';
         elBadge.style.background = 'rgba(201,150,62,.15)';
-        elBadge.style.color = '#9C7A2E';
+        elBadge.style.color = '#6B4F17';
       }else{
         elBadge.textContent = 'Tinggi';
         elBadge.style.background = 'rgba(220,38,38,.12)';
