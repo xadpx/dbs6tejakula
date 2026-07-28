@@ -810,9 +810,9 @@
     .blob-bg{
       position: fixed;
       border-radius: 50%;
-      filter: blur(50px);
+      filter: blur(60px) saturate(70%);
       z-index: -1;
-      opacity: .55;
+      opacity: .28;
       pointer-events: none;
     }
     .blob-bg.b1{ width:340px; height:340px; background:#F7C99A; top:-60px; left:-90px; }
@@ -830,14 +830,10 @@
       border-radius: 22px !important;
       color: var(--ink);
     }
-    .neu-card.tint-danger{
-      background: linear-gradient(135deg, rgba(242,84,91,.16), rgba(255,255,255,.85)) !important;
-    }
-    .neu-card.tint-safe{
-      background: linear-gradient(135deg, rgba(78,205,196,.16), rgba(255,255,255,.85)) !important;
-    }
+    .neu-card.tint-danger,
+    .neu-card.tint-safe,
     .neu-card.tint-purple{
-      background: linear-gradient(135deg, rgba(155,127,232,.16), rgba(92,199,232,.1), rgba(255,255,255,.85)) !important;
+      background: var(--card) !important;
     }
     /* 2. Search bar tetap flat sederhana, biar kontras sama card glass */
     .neu-search {
@@ -1049,7 +1045,7 @@
       </div>
     </div>
 
-    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="background:rgba(228,229,245,.65); -webkit-backdrop-filter:blur(14px) saturate(160%); backdrop-filter:blur(14px) saturate(160%); border:1px solid var(--card-border); border-radius:20px; padding:14px 38px 14px 14px; position:relative; min-height:96px; box-shadow: 0 8px 20px rgba(70,60,120,.1);">
+    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="background:var(--card); -webkit-backdrop-filter:blur(18px) saturate(160%); backdrop-filter:blur(18px) saturate(160%); border:1px solid var(--card-border); border-radius:22px; padding:14px 38px 14px 14px; position:relative; min-height:96px; box-shadow: 0 16px 36px rgba(70,60,120,.1);">
       <span class="material-symbols-rounded text-[20px]" style="position:absolute; top:14px; right:14px; color:#534AB7;">import_contacts</span>
       <span class="material-symbols-rounded text-[18px]" style="position:absolute; top:50%; right:12px; transform:translateY(-50%); color:#534AB7;">chevron_right</span>
       <p style="font-size:12px; font-weight:700; color:#3C3489; margin:0;">Guru</p>
@@ -1060,7 +1056,7 @@
       <p style="font-size:11.5px; font-weight:600; color:#534AB7; margin:3px 0 0;">Guru Kelas &amp; Mapel</p>
     </div>
 
-    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer" style="background:rgba(251,234,218,.65); -webkit-backdrop-filter:blur(14px) saturate(160%); backdrop-filter:blur(14px) saturate(160%); border:1px solid var(--card-border); border-radius:20px; padding:14px 38px 14px 14px; position:relative; min-height:96px; box-shadow: 0 8px 20px rgba(70,60,120,.1);">
+    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer" style="background:var(--card); -webkit-backdrop-filter:blur(18px) saturate(160%); backdrop-filter:blur(18px) saturate(160%); border:1px solid var(--card-border); border-radius:22px; padding:14px 38px 14px 14px; position:relative; min-height:96px; box-shadow: 0 16px 36px rgba(70,60,120,.1);">
       <span class="material-symbols-rounded text-[20px]" style="position:absolute; top:14px; right:14px; color:#854F0B;">badge</span>
       <span class="material-symbols-rounded text-[18px]" style="position:absolute; top:50%; right:12px; transform:translateY(-50%); color:#854F0B;">chevron_right</span>
       <p style="font-size:12px; font-weight:700; color:#633806; margin:0;">Tendik</p>
@@ -1071,7 +1067,7 @@
       <p style="font-size:11.5px; font-weight:600; color:#854F0B; margin:3px 0 0;">Tenaga Kependidikan</p>
     </div>
 
-    <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="grid-column:1 / 3; background:rgba(251,234,240,.65); -webkit-backdrop-filter:blur(14px) saturate(160%); backdrop-filter:blur(14px) saturate(160%); border:1px solid var(--card-border); border-radius:20px; padding:14px 38px 14px 14px; position:relative; min-height:96px; box-shadow: 0 8px 20px rgba(70,60,120,.1);">
+    <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="grid-column:1 / 3; background:var(--card); -webkit-backdrop-filter:blur(18px) saturate(160%); backdrop-filter:blur(18px) saturate(160%); border:1px solid var(--card-border); border-radius:22px; padding:14px 38px 14px 14px; position:relative; min-height:96px; box-shadow: 0 16px 36px rgba(70,60,120,.1);">
       <span class="material-symbols-rounded text-[20px]" style="position:absolute; top:14px; right:14px; color:#993556;">groups</span>
       <span class="material-symbols-rounded text-[18px]" style="position:absolute; top:50%; right:12px; transform:translateY(-50%); color:#993556;">chevron_right</span>
       <p style="font-size:12px; font-weight:700; color:#72243E; margin:0;">Total Rombel</p>
@@ -1127,7 +1123,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
 
     <p class="text-[11px] font-bold text-gray-600 uppercase m-0 mt-5 mb-3" style="letter-spacing:.04em;">Kategori</p>
 
-    <div onclick="bukaKategoriKesejahteraanDariBeranda()" class="cursor-pointer flex items-center gap-3.5" style="background:linear-gradient(135deg, rgba(245,179,122,.16), rgba(255,255,255,.85)); -webkit-backdrop-filter:blur(18px) saturate(160%); backdrop-filter:blur(18px) saturate(160%); border:1px solid var(--card-border); border-radius:var(--radius-lg); box-shadow:0 10px 26px rgba(70,60,120,.08); padding:16px; margin-bottom:12px;">
+    <div onclick="bukaKategoriKesejahteraanDariBeranda()" class="cursor-pointer flex items-center gap-3.5" style="background:var(--card); -webkit-backdrop-filter:blur(18px) saturate(160%); backdrop-filter:blur(18px) saturate(160%); border:1px solid var(--card-border); border-radius:var(--radius-lg); box-shadow:0 10px 26px rgba(70,60,120,.08); padding:16px; margin-bottom:12px;">
       <div style="width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg, #F5B37A, #E07A2F);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
         <span class="material-symbols-rounded text-[22px]" style="color:#fff;">volunteer_activism</span>
       </div>
@@ -1142,7 +1138,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
       <span class="material-symbols-rounded text-[20px]" style="color:var(--sub); flex-shrink:0;">chevron_right</span>
     </div>
 
-    <div onclick="bukaKategoriStatusAnakDariBeranda()" class="cursor-pointer flex items-center gap-3.5" style="background:linear-gradient(135deg, rgba(155,127,232,.14), rgba(92,199,232,.1), rgba(255,255,255,.85)); -webkit-backdrop-filter:blur(18px) saturate(160%); backdrop-filter:blur(18px) saturate(160%); border:1px solid var(--card-border); border-radius:var(--radius-lg); box-shadow:0 10px 26px rgba(70,60,120,.08); padding:16px; margin-bottom:12px;">
+    <div onclick="bukaKategoriStatusAnakDariBeranda()" class="cursor-pointer flex items-center gap-3.5" style="background:var(--card); -webkit-backdrop-filter:blur(18px) saturate(160%); backdrop-filter:blur(18px) saturate(160%); border:1px solid var(--card-border); border-radius:var(--radius-lg); box-shadow:0 10px 26px rgba(70,60,120,.08); padding:16px; margin-bottom:12px;">
       <div style="width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg, #9B7FE8, #5CC7E8);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
         <span style="color:#fff;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></span>
       </div>
