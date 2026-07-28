@@ -1114,34 +1114,34 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
 
     <p class="text-[11px] font-bold text-gray-600 uppercase m-0 mt-5 mb-3" style="letter-spacing:.04em;">Kategori</p>
 
-    <div onclick="bukaKategoriKesejahteraanDariBeranda()" class="cursor-pointer flex items-center gap-3.5" style="background-color:var(--color-bg-card); border-radius:var(--radius-lg); box-shadow:var(--shadow-card); padding:16px; margin-bottom:12px;">
-      <div style="width:46px;height:46px;border-radius:16px;background:rgba(224,122,47,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-        <span class="material-symbols-rounded text-[22px]" style="color:#E07A2F;">volunteer_activism</span>
+    <div onclick="bukaKategoriKesejahteraanDariBeranda()" class="cursor-pointer flex items-center gap-3.5" style="background:var(--card); -webkit-backdrop-filter:blur(18px) saturate(160%); backdrop-filter:blur(18px) saturate(160%); border:1px solid var(--card-border); border-radius:var(--radius-lg); box-shadow:0 10px 26px rgba(70,60,120,.08); padding:16px; margin-bottom:12px;">
+      <div style="width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg, #F5B37A, #E07A2F);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <span class="material-symbols-rounded text-[22px]" style="color:#fff;">volunteer_activism</span>
       </div>
       <div class="flex-1 min-w-0">
-        <p class="text-[15px] font-bold text-gray-800 m-0">Kesejahteraan</p>
-        <p class="text-[11.5px] text-gray-600 m-0 mt-0.5" id="subKesejahteraanBeranda">Memuat data&hellip;</p>
+        <p class="text-[15px] font-bold m-0" style="color:var(--ink);">Kesejahteraan</p>
+        <p class="text-[11.5px] m-0 mt-0.5" style="color:var(--sub);" id="subKesejahteraanBeranda">Memuat data&hellip;</p>
       </div>
       <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
-        <span id="pctKesejahteraanBeranda" style="font-size:22px; font-weight:800; color:#23213A; line-height:1;">&ndash;</span>
+        <span id="pctKesejahteraanBeranda" style="font-size:22px; font-weight:800; color:var(--ink); line-height:1;">&ndash;</span>
         <span id="badgeKesejahteraanBeranda" style="font-size:9px; font-weight:700; padding:3px 9px; border-radius:999px; text-transform:uppercase; letter-spacing:.02em; white-space:nowrap;"></span>
       </div>
-      <span class="material-symbols-rounded text-[20px]" style="color:#4b5563; flex-shrink:0;">chevron_right</span>
+      <span class="material-symbols-rounded text-[20px]" style="color:var(--sub); flex-shrink:0;">chevron_right</span>
     </div>
 
-    <div onclick="bukaKategoriStatusAnakDariBeranda()" class="cursor-pointer flex items-center gap-3.5" style="background-color:var(--color-bg-card); border-radius:var(--radius-lg); box-shadow:var(--shadow-card); padding:16px; margin-bottom:12px;">
-      <div style="width:46px;height:46px;border-radius:16px;background:rgba(44,156,143,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-        <span style="color:var(--color-accent-blue-deep, #4A6FC2);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></span>
+    <div onclick="bukaKategoriStatusAnakDariBeranda()" class="cursor-pointer flex items-center gap-3.5" style="background:var(--card); -webkit-backdrop-filter:blur(18px) saturate(160%); backdrop-filter:blur(18px) saturate(160%); border:1px solid var(--card-border); border-radius:var(--radius-lg); box-shadow:0 10px 26px rgba(70,60,120,.08); padding:16px; margin-bottom:12px;">
+      <div style="width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg, #9B7FE8, #5CC7E8);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <span style="color:#fff;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></span>
       </div>
       <div class="flex-1 min-w-0">
-        <p class="text-[15px] font-bold text-gray-800 m-0">Status Anak</p>
-        <p class="text-[11.5px] text-gray-600 m-0 mt-0.5" id="subStatusAnakBeranda">Memuat data&hellip;</p>
+        <p class="text-[15px] font-bold m-0" style="color:var(--ink);">Status Anak</p>
+        <p class="text-[11.5px] m-0 mt-0.5" style="color:var(--sub);" id="subStatusAnakBeranda">Memuat data&hellip;</p>
       </div>
       <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
-        <span id="pctStatusAnakBeranda" style="font-size:22px; font-weight:800; color:#23213A; line-height:1;">&ndash;</span>
+        <span id="pctStatusAnakBeranda" style="font-size:22px; font-weight:800; color:var(--ink); line-height:1;">&ndash;</span>
         <span id="badgeStatusAnakBeranda" style="font-size:9px; font-weight:700; padding:3px 9px; border-radius:999px; text-transform:uppercase; letter-spacing:.02em; white-space:nowrap;"></span>
       </div>
-      <span class="material-symbols-rounded text-[20px]" style="color:#4b5563; flex-shrink:0;">chevron_right</span>
+      <span class="material-symbols-rounded text-[20px]" style="color:var(--sub); flex-shrink:0;">chevron_right</span>
     </div>
 <div class="mt-5 mb-3 text-center text-[10px] text-gray-400">
 
