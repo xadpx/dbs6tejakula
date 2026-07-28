@@ -334,7 +334,7 @@
     }
     .neu-bg{ background: transparent; }
     .neu-card{
-      background-color: #E8ECF3;
+      background-color: #D6DDE8;
       border-radius: var(--radius-md);
       border: 1.5px solid rgba(255,255,255,.9);
       box-shadow: -4px -4px 10px rgba(255,255,255,.9), 4px 4px 12px rgba(163,177,198,.4);
@@ -470,9 +470,8 @@
       position: relative;
       width: 100%; height: 132px;
       display: flex; align-items: flex-end; justify-content: center;
-      background: rgba(255,255,255,.35);
-      -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm);
-      -webkit-backdrop-filter: var(--blur-glass-sm);
+      background: #D6DDE8;
+      border: 1.5px solid rgba(255,255,255,.9);
       border: 1px solid var(--glass-border);
       border-radius: 20px;
       box-shadow: inset 0 2px 6px rgba(110,110,118,.12);
@@ -541,17 +540,16 @@
     }
     .neu-ring-wrap {
       border-radius: 50%; flex-shrink: 0; position: relative;
-      border: 1px solid var(--glass-border);
-      box-shadow: 0 3px 10px rgba(110,110,118,.1);
+      border: 1.5px solid rgba(255,255,255,.9);
+      box-shadow: -3px -3px 8px rgba(255,255,255,.9), 3px 3px 10px rgba(190,190,200,.4);
       display: flex; align-items: center; justify-content: center;
-      background: rgba(255,255,255,.22);
+      background: #D6DDE8;
     }
     .fab-copy {
       width: 34px; height: 34px; border-radius: 50%;
-      background: rgba(255,255,255,.22);
-      -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm);
-      border: 1px solid var(--glass-border);
-      box-shadow: 0 6px 16px rgba(110,110,118,.18);
+      background: #D6DDE8;
+      border: 1.5px solid rgba(255,255,255,.9);
+      box-shadow: -3px -3px 6px rgba(255,255,255,.9), 3px 3px 6px rgba(190,190,200,.4);
       display: flex; align-items: center; justify-content: center;
       color: var(--color-text-secondary);
     }
@@ -581,17 +579,16 @@
       transform: translate(-50%, -50%);
       width: 70px; height: 70px;
       border-radius: 50%;
-      background: rgba(255,255,255,.55);
-      -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm);
-      border: 1px solid var(--glass-border);
-      box-shadow: 0 4px 12px rgba(110,110,118,.14);
+      background: #D6DDE8;
+      border: 1.5px solid rgba(255,255,255,.9);
+      box-shadow: -2px -2px 6px rgba(255,255,255,.9), 2px 2px 6px rgba(190,190,200,.4);
       z-index: 0;
     }
     .legend-chip-neu {
       display: flex; flex-direction: row; align-items: center; gap: 8px; justify-content: space-between;
-      background: rgba(255,255,255,.22); border-radius: 999px; padding: 9px 14px;
-      border: 1px solid var(--glass-border);
-      box-shadow: 0 4px 14px rgba(110,110,118,.1);
+      background: #D6DDE8; border-radius: 999px; padding: 9px 14px;
+      border: 1.5px solid rgba(255,255,255,.9);
+      box-shadow: -2px -2px 6px rgba(255,255,255,.9), 2px 2px 6px rgba(190,190,200,.4);
       position: relative; overflow: hidden;
     }
     .ripple-effect { position: relative; overflow: hidden; }
@@ -619,10 +616,9 @@
       width: 136px;
       height: 136px;
       border-radius: 50%;
-      background: rgba(255,255,255,.6);
-      -webkit-backdrop-filter: var(--blur-glass); backdrop-filter: var(--blur-glass);
-      border: 1px solid var(--glass-border);
-      box-shadow: var(--shadow-card);
+      background: #D6DDE8;
+      border: 1.5px solid rgba(255,255,255,.9);
+      box-shadow: -3px -3px 8px rgba(255,255,255,.9), 3px 3px 10px rgba(190,190,200,.4);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -699,7 +695,7 @@
     .chart-card-carousel{
       scroll-snap-align:start;
       flex:0 0 100%;
-      background-color: #E8ECF3;
+      background-color: #D6DDE8;
       border: 1.5px solid rgba(255,255,255,.9);
       box-shadow: -4px -4px 10px rgba(255,255,255,.9), 4px 4px 12px rgba(163,177,198,.4);
       border-radius:var(--radius-lg);
@@ -859,7 +855,7 @@
 
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-3">
-      <div id="avatarGuruWrap" style="width:44px;height:44px;border-radius:50%;background-color:var(--color-bg-card);box-shadow:var(--shadow-card);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;">
+      <div id="avatarGuruWrap" style="width:44px;height:44px;border-radius:50%;background-color:#D6DDE8;border:1.5px solid rgba(255,255,255,.95);box-shadow:-3px -3px 6px rgba(255,255,255,1), 4px 4px 9px rgba(140,150,175,.55);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;">
         <img id="avatarGuruImg" src="" class="hidden" style="width:100%;height:100%;object-fit:cover;">
         <span id="avatarGuruFallback" class="material-symbols-rounded" style="font-size:22px;color:#6b7280;">person</span>
       </div>
@@ -872,8 +868,8 @@
     <div class="relative" id="notifWrap">
       <button id="btnNotifUpdate" onpointerdown="buatRipple(event)" onclick="toggleNotifUpdate(event)"
         class="relative flex items-center justify-center"
-        style="width:30px;height:30px;border-radius:50%;background:#FFFFFF;overflow:hidden;
-               box-shadow: 0 4px 12px rgba(110,110,118,.28);">
+        style="width:30px;height:30px;border-radius:50%;background:#D6DDE8;overflow:hidden;border:1.5px solid rgba(255,255,255,.95);
+               box-shadow: -3px -3px 6px rgba(255,255,255,1), 4px 4px 9px rgba(140,150,175,.55);">
         <span class="material-symbols-rounded" style="font-size:16px;color:#6D6F8F;">notifications</span>
         <span id="notifDot" class="hidden" style="position:absolute;top:3px;right:4px;width:7px;height:7px;border-radius:50%;background:var(--color-primary);border:1.5px solid #fff;"></span>
       </button>
@@ -1336,8 +1332,8 @@ class="hidden detail-fullpage-overlay fixed inset-0 z-[60] overflow-y-auto">
         <button
           onclick="mundurModal()"
           class="flex items-center justify-center shrink-0"
-          style="width:36px;height:36px;border-radius:50%;background:var(--color-bg-app-3);border:1.5px solid rgba(255,255,255,.9);
-                 box-shadow: -3px -3px 6px rgba(255,255,255,.9), 3px 3px 6px rgba(190,190,200,.4);">
+          style="width:36px;height:36px;border-radius:50%;background:#D6DDE8;border:1.5px solid rgba(255,255,255,.95);
+                 box-shadow: -3px -3px 6px rgba(255,255,255,1), 4px 4px 9px rgba(140,150,175,.55);">
           <span class="material-symbols-rounded text-[20px]" style="color:#5f6368;">chevron_left</span>
         </button>
 
@@ -1348,8 +1344,8 @@ class="hidden detail-fullpage-overlay fixed inset-0 z-[60] overflow-y-auto">
             id="detailDotsBtn"
             onclick="toggleDetailMenu(event)"
             class="flex items-center justify-center"
-            style="width:36px;height:36px;border-radius:50%;background:var(--color-bg-app-3);border:1.5px solid rgba(255,255,255,.9);
-                   box-shadow: -3px -3px 6px rgba(255,255,255,.9), 3px 3px 6px rgba(190,190,200,.4);">
+            style="width:36px;height:36px;border-radius:50%;background:#D6DDE8;border:1.5px solid rgba(255,255,255,.95);
+                   box-shadow: -3px -3px 6px rgba(255,255,255,1), 4px 4px 9px rgba(140,150,175,.55);">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
               <circle cx="7" cy="7" r="3" stroke="#5f6368" stroke-width="1.6"/>
               <circle cx="17" cy="7" r="3" fill="#5f6368"/>
