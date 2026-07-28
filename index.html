@@ -800,63 +800,12 @@
       --sub: #7A7A88;
       --card: rgba(255,255,255,.72);
       --card-border: rgba(255,255,255,.55);
-      --grad1: linear-gradient(135deg,#9B7FE8 0%,#E893C4 35%,#F5B37A 65%,#8FCCE8 100%);
-      --grad2: linear-gradient(135deg,#7B61E0,#B98BF0);
-      --grad-orange: linear-gradient(160deg,#F5C89F,#E8935F);
-      --grad-blue:   linear-gradient(160deg,#9FD3F0,#5B93D9);
-      --grad-purple: linear-gradient(160deg,#C6B6F0,#7B61E0);
-
-      /* Alias token lama supaya seluruh referensi var(--color-*) di file ini
-         otomatis ikut jadi neo-apple, tanpa perlu ubah tiap pemakaian satu-satu. */
-      --color-primary:      #7B61E0;
-      --color-primary-deep: #5B3FC4;
-      --color-primary-soft: rgba(123,97,224,.14);
-      --color-text-primary:   var(--ink);
-      --color-text-secondary: var(--sub);
-      --color-bg-app-1: #F6F5FB;
-      --color-bg-app-2: #F6F5FB;
-      --color-bg-app-3: #F6F5FB;
-      --color-bg-card:  rgba(255,255,255,.9);
-      --color-nav-inactive: #B7B4D6;
-      --color-nav-active-bg: var(--grad2);
+      --grad1: linear-gradient(135deg, #FFD07B 0%, #E892D5 50%, #B18CFF 100%);
+      --grad2: linear-gradient(90deg, #7A72EC 0%, #FFA8A8 100%);
     }
     body {
       background: #F6F5FB !important;
       color: var(--ink);
-    }
-    /* 6. Hero card — pakai gradasi organik 4 warna (ungu→pink→peach→biru) khas neo-apple,
-       bukan lagi gradasi biru-abu yang datar */
-    .hero-card{
-      background: var(--grad1) !important;
-    }
-    /* 7. Elemen bulat/kotak yang tadinya flat abu-lavender (#E8ECF3) disatukan jadi
-       kaca lembut senada dengan .neu-card, supaya "look" konsisten total di satu halaman */
-    .neu-ring-wrap,
-    .fab-copy,
-    .ring-center-raised,
-    .center-label.show,
-    .legend-chip-neu,
-    .chart-card-carousel {
-      background: var(--card) !important;
-      -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
-      backdrop-filter: blur(16px) saturate(160%) !important;
-      border: 1.5px solid var(--card-border) !important;
-      box-shadow: 0 10px 26px rgba(70,60,120,.12), inset 0 1px 0 rgba(255,255,255,.5) !important;
-    }
-    .chart-card-carousel{ border-radius: 22px !important; }
-    /* 8. Badge ikon gradasi — selaraskan dengan 3 warna aksen di kit referensi */
-    .icon-badge-teal   { background: var(--grad-blue)   !important; }
-    .icon-badge-purple { background: var(--grad-purple) !important; }
-    /* 9. Toggle & checkbox aktif pakai gradient ungu brand, bukan biru generik lagi */
-    .toggle-track.on{
-      background: var(--grad2) !important;
-      box-shadow: inset 0 1px 4px rgba(91,63,196,.3) !important;
-    }
-    .kategori:checked{
-      background: var(--grad2) !important;
-    }
-    .neu-search-icon .material-symbols-rounded{
-      color: var(--color-primary) !important;
     }
     .blob-bg{
       position: fixed;
@@ -872,23 +821,22 @@
 
     /* 1. Card utama — glass halus (opacity moderat, bukan hampir tembus pandang) */
     .neu-card, .neu-card-flat {
-      background: var(--card) !important;
-      background-image: linear-gradient(180deg, rgba(255,255,255,.35) 0%, rgba(255,255,255,0) 40%) !important;
-      -webkit-backdrop-filter: blur(18px) saturate(160%) !important;
-      backdrop-filter: blur(18px) saturate(160%) !important;
-      border: 1px solid var(--card-border) !important;
-      box-shadow: 0 16px 40px rgba(70,60,120,.1), 0 2px 6px rgba(70,60,120,.06), inset 0 1px 0 rgba(255,255,255,.5) !important;
+      background: #FFFFFF !important;
+      background-image: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+      border: none !important;
+      box-shadow: 12px 16px 32px rgba(166,175,195,.15), -8px -8px 20px rgba(255,255,255,.9) !important;
       border-radius: 22px !important;
       color: var(--ink);
     }
     .neu-card.tint-danger,
     .neu-card.tint-safe,
     .neu-card.tint-purple{
-      background: var(--card) !important;
+      background: #FFFFFF !important;
     }
-    /* 2. Search bar tetap flat sederhana, biar kontras sama card glass */
     .neu-search {
-      background: rgba(255,255,255,.9) !important;
+      background: #FFFFFF !important;
       border: 1px solid var(--card-border) !important;
       box-shadow: 0 4px 14px rgba(70,60,120,.06) !important;
       color: var(--ink) !important;
@@ -907,12 +855,12 @@
     }
     /* 4. Navigasi bawah — glass juga, konsisten sama card */
     .neu-nav-flat {
-      background: var(--card) !important;
-      background-image: linear-gradient(180deg, rgba(255,255,255,.35) 0%, rgba(255,255,255,0) 50%) !important;
-      -webkit-backdrop-filter: blur(18px) saturate(160%) !important;
-      backdrop-filter: blur(18px) saturate(160%) !important;
-      border: 1px solid var(--card-border) !important;
-      box-shadow: 0 18px 40px rgba(70,60,120,.14), inset 0 1px 0 rgba(255,255,255,.5) !important;
+      background: #FFFFFF !important;
+      background-image: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+      border: none !important;
+      box-shadow: 0 14px 34px rgba(166,175,195,.25) !important;
     }
     /* 5. Icon nav aktif — gradient */
     .nav-active .nav-icon-wrap {
@@ -989,7 +937,7 @@
     </div>
 
   </div>
-  <div id="p-home" class="p-5 pb-24">
+  <div id="p-home" class="p-5" style="padding-bottom:110px;">
   <div class="mb-6">
 
   <div id="greetingBlock">
@@ -1059,13 +1007,16 @@
 
   <div id="homeNormalContent">
 
-  <p style="font-size:15px; font-weight:600; color:#23213A; margin:0 0 10px 4px;">Ringkasan data</p>
+  <p style="font-size:15px; font-weight:600; color:#1E1E24; margin:0 0 10px 4px;">Ringkasan data</p>
 
   <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
 
     <div style="grid-column:1 / 3; background:var(--grad1); border-radius:22px; padding:18px; position:relative; overflow:hidden; box-shadow:0 12px 28px rgba(120,100,200,.28);">
-      <div style="position:absolute; top:14px; right:14px; width:34px; height:34px; border-radius:10px; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center;">
-        <span class="material-symbols-rounded text-[18px]" style="color:#fff;">school</span>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; width:44px; margin-bottom:12px;">
+        <div style="aspect-ratio:1; border-radius:8px; background:rgba(255,255,255,.28);"></div>
+        <div style="aspect-ratio:1; border-radius:8px; background:rgba(255,255,255,.28);"></div>
+        <div style="aspect-ratio:1; border-radius:8px; background:rgba(255,255,255,.28);"></div>
+        <div style="aspect-ratio:1; border-radius:8px; background:rgba(255,255,255,.28);"></div>
       </div>
       <p style="font-size:11px; font-weight:700; color:rgba(255,255,255,.8); margin:0; text-transform:uppercase; letter-spacing:.03em;">Total Siswa</p>
       <div class="relative min-h-[38px] flex items-center">
@@ -1094,39 +1045,95 @@
         <div id="barLPL" style="width:50%; height:100%; background:#fff; transition:width .5s ease;"></div>
         <div id="barLPP" style="width:50%; height:100%; background:rgba(255,255,255,.55); transition:width .5s ease;"></div>
       </div>
+      <div style="display:flex; gap:5px; margin-top:12px;">
+        <span style="width:14px;height:5px;border-radius:3px;background:#fff;"></span>
+        <span style="width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.5);"></span>
+      </div>
     </div>
 
-    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="background:var(--card); -webkit-backdrop-filter:blur(18px) saturate(160%); backdrop-filter:blur(18px) saturate(160%); border:1px solid var(--card-border); border-radius:22px; padding:14px 38px 14px 14px; position:relative; min-height:96px; box-shadow: 0 16px 36px rgba(70,60,120,.1);">
-      <span class="material-symbols-rounded text-[20px]" style="position:absolute; top:14px; right:14px; color:#534AB7;">import_contacts</span>
-      <span class="material-symbols-rounded text-[18px]" style="position:absolute; top:50%; right:12px; transform:translateY(-50%); color:#534AB7;">chevron_right</span>
-      <p style="font-size:12px; font-weight:700; color:#3C3489; margin:0;">Guru</p>
-      <div class="relative min-h-[26px] flex items-center" style="margin-top:4px;">
-        <p id="totGuru" class="hidden text-[24px] font-extrabold tracking-tight tabular-nums leading-6 m-0" style="color:#26215C;">0</p>
+    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="background:#FFFFFF; border-radius:20px; padding:14px; position:relative; min-height:96px; box-shadow:12px 16px 32px rgba(166,175,195,.15), -8px -8px 20px rgba(255,255,255,.9);">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
+        <span style="font-size:12px; font-weight:700; color:#1E1E24;">Guru</span>
+        <span class="material-symbols-rounded text-[13px]" style="color:#9EA3B0;">chevron_right</span>
+      </div>
+      <div class="relative min-h-[24px] flex items-center">
+        <p id="totGuru" class="hidden text-[20px] font-extrabold tracking-tight tabular-nums leading-6 m-0" style="color:#1E1E24;">0</p>
         <div id="totGuruSpin" class="spinner-ring-gray" style="width:16px;height:16px;"></div>
       </div>
-      <p style="font-size:11.5px; font-weight:600; color:#534AB7; margin:3px 0 0;">Guru Kelas &amp; Mapel</p>
+      <div style="display:flex; gap:6px; margin:8px 0 4px;">
+        <div id="barGuruKelas" style="flex:1; height:5px; border-radius:3px; background:linear-gradient(90deg,#A886FF,#6E53F1); transition:width .5s ease;"></div>
+        <div id="barGuruMapel" style="flex:1; height:5px; border-radius:3px; background:#F1EFE8; transition:width .5s ease;"></div>
+      </div>
+      <div style="display:flex; justify-content:space-between;">
+        <span id="lblGuruKelas" style="font-size:8.5px; color:#6E53F1; font-weight:700;">&ndash; Kelas</span>
+        <span id="lblGuruMapel" style="font-size:8.5px; color:#9EA3B0;">&ndash; Mapel</span>
+      </div>
     </div>
 
-    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer" style="background:var(--card); -webkit-backdrop-filter:blur(18px) saturate(160%); backdrop-filter:blur(18px) saturate(160%); border:1px solid var(--card-border); border-radius:22px; padding:14px 38px 14px 14px; position:relative; min-height:96px; box-shadow: 0 16px 36px rgba(70,60,120,.1);">
-      <span class="material-symbols-rounded text-[20px]" style="position:absolute; top:14px; right:14px; color:#854F0B;">badge</span>
-      <span class="material-symbols-rounded text-[18px]" style="position:absolute; top:50%; right:12px; transform:translateY(-50%); color:#854F0B;">chevron_right</span>
-      <p style="font-size:12px; font-weight:700; color:#633806; margin:0;">Tendik</p>
-      <div class="relative min-h-[26px] flex items-center" style="margin-top:4px;">
-        <p id="totTendik" class="hidden text-[24px] font-extrabold tracking-tight tabular-nums leading-6 m-0" style="color:#412402;">0</p>
-        <div id="totTendikSpin" class="spinner-ring-gray" style="width:16px;height:16px;"></div>
+    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer" style="background:#FFFFFF; border-radius:20px; padding:14px; position:relative; min-height:96px; box-shadow:12px 16px 32px rgba(166,175,195,.15), -8px -8px 20px rgba(255,255,255,.9);">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
+        <span style="font-size:12px; font-weight:700; color:#1E1E24;">Tendik</span>
+        <span class="material-symbols-rounded text-[13px]" style="color:#9EA3B0;">chevron_right</span>
       </div>
-      <p style="font-size:11.5px; font-weight:600; color:#854F0B; margin:3px 0 0;">Tenaga Kependidikan</p>
+      <div style="display:flex; align-items:flex-start; justify-content:space-between;">
+        <div class="relative min-h-[24px] flex items-center">
+          <p id="totTendik" class="hidden text-[20px] font-extrabold tracking-tight tabular-nums leading-6 m-0" style="color:#1E1E24;">0</p>
+          <div id="totTendikSpin" class="spinner-ring-gray" style="width:16px;height:16px;"></div>
+        </div>
+        <div style="display:flex; gap:4px;">
+          <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
+            <div style="width:20px; height:20px; border-radius:6px; background:linear-gradient(135deg,#A886FF,#6E53F1); display:flex; align-items:center; justify-content:center;">
+              <span class="material-symbols-rounded text-[11px]" style="color:#fff;">military_tech</span>
+            </div>
+            <span style="font-size:5.5px; color:#9EA3B0;">Kepsek</span>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
+            <div style="width:20px; height:20px; border-radius:6px; background:linear-gradient(135deg,#5DCAA5,#0F6E56); display:flex; align-items:center; justify-content:center;">
+              <span class="material-symbols-rounded text-[11px]" style="color:#fff;">description</span>
+            </div>
+            <span style="font-size:5.5px; color:#9EA3B0;">TU</span>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
+            <div style="width:20px; height:20px; border-radius:6px; background:linear-gradient(135deg,#FFD07B,#E07A2F); display:flex; align-items:center; justify-content:center;">
+              <span class="material-symbols-rounded text-[11px]" style="color:#fff;">menu_book</span>
+            </div>
+            <span style="font-size:5.5px; color:#9EA3B0;">Pustaka</span>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
+            <div style="width:20px; height:20px; border-radius:6px; background:linear-gradient(135deg,#F09595,#A32D2D); display:flex; align-items:center; justify-content:center;">
+              <span class="material-symbols-rounded text-[11px]" style="color:#fff;">yard</span>
+            </div>
+            <span style="font-size:5.5px; color:#9EA3B0;">T.Kebun</span>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="grid-column:1 / 3; background:var(--card); -webkit-backdrop-filter:blur(18px) saturate(160%); backdrop-filter:blur(18px) saturate(160%); border:1px solid var(--card-border); border-radius:22px; padding:14px 38px 14px 14px; position:relative; min-height:96px; box-shadow: 0 16px 36px rgba(70,60,120,.1);">
-      <span class="material-symbols-rounded text-[20px]" style="position:absolute; top:14px; right:14px; color:#993556;">groups</span>
-      <span class="material-symbols-rounded text-[18px]" style="position:absolute; top:50%; right:12px; transform:translateY(-50%); color:#993556;">chevron_right</span>
-      <p style="font-size:12px; font-weight:700; color:#72243E; margin:0;">Total Rombel</p>
-      <div class="relative min-h-[26px] flex items-center" style="margin-top:4px;">
-        <p id="totRombel" class="hidden text-[24px] font-extrabold tracking-tight tabular-nums leading-6 m-0" style="color:#4B1528;">0</p>
-        <div id="totRombelSpin" class="spinner-ring-gray" style="width:14px;height:14px;"></div>
+    <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="grid-column:1 / 3; background:#FFFFFF; border-radius:20px; padding:14px 16px; position:relative; box-shadow:12px 16px 32px rgba(166,175,195,.15), -8px -8px 20px rgba(255,255,255,.9);">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+        <span style="font-size:12.5px; font-weight:700; color:#1E1E24;">Total Rombel</span>
+        <span class="material-symbols-rounded text-[15px]" style="color:#9EA3B0;">chevron_right</span>
       </div>
-      <p style="font-size:11.5px; font-weight:600; color:#993556; margin:3px 0 0;">Kelas 1 - Kelas 6</p>
+      <div style="display:flex; align-items:center; justify-content:flex-end; gap:10px;">
+        <div class="relative min-h-[24px] flex items-center" style="margin-right:auto;">
+          <p id="totRombel" class="hidden text-[22px] font-extrabold tracking-tight tabular-nums leading-6 m-0" style="color:#1E1E24;">0</p>
+          <div id="totRombelSpin" class="spinner-ring-gray" style="width:16px;height:16px;"></div>
+          <span style="font-size:11px; font-weight:600; color:#9EA3B0; margin-left:5px;">kelas</span>
+        </div>
+        <div style="width:1px; height:26px; background:#F1EFE8; flex-shrink:0;"></div>
+        <div id="badgeRombelMax" style="display:flex; align-items:center; gap:6px; min-width:0;">
+          <div style="width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,#A886FF,#6E53F1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span class="material-symbols-rounded text-[12px]" style="color:#fff;">trending_up</span>
+          </div>
+          <span style="font-size:10.5px; color:#6E7381; white-space:nowrap;">&ndash;</span>
+        </div>
+        <div id="badgeRombelMin" style="display:flex; align-items:center; gap:6px; min-width:0;">
+          <div style="width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,#FFD07B,#E07A2F);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span class="material-symbols-rounded text-[12px]" style="color:#fff;">trending_down</span>
+          </div>
+          <span style="font-size:10.5px; color:#6E7381; white-space:nowrap;">&ndash;</span>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -1174,7 +1181,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
 
     <p class="text-[11px] font-bold text-gray-600 uppercase m-0 mt-5 mb-3" style="letter-spacing:.04em;">Kategori</p>
 
-    <div onclick="bukaKategoriKesejahteraanDariBeranda()" class="cursor-pointer flex items-center gap-3.5" style="background:var(--card); -webkit-backdrop-filter:blur(18px) saturate(160%); backdrop-filter:blur(18px) saturate(160%); border:1px solid var(--card-border); border-radius:var(--radius-lg); box-shadow:0 10px 26px rgba(70,60,120,.08); padding:16px; margin-bottom:12px;">
+    <div onclick="bukaKategoriKesejahteraanDariBeranda()" class="cursor-pointer flex items-center gap-3.5" style="background:#FFFFFF; border-radius:var(--radius-lg); box-shadow:12px 16px 32px rgba(166,175,195,.15), -8px -8px 20px rgba(255,255,255,.9); padding:16px; margin-bottom:12px;">
       <div style="width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg, #F5B37A, #E07A2F);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
         <span class="material-symbols-rounded text-[22px]" style="color:#fff;">volunteer_activism</span>
       </div>
@@ -1189,7 +1196,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
       <span class="material-symbols-rounded text-[20px]" style="color:var(--sub); flex-shrink:0;">chevron_right</span>
     </div>
 
-    <div onclick="bukaKategoriStatusAnakDariBeranda()" class="cursor-pointer flex items-center gap-3.5" style="background:var(--card); -webkit-backdrop-filter:blur(18px) saturate(160%); backdrop-filter:blur(18px) saturate(160%); border:1px solid var(--card-border); border-radius:var(--radius-lg); box-shadow:0 10px 26px rgba(70,60,120,.08); padding:16px; margin-bottom:12px;">
+    <div onclick="bukaKategoriStatusAnakDariBeranda()" class="cursor-pointer flex items-center gap-3.5" style="background:#FFFFFF; border-radius:var(--radius-lg); box-shadow:12px 16px 32px rgba(166,175,195,.15), -8px -8px 20px rgba(255,255,255,.9); padding:16px; margin-bottom:12px;">
       <div style="width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg, #9B7FE8, #5CC7E8);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
         <span style="color:#fff;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></span>
       </div>
@@ -1215,7 +1222,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
 
 <div id="p-siswa" class="hidden fixed inset-0 z-10 overflow-x-hidden w-full max-w-[100vw]">
 
-  <div class="h-full w-full max-w-full flex flex-col pt-5 pb-[68px] overflow-x-hidden">
+  <div class="h-full w-full max-w-full flex flex-col pt-5 overflow-x-hidden" style="padding-bottom:110px;">
 
     <!-- HEADER -->
     <div class="shrink-0 px-5">
@@ -1261,7 +1268,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
 
 </div>
 
-  <div id="p-download" class="hidden p-5 pb-24">
+  <div id="p-download" class="hidden p-5" style="padding-bottom:110px;">
   <h1 class="text-xl font-bold text-gray-800 flex items-center gap-2 mb-5">
   <span class="material-symbols-rounded text-[23px]">
     download_for_offline
@@ -2465,6 +2472,14 @@ let historyTabAktif = false;
 
 const idxPuncakRombel = window.rombelData.reduce((best, r, i, arr) =>
   (r.L + r.P) > (arr[best].L + arr[best].P) ? i : best, 0);
+const idxTerendahRombel = window.rombelData.reduce((worst, r, i, arr) =>
+  (r.L + r.P) < (arr[worst].L + arr[worst].P) ? i : worst, 0);
+const rMax = window.rombelData[idxPuncakRombel];
+const rMin = window.rombelData[idxTerendahRombel];
+const elBadgeMax = document.querySelector('#badgeRombelMax span:last-child');
+const elBadgeMin = document.querySelector('#badgeRombelMin span:last-child');
+if(elBadgeMax) elBadgeMax.textContent = `${rMax.kelas} (${rMax.L + rMax.P})`;
+if(elBadgeMin) elBadgeMin.textContent = `${rMin.kelas} (${rMin.L + rMin.P})`;
 
 document.getElementById('pillbars').innerHTML = window.rombelData.map((r, i) => {
   const total = r.L + r.P;
@@ -3076,6 +3091,17 @@ function muatDataGuru(){
       }
       dataGuru = json.data.slice(1).filter(r => r[1] && String(r[1]).trim() !== "");
       renderListPegawai('guru');
+      const jmlGuruKelas = dataGuru.filter(r => String(r[2]).trim() === 'Guru Kelas').length;
+      const jmlGuruMapel = dataGuru.length - jmlGuruKelas;
+      const totalGuruBar = dataGuru.length || 1;
+      const elBarKelas = document.getElementById('barGuruKelas');
+      const elBarMapel = document.getElementById('barGuruMapel');
+      const elLblKelas = document.getElementById('lblGuruKelas');
+      const elLblMapel = document.getElementById('lblGuruMapel');
+      if(elBarKelas) elBarKelas.style.flex = jmlGuruKelas + ' 1 0%';
+      if(elBarMapel) elBarMapel.style.flex = jmlGuruMapel + ' 1 0%';
+      if(elLblKelas) elLblKelas.textContent = jmlGuruKelas + ' Kelas';
+      if(elLblMapel) elLblMapel.textContent = jmlGuruMapel + ' Mapel';
       const elTot = document.getElementById('totGuru');
       const elSpin = document.getElementById('totGuruSpin');
       if(elTot){
