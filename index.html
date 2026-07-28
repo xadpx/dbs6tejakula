@@ -227,24 +227,25 @@
       flex-direction:column;
       align-items:center;
       justify-content:center;
-      gap:2px;
-      padding:8px 16px;
+      gap:3px;
+      padding:8px 18px;
       border-radius:9999px;
       transition:.25s;
-    }
-    .nav-active.nav-btn{
-      background: var(--grad2);
-      box-shadow: 0 6px 16px rgba(123,97,224,.35);
     }
     .nav-icon-wrap{
       display:flex;
       align-items:center;
       justify-content:center;
+      width:34px;
+      height:26px;
+      border-radius:12px;
       color: var(--color-nav-inactive);
       transition:.25s;
     }
     .nav-active .nav-icon-wrap{
+      background: var(--grad2);
       color: #fff;
+      box-shadow: 0 4px 10px rgba(123,97,224,.35);
     }
     .nav-active .nav-icon-wrap .nav-icon{
       color: #fff;
@@ -256,7 +257,8 @@
       transition:.2s;
     }
     .nav-active .nav-label{
-      color: #fff;
+      color: #7B61E0;
+      font-weight:700;
     }
     .skeleton{
       background: rgba(255,255,255,.4);
@@ -827,6 +829,15 @@
       border-radius: 22px !important;
       color: var(--ink);
     }
+    .neu-card.tint-danger{
+      background: linear-gradient(135deg, rgba(242,84,91,.16), rgba(255,255,255,.85)) !important;
+    }
+    .neu-card.tint-safe{
+      background: linear-gradient(135deg, rgba(78,205,196,.16), rgba(255,255,255,.85)) !important;
+    }
+    .neu-card.tint-purple{
+      background: linear-gradient(135deg, rgba(155,127,232,.16), rgba(92,199,232,.1), rgba(255,255,255,.85)) !important;
+    }
     /* 2. Search bar tetap flat sederhana, biar kontras sama card glass */
     .neu-search {
       background: rgba(255,255,255,.9) !important;
@@ -1114,7 +1125,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
 
     <p class="text-[11px] font-bold text-gray-600 uppercase m-0 mt-5 mb-3" style="letter-spacing:.04em;">Kategori</p>
 
-    <div onclick="bukaKategoriKesejahteraanDariBeranda()" class="cursor-pointer flex items-center gap-3.5" style="background:var(--card); -webkit-backdrop-filter:blur(18px) saturate(160%); backdrop-filter:blur(18px) saturate(160%); border:1px solid var(--card-border); border-radius:var(--radius-lg); box-shadow:0 10px 26px rgba(70,60,120,.08); padding:16px; margin-bottom:12px;">
+    <div onclick="bukaKategoriKesejahteraanDariBeranda()" class="cursor-pointer flex items-center gap-3.5" style="background:linear-gradient(135deg, rgba(245,179,122,.16), rgba(255,255,255,.85)); -webkit-backdrop-filter:blur(18px) saturate(160%); backdrop-filter:blur(18px) saturate(160%); border:1px solid var(--card-border); border-radius:var(--radius-lg); box-shadow:0 10px 26px rgba(70,60,120,.08); padding:16px; margin-bottom:12px;">
       <div style="width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg, #F5B37A, #E07A2F);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
         <span class="material-symbols-rounded text-[22px]" style="color:#fff;">volunteer_activism</span>
       </div>
@@ -1129,7 +1140,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
       <span class="material-symbols-rounded text-[20px]" style="color:var(--sub); flex-shrink:0;">chevron_right</span>
     </div>
 
-    <div onclick="bukaKategoriStatusAnakDariBeranda()" class="cursor-pointer flex items-center gap-3.5" style="background:var(--card); -webkit-backdrop-filter:blur(18px) saturate(160%); backdrop-filter:blur(18px) saturate(160%); border:1px solid var(--card-border); border-radius:var(--radius-lg); box-shadow:0 10px 26px rgba(70,60,120,.08); padding:16px; margin-bottom:12px;">
+    <div onclick="bukaKategoriStatusAnakDariBeranda()" class="cursor-pointer flex items-center gap-3.5" style="background:linear-gradient(135deg, rgba(155,127,232,.14), rgba(92,199,232,.1), rgba(255,255,255,.85)); -webkit-backdrop-filter:blur(18px) saturate(160%); backdrop-filter:blur(18px) saturate(160%); border:1px solid var(--card-border); border-radius:var(--radius-lg); box-shadow:0 10px 26px rgba(70,60,120,.08); padding:16px; margin-bottom:12px;">
       <div style="width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg, #9B7FE8, #5CC7E8);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
         <span style="color:#fff;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></span>
       </div>
@@ -1808,9 +1819,10 @@ let historyTabAktif = false;
       const warnaStatusTeks = statusPerhatian ? '#993C1D' : '#3B6D11';
       const labelStatus = statusPerhatian ? 'Perlu perhatian' : 'Kondisi baik';
       const warnaAksenDonat = statusPerhatian ? '#F2545B' : '#4ECDC4';
+      const kelasTintKartu = statusPerhatian ? 'tint-danger' : 'tint-safe';
 
       const kartuRingkasan = `
-        <div class="neu-card" style="padding:18px; margin-bottom:12px;">
+        <div class="neu-card ${kelasTintKartu}" style="padding:18px; margin-bottom:12px;">
           <div style="display:flex; align-items:center; gap:16px;">
             <div style="position:relative; width:80px; height:80px; flex-shrink:0;">
               <div style="width:100%; height:100%; border-radius:50%; background:conic-gradient(${warnaAksenDonat} 0% ${pctBawah}%, #E5E7EB ${pctBawah}% 100%);"></div>
@@ -2012,7 +2024,7 @@ let historyTabAktif = false;
         const gradasiKategori = { "Yatim":["#D4CDFA","#A9A0F0"], "Piatu":["#A6E8E0","#4ECDC4"], "Yatim Piatu":["#F7A8AC","#F2545B"] };
 
         kartuRingkasanStatus = `
-          <div class="neu-card" style="padding:18px; margin-bottom:12px;">
+          <div class="neu-card tint-purple" style="padding:18px; margin-bottom:12px;">
             <div style="display:flex; align-items:center; gap:16px;">
               <div style="position:relative; width:80px; height:80px; flex-shrink:0;">
                 <div style="width:100%; height:100%; border-radius:50%; background:conic-gradient(${stopDonatStatus});"></div>
