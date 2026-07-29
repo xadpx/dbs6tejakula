@@ -45,7 +45,7 @@
       --color-accent-pink:    #F0B8CE;
 
       --color-text-primary:   #23213A;
-      --color-text-secondary: #6D6F8F;
+      --color-text-secondary: #585A75;
       --color-border:         rgba(255,255,255,.6);
 
       --glass-border:     rgba(200,190,255,.4);
@@ -931,7 +931,7 @@
     </div>
 
   </div>
-  <div id="p-home" class="p-5" style="padding-bottom:110px;">
+  <div id="p-home" class="p-5" style="padding-bottom:140px;">
   <div class="mb-6">
 
   <div id="greetingBlock">
@@ -940,7 +940,7 @@
     <div>
       <p class="text-[11px] font-semibold m-0" style="color:#9EA3B0; letter-spacing:.02em;">Tahun Ajaran 2026/2027</p>
       <p class="text-[20px] font-extrabold m-0" style="color:#1E1E24; letter-spacing:-0.02em; margin-top:3px;">Dashboard</p>
-      <p class="text-[12px] m-0" style="color:#6E7381; margin-top:2px;">SD Negeri 6 Tejakula</p>
+      <p class="text-[12px] m-0" style="color:#585A75; margin-top:2px;">SD Negeri 6 Tejakula</p>
     </div>
     <p id="greetingText" class="hidden"></p>
     <h1 id="namaGuruAktif" class="hidden"></h1>
@@ -950,7 +950,7 @@
         class="relative flex items-center justify-center"
         style="width:36px;height:36px;border-radius:50%;background:#fff;overflow:hidden;
                box-shadow: 12px 16px 32px rgba(166,175,195,.15), -8px -8px 20px rgba(255,255,255,.9);">
-        <span class="material-symbols-rounded" style="font-size:17px;color:#6E7381;">notifications</span>
+        <span class="material-symbols-rounded" style="font-size:17px;color:#585A75;">notifications</span>
         <span id="notifDot" class="hidden" style="position:absolute;top:3px;right:4px;width:7px;height:7px;border-radius:50%;background:var(--color-primary);border:1.5px solid #fff;"></span>
       </button>
       <div id="notifDropdown" class="hidden" style="position:absolute;top:42px;right:0;width:210px;background:#FFFFFF;border-radius:16px;padding:12px;z-index:50;
@@ -1032,7 +1032,7 @@
       <div style="display:flex; align-items:flex-start; justify-content:space-between;">
         <div>
           <div style="font-size:16px; font-weight:500; color:#1E1E24;">Guru</div>
-          <div style="font-size:11.5px; color:#6E7381; margin-top:2px;">Guru kelas dan mapel</div>
+          <div style="font-size:11.5px; color:#585A75; margin-top:2px;">Guru kelas dan mapel</div>
         </div>
         <div style="width:44px; height:44px; border-radius:14px; background:linear-gradient(160deg,#7B61E0,#B98BF0); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 6px 14px rgba(123,97,224,.35);">
           <span class="material-symbols-rounded" style="font-size:21px; color:#fff;">import_contacts</span>
@@ -1043,7 +1043,7 @@
           <span id="totGuru" class="hidden tabular-nums">0</span>
           <span id="totGuruSpin" class="spinner-ring-gray" style="width:26px;height:26px;"></span>
         </div>
-        <div style="font-size:11.5px; color:#7B61E0; margin-top:6px;"><span id="lblGuruKelas">&ndash; Kelas</span> &middot; <span id="lblGuruMapel">&ndash; Mapel</span></div>
+        <div style="font-size:11.5px; color:#7B61E0; margin-top:6px;"><span id="lblGuruKelas">&ndash; Guru Kelas</span> &middot; <span id="lblGuruMapel">&ndash; Mapel</span></div>
       </div>
       <div style="display:flex; justify-content:flex-end;">
         <div style="width:30px; height:30px; border-radius:50%; background:linear-gradient(160deg,#7B61E0,#B98BF0); box-shadow:0 4px 10px rgba(123,97,224,.4); display:flex; align-items:center; justify-content:center;">
@@ -1065,7 +1065,7 @@
             <span id="totTendik" class="hidden tabular-nums">0</span>
             <span id="totTendikSpin" class="spinner-ring-gray" style="width:16px;height:16px;"></span>
           </div>
-          <div style="font-size:10.5px; color:#C9762F; margin-top:3px;"><span id="jenisJabatanTendikCount">&ndash;</span> jenis jabatan</div>
+          <div style="font-size:10.5px; color:#C9762F; margin-top:3px;" id="rincianTendikBeranda">&ndash;</div>
         </div>
       </div>
       <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="position:relative; background:rgba(255,255,255,.42); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,.75); border-radius:18px; padding:16px; box-shadow:0 14px 26px -8px rgba(62,123,196,.2), inset 0 1px 0 rgba(255,255,255,.7); min-height:119px; display:flex; flex-direction:column; justify-content:space-between;">
@@ -1080,14 +1080,14 @@
             <span id="totRombel" class="hidden tabular-nums">0</span>
             <span id="totRombelSpin" class="spinner-ring-gray" style="width:16px;height:16px;"></span>
           </div>
-          <div style="font-size:10.5px; color:#3E7BC4; margin-top:3px;">Kelas 1&ndash;6</div>
+          <div style="font-size:10.5px; color:#3E7BC4; margin-top:3px;" id="rataRataRombelBeranda">Kelas 1&ndash;6</div>
         </div>
       </div>
     </div>
 
   </div>
 
-  <p style="position:relative; font-size:11px; font-weight:500; letter-spacing:.05em; color:#8A8798; margin:0 0 10px;">KATEGORI</p>
+  <p style="position:relative; font-size:11px; font-weight:500; letter-spacing:.05em; color:#6E6C86; margin:0 0 10px;">KATEGORI</p>
 
   <div style="position:relative; background:rgba(255,255,255,.42); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,.75); border-radius:22px; box-shadow:0 16px 30px -10px rgba(123,97,224,.18), inset 0 1px 0 rgba(255,255,255,.7); overflow:hidden; margin-bottom:16px;">
 
@@ -1097,7 +1097,7 @@
       </div>
       <div style="flex:1; min-width:0;">
         <div style="font-size:16.5px; font-weight:500; color:#1E1E24;">Kesejahteraan</div>
-        <div id="subKesejahteraanBeranda" style="font-size:11.5px; color:#6E7381; margin-top:2px;">Memuat data&hellip;</div>
+        <div id="subKesejahteraanBeranda" style="font-size:11.5px; color:#585A75; margin-top:2px;">Memuat data&hellip;</div>
       </div>
       <div id="pctKesejahteraanBeranda" style="font-size:24px; font-weight:500; color:#C9762F; line-height:1; margin-right:6px;">&ndash;</div>
       <div style="width:28px; height:28px; border-radius:50%; background:linear-gradient(160deg,#F5B37A,#E07A2F); box-shadow:0 4px 10px rgba(224,122,47,.4); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
@@ -1113,7 +1113,7 @@
       </div>
       <div style="flex:1; min-width:0;">
         <div style="font-size:16.5px; font-weight:500; color:#1E1E24;">Status anak</div>
-        <div id="subStatusAnakBeranda" style="font-size:11.5px; color:#6E7381; margin-top:2px;">Memuat data&hellip;</div>
+        <div id="subStatusAnakBeranda" style="font-size:11.5px; color:#585A75; margin-top:2px;">Memuat data&hellip;</div>
       </div>
       <div id="pctStatusAnakBeranda" style="font-size:24px; font-weight:500; color:#6B4FC7; line-height:1; margin-right:6px;">&ndash;</div>
       <div style="width:28px; height:28px; border-radius:50%; background:linear-gradient(160deg,#9B7FE8,#5CC7E8); box-shadow:0 4px 10px rgba(123,97,224,.4); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
@@ -1172,16 +1172,6 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
   </div>
 </div>
 
-    <div onclick="nav('download')" class="cursor-pointer" style="background:var(--grad2); border-radius:22px; padding:16px 18px; display:flex; align-items:center; justify-content:space-between; margin-top:16px; margin-bottom:16px;">
-      <div style="display:flex; align-items:center; gap:10px;">
-        <span class="material-symbols-rounded text-[18px]" style="color:#fff;">download</span>
-        <div>
-          <p style="font-size:12.5px; font-weight:700; color:#fff; margin:0;">Unduh Data</p>
-          <p style="font-size:10px; color:rgba(255,255,255,.85); margin:1px 0 0;">Ekspor data siswa</p>
-        </div>
-      </div>
-      <span class="material-symbols-rounded text-[16px]" style="color:#fff;">arrow_forward</span>
-    </div>
 <div class="mt-5 mb-3 text-center text-[10px] text-gray-400">
 
     <p class="m-0">© 2026 Ari Darma Putra</p>
@@ -1194,7 +1184,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
 
 <div id="p-siswa" class="hidden fixed inset-0 z-10 overflow-x-hidden w-full max-w-[100vw]">
 
-  <div class="h-full w-full max-w-full flex flex-col pt-5 overflow-x-hidden" style="padding-bottom:110px;">
+  <div class="h-full w-full max-w-full flex flex-col pt-5 overflow-x-hidden" style="padding-bottom:140px;">
 
     <!-- HEADER -->
     <div class="shrink-0 px-5">
@@ -1216,7 +1206,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
         <div id="divGuruTendik" style="width:1px;height:18px;background:#C3CAD4;flex-shrink:0;"></div>
         <button id="tabDataTendik" onclick="switchDataTab('tendik')"
           class="flex-1 flex items-center justify-center gap-1 text-[12.5px] font-semibold py-2 px-1 rounded-full transition-all duration-200"
-          style="background:transparent;color:#6D6F8F;box-shadow:none;">
+          style="background:transparent;color:#585A75;box-shadow:none;">
           <span class="material-symbols-rounded text-[15px]">badge</span>
           Tendik
         </button>
@@ -1240,7 +1230,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
 
 </div>
 
-  <div id="p-download" class="hidden p-5" style="padding-bottom:110px;">
+  <div id="p-download" class="hidden p-5" style="padding-bottom:140px;">
   <h1 class="text-xl font-bold text-gray-800 flex items-center gap-2 mb-5">
   <span class="material-symbols-rounded text-[23px]">
     download_for_offline
@@ -1652,7 +1642,7 @@ let historyTabAktif = false;
       };
 
       const aktif       = 'background-color:var(--color-bg-app-3);color:#23213A;border:1.5px solid rgba(255,255,255,.55);box-shadow: 0 4px 12px rgba(70,60,120,.1);';
-      const nonaktif    = 'background:transparent;color:#6D6F8F;box-shadow:none;';
+      const nonaktif    = 'background:transparent;color:#585A75;box-shadow:none;';
 
       const aktifStyle = { guru: aktif, tendik: aktif };
 
@@ -1704,19 +1694,19 @@ let historyTabAktif = false;
               </div>
               <div style="flex:1; min-width:0;">
                 <p style="font-size:13px; font-weight:700; color:#23213A; margin:0 0 3px;">${totalSemua} siswa dalam ${data.length} rombel</p>
-                <p style="font-size:11.5px; color:#6D6F8F; margin:0; line-height:1.4;">tersebar di ${data[0].kelas}&ndash;${data[data.length-1].kelas.replace('Kelas ','')}</p>
+                <p style="font-size:11.5px; color:#585A75; margin:0; line-height:1.4;">tersebar di ${data[0].kelas}&ndash;${data[data.length-1].kelas.replace('Kelas ','')}</p>
               </div>
             </div>
             <div style="display:flex; gap:14px; margin-top:16px; padding-top:14px; border-top:1px solid #ECEDF0;">
               <div style="flex:1; min-width:0;">
                 <p style="font-size:11.5px; font-weight:700; color:#0091EA; margin:0 0 2px;">Laki-laki</p>
-                <p style="font-size:11px; color:#6D6F8F; margin:0 0 6px;">${pctL}% <span style="color:#6b7280;">(${totalL} siswa)</span></p>
+                <p style="font-size:11px; color:#585A75; margin:0 0 6px;">${pctL}% <span style="color:#6b7280;">(${totalL} siswa)</span></p>
                 <div style="width:100%; height:4px; border-radius:999px; background:#EEF0F3; overflow:hidden;"><div style="width:${pctL}%; height:100%; border-radius:999px; background:#0091EA;"></div></div>
               </div>
               <div style="width:1px; background:#ECEDF0;"></div>
               <div style="flex:1; min-width:0;">
                 <p style="font-size:11.5px; font-weight:700; color:#D4537E; margin:0 0 2px;">Perempuan</p>
-                <p style="font-size:11px; color:#6D6F8F; margin:0 0 6px;">${pctP}% <span style="color:#6b7280;">(${totalP} siswa)</span></p>
+                <p style="font-size:11px; color:#585A75; margin:0 0 6px;">${pctP}% <span style="color:#6b7280;">(${totalP} siswa)</span></p>
                 <div style="width:100%; height:4px; border-radius:999px; background:#EEF0F3; overflow:hidden;"><div style="width:${pctP}%; height:100%; border-radius:999px; background:#F88AB0;"></div></div>
               </div>
             </div>
@@ -1860,20 +1850,20 @@ let historyTabAktif = false;
             </div>
             <div style="flex:1; min-width:0;">
               <p style="font-size:13px; font-weight:700; color:#23213A; margin:0 0 3px;">${bawahDesil} siswa di Desil 1&ndash;4</p>
-              <p style="font-size:11.5px; color:#6D6F8F; margin:0; line-height:1.4;">dari total ${totalSemuaDesil} siswa terdata</p>
+              <p style="font-size:11.5px; color:#585A75; margin:0; line-height:1.4;">dari total ${totalSemuaDesil} siswa terdata</p>
               <span style="display:inline-flex; align-items:center; gap:5px; margin-top:8px; font-size:10px; font-weight:700; color:${warnaStatusTeks}; background:${warnaStatusBg}; padding:3px 9px; border-radius:999px;"><span style="width:5px; height:5px; border-radius:50%; background:${warnaStatusTeks}; flex-shrink:0;"></span>${labelStatus}</span>
             </div>
           </div>
           <div style="display:flex; gap:14px; margin-top:16px; padding-top:14px; border-top:1px solid #ECEDF0;">
             <div style="flex:1; min-width:0;">
               <p style="font-size:11.5px; font-weight:700; color:#23213A; margin:0 0 2px;">Desil 1&ndash;4</p>
-              <p style="font-size:11px; color:#6D6F8F; margin:0 0 6px;">${pctBawah}% <span style="color:#6b7280;">(${bawahDesil} siswa)</span></p>
+              <p style="font-size:11px; color:#585A75; margin:0 0 6px;">${pctBawah}% <span style="color:#6b7280;">(${bawahDesil} siswa)</span></p>
               <div style="width:100%; height:4px; border-radius:999px; background:#EEF0F3; overflow:hidden;"><div style="width:${pctBawah}%; height:100%; border-radius:999px; background:#F2545B;"></div></div>
             </div>
             <div style="width:1px; background:#ECEDF0;"></div>
             <div style="flex:1; min-width:0;">
               <p style="font-size:11.5px; font-weight:700; color:#23213A; margin:0 0 2px;">Desil 5&ndash;10</p>
-              <p style="font-size:11px; color:#6D6F8F; margin:0 0 6px;">${pctAtas}% <span style="color:#6b7280;">(${atasDesil} siswa)</span></p>
+              <p style="font-size:11px; color:#585A75; margin:0 0 6px;">${pctAtas}% <span style="color:#6b7280;">(${atasDesil} siswa)</span></p>
               <div style="width:100%; height:4px; border-radius:999px; background:#EEF0F3; overflow:hidden;"><div style="width:${pctAtas}%; height:100%; border-radius:999px; background:#7B81BE;"></div></div>
             </div>
           </div>
@@ -2062,7 +2052,7 @@ let historyTabAktif = false;
               </div>
               <div style="flex:1; min-width:0;">
                 <p style="font-size:13px; font-weight:700; color:#23213A; margin:0 0 3px;">${hasil.length} siswa yatim/piatu</p>
-                <p style="font-size:11.5px; color:#6D6F8F; margin:0; line-height:1.4;">${pctDariTotal}% dari total ${totalSemuaSiswa} siswa terdata</p>
+                <p style="font-size:11.5px; color:#585A75; margin:0; line-height:1.4;">${pctDariTotal}% dari total ${totalSemuaSiswa} siswa terdata</p>
                 <span style="display:inline-flex; align-items:center; gap:5px; margin-top:8px; font-size:10px; font-weight:700; color:#993C1D; background:#F5C4B3; padding:3px 9px; border-radius:999px;"><span style="width:5px; height:5px; border-radius:50%; background:#993C1D; flex-shrink:0;"></span>Perlu pendampingan</span>
               </div>
             </div>
@@ -2145,13 +2135,13 @@ let historyTabAktif = false;
       const list = document.getElementById('notifList');
       if(!list) return;
       if(!riwayatUpdateData.length){
-        list.innerHTML = `<p style="font-size:11px;color:#6D6F8F;margin:0;">Belum ada data pembaruan</p>`;
+        list.innerHTML = `<p style="font-size:11px;color:#585A75;margin:0;">Belum ada data pembaruan</p>`;
         return;
       }
       list.innerHTML = riwayatUpdateData.slice(0,3).map((iso,i) => `
         <div style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:10px;${i===0 ? 'background:#F3F6FF;' : ''}">
           <span class="material-symbols-rounded" style="font-size:15px;color:${i===0 ? 'var(--color-accent-blue-deep, #4A6FC2)' : '#9ca3af'};">sync</span>
-          <span style="font-size:11.5px;font-weight:${i===0 ? '700' : '500'};color:${i===0 ? '#23213A' : '#6D6F8F'};">${formatTanggalUpdate(iso)}</span>
+          <span style="font-size:11.5px;font-weight:${i===0 ? '700' : '500'};color:${i===0 ? '#23213A' : '#585A75'};">${formatTanggalUpdate(iso)}</span>
         </div>
       `).join('');
     }
@@ -2374,6 +2364,12 @@ let historyTabAktif = false;
       sudahMuatGuru = true;
       dataGuru = json.guru.slice(1).filter(r => r[1] && String(r[1]).trim() !== "");
       renderListPegawai('guru');
+      const jmlGuruKelasBeranda = dataGuru.filter(r => String(r[2]).trim() === 'Guru Kelas').length;
+      const jmlGuruMapelBeranda = dataGuru.length - jmlGuruKelasBeranda;
+      const elLblGuruKelasBeranda = document.getElementById('lblGuruKelas');
+      const elLblGuruMapelBeranda = document.getElementById('lblGuruMapel');
+      if(elLblGuruKelasBeranda) elLblGuruKelasBeranda.textContent = jmlGuruKelasBeranda + ' Guru Kelas';
+      if(elLblGuruMapelBeranda) elLblGuruMapelBeranda.textContent = jmlGuruMapelBeranda + ' Mapel';
       const elTotGuru = document.getElementById('totGuru');
       const elSpinGuru = document.getElementById('totGuruSpin');
       if(elTotGuru){
@@ -2387,6 +2383,8 @@ let historyTabAktif = false;
       sudahMuatTendik = true;
       dataTendik = json.tendik.slice(1).filter(r => r[1] && String(r[1]).trim() !== "");
       renderListPegawai('tendik');
+      const elRincianTendikBeranda = document.getElementById('rincianTendikBeranda');
+      if(elRincianTendikBeranda) elRincianTendikBeranda.textContent = buatRincianStatusTendik(dataTendik);
       const elTotTendik = document.getElementById('totTendik');
       const elSpinTendik = document.getElementById('totTendikSpin');
       if(elTotTendik){
@@ -2438,6 +2436,11 @@ let historyTabAktif = false;
       const elSubtitleRombel = document.getElementById('subtitleRombel');
       if(elSubtitleRombel){
         elSubtitleRombel.textContent = `${classes.length} kelas \u00b7 ${totalSiswa} siswa`;
+      }
+      const elRataRataRombelBeranda = document.getElementById('rataRataRombelBeranda');
+      if(elRataRataRombelBeranda){
+        const rataRataSiswaPerKelas = classes.length > 0 ? Math.round(totalSiswa / classes.length) : 0;
+        elRataRataRombelBeranda.textContent = `Rata-rata ${rataRataSiswaPerKelas} siswa/kelas`;
       }
       animasikanAngka('totRombel', classes.length, 900);
       animasikanAngka('totRombelHero', classes.length, 900);
@@ -3073,7 +3076,7 @@ function muatDataGuru(){
       const elLblMapel = document.getElementById('lblGuruMapel');
       if(elBarKelas) elBarKelas.style.flex = jmlGuruKelas + ' 1 0%';
       if(elBarMapel) elBarMapel.style.flex = jmlGuruMapel + ' 1 0%';
-      if(elLblKelas) elLblKelas.textContent = jmlGuruKelas + ' Kelas';
+      if(elLblKelas) elLblKelas.textContent = jmlGuruKelas + ' Guru Kelas';
       if(elLblMapel) elLblMapel.textContent = jmlGuruMapel + ' Mapel';
       const elTot = document.getElementById('totGuru');
       const elSpin = document.getElementById('totGuruSpin');
@@ -3125,9 +3128,8 @@ function muatDataTendik(){
       }
       dataTendik = json.data.slice(1).filter(r => r[1] && String(r[1]).trim() !== "");
       renderListPegawai('tendik');
-      const jenisJabatanUnikBeranda = new Set(dataTendik.map(r => String(r[2] || '').trim()).filter(j => j !== '')).size;
-      const elJenisJabatan = document.getElementById('jenisJabatanTendikCount');
-      if(elJenisJabatan) elJenisJabatan.textContent = jenisJabatanUnikBeranda;
+      const elRincianTendik = document.getElementById('rincianTendikBeranda');
+      if(elRincianTendik) elRincianTendik.textContent = buatRincianStatusTendik(dataTendik);
       const elTot = document.getElementById('totTendik');
       const elSpin = document.getElementById('totTendikSpin');
       if(elTot){
@@ -3149,6 +3151,8 @@ function muatDataTendik(){
           }
           dataTendik = json.data.slice(1).filter(r => r[1] && String(r[1]).trim() !== "");
           renderListPegawai('tendik');
+          const elRincianTendikRetry = document.getElementById('rincianTendikBeranda');
+          if(elRincianTendikRetry) elRincianTendikRetry.textContent = buatRincianStatusTendik(dataTendik);
           const elTot = document.getElementById('totTendik');
           const elSpin = document.getElementById('totTendikSpin');
           if(elTot){
@@ -3164,6 +3168,29 @@ function muatDataTendik(){
           showToast("Tidak bisa terhubung ke server data tendik", 3000);
         });
     });
+}
+
+// Membuat rincian singkat status kepegawaian tendik untuk kartu Beranda,
+// misal "2 PNS \u00b7 2 Non-ASN". Kalau status lebih dari 2 jenis,
+// dua terbanyak ditampilkan dan sisanya diringkas jadi "+N lainnya".
+function buatRincianStatusTendik(data){
+  if(!data || data.length === 0) return '\u2013';
+
+  const hitung = {};
+  data.forEach(r => {
+    const status = String(r[3] || '').trim() || 'Lainnya';
+    hitung[status] = (hitung[status] || 0) + 1;
+  });
+
+  const urutan = Object.entries(hitung).sort((a, b) => b[1] - a[1]);
+  const utama = urutan.slice(0, 2).map(([status, jml]) => `${jml} ${status}`);
+  const sisaJenis = urutan.slice(2);
+
+  if(sisaJenis.length > 0){
+    utama.push(`+${sisaJenis.length} lainnya`);
+  }
+
+  return utama.join(' \u00b7 ');
 }
 
 function warnaJabatanTendik(jabatan){
@@ -3197,15 +3224,15 @@ function renderListPegawai(tipe){
 <div class="neu-card" style="padding:16px; margin-bottom:16px; display:flex; align-items:center; justify-content:space-around;">
   <div style="display:flex; align-items:center; gap:10px;">
     <div style="width:38px;height:38px;border-radius:12px;background:#7B81BE22;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span class="material-symbols-rounded text-[18px]" style="color:#7B81BE;">groups</span></div>
-    <div><p style="font-size:16px; font-weight:800; color:#23213A; margin:0;">${sumber.length}</p><p style="font-size:10px; color:#6D6F8F; margin:1px 0 0;">Total Guru</p></div>
+    <div><p style="font-size:16px; font-weight:800; color:#23213A; margin:0;">${sumber.length}</p><p style="font-size:10px; color:#585A75; margin:1px 0 0;">Total Guru</p></div>
   </div>
   <div style="display:flex; align-items:center; gap:10px;">
     <div style="width:38px;height:38px;border-radius:12px;background:#4ECDC422;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span class="material-symbols-rounded text-[18px]" style="color:#0d7d70;">school</span></div>
-    <div><p style="font-size:16px; font-weight:800; color:#23213A; margin:0;">${guruKelasCount}</p><p style="font-size:10px; color:#6D6F8F; margin:1px 0 0;">Guru Kelas</p></div>
+    <div><p style="font-size:16px; font-weight:800; color:#23213A; margin:0;">${guruKelasCount}</p><p style="font-size:10px; color:#585A75; margin:1px 0 0;">Guru Kelas</p></div>
   </div>
   <div style="display:flex; align-items:center; gap:10px;">
     <div style="width:38px;height:38px;border-radius:12px;background:#F2A65A22;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span class="material-symbols-rounded text-[18px]" style="color:#c07729;">menu_book</span></div>
-    <div><p style="font-size:16px; font-weight:800; color:#23213A; margin:0;">${guruMapelCount}</p><p style="font-size:10px; color:#6D6F8F; margin:1px 0 0;">Guru Mapel</p></div>
+    <div><p style="font-size:16px; font-weight:800; color:#23213A; margin:0;">${guruMapelCount}</p><p style="font-size:10px; color:#585A75; margin:1px 0 0;">Guru Mapel</p></div>
   </div>
 </div>`;
  } else if(tipe === 'tendik'){
@@ -3213,7 +3240,7 @@ function renderListPegawai(tipe){
    kartuRingkasanGuru = `
 <div class="neu-card" style="padding:16px; margin-bottom:16px; display:flex; align-items:center; gap:12px;">
   <div style="width:42px;height:42px;border-radius:12px;background:#F2A65A22;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span class="material-symbols-rounded text-[20px]" style="color:#c07729;">badge</span></div>
-  <div><p style="font-size:11px; font-weight:700; color:#6D6F8F; margin:0; text-transform:uppercase; letter-spacing:.02em;">Total Tendik</p><p style="font-size:20px; font-weight:800; color:#23213A; margin:2px 0 0; line-height:1;">${sumber.length}</p><p style="font-size:10.5px; color:#6b7280; margin:3px 0 0;">${jenisJabatanUnik} jenis jabatan berbeda</p></div>
+  <div><p style="font-size:11px; font-weight:700; color:#585A75; margin:0; text-transform:uppercase; letter-spacing:.02em;">Total Tendik</p><p style="font-size:20px; font-weight:800; color:#23213A; margin:2px 0 0; line-height:1;">${sumber.length}</p><p style="font-size:10.5px; color:#6b7280; margin:3px 0 0;">${jenisJabatanUnik} jenis jabatan berbeda</p></div>
 </div>`;
  }
 
@@ -4390,7 +4417,7 @@ function setNavDisabled(disabled){
     ctx.textBaseline = "alphabetic";
     ctx.fillText(String(totalSemua), tengahX, tengahY - 2);
 
-    ctx.fillStyle = "#6D6F8F";
+    ctx.fillStyle = "#585A75";
     ctx.font = "500 13px 'Plus Jakarta Sans', sans-serif";
     ctx.fillText(totalLabel, tengahX, tengahY + 18);
 
