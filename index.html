@@ -936,32 +936,34 @@
 
   <div id="greetingBlock">
 
-  <div class="flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <div id="avatarGuruWrap" style="width:44px;height:44px;border-radius:50%;background-color:#E8ECF3;border:1.5px solid rgba(255,255,255,.55);box-shadow:0 6px 16px rgba(70,60,120,.12);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;">
-        <img id="avatarGuruImg" src="" class="hidden" style="width:100%;height:100%;object-fit:cover;">
-        <span id="avatarGuruFallback" class="material-symbols-rounded" style="font-size:22px;color:#6b7280;">person</span>
-      </div>
-      <div>
-        <p id="greetingText" class="text-sm text-gray-500 m-0"></p>
-        <h1 id="namaGuruAktif" class="text-xl font-bold text-gray-800 m-0 mt-0.5"></h1>
-      </div>
+  <div class="flex items-start justify-between">
+    <div>
+      <p class="text-[11px] font-semibold m-0" style="color:#9EA3B0; letter-spacing:.02em;">Tahun Ajaran 2026/2027</p>
+      <p class="text-[22px] font-extrabold m-0" style="color:#1E1E24; letter-spacing:-0.02em; margin-top:3px;">Dashboard</p>
+      <p class="text-[12.5px] m-0" style="color:#6E7381; margin-top:2px;">SD Negeri 6 Tejakula</p>
+      <p id="greetingText" class="hidden"></p>
+      <h1 id="namaGuruAktif" class="hidden"></h1>
     </div>
 
     <div class="relative" id="notifWrap">
       <button id="btnNotifUpdate" onpointerdown="buatRipple(event)" onclick="toggleNotifUpdate(event)"
         class="relative flex items-center justify-center"
-        style="width:30px;height:30px;border-radius:50%;background:#E8ECF3;overflow:hidden;border:1.5px solid rgba(255,255,255,.55);
-               box-shadow: 0 6px 16px rgba(70,60,120,.12);">
-        <span class="material-symbols-rounded" style="font-size:16px;color:#6D6F8F;">notifications</span>
+        style="width:36px;height:36px;border-radius:50%;background:#fff;overflow:hidden;
+               box-shadow: 12px 16px 32px rgba(166,175,195,.15), -8px -8px 20px rgba(255,255,255,.9);">
+        <span class="material-symbols-rounded" style="font-size:17px;color:#6E7381;">notifications</span>
         <span id="notifDot" class="hidden" style="position:absolute;top:3px;right:4px;width:7px;height:7px;border-radius:50%;background:var(--color-primary);border:1.5px solid #fff;"></span>
       </button>
-      <div id="notifDropdown" class="hidden" style="position:absolute;top:38px;right:0;width:210px;background:#FFFFFF;border-radius:16px;padding:12px;z-index:50;
-             box-shadow: 0 6px 18px rgba(110,110,118,.3);">
+      <div id="notifDropdown" class="hidden" style="position:absolute;top:42px;right:0;width:210px;background:#FFFFFF;border-radius:16px;padding:12px;z-index:50;
+             box-shadow: 12px 16px 32px rgba(166,175,195,.2), -8px -8px 20px rgba(255,255,255,.9);">
         <p style="font-size:11px;font-weight:700;color:#374151;margin:0 0 8px;">Pembaruan Terakhir</p>
         <div id="notifList" style="display:flex;flex-direction:column;gap:6px;"></div>
       </div>
     </div>
+  </div>
+
+  <div id="avatarGuruWrap" class="hidden" style="display:none;">
+    <img id="avatarGuruImg" src="" class="hidden">
+    <span id="avatarGuruFallback" class="hidden material-symbols-rounded">person</span>
   </div>
 
   </div>
@@ -1003,136 +1005,123 @@
 
   <p style="font-size:15px; font-weight:600; color:#1E1E24; margin:0 0 10px 4px;">Ringkasan data</p>
 
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
-
-    <div style="grid-column:1 / 3; background:var(--grad1); border-radius:22px; padding:18px; position:relative; overflow:hidden; box-shadow:0 12px 28px rgba(120,100,200,.28);">
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; width:44px; margin-bottom:12px;">
-        <div style="aspect-ratio:1; border-radius:8px; background:rgba(255,255,255,.28);"></div>
-        <div style="aspect-ratio:1; border-radius:8px; background:rgba(255,255,255,.28);"></div>
-        <div style="aspect-ratio:1; border-radius:8px; background:rgba(255,255,255,.28);"></div>
-        <div style="aspect-ratio:1; border-radius:8px; background:rgba(255,255,255,.28);"></div>
-      </div>
-      <p style="font-size:11px; font-weight:700; color:rgba(255,255,255,.8); margin:0; text-transform:uppercase; letter-spacing:.03em;">Total Siswa</p>
-      <div class="relative min-h-[38px] flex items-center">
-        <p id="tot" class="hidden text-[32px] font-extrabold tracking-tight tabular-nums leading-8 m-0" style="color:#fff;">0</p>
-        <div id="totSpin" class="spinner-ring-gray"></div>
-      </div>
-      <div class="flex gap-3.5 mt-2">
-        <div class="flex items-center gap-1.5">
-          <div class="relative min-h-[15px] flex items-center">
-            <span id="laki" class="hidden text-[12px]" style="color:rgba(255,255,255,.9);">0</span>
-            <div id="lakiSpin" class="spinner-ring-gray" style="width:12px;height:12px;"></div>
-          </div>
-          <span class="text-[12px]" style="color:rgba(255,255,255,.9);">L</span>
-          <span id="pctL" class="text-[12px]" style="color:rgba(255,255,255,.7);"></span>
-        </div>
-        <div class="flex items-center gap-1.5">
-          <div class="relative min-h-[15px] flex items-center">
-            <span id="perempuan" class="hidden text-[12px]" style="color:rgba(255,255,255,.9);">0</span>
-            <div id="perempuanSpin" class="spinner-ring-gray" style="width:12px;height:12px;"></div>
-          </div>
-          <span class="text-[12px]" style="color:rgba(255,255,255,.9);">P</span>
-          <span id="pctP" class="text-[12px]" style="color:rgba(255,255,255,.7);"></span>
-        </div>
-      </div>
-      <div style="width:100%; height:5px; border-radius:999px; overflow:hidden; display:flex; margin-top:10px; background:rgba(255,255,255,.25);">
-        <div id="barLPL" style="width:50%; height:100%; background:#fff; transition:width .5s ease;"></div>
-        <div id="barLPP" style="width:50%; height:100%; background:rgba(255,255,255,.55); transition:width .5s ease;"></div>
-      </div>
-      <div style="display:flex; gap:5px; margin-top:12px;">
-        <span style="width:14px;height:5px;border-radius:3px;background:#fff;"></span>
-        <span style="width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.5);"></span>
-      </div>
+  <div style="background:linear-gradient(135deg, #FFD07B 0%, #E892D5 50%, #B18CFF 100%); border-radius:28px; padding:22px; margin-bottom:16px; position:relative; overflow:hidden;">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; width:52px; margin-bottom:16px;">
+      <div style="aspect-ratio:1; border-radius:11px; background:rgba(255,255,255,.28);"></div>
+      <div style="aspect-ratio:1; border-radius:11px; background:rgba(255,255,255,.28);"></div>
+      <div style="aspect-ratio:1; border-radius:11px; background:rgba(255,255,255,.28);"></div>
+      <div style="aspect-ratio:1; border-radius:11px; background:rgba(255,255,255,.28);"></div>
     </div>
+    <p style="font-size:15px; font-weight:800; color:#fff; margin:0 0 4px;">
+      Total Siswa: <span class="relative inline-flex items-center">
+        <span id="tot" class="hidden tabular-nums">0</span>
+        <span id="totSpin" class="spinner-ring-gray" style="width:16px;height:16px;"></span>
+      </span>
+    </p>
+    <p style="font-size:11.5px; color:rgba(255,255,255,.85); margin:0; line-height:1.4;">
+      <span class="relative inline-flex items-center"><span id="laki" class="hidden tabular-nums">0</span><span id="lakiSpin" class="spinner-ring-gray" style="width:11px;height:11px;"></span></span> Laki-laki,
+      <span class="relative inline-flex items-center"><span id="perempuan" class="hidden tabular-nums">0</span><span id="perempuanSpin" class="spinner-ring-gray" style="width:11px;height:11px;"></span></span> Perempuan
+      tersebar di <span class="relative inline-flex items-center"><span id="totRombelHero" class="hidden tabular-nums">0</span><span id="totRombelHeroSpin" class="spinner-ring-gray" style="width:11px;height:11px;"></span></span> rombel.
+    </p>
+    <span id="pctL" class="hidden"></span>
+    <span id="pctP" class="hidden"></span>
+    <div id="barLPL" class="hidden"></div>
+    <div id="barLPP" class="hidden"></div>
+    <div style="display:flex; gap:5px; margin-top:14px;">
+      <span style="width:14px;height:5px;border-radius:3px;background:#fff;"></span>
+      <span style="width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.5);"></span>
+    </div>
+  </div>
 
-    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="background:#FFFFFF; border-radius:20px; padding:14px; position:relative; min-height:96px; box-shadow:12px 16px 32px rgba(166,175,195,.15), -8px -8px 20px rgba(255,255,255,.9);">
-      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
-        <span style="font-size:12px; font-weight:700; color:#1E1E24;">Guru</span>
-        <span class="material-symbols-rounded text-[13px]" style="color:#9EA3B0;">chevron_right</span>
-      </div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+
+    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="background:#fff; border-radius:24px; padding:16px; box-shadow:12px 16px 32px rgba(166,175,195,.15), -8px -8px 20px rgba(255,255,255,.9);">
+      <span style="font-size:12.5px; font-weight:700; color:#1E1E24; margin-bottom:8px; display:block;">Guru</span>
+      <svg viewBox="0 0 100 40" style="width:100%; height:30px; margin-bottom:4px; display:block;">
+        <polyline points="0,30 15,22 30,26 45,14 60,18 75,8 100,12" fill="none" stroke="#6E53F1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
       <div class="relative min-h-[24px] flex items-center">
         <p id="totGuru" class="hidden text-[20px] font-extrabold tracking-tight tabular-nums leading-6 m-0" style="color:#1E1E24;">0</p>
         <div id="totGuruSpin" class="spinner-ring-gray" style="width:16px;height:16px;"></div>
+        <span style="font-size:10px; font-weight:600; color:#9EA3B0; margin-left:4px;">orang</span>
       </div>
-      <div style="display:flex; gap:6px; margin:8px 0 4px;">
-        <div id="barGuruKelas" style="flex:1; height:5px; border-radius:3px; background:linear-gradient(90deg,#A886FF,#6E53F1); transition:width .5s ease;"></div>
-        <div id="barGuruMapel" style="flex:1; height:5px; border-radius:3px; background:#F1EFE8; transition:width .5s ease;"></div>
-      </div>
-      <div style="display:flex; justify-content:space-between;">
-        <span id="lblGuruKelas" style="font-size:8.5px; color:#6E53F1; font-weight:700;">&ndash; Kelas</span>
-        <span id="lblGuruMapel" style="font-size:8.5px; color:#9EA3B0;">&ndash; Mapel</span>
+      <p style="font-size:9px; color:#9EA3B0; margin:2px 0 8px;"><span id="lblGuruKelas">&ndash; Kelas</span> &middot; <span id="lblGuruMapel">&ndash; Mapel</span></p>
+      <div style="display:flex; align-items:center; gap:4px;">
+        <span style="font-size:10px; font-weight:700; color:#6E53F1;">Lihat detail</span>
+        <span class="material-symbols-rounded" style="font-size:12px; color:#6E53F1;">chevron_right</span>
       </div>
     </div>
 
-    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer" style="background:#FFFFFF; border-radius:20px; padding:14px; position:relative; min-height:96px; box-shadow:12px 16px 32px rgba(166,175,195,.15), -8px -8px 20px rgba(255,255,255,.9);">
-      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
-        <span style="font-size:12px; font-weight:700; color:#1E1E24;">Tendik</span>
-        <span class="material-symbols-rounded text-[13px]" style="color:#9EA3B0;">chevron_right</span>
-      </div>
-      <div style="display:flex; align-items:flex-start; justify-content:space-between;">
-        <div class="relative min-h-[24px] flex items-center">
-          <p id="totTendik" class="hidden text-[20px] font-extrabold tracking-tight tabular-nums leading-6 m-0" style="color:#1E1E24;">0</p>
-          <div id="totTendikSpin" class="spinner-ring-gray" style="width:16px;height:16px;"></div>
-        </div>
-        <div style="display:flex; gap:4px;">
-          <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
-            <div style="width:20px; height:20px; border-radius:6px; background:linear-gradient(135deg,#A886FF,#6E53F1); display:flex; align-items:center; justify-content:center;">
-              <span class="material-symbols-rounded text-[11px]" style="color:#fff;">military_tech</span>
-            </div>
-            <span style="font-size:5.5px; color:#9EA3B0;">Kepsek</span>
-          </div>
-          <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
-            <div style="width:20px; height:20px; border-radius:6px; background:linear-gradient(135deg,#5DCAA5,#0F6E56); display:flex; align-items:center; justify-content:center;">
-              <span class="material-symbols-rounded text-[11px]" style="color:#fff;">description</span>
-            </div>
-            <span style="font-size:5.5px; color:#9EA3B0;">TU</span>
-          </div>
-          <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
-            <div style="width:20px; height:20px; border-radius:6px; background:linear-gradient(135deg,#FFD07B,#E07A2F); display:flex; align-items:center; justify-content:center;">
-              <span class="material-symbols-rounded text-[11px]" style="color:#fff;">menu_book</span>
-            </div>
-            <span style="font-size:5.5px; color:#9EA3B0;">Pustaka</span>
-          </div>
-          <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
-            <div style="width:20px; height:20px; border-radius:6px; background:linear-gradient(135deg,#F09595,#A32D2D); display:flex; align-items:center; justify-content:center;">
-              <span class="material-symbols-rounded text-[11px]" style="color:#fff;">yard</span>
-            </div>
-            <span style="font-size:5.5px; color:#9EA3B0;">T.Kebun</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="grid-column:1 / 3; background:#FFFFFF; border-radius:20px; padding:14px 16px; position:relative; box-shadow:12px 16px 32px rgba(166,175,195,.15), -8px -8px 20px rgba(255,255,255,.9);">
-      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
-        <span style="font-size:12.5px; font-weight:700; color:#1E1E24;">Total Rombel</span>
-        <span class="material-symbols-rounded text-[15px]" style="color:#9EA3B0;">chevron_right</span>
-      </div>
-      <div style="display:flex; align-items:center; justify-content:flex-end; gap:10px;">
-        <div class="relative min-h-[24px] flex items-center" style="margin-right:auto;">
-          <p id="totRombel" class="hidden text-[22px] font-extrabold tracking-tight tabular-nums leading-6 m-0" style="color:#1E1E24;">0</p>
-          <div id="totRombelSpin" class="spinner-ring-gray" style="width:16px;height:16px;"></div>
-          <span style="font-size:11px; font-weight:600; color:#9EA3B0; margin-left:5px;">kelas</span>
-        </div>
-        <div style="width:1px; height:26px; background:#F1EFE8; flex-shrink:0;"></div>
-        <div id="badgeRombelMax" style="display:flex; align-items:center; gap:6px; min-width:0;">
-          <div style="width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,#A886FF,#6E53F1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <span class="material-symbols-rounded text-[12px]" style="color:#fff;">trending_up</span>
-          </div>
-          <span style="font-size:10.5px; color:#6E7381; white-space:nowrap;">&ndash;</span>
-        </div>
-        <div id="badgeRombelMin" style="display:flex; align-items:center; gap:6px; min-width:0;">
-          <div style="width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,#FFD07B,#E07A2F);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <span class="material-symbols-rounded text-[12px]" style="color:#fff;">trending_down</span>
-          </div>
-          <span style="font-size:10.5px; color:#6E7381; white-space:nowrap;">&ndash;</span>
-        </div>
+    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer" style="background:#fff; border-radius:24px; padding:16px; box-shadow:12px 16px 32px rgba(166,175,195,.15), -8px -8px 20px rgba(255,255,255,.9); display:flex; flex-direction:column; align-items:center;">
+      <div style="width:44px; height:44px; border-radius:46% 54% 62% 38% / 45% 40% 60% 55%; background:linear-gradient(160deg,#FFD07B,#E07A2F); margin-bottom:8px;"></div>
+      <span style="font-size:12.5px; font-weight:700; color:#1E1E24;">Tendik</span>
+      <p style="font-size:9.5px; color:#9EA3B0; margin:4px 0 8px; line-height:1.4; text-align:center;">
+        <span class="relative inline-flex items-center"><span id="totTendik" class="hidden tabular-nums">0</span><span id="totTendikSpin" class="spinner-ring-gray" style="width:11px;height:11px;"></span></span>
+        orang, <span id="jenisJabatanTendikCount">&ndash;</span> jenis jabatan.
+      </p>
+      <div style="display:flex; align-items:center; gap:4px;">
+        <span style="font-size:10px; font-weight:700; color:#E07A2F;">Lihat detail</span>
+        <span class="material-symbols-rounded" style="font-size:12px; color:#E07A2F;">chevron_right</span>
       </div>
     </div>
 
   </div>
 
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
 
+    <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="background:#fff; border-radius:24px; padding:16px; box-shadow:12px 16px 32px rgba(166,175,195,.15), -8px -8px 20px rgba(255,255,255,.9);">
+      <span style="font-size:12.5px; font-weight:700; color:#1E1E24; margin-bottom:10px; display:block;">Total Rombel</span>
+      <p style="font-size:9.5px; color:#9EA3B0; margin:0 0 10px; line-height:1.4;">
+        <span class="relative inline-flex items-center"><span id="totRombel" class="hidden tabular-nums">0</span><span id="totRombelSpin" class="spinner-ring-gray" style="width:11px;height:11px;"></span></span>
+        kelas aktif tahun ini.
+      </p>
+      <div style="display:flex; align-items:center; gap:6px; margin-bottom:6px;">
+        <span class="material-symbols-rounded" style="font-size:12px; color:#6E53F1;">arrow_upward</span>
+        <span id="lblRombelMax" style="font-size:9.5px; color:#6E7381;">&ndash;</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:6px; margin-bottom:8px;">
+        <span class="material-symbols-rounded" style="font-size:12px; color:#E07A2F;">arrow_downward</span>
+        <span id="lblRombelMin" style="font-size:9.5px; color:#6E7381;">&ndash;</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:4px;">
+        <span style="font-size:10px; font-weight:700; color:#6E53F1;">Lihat detail</span>
+        <span class="material-symbols-rounded" style="font-size:12px; color:#6E53F1;">chevron_right</span>
+      </div>
+    </div>
+
+    <div class="neu-card" style="padding:16px;">
+      <span style="font-size:12.5px; font-weight:700; color:#1E1E24; margin-bottom:8px; display:block;">Kategori</span>
+      <div onclick="bukaKategoriKesejahteraanDariBeranda()" class="cursor-pointer" style="margin-bottom:8px;">
+        <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#D85A30;"></span>
+          <span style="font-size:9px; color:#6E7381;">Kesejahteraan</span>
+        </div>
+        <div style="width:100%; height:4px; border-radius:3px; background:#F1EFE8; overflow:hidden;">
+          <div id="barKesejahteraanBeranda" style="width:0%; height:100%; background:#D85A30; transition:width .5s ease;"></div>
+        </div>
+      </div>
+      <div onclick="bukaKategoriStatusAnakDariBeranda()" class="cursor-pointer" style="margin-bottom:8px;">
+        <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#378ADD;"></span>
+          <span style="font-size:9px; color:#6E7381;">Status Anak</span>
+        </div>
+        <div style="width:100%; height:4px; border-radius:3px; background:#F1EFE8; overflow:hidden;">
+          <div id="barStatusAnakBeranda" style="width:0%; height:100%; background:#378ADD; transition:width .5s ease;"></div>
+        </div>
+      </div>
+      <div onclick="bukaKategoriKesejahteraanDariBeranda()" class="cursor-pointer" style="display:flex; align-items:center; gap:4px;">
+        <span style="font-size:10px; font-weight:700; color:#378ADD;">Lihat detail</span>
+        <span class="material-symbols-rounded" style="font-size:12px; color:#378ADD;">chevron_right</span>
+      </div>
+      <span id="pctKesejahteraanBeranda" class="hidden"></span>
+      <span id="badgeKesejahteraanBeranda" class="hidden"></span>
+      <span id="subKesejahteraanBeranda" class="hidden"></span>
+      <span id="pctStatusAnakBeranda" class="hidden"></span>
+      <span id="badgeStatusAnakBeranda" class="hidden"></span>
+      <span id="subStatusAnakBeranda" class="hidden"></span>
+    </div>
+
+  </div>
 
     <p class="text-[11px] font-bold text-gray-600 uppercase m-0 mt-3 mb-2" style="letter-spacing:.04em;">Grafik Data</p>
 
@@ -1173,9 +1162,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
   </div>
 </div>
 
-    <p class="text-[11px] font-bold text-gray-600 uppercase m-0 mt-5 mb-3" style="letter-spacing:.04em;">Kategori</p>
-
-    <div onclick="nav('download')" class="cursor-pointer" style="background:var(--grad2); border-radius:22px; padding:16px 18px; display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+    <div onclick="nav('download')" class="cursor-pointer" style="background:var(--grad2); border-radius:22px; padding:16px 18px; display:flex; align-items:center; justify-content:space-between; margin-top:16px; margin-bottom:16px;">
       <div style="display:flex; align-items:center; gap:10px;">
         <span class="material-symbols-rounded text-[18px]" style="color:#fff;">download</span>
         <div>
@@ -1184,30 +1171,6 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
         </div>
       </div>
       <span class="material-symbols-rounded text-[16px]" style="color:#fff;">arrow_forward</span>
-    </div>
-
-    <div class="neu-card" style="padding:16px 18px; margin-bottom:16px;">
-      <p class="text-[13px] font-bold m-0 mb-3" style="color:var(--ink);">Kategori</p>
-      <div onclick="bukaKategoriKesejahteraanDariBeranda()" class="cursor-pointer flex items-center gap-3" style="padding:7px 0;">
-        <span style="width:8px;height:8px;border-radius:50%;background:#D85A30;flex-shrink:0;"></span>
-        <span class="flex-1 min-w-0 text-[12.5px] truncate" style="color:var(--sub);">Kesejahteraan</span>
-        <div style="width:70px; height:5px; border-radius:3px; background:#F1EFE8; overflow:hidden; flex-shrink:0;">
-          <div id="barKesejahteraanBeranda" style="width:0%; height:100%; background:#D85A30; transition:width .5s ease;"></div>
-        </div>
-      </div>
-      <div onclick="bukaKategoriStatusAnakDariBeranda()" class="cursor-pointer flex items-center gap-3" style="padding:7px 0;">
-        <span style="width:8px;height:8px;border-radius:50%;background:#378ADD;flex-shrink:0;"></span>
-        <span class="flex-1 min-w-0 text-[12.5px] truncate" style="color:var(--sub);">Status Anak</span>
-        <div style="width:70px; height:5px; border-radius:3px; background:#F1EFE8; overflow:hidden; flex-shrink:0;">
-          <div id="barStatusAnakBeranda" style="width:0%; height:100%; background:#378ADD; transition:width .5s ease;"></div>
-        </div>
-      </div>
-      <span id="pctKesejahteraanBeranda" class="hidden"></span>
-      <span id="badgeKesejahteraanBeranda" class="hidden"></span>
-      <span id="subKesejahteraanBeranda" class="hidden"></span>
-      <span id="pctStatusAnakBeranda" class="hidden"></span>
-      <span id="badgeStatusAnakBeranda" class="hidden"></span>
-      <span id="subStatusAnakBeranda" class="hidden"></span>
     </div>
 <div class="mt-5 mb-3 text-center text-[10px] text-gray-400">
 
@@ -2467,6 +2430,7 @@ let historyTabAktif = false;
         elSubtitleRombel.textContent = `${classes.length} kelas \u00b7 ${totalSiswa} siswa`;
       }
       animasikanAngka('totRombel', classes.length, 900);
+      animasikanAngka('totRombelHero', classes.length, 900);
 
 
 const idxPuncakRombel = window.rombelData.reduce((best, r, i, arr) =>
@@ -2475,10 +2439,10 @@ const idxTerendahRombel = window.rombelData.reduce((worst, r, i, arr) =>
   (r.L + r.P) < (arr[worst].L + arr[worst].P) ? i : worst, 0);
 const rMax = window.rombelData[idxPuncakRombel];
 const rMin = window.rombelData[idxTerendahRombel];
-const elBadgeMax = document.querySelector('#badgeRombelMax span:last-child');
-const elBadgeMin = document.querySelector('#badgeRombelMin span:last-child');
-if(elBadgeMax) elBadgeMax.textContent = `${rMax.kelas} (${rMax.L + rMax.P})`;
-if(elBadgeMin) elBadgeMin.textContent = `${rMin.kelas} (${rMin.L + rMin.P})`;
+const elLblMax = document.getElementById('lblRombelMax');
+const elLblMin = document.getElementById('lblRombelMin');
+if(elLblMax) elLblMax.textContent = `Terbanyak: ${rMax.kelas} \u00b7 ${rMax.L + rMax.P} siswa`;
+if(elLblMin) elLblMin.textContent = `Tersedikit: ${rMin.kelas} \u00b7 ${rMin.L + rMin.P} siswa`;
 
 document.getElementById('pillbars').innerHTML = window.rombelData.map((r, i) => {
   const total = r.L + r.P;
@@ -3151,6 +3115,9 @@ function muatDataTendik(){
       }
       dataTendik = json.data.slice(1).filter(r => r[1] && String(r[1]).trim() !== "");
       renderListPegawai('tendik');
+      const jenisJabatanUnikBeranda = new Set(dataTendik.map(r => String(r[2] || '').trim()).filter(j => j !== '')).size;
+      const elJenisJabatan = document.getElementById('jenisJabatanTendikCount');
+      if(elJenisJabatan) elJenisJabatan.textContent = jenisJabatanUnikBeranda;
       const elTot = document.getElementById('totTendik');
       const elSpin = document.getElementById('totTendikSpin');
       if(elTot){
