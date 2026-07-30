@@ -949,17 +949,17 @@
   <div id="greetingBlock">
 
   <div class="flex items-start justify-between">
-    <div>
-      <p class="text-[11px] font-semibold m-0" style="color:#9EA3B0; letter-spacing:.02em;">Tahun Ajaran 2026/2027</p>
-      <p class="text-[20px] font-extrabold m-0" style="color:#1E1E24; letter-spacing:-0.02em; margin-top:3px;">Dashboard</p>
-      <p class="text-[12px] m-0" style="color:#585A75; margin-top:2px;">SD Negeri 6 Tejakula</p>
+    <div style="min-width:0;">
+      <p class="text-[12.5px] font-semibold m-0" style="color:#8B8AA3;"><span id="greetingText">Selamat datang</span>,</p>
+      <p class="text-[22px] font-extrabold m-0" id="namaGuruAktif" style="color:#1E1E24; letter-spacing:-0.02em; margin-top:2px;"></p>
+      <p id="tanggalWaktuBeranda" style="font-size:11px; color:#A6A9CC; margin:6px 0 0; font-weight:500;"></p>
     </div>
     <div class="relative" id="notifWrap">
       <button id="btnNotifUpdate" onpointerdown="buatRipple(event)" onclick="toggleNotifUpdate(event)"
         class="relative flex items-center justify-center"
-        style="width:36px;height:36px;border-radius:50%;background:#fff;overflow:hidden;
-               box-shadow: 12px 16px 32px rgba(166,175,195,.15), -8px -8px 20px rgba(255,255,255,.9);">
-        <span class="material-symbols-rounded" style="font-size:17px;color:#585A75;">notifications</span>
+        style="width:34px;height:34px;border-radius:50%;background:#fff;overflow:hidden;flex-shrink:0;
+               box-shadow: 0 8px 18px rgba(166,175,195,.3);">
+        <span class="material-symbols-rounded" style="font-size:16px;color:#585A75;">notifications</span>
         <span id="notifDot" class="hidden" style="position:absolute;top:3px;right:4px;width:7px;height:7px;border-radius:50%;background:var(--color-primary);border:1.5px solid #fff;"></span>
       </button>
       <div id="notifDropdown" class="hidden" style="position:absolute;top:42px;right:0;width:210px;background:#FFFFFF;border-radius:16px;padding:12px;z-index:50;
@@ -979,39 +979,46 @@
 
   </div>
 
-  <div style="margin-bottom:20px;">
-    <p style="font-size:15px; font-weight:700; color:#1E1E24; margin:0;">
-      <span id="greetingText">Selamat datang</span>, <span id="namaGuruAktif"></span>
-    </p>
-    <p id="tanggalWaktuBeranda" style="font-size:12px; color:#8B8AA3; margin:3px 0 0; font-weight:500;"></p>
-  </div>
-
   <div id="homeNormalContent">
 
   <div style="position:relative; overflow:hidden; border-radius:12px;">
 
-  <div style="position:absolute;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,#C9B8F0,transparent 70%);top:60px;left:-60px;opacity:.6; z-index:0;"></div>
-  <div style="position:absolute;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,#F2B98A,transparent 70%);bottom:40px;right:-40px;opacity:.5; z-index:0;"></div>
+  <div style="position:absolute;width:200px;height:200px;border-radius:50%;background:#F7C99A;top:-50px;left:-60px;opacity:.35; z-index:0; filter:blur(45px);"></div>
+  <div style="position:absolute;width:190px;height:190px;border-radius:50%;background:#C9B6F5;bottom:40px;right:-60px;opacity:.35; z-index:0; filter:blur(45px);"></div>
 
   <p style="position:relative; font-size:15px; font-weight:500; color:#1E1E24; margin:0 0 12px;">Ringkasan data</p>
 
-  <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="position:relative; border-radius:24px; padding:20px; background:linear-gradient(135deg,#7B61E0,#B98BF0); margin-bottom:12px;">
-    <div style="font-size:10.5px; font-weight:500; letter-spacing:.06em; color:rgba(255,255,255,.8); margin-bottom:6px;">TOTAL SISWA</div>
-    <div style="font-size:38px; font-weight:700; color:#fff; line-height:1; margin-bottom:10px; font-family:var(--font-family);" class="relative inline-flex items-center">
-      <span id="tot" class="hidden tabular-nums">0</span>
-      <span id="totSpin" class="spinner-ring-gray" style="width:20px;height:20px;"></span>
+  <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="position:relative; border-radius:22px; background:rgba(255,255,255,.55); -webkit-backdrop-filter:blur(14px) saturate(200%); backdrop-filter:blur(14px) saturate(200%); border:1px solid rgba(255,255,255,.8); box-shadow:0 14px 30px -10px rgba(123,97,224,.2); display:flex; overflow:hidden; margin-bottom:12px;">
+
+    <div style="flex:1; min-width:0; padding:16px 14px 16px 18px;">
+      <div style="margin:0 0 16px;">
+        <p style="font-size:12px; font-weight:700; color:#8B8AA3; line-height:1.35; margin:0;">SD Negeri 6 Tejakula</p>
+        <p style="font-size:10px; color:#B4B2C7; font-weight:600; margin:2px 0 0;">Tahun Ajaran 2026/2027</p>
+      </div>
+      <p style="font-size:10px; font-weight:700; letter-spacing:.06em; color:#8B8AA3; margin:0; text-transform:uppercase;">Total siswa</p>
+      <div style="font-size:34px; font-weight:800; color:#23213A; margin:6px 0 2px; line-height:1; font-family:var(--font-family);" class="relative inline-flex items-center">
+        <span id="tot" class="hidden tabular-nums">0</span>
+        <span id="totSpin" class="spinner-ring-gray" style="width:20px;height:20px;"></span>
+      </div>
+      <div style="font-size:10.5px; color:#585A75; font-weight:600; margin:0 0 10px;">
+        <span style="color:#4A6FC2; font-weight:700;" class="relative inline-flex items-center"><span id="laki" class="hidden tabular-nums">0</span><span id="lakiSpin" class="spinner-ring-gray" style="width:12px;height:12px;"></span>&nbsp;L</span> (<span id="pctL"></span>) &middot;
+        <span style="color:#D4537E;" class="relative inline-flex items-center"><span id="perempuan" class="hidden tabular-nums">0</span><span id="perempuanSpin" class="spinner-ring-gray" style="width:12px;height:12px;"></span>&nbsp;P</span> (<span id="pctP"></span>)
+      </div>
+      <div style="height:6px; border-radius:999px; background:#EDEFF5; overflow:hidden; display:flex;">
+        <div id="barLPL" style="width:50%; height:100%; background:linear-gradient(90deg,#7A72EC,#4A6FC2); transition:width .5s ease;"></div>
+        <div id="barLPP" style="height:100%; background:#F0B8CE; transition:width .5s ease;"></div>
+      </div>
     </div>
-    <div style="display:flex; gap:16px; font-size:12.5px; font-weight:700; color:rgba(255,255,255,.9); margin-bottom:10px;">
-      <span class="relative inline-flex items-center"><span id="laki" class="hidden tabular-nums">0</span><span id="lakiSpin" class="spinner-ring-gray" style="width:12px;height:12px;"></span>&nbsp;L (<span id="pctL"></span>)</span>
-      <span class="relative inline-flex items-center"><span id="perempuan" class="hidden tabular-nums">0</span><span id="perempuanSpin" class="spinner-ring-gray" style="width:12px;height:12px;"></span>&nbsp;P (<span id="pctP"></span>)</span>
+
+    <div style="width:96px; flex-shrink:0; border-left:1px solid rgba(160,150,210,.2); display:flex; flex-direction:column; align-items:center; justify-content:space-between; padding:14px 8px; text-align:center; background:rgba(255,255,255,.35);">
+      <div style="width:40px; height:40px; border-radius:12px; background:rgba(123,97,224,.12); display:flex; align-items:center; justify-content:center; margin-bottom:6px;">
+        <span class="material-symbols-rounded" style="font-size:19px; color:#7B61E0;">school</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:1px; font-size:9.5px; font-weight:700; color:#7B61E0;">
+        Lihat detail<span class="material-symbols-rounded" style="font-size:12px;">arrow_forward</span>
+      </div>
     </div>
-    <div style="display:flex; justify-content:flex-end; margin-bottom:6px;">
-      <span style="font-size:10.5px; font-weight:500; color:rgba(255,255,255,.55);">Lihat detail &rsaquo;</span>
-    </div>
-    <div style="height:4px; border-radius:999px; background:rgba(255,255,255,.28); overflow:hidden; display:flex;">
-      <div id="barLPL" style="width:50%; height:100%; background:#fff; border-radius:999px; transition:width .5s ease;"></div>
-      <div id="barLPP" class="hidden"></div>
-    </div>
+
   </div>
 
   <div style="position:relative; display:grid; grid-template-columns:1.3fr 1fr; gap:12px; margin-bottom:16px; align-items:start;">
