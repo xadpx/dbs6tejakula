@@ -1036,12 +1036,11 @@
           <span id="totGuru" class="hidden tabular-nums">0</span>
           <span id="totGuruSpin" class="spinner-ring-gray" style="width:26px;height:26px;"></span>
         </div>
-        <div style="font-size:11.5px; color:#7B61E0; margin-top:6px;"><span id="lblGuruKelas">&ndash; Guru Kelas</span> &middot; <span id="lblGuruMapel">&ndash; Mapel</span></div>
+        <div style="font-size:11.5px; color:#7B61E0; margin-top:6px;"><span id="lblGuruKelas">&ndash; Guru Kelas</span></div>
         <div id="avatarStackGuru" style="display:flex; align-items:center; margin-top:8px;"></div>
       </div>
       <div>
-        <div id="barGuruStatusWrap" style="height:5px; border-radius:999px; background:#EEEDFE; overflow:hidden; display:flex; margin-top:10px;"></div>
-        <div id="lblGuruStatusWrap" style="display:flex; justify-content:space-between; font-size:10.5px; color:#7B61E0; margin-top:6px;"></div>
+        <div id="lblGuruStatusWrap" style="display:flex; gap:14px; font-size:12.5px; font-weight:500; color:#43424E; margin-top:10px; flex-wrap:wrap;"></div>
       </div>
     </div>
 
@@ -3283,7 +3282,7 @@ function renderAvatarStackGuru(data){
   });
 
   if(sisa > 0){
-    html += `<div style="width:24px; height:24px; border-radius:50%; border:2px solid #fff; background:#E4DEFB; display:flex; align-items:center; justify-content:center;"><span style="font-size:9px; font-weight:700; color:#5B3FC4;">+${sisa}</span></div>`;
+    html += `<div style="width:24px; height:24px; border-radius:50%; border:2px solid #fff; background:linear-gradient(160deg,#6FA8E8,#3E7BC4); display:flex; align-items:center; justify-content:center;"><span class="material-symbols-rounded" style="font-size:13px; color:#fff; font-weight:700;">add</span></div>`;
   }
 
   el.innerHTML = html;
@@ -3309,13 +3308,11 @@ function buatSegmenStatusGuru(data){
 }
 
 function renderStatusGuru(data){
-  const elBar = document.getElementById('barGuruStatusWrap');
   const elLbl = document.getElementById('lblGuruStatusWrap');
-  if(!elBar || !elLbl) return;
-  if(!data || data.length === 0){ elBar.innerHTML = ''; elLbl.innerHTML = ''; return; }
+  if(!elLbl) return;
+  if(!data || data.length === 0){ elLbl.innerHTML = ''; return; }
   const segmen = buatSegmenStatusGuru(data);
-  elBar.innerHTML = segmen.map(s => `<div style="width:${s.pct}%; background:${s.warna};"></div>`).join('');
-  elLbl.innerHTML = segmen.map(s => `<span>${s.status} ${s.jml}</span>`).join('');
+  elLbl.innerHTML = segmen.map(s => `<span>${s.status} ${s.jml} orang</span>`).join('');
 }
 
 function buatRincianStatusTendik(data){
@@ -3328,14 +3325,14 @@ function buatRincianStatusTendik(data){
   });
 
   const urutan = Object.entries(hitung).sort((a, b) => b[1] - a[1]);
-  const utama = urutan.slice(0, 3).map(([status]) => status);
-  const sisaJenis = urutan.slice(3);
+  const utama = urutan.slice(0, 2).map(([status]) => status);
+  const sisaJenis = urutan.slice(2);
 
   if(sisaJenis.length > 0){
-    return `${utama.join(', ')} +${sisaJenis.length} lainnya`;
+    return `${utama.join(' \u2022 ')} \u2022 ${sisaJenis.length}+ lainnya`;
   }
 
-  return utama.join(', ');
+  return utama.join(' \u2022 ');
 }
 
 function warnaJabatanTendik(jabatan){
