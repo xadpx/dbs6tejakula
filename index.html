@@ -1044,6 +1044,7 @@
         </div>
         <div style="font-size:11.5px; color:#7B61E0; margin-top:6px;"><span id="lblGuruKelas">&ndash; Guru Kelas</span> &middot; <span id="lblGuruMapel">&ndash; Mapel</span></div>
       </div>
+      <div id="avatarStackGuru" style="display:flex; align-items:center; margin:2px 0;"></div>
       <div style="display:flex; justify-content:flex-end;">
         <div style="width:30px; height:30px; border-radius:50%; background:linear-gradient(160deg,#7B61E0,#B98BF0); box-shadow:0 4px 10px rgba(123,97,224,.4); display:flex; align-items:center; justify-content:center;">
           <span class="material-symbols-rounded" style="font-size:15px; color:#fff;">chevron_right</span>
@@ -2369,6 +2370,7 @@ let historyTabAktif = false;
       const elLblGuruMapelBeranda = document.getElementById('lblGuruMapel');
       if(elLblGuruKelasBeranda) elLblGuruKelasBeranda.textContent = jmlGuruKelasBeranda + ' Guru Kelas';
       if(elLblGuruMapelBeranda) elLblGuruMapelBeranda.textContent = jmlGuruMapelBeranda + ' Mapel';
+      renderAvatarStackGuru(dataGuru);
       const elTotGuru = document.getElementById('totGuru');
       const elSpinGuru = document.getElementById('totGuruSpin');
       if(elTotGuru){
@@ -3172,6 +3174,43 @@ function muatDataTendik(){
 // Membuat rincian singkat status kepegawaian tendik untuk kartu Beranda,
 // misal "2 PNS \u00b7 2 Non-ASN". Kalau status lebih dari 2 jenis,
 // dua terbanyak ditampilkan dan sisanya diringkas jadi "+N lainnya".
+function renderAvatarStackGuru(data){
+  const el = document.getElementById('avatarStackGuru');
+  if(!el) return;
+  if(!data || data.length === 0){ el.innerHTML = ''; return; }
+
+  const warnaAvatar = ['#7B61E0','#8F6FE8','#A382ED','#B98BF0'];
+  const tampil = data.slice(0, 4);
+  const sisa = data.length - tampil.length;
+
+  const ambilInisial = (nama) => {
+    const bagian = String(nama || '?').trim().split(/\s+/);
+    const a = bagian[0] ? bagian[0][0] : '';
+    const b = bagian[1] ? bagian[1][0] : '';
+    return (a + b).toUpperCase() || '?';
+  };
+
+  let html = '';
+  tampil.forEach((r, i) => {
+    const nama = r[1] || '';
+    const fotoUrl = String(r[11] || '').trim();
+    const inisial = ambilInisial(nama);
+    const warna = warnaAvatar[i % warnaAvatar.length];
+    const marginRight = i === tampil.length - 1 && sisa <= 0 ? '' : 'margin-right:-8px;';
+    if(fotoUrl){
+      html += `<img src="${fotoUrl.replace(/"/g,'&quot;')}" title="${String(nama).replace(/"/g,'&quot;')}" style="width:24px; height:24px; border-radius:50%; border:2px solid #fff; object-fit:cover; background:${warna}; ${marginRight}" onerror="this.outerHTML='<div style=\\'width:24px;height:24px;border-radius:50%;border:2px solid #fff;background:${warna};display:flex;align-items:center;justify-content:center;${marginRight}\\'><span style=\\'font-size:9px;font-weight:700;color:#fff;\\'>${inisial}</span></div>'">`;
+    } else {
+      html += `<div title="${String(nama).replace(/"/g,'&quot;')}" style="width:24px; height:24px; border-radius:50%; border:2px solid #fff; background:${warna}; display:flex; align-items:center; justify-content:center; ${marginRight}"><span style="font-size:9px; font-weight:700; color:#fff;">${inisial}</span></div>`;
+    }
+  });
+
+  if(sisa > 0){
+    html += `<div style="width:24px; height:24px; border-radius:50%; border:2px solid #fff; background:#E4DEFB; display:flex; align-items:center; justify-content:center;"><span style="font-size:9px; font-weight:700; color:#5B3FC4;">+${sisa}</span></div>`;
+  }
+
+  el.innerHTML = html;
+}
+
 function buatRincianStatusTendik(data){
   if(!data || data.length === 0) return '\u2013';
 
