@@ -1850,20 +1850,20 @@ let historyTabAktif = false;
             </div>
             <div style="flex:1; min-width:0;">
               <p style="font-size:13px; font-weight:700; color:#23213A; margin:0 0 3px;">${bawahDesil} siswa di Desil 1&ndash;4</p>
-              <p style="font-size:11.5px; color:#585A75; margin:0; line-height:1.4;">dari total ${totalSemuaDesil} siswa terdata</p>
-              <span style="display:inline-flex; align-items:center; gap:5px; margin-top:8px; font-size:10px; font-weight:700; color:${warnaStatusTeks}; background:${warnaStatusBg}; padding:3px 9px; border-radius:999px;"><span style="width:5px; height:5px; border-radius:50%; background:${warnaStatusTeks}; flex-shrink:0;"></span>${labelStatus}</span>
+              <p style="font-size:13px; color:#585A75; margin:0; line-height:1.4;">dari total ${totalSemuaDesil} siswa terdata</p>
+              <span style="display:inline-flex; align-items:center; gap:5px; margin-top:8px; font-size:11.5px; font-weight:700; color:${warnaStatusTeks}; background:${warnaStatusBg}; padding:3px 9px; border-radius:999px;"><span style="width:5px; height:5px; border-radius:50%; background:${warnaStatusTeks}; flex-shrink:0;"></span>${labelStatus}</span>
             </div>
           </div>
           <div style="display:flex; gap:14px; margin-top:16px; padding-top:14px; border-top:1px solid #ECEDF0;">
             <div style="flex:1; min-width:0;">
-              <p style="font-size:11.5px; font-weight:700; color:#23213A; margin:0 0 2px;">Desil 1&ndash;4</p>
-              <p style="font-size:11px; color:#585A75; margin:0 0 6px;">${pctBawah}% <span style="color:#6b7280;">(${bawahDesil} siswa)</span></p>
+              <p style="font-size:13px; font-weight:700; color:#23213A; margin:0 0 2px;">Desil 1&ndash;4</p>
+              <p style="font-size:12.5px; color:#585A75; margin:0 0 6px;">${pctBawah}% <span style="color:#6b7280;">(${bawahDesil} siswa)</span></p>
               <div style="width:100%; height:4px; border-radius:999px; background:#EEF0F3; overflow:hidden;"><div style="width:${pctBawah}%; height:100%; border-radius:999px; background:#F2545B;"></div></div>
             </div>
             <div style="width:1px; background:#ECEDF0;"></div>
             <div style="flex:1; min-width:0;">
-              <p style="font-size:11.5px; font-weight:700; color:#23213A; margin:0 0 2px;">Desil 5&ndash;10</p>
-              <p style="font-size:11px; color:#585A75; margin:0 0 6px;">${pctAtas}% <span style="color:#6b7280;">(${atasDesil} siswa)</span></p>
+              <p style="font-size:13px; font-weight:700; color:#23213A; margin:0 0 2px;">Desil 5&ndash;10</p>
+              <p style="font-size:12.5px; color:#585A75; margin:0 0 6px;">${pctAtas}% <span style="color:#6b7280;">(${atasDesil} siswa)</span></p>
               <div style="width:100%; height:4px; border-radius:999px; background:#EEF0F3; overflow:hidden;"><div style="width:${pctAtas}%; height:100%; border-radius:999px; background:#7B81BE;"></div></div>
             </div>
           </div>
@@ -1943,10 +1943,10 @@ let historyTabAktif = false;
                   </div>
                   <div class="ml-3 flex-1 min-w-0">
                     <div class="text-[13px] font-semibold text-gray-900 truncate">${r[1]}</div>
-                    <div class="text-[11px] text-gray-600 mt-0.5">${r[2]}</div>
+                    <div class="text-[12.5px] text-gray-600 mt-0.5">${r[2]}</div>
                   </div>
                 </div>
-                <span style="flex-shrink:0; margin-left:8px; font-size:9.5px; font-weight:700; background:${WARNA_DESIL[label]}26; color:${warnaPekat(WARNA_DESIL[label])}; padding:3px 9px; border-radius:999px; white-space:nowrap;">${label.replace('Desil ','D')}</span>
+                <span style="flex-shrink:0; margin-left:8px; font-size:11px; font-weight:700; background:${WARNA_DESIL[label]}26; color:${warnaPekat(WARNA_DESIL[label])}; padding:3px 9px; border-radius:999px; white-space:nowrap;">${label.replace('Desil ','D')}</span>
               </div>
             `).join('')}
           </div>
@@ -2052,15 +2052,15 @@ let historyTabAktif = false;
               </div>
               <div style="flex:1; min-width:0;">
                 <p style="font-size:13px; font-weight:700; color:#23213A; margin:0 0 3px;">${hasil.length} siswa yatim/piatu</p>
-                <p style="font-size:11.5px; color:#585A75; margin:0; line-height:1.4;">${pctDariTotal}% dari total ${totalSemuaSiswa} siswa terdata</p>
-                <span style="display:inline-flex; align-items:center; gap:5px; margin-top:8px; font-size:10px; font-weight:700; color:#993C1D; background:#F5C4B3; padding:3px 9px; border-radius:999px;"><span style="width:5px; height:5px; border-radius:50%; background:#993C1D; flex-shrink:0;"></span>Perlu pendampingan</span>
+                <p style="font-size:13px; color:#585A75; margin:0; line-height:1.4;">${pctDariTotal}% dari total ${totalSemuaSiswa} siswa terdata</p>
+                <span style="display:inline-flex; align-items:center; gap:5px; margin-top:8px; font-size:11.5px; font-weight:700; color:#993C1D; background:#F5C4B3; padding:3px 9px; border-radius:999px;"><span style="width:5px; height:5px; border-radius:50%; background:#993C1D; flex-shrink:0;"></span>Perlu pendampingan</span>
               </div>
             </div>
             <div style="display:flex; gap:12px; margin-top:16px; padding-top:14px; border-top:1px solid #ECEDF0;">
               ${kategoriRincian.map((label2,idx) => `
                 <div style="flex:1; min-width:0;">
-                  <p style="font-size:11px; font-weight:700; color:#23213A; margin:0 0 2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${label2}</p>
-                  <p style="font-size:10.5px; color:#6b7280; margin:0 0 6px;">${hitungKategori[label2]} siswa</p>
+                  <p style="font-size:12.5px; font-weight:700; color:#23213A; margin:0 0 2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${label2}</p>
+                  <p style="font-size:12px; color:#6b7280; margin:0 0 6px;">${hitungKategori[label2]} siswa</p>
                   <div style="width:100%; height:4px; border-radius:999px; background:#EEF0F3; overflow:hidden;"><div style="width:${Math.round((hitungKategori[label2]/totalRincian)*100)}%; height:100%; border-radius:999px; background:linear-gradient(90deg, ${gradasiKategori[label2][0]}, ${gradasiKategori[label2][1]});"></div></div>
                 </div>
               `).join('')}
@@ -2080,7 +2080,7 @@ let historyTabAktif = false;
                 <span class="material-symbols-rounded text-[16px]" style="color:#6C5DD3;">groups</span>
                 <span style="font-size:13px; font-weight:700; color:#23213A;">Daftar Siswa</span>
               </div>
-              <span style="font-size:11px; font-weight:700; color:#4b5563; background:#FFFFFF; padding:5px 10px; border-radius:999px;">${hasil.length} siswa</span>
+              <span style="font-size:12.5px; font-weight:700; color:#4b5563; background:#FFFFFF; padding:5px 10px; border-radius:999px;">${hasil.length} siswa</span>
             </div>
             ${hasil.map((r,i) => {
               let statusR = String(r[14]).trim();
@@ -2101,10 +2101,10 @@ let historyTabAktif = false;
                   </div>
                   <div class="ml-3 flex-1 min-w-0">
                     <div class="text-[13px] font-semibold text-gray-900 truncate">${r[1]}</div>
-                    <div class="text-[11px] text-gray-600 mt-0.5">${r[2]}</div>
+                    <div class="text-[12.5px] text-gray-600 mt-0.5">${r[2]}</div>
                   </div>
                 </div>
-                <span style="flex-shrink:0; margin-left:8px; font-size:9.5px; font-weight:700; background:${warnaStatusR}26; color:${warnaPekat(warnaStatusR)}; padding:3px 9px; border-radius:999px; white-space:nowrap;">${statusR}</span>
+                <span style="flex-shrink:0; margin-left:8px; font-size:11px; font-weight:700; background:${warnaStatusR}26; color:${warnaPekat(warnaStatusR)}; padding:3px 9px; border-radius:999px; white-space:nowrap;">${statusR}</span>
               </div>
             `;}).join('')}
           </div>
@@ -4020,7 +4020,7 @@ const leaderLinePlugin = {
     const rightPts = layoutSide(items.filter(it=>it.side==='right'));
 
     ctx.save();
-    ctx.font = "9.5px 'Plus Jakarta Sans', sans-serif";
+    ctx.font = "9.5px 'Inter', sans-serif";
     ctx.textBaseline = 'middle';
     [...leftPts, ...rightPts].forEach(p => {
       const dir = p.side === 'right' ? 1 : -1;
@@ -4443,7 +4443,7 @@ function setNavDisabled(disabled){
 
     // Judul
     ctx.fillStyle = "#23213A";
-    ctx.font = "700 20px 'Plus Jakarta Sans', sans-serif";
+    ctx.font = "700 20px 'Inter', sans-serif";
     ctx.textAlign = "left";
     ctx.textBaseline = "middle";
     ctx.fillText(judul, margin, 32);
@@ -4460,13 +4460,13 @@ function setNavDisabled(disabled){
     const tengahY = paddingAtas + ukuranGambarChart / 2;
 
     ctx.fillStyle = "#111827";
-    ctx.font = "800 24px 'Plus Jakarta Sans', sans-serif";
+    ctx.font = "800 24px 'Inter', sans-serif";
     ctx.textAlign = "center";
     ctx.textBaseline = "alphabetic";
     ctx.fillText(String(totalSemua), tengahX, tengahY - 2);
 
     ctx.fillStyle = "#585A75";
-    ctx.font = "500 13px 'Plus Jakarta Sans', sans-serif";
+    ctx.font = "500 13px 'Inter', sans-serif";
     ctx.fillText(totalLabel, tengahX, tengahY + 18);
 
     // Legend, 2 kolom
@@ -4495,13 +4495,13 @@ function setNavDisabled(disabled){
 
       // Label
       ctx.fillStyle = "#4b5563";
-      ctx.font = "500 14px 'Plus Jakarta Sans', sans-serif";
+      ctx.font = "500 14px 'Inter', sans-serif";
       ctx.textAlign = "left";
       ctx.fillText(label, x + 36, y + 22);
 
       // Angka
       ctx.fillStyle = "#111827";
-      ctx.font = "700 14px 'Plus Jakarta Sans', sans-serif";
+      ctx.font = "700 14px 'Inter', sans-serif";
       ctx.textAlign = "right";
       ctx.fillText(String(values[i]), x + lebarKolom - 14, y + 22);
 
