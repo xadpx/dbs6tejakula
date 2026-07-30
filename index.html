@@ -225,28 +225,26 @@
     }
     .nav-btn{
       display:flex;
-      flex-direction:column;
+      flex-direction:row;
       align-items:center;
       justify-content:center;
-      gap:3px;
-      padding:9px 18px;
+      gap:0;
+      padding:10px 12px;
       border-radius:9999px;
-      transition: background .3s cubic-bezier(.4,0,.2,1), box-shadow .3s cubic-bezier(.4,0,.2,1), transform .15s;
+      transition: background .3s cubic-bezier(.4,0,.2,1), padding .3s cubic-bezier(.4,0,.2,1), box-shadow .3s cubic-bezier(.4,0,.2,1), transform .15s;
     }
     .nav-btn:active{
       transform: scale(0.96);
     }
     .nav-active{
       background: #23213A;
-      box-shadow: 0 10px 22px -6px rgba(35,33,58,.5);
+      padding:10px 16px;
+      box-shadow: 0 8px 16px -6px rgba(35,33,58,.45);
     }
     .nav-icon-wrap{
       display:flex;
       align-items:center;
       justify-content:center;
-      width:34px;
-      height:26px;
-      border-radius:12px;
       color: var(--color-nav-inactive);
       transition: color .25s;
     }
@@ -257,14 +255,17 @@
       color: #fff;
     }
     .nav-label{
-      font-size:9.5px;
-      font-weight:600;
-      color: var(--sub);
-      transition: color .25s;
+      font-size:11px;
+      font-weight:700;
+      color: #fff;
+      max-width:0;
+      overflow:hidden;
+      white-space:nowrap;
+      transition: max-width .3s cubic-bezier(.4,0,.2,1), margin .3s cubic-bezier(.4,0,.2,1);
     }
     .nav-active .nav-label{
-      color: #fff;
-      font-weight:700;
+      max-width:70px;
+      margin-left:6px;
     }
     .skeleton{
       background: rgba(255,255,255,.4);
@@ -1593,7 +1594,7 @@ class="nav-inactive nav-btn transition-colors duration-150">
 school
 </span>
 </span>
-<span class="nav-label">Siswa</span>
+<span class="nav-label">Data</span>
 
 </button>
 
