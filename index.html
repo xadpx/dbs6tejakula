@@ -1031,21 +1031,25 @@
 
   <div style="position:relative; display:grid; grid-template-columns:1.3fr 1fr; gap:12px; margin-bottom:16px; align-items:start;">
 
-    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="position:relative; overflow:hidden; background:rgba(255,255,255,.42); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,.75); border-radius:20px; padding:18px; box-shadow:0 18px 34px -10px rgba(123,97,224,.22), inset 0 1px 0 rgba(255,255,255,.7); min-height:170px; display:flex; flex-direction:column; justify-content:space-between;">
-      <div style="display:flex; justify-content:flex-end;">
-        <div style="width:44px; height:44px; border-radius:14px; background:linear-gradient(160deg,#7B61E0,#B98BF0); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 6px 14px rgba(123,97,224,.35);">
-          <span class="material-symbols-rounded" style="font-size:21px; color:#fff;">import_contacts</span>
+    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="position:relative; overflow:hidden; background:rgba(255,255,255,.42); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,.75); border-radius:20px; padding:18px; box-shadow:0 18px 34px -10px rgba(123,97,224,.22), inset 0 1px 0 rgba(255,255,255,.7); min-height:250px; display:flex; flex-direction:column; justify-content:space-between;">
+      <div style="display:flex; align-items:center; justify-content:space-between;">
+        <div style="font-size:15px; font-weight:700; color:#1E1E24;">Guru</div>
+        <div style="width:40px; height:40px; border-radius:13px; background:linear-gradient(160deg,#7B61E0,#B98BF0); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 6px 14px rgba(123,97,224,.35);">
+          <span class="material-symbols-rounded" style="font-size:19px; color:#fff;">import_contacts</span>
         </div>
       </div>
       <div>
-        <div style="font-size:15px; font-weight:700; color:#1E1E24; margin-bottom:2px;">Guru</div>
         <div class="relative min-h-[34px] flex items-center" style="font-size:34px; font-weight:700; color:#5B3FC4; line-height:1; font-family:var(--font-family);">
           <span id="totGuru" class="hidden tabular-nums">0</span>
           <span id="totGuruSpin" class="spinner-ring-gray" style="width:26px;height:26px;"></span>
         </div>
         <div style="font-size:11.5px; color:#7B61E0; margin-top:6px;"><span id="lblGuruKelas">&ndash; Guru Kelas</span> &middot; <span id="lblGuruMapel">&ndash; Mapel</span></div>
+        <div id="avatarStackGuru" style="display:flex; align-items:center; margin-top:8px;"></div>
       </div>
-      <div id="avatarStackGuru" style="display:flex; align-items:center; margin:2px 0;"></div>
+      <div>
+        <div id="barGuruStatusWrap" style="height:5px; border-radius:999px; background:#EEEDFE; overflow:hidden; display:flex; margin-top:10px;"></div>
+        <div id="lblGuruStatusWrap" style="display:flex; justify-content:space-between; font-size:10.5px; color:#7B61E0; margin-top:6px;"></div>
+      </div>
     </div>
 
     <div style="display:flex; flex-direction:column; gap:12px;">
@@ -1061,7 +1065,7 @@
             <span id="totTendik" class="hidden tabular-nums">0</span>
             <span id="totTendikSpin" class="spinner-ring-gray" style="width:16px;height:16px;"></span>
           </div>
-          <div style="font-size:10.5px; color:#C9762F; margin-top:3px;" id="rincianTendikBeranda">&ndash;</div>
+          <div style="font-size:10.5px; color:#C9762F; margin-top:3px; white-space:nowrap; overflow:hidden; -webkit-mask-image:linear-gradient(to right, #000 80%, transparent 100%); mask-image:linear-gradient(to right, #000 80%, transparent 100%);" id="rincianTendikBeranda">&ndash;</div>
         </div>
       </div>
       <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="position:relative; background:rgba(255,255,255,.42); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,.75); border-radius:18px; padding:16px; box-shadow:0 14px 26px -8px rgba(62,123,196,.2), inset 0 1px 0 rgba(255,255,255,.7); min-height:119px; display:flex; flex-direction:column; justify-content:space-between;">
@@ -2367,6 +2371,7 @@ let historyTabAktif = false;
       if(elLblGuruKelasBeranda) elLblGuruKelasBeranda.textContent = jmlGuruKelasBeranda + ' Guru Kelas';
       if(elLblGuruMapelBeranda) elLblGuruMapelBeranda.textContent = jmlGuruMapelBeranda + ' Mapel';
       renderAvatarStackGuru(dataGuru);
+      renderStatusGuru(dataGuru);
       const elTotGuru = document.getElementById('totGuru');
       const elSpinGuru = document.getElementById('totGuruSpin');
       if(elTotGuru){
@@ -3064,6 +3069,8 @@ function muatDataGuru(){
       }
       dataGuru = json.data.slice(1).filter(r => r[1] && String(r[1]).trim() !== "");
       renderListPegawai('guru');
+      renderAvatarStackGuru(dataGuru);
+      renderStatusGuru(dataGuru);
       const jmlGuruKelas = dataGuru.filter(r => String(r[2]).trim() === 'Guru Kelas').length;
       const jmlGuruMapel = dataGuru.length - jmlGuruKelas;
       const totalGuruBar = dataGuru.length || 1;
@@ -3096,6 +3103,8 @@ function muatDataGuru(){
           }
           dataGuru = json.data.slice(1).filter(r => r[1] && String(r[1]).trim() !== "");
           renderListPegawai('guru');
+          renderAvatarStackGuru(dataGuru);
+          renderStatusGuru(dataGuru);
           const elTot = document.getElementById('totGuru');
           const elSpin = document.getElementById('totGuruSpin');
           if(elTot){
@@ -3215,6 +3224,35 @@ function renderAvatarStackGuru(data){
   }
 
   el.innerHTML = html;
+}
+
+function buatSegmenStatusGuru(data){
+  const hitung = {};
+  (data || []).forEach(r => {
+    const s = String(r[3] || '').trim() || 'Lainnya';
+    hitung[s] = (hitung[s] || 0) + 1;
+  });
+  const urutan = Object.entries(hitung).sort((a, b) => b[1] - a[1]);
+  const total = (data || []).length || 1;
+  const warna = ['#7B61E0', '#CBBFF7', '#E4DEFB'];
+  const segmen = urutan.slice(0, 2);
+  const sisaJml = urutan.slice(2).reduce((a, [, n]) => a + n, 0);
+  if(sisaJml > 0) segmen.push(['Lainnya', sisaJml]);
+  return segmen.map(([status, jml], i) => ({
+    status, jml,
+    pct: Math.max(6, Math.round(jml / total * 100)),
+    warna: warna[i % warna.length]
+  }));
+}
+
+function renderStatusGuru(data){
+  const elBar = document.getElementById('barGuruStatusWrap');
+  const elLbl = document.getElementById('lblGuruStatusWrap');
+  if(!elBar || !elLbl) return;
+  if(!data || data.length === 0){ elBar.innerHTML = ''; elLbl.innerHTML = ''; return; }
+  const segmen = buatSegmenStatusGuru(data);
+  elBar.innerHTML = segmen.map(s => `<div style="width:${s.pct}%; background:${s.warna};"></div>`).join('');
+  elLbl.innerHTML = segmen.map(s => `<span>${s.status} ${s.jml}</span>`).join('');
 }
 
 function buatRincianStatusTendik(data){
