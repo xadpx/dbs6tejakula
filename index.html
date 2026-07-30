@@ -17,6 +17,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -81,7 +82,7 @@
       --shadow-hero: 0 4px 16px rgba(20,20,30,.1);
 
       /* Font */
-      --font-family: 'Inter', sans-serif;
+      --font-family: 'Sora', 'Inter', sans-serif;
     }
     html {
       overflow-x: clip;
@@ -1012,7 +1013,7 @@
 
   <div style="position:relative; border-radius:24px; padding:20px; background:linear-gradient(135deg,#7B61E0,#B98BF0); margin-bottom:12px;">
     <div style="font-size:10.5px; font-weight:500; letter-spacing:.06em; color:rgba(255,255,255,.8); margin-bottom:6px;">TOTAL SISWA</div>
-    <div style="font-size:38px; font-weight:500; color:#fff; line-height:1; margin-bottom:10px;" class="relative inline-flex items-center">
+    <div style="font-size:38px; font-weight:500; color:#fff; line-height:1; margin-bottom:10px; font-family:var(--font-family);" class="relative inline-flex items-center">
       <span id="tot" class="hidden tabular-nums">0</span>
       <span id="totSpin" class="spinner-ring-gray" style="width:20px;height:20px;"></span>
     </div>
@@ -1038,7 +1039,7 @@
         </div>
       </div>
       <div>
-        <div class="relative min-h-[56px] flex items-center" style="font-size:56px; font-weight:500; color:#5B3FC4; line-height:1;">
+        <div class="relative min-h-[56px] flex items-center" style="font-size:56px; font-weight:500; color:#5B3FC4; line-height:1; font-family:var(--font-family);">
           <span id="totGuru" class="hidden tabular-nums">0</span>
           <span id="totGuruSpin" class="spinner-ring-gray" style="width:26px;height:26px;"></span>
         </div>
@@ -1061,7 +1062,7 @@
           </div>
         </div>
         <div>
-          <div class="relative min-h-[30px] flex items-center" style="font-size:30px; font-weight:500; color:#C9762F; line-height:1;">
+          <div class="relative min-h-[30px] flex items-center" style="font-size:30px; font-weight:500; color:#C9762F; line-height:1; font-family:var(--font-family);">
             <span id="totTendik" class="hidden tabular-nums">0</span>
             <span id="totTendikSpin" class="spinner-ring-gray" style="width:16px;height:16px;"></span>
           </div>
@@ -1076,7 +1077,7 @@
           </div>
         </div>
         <div>
-          <div class="relative min-h-[30px] flex items-center" style="font-size:30px; font-weight:500; color:#3E7BC4; line-height:1;">
+          <div class="relative min-h-[30px] flex items-center" style="font-size:30px; font-weight:500; color:#3E7BC4; line-height:1; font-family:var(--font-family);">
             <span id="totRombel" class="hidden tabular-nums">0</span>
             <span id="totRombelSpin" class="spinner-ring-gray" style="width:16px;height:16px;"></span>
           </div>
@@ -4020,7 +4021,7 @@ const leaderLinePlugin = {
     const rightPts = layoutSide(items.filter(it=>it.side==='right'));
 
     ctx.save();
-    ctx.font = "9.5px 'Inter', sans-serif";
+    ctx.font = "9.5px 'Sora', sans-serif";
     ctx.textBaseline = 'middle';
     [...leftPts, ...rightPts].forEach(p => {
       const dir = p.side === 'right' ? 1 : -1;
@@ -4443,7 +4444,7 @@ function setNavDisabled(disabled){
 
     // Judul
     ctx.fillStyle = "#23213A";
-    ctx.font = "700 20px 'Inter', sans-serif";
+    ctx.font = "700 20px 'Sora', sans-serif";
     ctx.textAlign = "left";
     ctx.textBaseline = "middle";
     ctx.fillText(judul, margin, 32);
@@ -4460,13 +4461,13 @@ function setNavDisabled(disabled){
     const tengahY = paddingAtas + ukuranGambarChart / 2;
 
     ctx.fillStyle = "#111827";
-    ctx.font = "800 24px 'Inter', sans-serif";
+    ctx.font = "800 24px 'Sora', sans-serif";
     ctx.textAlign = "center";
     ctx.textBaseline = "alphabetic";
     ctx.fillText(String(totalSemua), tengahX, tengahY - 2);
 
     ctx.fillStyle = "#585A75";
-    ctx.font = "500 13px 'Inter', sans-serif";
+    ctx.font = "500 13px 'Sora', sans-serif";
     ctx.fillText(totalLabel, tengahX, tengahY + 18);
 
     // Legend, 2 kolom
@@ -4495,13 +4496,13 @@ function setNavDisabled(disabled){
 
       // Label
       ctx.fillStyle = "#4b5563";
-      ctx.font = "500 14px 'Inter', sans-serif";
+      ctx.font = "500 14px 'Sora', sans-serif";
       ctx.textAlign = "left";
       ctx.fillText(label, x + 36, y + 22);
 
       // Angka
       ctx.fillStyle = "#111827";
-      ctx.font = "700 14px 'Inter', sans-serif";
+      ctx.font = "700 14px 'Sora', sans-serif";
       ctx.textAlign = "right";
       ctx.fillText(String(values[i]), x + lebarKolom - 14, y + 22);
 
