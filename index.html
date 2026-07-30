@@ -101,7 +101,7 @@
       position: relative;
     }
 
-    #app-scroll, #p-home, #p-siswa, #p-download, #p-login {
+    #app-scroll, #p-home, #p-siswa, #p-guru, #p-download, #p-login {
       width: 100%;
       max-width: 480px;
       margin-left: auto;
@@ -112,7 +112,7 @@
       overflow-y: visible;
       overflow-x: clip;
     }
-    #p-siswa, #p-download, #p-login {
+    #p-siswa, #p-guru, #p-download, #p-login {
       overflow-x: clip;
     }
     #app-scroll {
@@ -183,7 +183,7 @@
     .toggle-knob-neu.on{
       background:#ffffff !important;
     }
-    #p-siswa{
+    #p-siswa, #p-guru{
       overflow-x:clip;
     }
     select{
@@ -349,6 +349,9 @@
       }
     }
     #p-siswa.hidden {
+      pointer-events: none !important;
+    }
+    #p-guru.hidden {
       pointer-events: none !important;
     }
     #p-download.hidden {
@@ -951,9 +954,6 @@
       <p class="text-[20px] font-extrabold m-0" style="color:#1E1E24; letter-spacing:-0.02em; margin-top:3px;">Dashboard</p>
       <p class="text-[12px] m-0" style="color:#585A75; margin-top:2px;">SD Negeri 6 Tejakula</p>
     </div>
-    <p id="greetingText" class="hidden"></p>
-    <h1 id="namaGuruAktif" class="hidden"></h1>
-
     <div class="relative" id="notifWrap">
       <button id="btnNotifUpdate" onpointerdown="buatRipple(event)" onclick="toggleNotifUpdate(event)"
         class="relative flex items-center justify-center"
@@ -979,36 +979,12 @@
 
   </div>
 
-  <div id="searchStickyWrap" style="z-index:30; margin-left:-20px; margin-right:-20px;">
-  <div id="searchStickyInner" style="background-color:var(--color-bg-app-1); padding-top:4px; padding-left:20px; padding-right:20px;">
-
-  <p id="searchModeTitle" class="hidden" style="font-size:18px; font-weight:700; color:#23213A; margin:0 0 16px;">Cari Siswa</p>
-
-  <div class="search-row" style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
-    <div class="neu-search relative" style="flex:1;">
-      <span class="neu-search-icon absolute left-2 top-1/2 -translate-y-1/2">
-        <span class="material-symbols-rounded text-gray-600 text-[17px]">search</span>
-      </span>
-      <input
-        type="text"
-        id="srch"
-        onkeyup="filterSiswa()"
-        onfocus="masukModeCariBeranda()"
-        placeholder="Cari Nama/NIK/NISN"
-        class="w-full h-[44px] pl-[46px] pr-10 rounded-full text-sm outline-none bg-transparent border-none">
-     <span
-        id="btnHapusSrch"
-        onclick="hapusPencarianSiswa()"
-        class="material-symbols-rounded hidden absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 text-[22px] cursor-pointer">
-        cancel
-      </span>
-    </div>
+  <div style="margin-bottom:20px;">
+    <p style="font-size:15px; font-weight:700; color:#1E1E24; margin:0;">
+      <span id="greetingText">Selamat datang</span>, <span id="namaGuruAktif"></span>
+    </p>
+    <p id="tanggalWaktuBeranda" style="font-size:12px; color:#8B8AA3; margin:3px 0 0; font-weight:500;"></p>
   </div>
-
-  </div>
-  </div>
-
-  <div id="list-siswa" class="hidden"></div>
 
   <div id="homeNormalContent">
 
@@ -1195,14 +1171,58 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
 
   <div class="h-full w-full max-w-full flex flex-col pt-5 overflow-x-hidden" style="padding-bottom:140px;">
 
+    <div class="shrink-0 px-5">
+      <h1 class="text-xl font-bold text-gray-800 flex items-center gap-2 mb-4">
+        <span class="material-symbols-rounded text-[23px]">school</span>
+        Data Siswa
+      </h1>
+
+      <div class="search-row" style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
+        <div class="neu-search relative" style="flex:1;">
+          <span class="neu-search-icon absolute left-2 top-1/2 -translate-y-1/2">
+            <span class="material-symbols-rounded text-gray-600 text-[17px]">search</span>
+          </span>
+          <input
+            type="text"
+            id="srch"
+            onkeyup="filterSiswa()"
+            placeholder="Cari Nama/NIK/NISN"
+            class="w-full h-[44px] pl-[46px] pr-10 rounded-full text-sm outline-none bg-transparent border-none">
+         <span
+            id="btnHapusSrch"
+            onclick="hapusPencarianSiswa()"
+            class="material-symbols-rounded hidden absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 text-[22px] cursor-pointer">
+            cancel
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-5 pb-5 pt-2 max-w-full">
+      <div id="list-siswa">
+        <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:#FFFFFF; border: 1px solid #ECEDF0;">
+          <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">keyboard</span>
+          <p class="text-sm text-gray-600 font-medium">Ketik minimal 3 huruf Nama siswa</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div id="p-guru" class="hidden fixed inset-0 z-10 overflow-x-hidden w-full max-w-[100vw]">
+
+  <div class="h-full w-full max-w-full flex flex-col pt-5 overflow-x-hidden" style="padding-bottom:140px;">
+
     <!-- HEADER -->
     <div class="shrink-0 px-5">
 
       <h1 class="text-xl font-bold text-gray-800 flex items-center gap-2 mb-4">
         <span class="material-symbols-rounded text-[23px]">
-          folder_open
+          badge
         </span>
-        Data
+        Guru & Tendik
       </h1>
 
       <div id="dataTabTrack" data-no-ripple class="flex items-center mb-4" style="background-color:var(--color-bg-app-3);border-radius:9999px;padding:3px;gap:0;box-shadow: inset 2px 2px 5px rgba(163,177,198,.35), inset -2px -2px 5px rgba(255,255,255,.7);">
@@ -1594,7 +1614,22 @@ class="nav-inactive nav-btn transition-colors duration-150">
 school
 </span>
 </span>
-<span class="nav-label">Data</span>
+<span class="nav-label">Siswa</span>
+
+</button>
+
+<button
+id="nav-guru"
+onclick="nav('guru')"
+data-no-ripple
+class="nav-inactive nav-btn transition-colors duration-150">
+
+<span class="nav-icon-wrap">
+<span class="material-symbols-rounded nav-icon text-[20px]">
+badge
+</span>
+</span>
+<span class="nav-label">Guru</span>
 
 </button>
 
@@ -2124,7 +2159,7 @@ let historyTabAktif = false;
     }
 
     function bukaDataPegawaiDariBeranda(tipe){
-      nav('siswa');
+      nav('guru');
       setTimeout(function(){
         switchDataTab(tipe);
       }, 320);
@@ -2240,6 +2275,16 @@ let historyTabAktif = false;
       return "Selamat Malam";
     }
 
+    function perbaruiTanggalWaktuBeranda(){
+      const el = document.getElementById('tanggalWaktuBeranda');
+      if(!el) return;
+      const now = new Date();
+      const tgl = now.toLocaleDateString('id-ID', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+      const jam = now.toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' });
+      el.textContent = tgl + ' \u00b7 ' + jam;
+    }
+    setInterval(perbaruiTanggalWaktuBeranda, 30000);
+
     function tampilkanNamaGuru(){
       const elNama = document.getElementById('namaGuruAktif');
       if(!window.guruAktif) return;
@@ -2250,6 +2295,7 @@ let historyTabAktif = false;
       if(elGreeting){
         elGreeting.textContent = tentukanSapaan();
       }
+      perbaruiTanggalWaktuBeranda();
       const img = document.getElementById('avatarGuruImg');
       const fallback = document.getElementById('avatarGuruFallback');
       if(img && fallback){
@@ -5095,13 +5141,13 @@ window.addEventListener('load', resetZoomPaksa);
 // ======================================================
 // GESTUR SWIPE ANTAR-HALAMAN DENGAN EFEK MENGIKUTI JARI
 // ======================================================
-const urutanHalamanSwipe = ["home", "siswa", "download"];
+const urutanHalamanSwipe = ["home", "siswa", "guru", "download"];
 
 function halamanAktifSaatIni(){
   return urutanHalamanSwipe.find(id => !document.getElementById("p-"+id).classList.contains("hidden"));
 }
 function updateNavAktif(p){
-  ["home","siswa","download"].forEach(id=>{
+  ["home","siswa","guru","download"].forEach(id=>{
     const btn=document.getElementById("nav-"+id);
     const iconWrap = btn.querySelector(".nav-icon-wrap");
     if(id===p){
@@ -5128,7 +5174,7 @@ function selesaikanSwipeKeHalaman(p){
     halamanSebelumnya = p;
   }
 
-  const halaman = ["p-home","p-siswa","p-download"];
+  const halaman = ["p-home","p-siswa","p-guru","p-download"];
   halaman.forEach(id=>{
     const el = document.getElementById(id);
     el.classList.add("hidden");
@@ -5137,7 +5183,7 @@ function selesaikanSwipeKeHalaman(p){
 
   const target = document.getElementById("p-"+p);
   target.classList.remove("hidden");
-  target.style.display = (p==="siswa") ? "block" : "";
+  target.style.display = (p==="siswa"||p==="guru") ? "block" : "";
 
   window.scrollTo(0, 0);
   updateNavAktif(p);
@@ -5146,7 +5192,7 @@ function selesaikanSwipeKeHalaman(p){
   // Teknik opacity doang kadang belum cukup di Safari/iOS.
   target.style.display = "none";
   void target.offsetHeight;
-  target.style.display = (p==="siswa") ? "block" : "";
+  target.style.display = (p==="siswa"||p==="guru") ? "block" : "";
 
 }
     let sedangTransisiNav = false;
@@ -5163,7 +5209,7 @@ function jalankanTransisiNav(pTarget){
       updateNavAktif(pTarget);
       return;
     }
-    const halaman = ["p-home","p-siswa","p-download"];
+    const halaman = ["p-home","p-siswa","p-guru","p-download"];
     halaman.forEach(id=>{
       const el = document.getElementById(id);
       el.classList.add("hidden");
@@ -5171,7 +5217,7 @@ function jalankanTransisiNav(pTarget){
     });
     const target = document.getElementById("p-" + pTarget);
     target.classList.remove("hidden");
-    target.style.display = (pTarget === "siswa") ? "block" : "";
+    target.style.display = (pTarget === "siswa"||pTarget === "guru") ? "block" : "";
     window.scrollTo(0, 0);
     updateNavAktif(pTarget);
     if(pTarget !== "download"){
