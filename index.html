@@ -3174,6 +3174,16 @@ function muatDataTendik(){
 // Membuat rincian singkat status kepegawaian tendik untuk kartu Beranda,
 // misal "2 PNS \u00b7 2 Non-ASN". Kalau status lebih dari 2 jenis,
 // dua terbanyak ditampilkan dan sisanya diringkas jadi "+N lainnya".
+function fallbackAvatarGuru(imgEl, warna, inisial, marginRightCss){
+  const div = document.createElement('div');
+  div.style.cssText = `width:24px;height:24px;border-radius:50%;border:2px solid #fff;background:${warna};display:flex;align-items:center;justify-content:center;${marginRightCss}`;
+  const span = document.createElement('span');
+  span.style.cssText = 'font-size:9px;font-weight:700;color:#fff;';
+  span.textContent = inisial;
+  div.appendChild(span);
+  imgEl.replaceWith(div);
+}
+
 function renderAvatarStackGuru(data){
   const el = document.getElementById('avatarStackGuru');
   if(!el) return;
@@ -3198,7 +3208,7 @@ function renderAvatarStackGuru(data){
     const warna = warnaAvatar[i % warnaAvatar.length];
     const marginRight = i === tampil.length - 1 && sisa <= 0 ? '' : 'margin-right:-8px;';
     if(fotoUrl){
-      html += `<img src="${fotoUrl.replace(/"/g,'&quot;')}" title="${String(nama).replace(/"/g,'&quot;')}" style="width:24px; height:24px; border-radius:50%; border:2px solid #fff; object-fit:cover; background:${warna}; ${marginRight}" onerror="this.outerHTML='<div style=\\'width:24px;height:24px;border-radius:50%;border:2px solid #fff;background:${warna};display:flex;align-items:center;justify-content:center;${marginRight}\\'><span style=\\'font-size:9px;font-weight:700;color:#fff;\\'>${inisial}</span></div>'">`;
+      html += `<img src="${fotoUrl.replace(/"/g,'&quot;')}" title="${String(nama).replace(/"/g,'&quot;')}" style="width:24px; height:24px; border-radius:50%; border:2px solid #fff; object-fit:cover; background:${warna}; ${marginRight}" onerror="fallbackAvatarGuru(this,'${warna}','${inisial.replace(/'/g,"")}','${marginRight}')">`;
     } else {
       html += `<div title="${String(nama).replace(/"/g,'&quot;')}" style="width:24px; height:24px; border-radius:50%; border:2px solid #fff; background:${warna}; display:flex; align-items:center; justify-content:center; ${marginRight}"><span style="font-size:9px; font-weight:700; color:#fff;">${inisial}</span></div>`;
     }
