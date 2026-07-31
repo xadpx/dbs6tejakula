@@ -3493,18 +3493,20 @@ function renderListPegawai(tipe){
    const guruKelasCount = sumber.filter(r => String(r[2]).trim() === 'Guru Kelas').length;
    const guruMapelCount = sumber.length - guruKelasCount;
    kartuRingkasanGuru = `
-<div class="neu-card" style="padding:16px; margin-bottom:16px; display:flex; align-items:center; justify-content:space-around;">
-  <div style="display:flex; align-items:center; gap:10px;">
-    <div style="width:38px;height:38px;border-radius:12px;background:#7B81BE22;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span class="material-symbols-rounded text-[18px]" style="color:#7B81BE;">groups</span></div>
-    <div><p style="font-size:16px; font-weight:800; color:#23213A; margin:0;">${sumber.length}</p><p style="font-size:10px; color:#585A75; margin:1px 0 0;">Total Guru</p></div>
+<div style="background:#FFFFFF; border-radius:24px; padding:18px 20px; margin-bottom:16px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 10px 26px -10px rgba(70,60,120,.14), 0 1px 0 rgba(255,255,255,.6) inset;">
+  <div style="display:flex; align-items:center; gap:12px;">
+    <div style="width:44px;height:44px;border-radius:14px;background:#EBE8FA;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span class="material-symbols-rounded text-[22px]" style="color:#6C5CE7;">groups</span></div>
+    <div><p style="font-size:24px; font-weight:800; color:#1E1E2C; margin:0; line-height:1;">${sumber.length}</p><p style="font-size:11.5px; color:#6B7280; margin:4px 0 0; white-space:nowrap;">Total Guru</p></div>
   </div>
-  <div style="display:flex; align-items:center; gap:10px;">
-    <div style="width:38px;height:38px;border-radius:12px;background:#4ECDC422;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span class="material-symbols-rounded text-[18px]" style="color:#0d7d70;">school</span></div>
-    <div><p style="font-size:16px; font-weight:800; color:#23213A; margin:0;">${guruKelasCount}</p><p style="font-size:10px; color:#585A75; margin:1px 0 0;">Guru Kelas</p></div>
+  <div style="width:1px;height:36px;background:#E5E7EB;flex-shrink:0;"></div>
+  <div style="display:flex; align-items:center; gap:12px;">
+    <div style="width:44px;height:44px;border-radius:14px;background:#D9F5E8;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span class="material-symbols-rounded text-[22px]" style="color:#0FA968;">school</span></div>
+    <div><p style="font-size:24px; font-weight:800; color:#1E1E2C; margin:0; line-height:1;">${guruKelasCount}</p><p style="font-size:11.5px; color:#6B7280; margin:4px 0 0; white-space:nowrap;">Guru Kelas</p></div>
   </div>
-  <div style="display:flex; align-items:center; gap:10px;">
-    <div style="width:38px;height:38px;border-radius:12px;background:#F2A65A22;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span class="material-symbols-rounded text-[18px]" style="color:#c07729;">menu_book</span></div>
-    <div><p style="font-size:16px; font-weight:800; color:#23213A; margin:0;">${guruMapelCount}</p><p style="font-size:10px; color:#585A75; margin:1px 0 0;">Guru Mapel</p></div>
+  <div style="width:1px;height:36px;background:#E5E7EB;flex-shrink:0;"></div>
+  <div style="display:flex; align-items:center; gap:12px;">
+    <div style="width:44px;height:44px;border-radius:14px;background:#FCE9D2;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span class="material-symbols-rounded text-[22px]" style="color:#D98A2B;">menu_book</span></div>
+    <div><p style="font-size:24px; font-weight:800; color:#1E1E2C; margin:0; line-height:1;">${guruMapelCount}</p><p style="font-size:11.5px; color:#6B7280; margin:4px 0 0; white-space:nowrap;">Guru Mapel</p></div>
   </div>
 </div>`;
  } else if(tipe === 'tendik'){
