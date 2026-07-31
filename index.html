@@ -229,7 +229,7 @@
       align-items:center;
       justify-content:center;
       gap:0;
-      padding:10px 12px;
+      padding:12px 12px 8px;
       border-radius:9999px;
       transition: background .3s cubic-bezier(.4,0,.2,1), padding .3s cubic-bezier(.4,0,.2,1), box-shadow .3s cubic-bezier(.4,0,.2,1), transform .15s;
     }
@@ -238,7 +238,7 @@
     }
     .nav-active{
       background: #23213A;
-      padding:10px 16px;
+      padding:12px 16px 8px;
       box-shadow: 0 8px 16px -6px rgba(35,33,58,.45);
     }
     .nav-icon-wrap{
@@ -1040,7 +1040,7 @@
         <div id="avatarStackGuru" style="display:flex; align-items:center; margin-top:10px;"></div>
       </div>
       <div>
-        <div id="lblGuruStatusWrap" style="display:flex; gap:2px; font-size:12.5px; font-weight:500; color:#43424E; margin-top:10px; flex-wrap:nowrap; overflow:hidden; align-items:center;"></div>
+        <div id="lblGuruStatusWrap" style="display:flex; gap:14px; font-size:12.5px; font-weight:500; color:#43424E; margin-top:10px; flex-wrap:nowrap; overflow:hidden;"></div>
       </div>
     </div>
 
@@ -1799,7 +1799,7 @@ let historyTabAktif = false;
                     <span class="material-symbols-rounded text-[16px]" style="color:#6b7280;">chevron_right</span>
                   </div>
                 </div>
-                <div class="flex items-center justify-between" style="margin-top:8px; font-size:10px; font-weight:700;">
+                <div class="flex items-center justify-between" style="margin-top:8px; font-size:12px; font-weight:700;">
                   <span style="color:#0091EA;">L (${r.L})</span>
                   <span style="color:#D4537E;">P (${r.P})</span>
                 </div>
@@ -2287,8 +2287,7 @@ let historyTabAktif = false;
       if(!el) return;
       const now = new Date();
       const tgl = now.toLocaleDateString('id-ID', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
-      const jam = now.toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' });
-      el.textContent = tgl + ' \u00b7 ' + jam;
+      el.textContent = tgl;
     }
     setInterval(perbaruiTanggalWaktuBeranda, 30000);
 
@@ -2680,7 +2679,6 @@ function nav(p){
 
   if(p === "home"){
     if(historyTabAktif){
-      historyTabAktif = false;
       history.back();
       return;
     }
@@ -2694,6 +2692,14 @@ function nav(p){
   gantiHalamanFade(p);
 }
 
+let antreanNavTarget = null;
+function lanjutkanAntreanNav(){
+  if(antreanNavTarget){
+    const target = antreanNavTarget;
+    antreanNavTarget = null;
+    gantiHalamanFade(target);
+  }
+}
 function gantiHalamanFade(pTarget){
   const pSekarang = halamanAktifSaatIni();
 
@@ -2701,7 +2707,10 @@ function gantiHalamanFade(pTarget){
     updateNavAktif(pTarget);
     return;
   }
-  if(sedangTransisiNav) return;
+  if(sedangTransisiNav){
+    antreanNavTarget = pTarget;
+    return;
+  }
   if(!pSekarang) return;
   sedangTransisiNav = true;
 
@@ -2719,10 +2728,13 @@ function gantiHalamanFade(pTarget){
     window.scrollTo(0, 0);
     updateNavAktif(pTarget);
     sedangTransisiNav = false;
+    lanjutkanAntreanNav();
     return;
   }
 
-  currentEl.style.transition = "opacity .16s ease, transform .16s ease";
+  currentEl.style.willChange = "opacity, transform";
+  targetEl.style.willChange = "opacity, transform";
+  currentEl.style.transition = "opacity .12s ease, transform .12s ease";
   currentEl.style.opacity = "0";
   currentEl.style.transform = "translateY(6px)";
 
@@ -2731,6 +2743,7 @@ function gantiHalamanFade(pTarget){
     currentEl.style.transition = "";
     currentEl.style.opacity = "";
     currentEl.style.transform = "";
+    currentEl.style.willChange = "";
 
     window.scrollTo(0, 0);
 
@@ -2743,7 +2756,7 @@ function gantiHalamanFade(pTarget){
 
     requestAnimationFrame(function(){
       requestAnimationFrame(function(){
-        targetEl.style.transition = "opacity .22s ease, transform .22s ease";
+        targetEl.style.transition = "opacity .18s ease, transform .18s ease";
         targetEl.style.opacity = "1";
         targetEl.style.transform = "translateY(0)";
       });
@@ -2753,8 +2766,10 @@ function gantiHalamanFade(pTarget){
       targetEl.style.transition = "";
       targetEl.style.opacity = "";
       targetEl.style.transform = "";
+      targetEl.style.willChange = "";
       sedangTransisiNav = false;
-    }, 260);
+      lanjutkanAntreanNav();
+    }, 200);
 
   }, 160);
 }
@@ -3313,7 +3328,7 @@ function renderStatusGuru(data){
   if(!elLbl) return;
   if(!data || data.length === 0){ elLbl.innerHTML = ''; return; }
   const segmen = buatSegmenStatusGuru(data);
-  elLbl.innerHTML = segmen.map(s => `<span style="white-space:nowrap;">${s.status} ${s.jml} org</span>`).join('<span style="color:#B9B7C9; margin:0 2px;">&middot;</span>');
+  elLbl.innerHTML = segmen.map(s => `<span style="white-space:nowrap;">${s.status} ${s.jml} org</span>`).join('');
 }
 
 function buatRincianStatusTendik(data){
