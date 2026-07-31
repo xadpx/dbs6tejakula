@@ -493,8 +493,20 @@
         inset 0 0 3px 1px rgba(255,255,255,.5) !important;
     }
     .neu-modal-close{
-      background:#ffffff !important;
+      background: rgba(255,255,255,.55) !important;
+      -webkit-backdrop-filter: var(--blur-glass-sm) !important;
+      backdrop-filter: var(--blur-glass-sm) !important;
+      border: 1px solid var(--glass-border) !important;
       box-shadow: 0 3px 10px rgba(35,33,58,.2) !important;
+    }
+    /* Tombol ikon bulat kaca — dipakai untuk lonceng notifikasi,
+       tombol back, dan tombol titik-4 (menu) di popup, supaya
+       semuanya konsisten pakai efek glass. */
+    .glass-icon-btn{
+      background: rgba(255,255,255,.55);
+      -webkit-backdrop-filter: var(--blur-glass-sm);
+      backdrop-filter: var(--blur-glass-sm);
+      border: 1.5px solid var(--glass-border);
     }
     .rombel-row {
       padding: 13px 16px; border-radius: 16px; cursor: pointer;
@@ -976,8 +988,8 @@
     </div>
     <div class="relative" id="notifWrap">
       <button id="btnNotifUpdate" onpointerdown="buatRipple(event)" onclick="toggleNotifUpdate(event)"
-        class="relative flex items-center justify-center"
-        style="width:34px;height:34px;border-radius:50%;background:#fff;overflow:hidden;flex-shrink:0;
+        class="relative flex items-center justify-center glass-icon-btn"
+        style="width:34px;height:34px;border-radius:50%;overflow:hidden;flex-shrink:0;
                box-shadow: 0 8px 18px rgba(166,175,195,.3);">
         <span class="material-symbols-rounded" style="font-size:16px;color:#585A75;">notifications</span>
         <span id="notifDot" class="hidden" style="position:absolute;top:3px;right:4px;width:7px;height:7px;border-radius:50%;background:var(--color-primary);border:1.5px solid #fff;"></span>
@@ -1495,8 +1507,8 @@ class="hidden detail-fullpage-overlay fixed inset-0 z-[60] overflow-y-auto">
      <div class="flex items-center justify-between mb-8" style="background-color:var(--color-bg-app-3); padding-top:8px; padding-bottom:8px; padding-left:20px; padding-right:20px;">
         <button
           onclick="mundurModal()"
-          class="flex items-center justify-center shrink-0"
-          style="width:36px;height:36px;border-radius:50%;background:#E8ECF3;border:1.5px solid rgba(255,255,255,.55);
+          class="flex items-center justify-center shrink-0 glass-icon-btn"
+          style="width:36px;height:36px;border-radius:50%;
                  box-shadow: 0 6px 16px rgba(70,60,120,.12);">
           <span class="material-symbols-rounded text-[20px]" style="color:#5f6368;">chevron_left</span>
         </button>
@@ -1507,8 +1519,8 @@ class="hidden detail-fullpage-overlay fixed inset-0 z-[60] overflow-y-auto">
           <button
             id="detailDotsBtn"
             onclick="toggleDetailMenu(event)"
-            class="flex items-center justify-center"
-            style="width:36px;height:36px;border-radius:50%;background:#E8ECF3;border:1.5px solid rgba(255,255,255,.55);
+            class="flex items-center justify-center glass-icon-btn"
+            style="width:36px;height:36px;border-radius:50%;
                    box-shadow: 0 6px 16px rgba(70,60,120,.12);">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
               <circle cx="7" cy="7" r="3" stroke="#5f6368" stroke-width="1.6"/>
@@ -1597,7 +1609,8 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
       <span
         id="rombelBackBtn"
         onclick="bukaDaftarKelas()"
-        class="hidden material-symbols-rounded text-[18px] text-gray-500 cursor-pointer shrink-0">
+        class="hidden material-symbols-rounded text-[16px] text-gray-500 cursor-pointer shrink-0 glass-icon-btn flex items-center justify-center"
+        style="width:26px;height:26px;border-radius:50%;">
         chevron_left
       </span>
       <h2 class="font-bold text-sm flex items-center gap-2 text-gray-800 min-w-0">
