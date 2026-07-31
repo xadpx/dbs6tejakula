@@ -177,8 +177,8 @@
       background:#ffffff !important;
       border: 1px solid rgba(255,255,255,.9) !important;
       box-shadow:
-        -2px -2px 4px rgba(255,255,255,.9),
-        2px 2px 4px rgba(190,190,200,.5) !important;
+        -1px -1px 2px rgba(255,255,255,.9),
+        1px 1px 2px rgba(190,190,200,.5) !important;
     }
     .toggle-knob-neu.on{
       background:#ffffff !important;
@@ -901,29 +901,29 @@
   </script>
   <div id="app-scroll">
 
-  <div id="p-login" class="hidden flex flex-col justify-center" style="min-height:100vh; min-height:100dvh; position:relative; overflow-y:auto; background:#F4F5F7; padding:32px 24px 44px; box-sizing:border-box;">
+  <div id="p-login" class="hidden flex flex-col justify-center" style="min-height:100vh; min-height:100dvh; position:relative; overflow-y:auto; background:var(--grad2); padding:32px 24px 44px; box-sizing:border-box;">
 
-    <div style="position:absolute; top:-60px; right:-60px; width:220px; height:220px; border-radius:50%; box-shadow: inset 0 2px 8px rgba(110,110,118,.18);"></div>
-    <div style="position:absolute; top:140px; left:-80px; width:180px; height:180px; border-radius:50%; box-shadow: inset 0 2px 8px rgba(110,110,118,.15);"></div>
-    <div style="position:absolute; bottom:220px; right:-40px; width:160px; height:160px; border-radius:50%; box-shadow: inset 0 2px 8px rgba(110,110,118,.16);"></div>
+    <div style="position:absolute; top:-70px; right:-70px; width:240px; height:240px; border-radius:50%; background:radial-gradient(circle, rgba(255,208,123,.55), transparent 70%); filter:blur(2px); pointer-events:none;"></div>
+    <div style="position:absolute; top:160px; left:-90px; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle, rgba(184,140,255,.45), transparent 70%); filter:blur(2px); pointer-events:none;"></div>
+    <div style="position:absolute; bottom:200px; right:-50px; width:180px; height:180px; border-radius:50%; background:radial-gradient(circle, rgba(255,168,168,.5), transparent 70%); filter:blur(2px); pointer-events:none;"></div>
 
-    <div style="position:relative; z-index:1;">
+    <div style="position:relative; z-index:1; background:rgba(255,255,255,.42); -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,.75); border-radius:28px; padding:28px 24px; box-shadow:0 24px 48px -12px rgba(70,60,140,.35), inset 0 1px 0 rgba(255,255,255,.7);">
 
-      <div style="width:56px;height:56px;border-radius:50%;background-color:var(--color-bg-card);box-shadow:var(--shadow-card);display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:16px;">
+      <div style="width:56px;height:56px;border-radius:18px;background:rgba(255,255,255,.7); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); border:1px solid rgba(255,255,255,.85); box-shadow:0 8px 18px rgba(123,97,224,.18); display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:16px;">
         <img src="logo-sekolah.png" alt="Logo SD Negeri 6 Tejakula" style="width:40px;height:40px;object-fit:contain;">
       </div>
 
-      <h1 class="font-bold" style="color:var(--color-text-primary); font-size:28px; line-height:1.25; margin:0 0 12px;">
+      <h1 class="font-bold" style="color:#1E1E24; font-size:28px; line-height:1.25; margin:0 0 12px;">
         Kelola Data Sekolah,<br>Lebih Mudah
       </h1>
-      <p style="color:var(--color-text-secondary); font-size:13px; line-height:1.6; margin:0 0 28px;">
+      <p style="color:#585A75; font-size:13px; line-height:1.6; margin:0 0 28px;">
         Pantau data siswa, guru, dan tenaga kependidikan SD Negeri 6 Tejakula dalam satu aplikasi.
       </p>
 
       <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
-        <div style="flex:1; height:1px; background:rgba(110,110,118,.4);"></div>
-        <span style="color:var(--color-text-secondary); font-size:11px; white-space:nowrap;">Silakan login</span>
-        <div style="flex:1; height:1px; background:rgba(110,110,118,.4);"></div>
+        <div style="flex:1; height:1px; background:rgba(110,110,118,.25);"></div>
+        <span style="color:#8B8AA3; font-size:11px; white-space:nowrap;">Silakan login</span>
+        <div style="flex:1; height:1px; background:rgba(110,110,118,.25);"></div>
       </div>
 
      <div style="display:flex; justify-content:center;">
@@ -931,7 +931,7 @@
           data-client_id="183272939624-9hm3c0ruqm5s5uo73vkk16v2lvu2cr6b.apps.googleusercontent.com"
           data-callback="handleGoogleCredential">
         </div>
-        <div style="border-radius:9999px; background-color:var(--color-bg-card); box-shadow:var(--shadow-card); padding:3px;">
+        <div style="border-radius:9999px; background:rgba(255,255,255,.7); border:1px solid rgba(255,255,255,.85); box-shadow:0 8px 18px rgba(123,97,224,.18); padding:3px;">
           <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="filled_white" data-size="large" data-text="continue_with" data-logo_alignment="left" data-width="300"></div>
         </div>
       </div>
@@ -1040,7 +1040,7 @@
         <div id="avatarStackGuru" style="display:flex; align-items:center; margin-top:10px;"></div>
       </div>
       <div>
-        <div id="lblGuruStatusWrap" style="display:flex; gap:14px; font-size:12.5px; font-weight:500; color:#43424E; margin-top:10px; flex-wrap:nowrap; overflow:hidden;"></div>
+        <div id="lblGuruStatusWrap" style="display:flex; gap:2px; font-size:12.5px; font-weight:500; color:#43424E; margin-top:10px; flex-wrap:nowrap; overflow:hidden; align-items:center;"></div>
       </div>
     </div>
 
@@ -2717,10 +2717,12 @@ function gantiHalamanFade(pTarget){
   const currentEl = document.getElementById("p-" + pSekarang);
   const targetEl = document.getElementById("p-" + pTarget);
 
-  // Tab Unduh: lewati animasi fade sepenuhnya, langsung tampil.
-  // Ada bug render/compositing browser yang bikin halaman ini
-  // kelihatan kosong sampai discroll kalau dianimasikan.
-  if(pTarget === "download" || pSekarang === "download"){
+  // Tab berat (Siswa, Guru, Unduh): lewati animasi fade sepenuhnya,
+  // langsung tampil. Halaman ini berisi chart/list besar yang bikin
+  // animasi terasa patah-patah/lag kalau dipaksa dianimasikan
+  // bersamaan dengan proses render kontennya.
+  const halamanBerat = ["siswa", "guru", "download"];
+  if(halamanBerat.includes(pTarget) || halamanBerat.includes(pSekarang)){
     currentEl.classList.add("hidden");
     currentEl.style.cssText = "";
     targetEl.classList.remove("hidden");
@@ -3328,7 +3330,7 @@ function renderStatusGuru(data){
   if(!elLbl) return;
   if(!data || data.length === 0){ elLbl.innerHTML = ''; return; }
   const segmen = buatSegmenStatusGuru(data);
-  elLbl.innerHTML = segmen.map(s => `<span style="white-space:nowrap;">${s.status} ${s.jml} org</span>`).join('');
+  elLbl.innerHTML = segmen.map(s => `<span style="white-space:nowrap;">${s.status} ${s.jml} org</span>`).join('<span style="color:#B9B7C9; margin:0 2px;">&middot;</span>');
 }
 
 function buatRincianStatusTendik(data){
