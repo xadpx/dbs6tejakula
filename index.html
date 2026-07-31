@@ -147,32 +147,42 @@
       border-right: 1px solid var(--glass-border);
     }
     .kategori{
-      appearance:none;
-      -webkit-appearance:none;
-      width:20px;
-      height:20px;
-      border: 1.5px solid #D1D5DB;
-      border-radius:7px;
-      background:#FFFFFF;
-      cursor:pointer;
-      transition:.15s;
-      position:relative;
-      flex-shrink:0;
-    }
-    .kategori:checked{
-      background: #0091EA;
-      border-color: transparent;
-    }
-    .kategori:checked::after{
-      content:"";
       position:absolute;
-      left:50%;
-      top:50%;
-      width:9px;
-      height:6px;
-      transform:translate(-50%,-73%) rotate(-45deg);
-      border-left:2px solid #fff;
-      border-bottom:2px solid #fff;
+      opacity:0;
+      width:0;
+      height:0;
+      pointer-events:none;
+    }
+    .kategori-chip{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:5px;
+      padding:9px 18px;
+      border-radius:9999px;
+      background:#E5E7EB;
+      color:#6B7280;
+      font-size:13px;
+      font-weight:500;
+      line-height:1;
+      cursor:pointer;
+      white-space:nowrap;
+      transition:.15s;
+      user-select:none;
+    }
+    .kategori-chip:has(.kategori:checked){
+      background:#E4D3FB;
+      color:#7C3AED;
+      font-weight:600;
+    }
+    .kategori-chip .chip-check{
+      display:none;
+      font-size:14px;
+      font-weight:700;
+      line-height:1;
+    }
+    .kategori-chip:has(.kategori:checked) .chip-check{
+      display:inline;
     }
     .neu-mini-pill{
       background: rgba(255,255,255,.22);
@@ -1423,73 +1433,71 @@ class="neu-dropdown-inset w-24 min-w-[96px] h-9 rounded-xl px-2 text-sm">
   </div>
 
 </div>
-<div class="grid grid-cols-2 gap-x-4 gap-y-2">
+<div class="flex flex-wrap gap-2">
 
-  <!-- BARIS 1 -->
-  <label class="flex items-center gap-2.5 whitespace-nowrap">
+  <label class="kategori-chip">
     <input class="kategori" type="checkbox" value="NIPD">
-    <span class="text-[13px]">NIPD</span>
+    <span class="chip-check">✓</span>
+    <span>NIPD</span>
   </label>
 
-  <label class="flex items-center gap-2.5 whitespace-nowrap">
+  <label class="kategori-chip">
     <input class="kategori" type="checkbox" value="ORTU">
-    <span class="text-[13px]">Data Ortu</span>
+    <span class="chip-check">✓</span>
+    <span>Data Ortu</span>
   </label>
 
-  <!-- BARIS 2 -->
-  <label class="flex items-center gap-2.5 whitespace-nowrap">
+  <label class="kategori-chip">
     <input class="kategori" type="checkbox" value="NISN">
-    <span class="text-[13px]">NISN</span>
+    <span class="chip-check">✓</span>
+    <span>NISN</span>
   </label>
 
-  <label class="flex items-center gap-2.5 whitespace-nowrap">
+  <label class="kategori-chip">
     <input class="kategori" type="checkbox" value="KES">
-    <span class="text-[13px]">Kesejahteraan</span>
+    <span class="chip-check">✓</span>
+    <span>Kesejahteraan</span>
   </label>
 
-  <!-- BARIS 3 -->
-  <label class="flex items-center gap-2.5 whitespace-nowrap">
+  <label class="kategori-chip">
     <input class="kategori" type="checkbox" value="NIK">
-    <span class="text-[13px]">NIK</span>
+    <span class="chip-check">✓</span>
+    <span>NIK</span>
   </label>
 
-  <label class="flex items-center gap-2.5 whitespace-nowrap">
+  <label class="kategori-chip">
     <input class="kategori" type="checkbox" value="STATUS">
-    <span class="text-[13px]">Status Anak</span>
+    <span class="chip-check">✓</span>
+    <span>Status Anak</span>
   </label>
 
-  <!-- BARIS 4 -->
-  <label class="flex items-center gap-2.5 whitespace-nowrap">
+  <label class="kategori-chip">
     <input class="kategori" type="checkbox" value="TGLLAHIR">
-<span class="text-[13px]">Tanggal Lahir</span>
-      </label>
-
-  <label class="flex items-center gap-2.5 whitespace-nowrap">
-    <input class="kategori" type="checkbox" value="UMUR">
-    <span class="text-[13px]">Umur</span>
+    <span class="chip-check">✓</span>
+    <span>Tanggal Lahir</span>
   </label>
 
-  <label class="flex items-center gap-2.5 whitespace-nowrap">
-  <input class="kategori" type="checkbox" value="ALAMAT">
-  <span class="text-[13px]">Alamat</span>
-</label>
+  <label class="kategori-chip">
+    <input class="kategori" type="checkbox" value="UMUR">
+    <span class="chip-check">✓</span>
+    <span>Umur</span>
+  </label>
 
-  <!-- BARIS 5 -->
-<label class="flex items-center gap-2.5 whitespace-nowrap">
+  <label class="kategori-chip">
+    <input class="kategori" type="checkbox" value="ALAMAT">
+    <span class="chip-check">✓</span>
+    <span>Alamat</span>
+  </label>
 
-  <input
-    id="semuaData"
-  class="kategori"
-  type="checkbox"
-  onchange="toggleSemuaData()">
-
-  <span class="text-[13px] font-semibold">
-    Semua Data
-  </span>
-
-</label>
-
-<div></div>
+  <label class="kategori-chip">
+    <input
+      id="semuaData"
+      class="kategori"
+      type="checkbox"
+      onchange="toggleSemuaData()">
+    <span class="chip-check">✓</span>
+    <span class="font-semibold">Semua Data</span>
+  </label>
 
 </div>
 
