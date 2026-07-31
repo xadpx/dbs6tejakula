@@ -893,10 +893,10 @@
     }
     /* 1. Card utama — glass halus (opacity moderat, bukan hampir tembus pandang) */
     .neu-card, .neu-card-flat {
-      background: rgba(255,255,255,.42) !important;
+      background: rgba(255,255,255,.22) !important;
       background-image: none !important;
-      -webkit-backdrop-filter: blur(10px) !important;
-      backdrop-filter: blur(10px) !important;
+      -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+      backdrop-filter: blur(16px) saturate(180%) !important;
       border: 1px solid rgba(255,255,255,.75) !important;
       box-shadow: 0 16px 30px -10px rgba(123,97,224,.18), inset 0 1px 0 rgba(255,255,255,.7) !important;
       border-radius: 22px !important;
@@ -905,7 +905,7 @@
     .neu-card.tint-danger,
     .neu-card.tint-safe,
     .neu-card.tint-purple{
-      background: rgba(255,255,255,.42) !important;
+      background: rgba(255,255,255,.22) !important;
     }
     .neu-search {
       background: #FFFFFF !important;
@@ -970,7 +970,7 @@
     <div style="position:absolute; top:160px; left:-90px; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle, rgba(184,140,255,.45), transparent 70%); filter:blur(2px); pointer-events:none;"></div>
     <div style="position:absolute; bottom:200px; right:-50px; width:180px; height:180px; border-radius:50%; background:radial-gradient(circle, rgba(255,168,168,.5), transparent 70%); filter:blur(2px); pointer-events:none;"></div>
 
-    <div style="position:relative; z-index:1; background:rgba(255,255,255,.42); -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,.75); border-radius:28px; padding:28px 24px; box-shadow:0 24px 48px -12px rgba(70,60,140,.35), inset 0 1px 0 rgba(255,255,255,.7);">
+    <div style="position:relative; z-index:1; background:rgba(255,255,255,.22); -webkit-backdrop-filter:blur(20px) saturate(180%); backdrop-filter:blur(20px) saturate(180%); border:1px solid rgba(255,255,255,.75); border-radius:28px; padding:28px 24px; box-shadow:0 24px 48px -12px rgba(70,60,140,.35), inset 0 1px 0 rgba(255,255,255,.7);">
 
       <div style="width:56px;height:56px;border-radius:18px;background:rgba(255,255,255,.7); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); border:1px solid rgba(255,255,255,.85); box-shadow:0 8px 18px rgba(123,97,224,.18); display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:16px;">
         <img src="logo-sekolah.png" alt="Logo SD Negeri 6 Tejakula" style="width:40px;height:40px;object-fit:contain;">
@@ -1087,7 +1087,7 @@
 </div>
   <div style="position:relative; display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:12px; margin-bottom:30px; align-items:stretch;">
 
-    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="position:relative; overflow:hidden; background:rgba(255,255,255,.42); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,.75); border-radius:20px; padding:18px; box-shadow:0 18px 34px -10px rgba(123,97,224,.22), inset 0 1px 0 rgba(255,255,255,.7); min-height:250px; display:flex; flex-direction:column; justify-content:space-between;">
+    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="position:relative; overflow:hidden; background:rgba(255,255,255,.22); -webkit-backdrop-filter:blur(16px) saturate(180%); backdrop-filter:blur(16px) saturate(180%); border:1px solid rgba(255,255,255,.75); border-radius:20px; padding:18px; box-shadow:0 18px 34px -10px rgba(123,97,224,.22), inset 0 1px 0 rgba(255,255,255,.7); min-height:250px; display:flex; flex-direction:column; justify-content:space-between;">
       <div style="display:flex; align-items:center; justify-content:space-between;">
         <div style="font-size:20px; font-weight:800; color:#1E1E24;">Guru</div>
         <div style="width:44px; height:44px; border-radius:14px; background:linear-gradient(160deg,#7B61E0,#B98BF0); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 6px 14px rgba(123,97,224,.35);">
@@ -1108,7 +1108,7 @@
     </div>
 
     <div style="display:flex; flex-direction:column; gap:12px; height:100%;">
-      <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer" style="position:relative; flex:1 1 0; background:rgba(255,255,255,.42); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,.75); border-radius:18px; padding:16px; box-shadow:0 14px 26px -8px rgba(232,147,95,.22), inset 0 1px 0 rgba(255,255,255,.7); min-height:119px; display:flex; flex-direction:column; justify-content:space-between;">
+      <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer" style="position:relative; flex:1 1 0; background:rgba(255,255,255,.22); -webkit-backdrop-filter:blur(16px) saturate(180%); backdrop-filter:blur(16px) saturate(180%); border:1px solid rgba(255,255,255,.75); border-radius:18px; padding:16px; box-shadow:0 14px 26px -8px rgba(232,147,95,.22), inset 0 1px 0 rgba(255,255,255,.7); min-height:119px; display:flex; flex-direction:column; justify-content:space-between;">
         <div style="display:flex; align-items:flex-start; justify-content:space-between;">
           <div style="font-size:17px; font-weight:800; color:#1E1E24;">Tendik</div>
           <div style="width:30px; height:30px; border-radius:9px; background:linear-gradient(160deg,#F5C89F,#E8935F); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 4px 10px rgba(232,147,95,.35);">
@@ -1123,7 +1123,7 @@
           <div style="font-size:11.5px; color:#585A75; margin-top:3px; white-space:nowrap; overflow:hidden; -webkit-mask-image:linear-gradient(to right, #000 80%, transparent 100%); mask-image:linear-gradient(to right, #000 80%, transparent 100%);" id="rincianTendikBeranda">&ndash;</div>
         </div>
       </div>
-      <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="position:relative; flex:1 1 0; background:rgba(255,255,255,.42); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,.75); border-radius:18px; padding:16px; box-shadow:0 14px 26px -8px rgba(62,123,196,.2), inset 0 1px 0 rgba(255,255,255,.7); min-height:119px; display:flex; flex-direction:column; justify-content:space-between;">
+      <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="position:relative; flex:1 1 0; background:rgba(255,255,255,.22); -webkit-backdrop-filter:blur(16px) saturate(180%); backdrop-filter:blur(16px) saturate(180%); border:1px solid rgba(255,255,255,.75); border-radius:18px; padding:16px; box-shadow:0 14px 26px -8px rgba(62,123,196,.2), inset 0 1px 0 rgba(255,255,255,.7); min-height:119px; display:flex; flex-direction:column; justify-content:space-between;">
         <div style="display:flex; align-items:flex-start; justify-content:space-between;">
           <div style="font-size:17px; font-weight:800; color:#1E1E24;">Rombel</div>
           <div style="width:30px; height:30px; border-radius:9px; background:linear-gradient(160deg,#9FD3F0,#5B93D9); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 4px 10px rgba(91,147,217,.35);">
@@ -1144,7 +1144,7 @@
 
   <p style="position:relative; font-size:11px; font-weight:500; letter-spacing:.05em; color:#6E6C86; margin:0 0 10px;">KATEGORI</p>
 
-  <div style="position:relative; background:rgba(255,255,255,.42); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,.75); border-radius:22px; box-shadow:0 16px 30px -10px rgba(123,97,224,.18), inset 0 1px 0 rgba(255,255,255,.7); overflow:hidden; margin-bottom:16px;">
+  <div style="position:relative; background:rgba(255,255,255,.22); -webkit-backdrop-filter:blur(16px) saturate(180%); backdrop-filter:blur(16px) saturate(180%); border:1px solid rgba(255,255,255,.75); border-radius:22px; box-shadow:0 16px 30px -10px rgba(123,97,224,.18), inset 0 1px 0 rgba(255,255,255,.7); overflow:hidden; margin-bottom:16px;">
 
     <div onclick="bukaKategoriKesejahteraanDariBeranda()" class="cursor-pointer" style="display:flex; align-items:center; gap:14px; padding:20px;">
       <div style="width:46px; height:46px; border-radius:15px; background:linear-gradient(135deg,#F5B37A,#E07A2F); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 6px 14px rgba(224,122,47,.35);">
