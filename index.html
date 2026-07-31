@@ -268,6 +268,40 @@
       max-width:70px;
       margin-left:6px;
     }
+
+    /* ===== Optimasi performa pindah tab di HP =====
+       Banyak kartu "glass" pakai backdrop-filter (blur) + box-shadow
+       bertumpuk. Di laptop itu ringan (GPU kencang), tapi di HP
+       backdrop-filter itu salah satu operasi paling berat untuk GPU
+       mobile — kalau dianimasikan (opacity/transform) jadi patah-patah.
+       Selama animasi pindah tab berlangsung, matikan sementara semua
+       blur/shadow di dalam halaman yang sedang animasi supaya browser
+       tidak perlu compositing berat tiap frame. Efeknya cuma kelihatan
+       ~0.2 detik pas transisi, jadi tidak mengganggu tampilan normal. */
+    #p-home, #p-siswa, #p-guru, #p-download {
+      contain: layout style;
+    }
+    body.nav-transisi-berlangsung #p-home *,
+    body.nav-transisi-berlangsung #p-siswa *,
+    body.nav-transisi-berlangsung #p-guru *,
+    body.nav-transisi-berlangsung #p-download * {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      box-shadow: none !important;
+      transition: none !important;
+    }
+    /* Di HP (layar sentuh/kecil), turunkan juga radius blur dasarnya
+       supaya scroll & interaksi biasa (di luar transisi) ikut lebih
+       ringan, tanpa mengubah tampilan di laptop/desktop. */
+    @media (pointer: coarse), (max-width: 767px) {
+      :root {
+        --blur-glass: blur(12px) saturate(200%);
+        --blur-glass-sm: blur(7px) saturate(180%);
+        --blur-hero: blur(18px) saturate(220%);
+        --blur-nav: blur(16px) saturate(200%);
+        --blur-chip: blur(5px) saturate(160%);
+      }
+    }
     .skeleton{
       background: rgba(255,255,255,.4);
       border-radius: 8px;
@@ -820,18 +854,6 @@
       background: #F6F5FB !important;
       color: var(--ink);
     }
-    .blob-bg{
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(60px) saturate(70%);
-      z-index: -1;
-      opacity: .28;
-      pointer-events: none;
-    }
-    .blob-bg.b1{ width:340px; height:340px; background:#F7C99A; top:-60px; left:-90px; }
-    .blob-bg.b2{ width:300px; height:300px; background:#C9B6F5; bottom:120px; right:-80px; }
-    .blob-bg.b3{ width:220px; height:220px; background:#F5B7C4; bottom:-60px; left:10%; }
-
     /* 1. Card utama — glass halus (opacity moderat, bukan hampir tembus pandang) */
     .neu-card, .neu-card-flat {
       background: rgba(255,255,255,.42) !important;
@@ -878,9 +900,6 @@
   </style>
 </head>
 <body class="text-base">
-<div class="blob-bg b1"></div>
-<div class="blob-bg b2"></div>
-<div class="blob-bg b3"></div>
   <script>
     // Anti-flash: cek status login SEBELUM browser sempat menggambar
     // halaman. Tanpa ini, karena #p-home defaultnya tidak diberi
@@ -2733,6 +2752,8 @@ function gantiHalamanFade(pTarget){
     return;
   }
 
+  document.body.classList.add("nav-transisi-berlangsung");
+
   currentEl.style.willChange = "opacity, transform";
   targetEl.style.willChange = "opacity, transform";
   currentEl.style.transition = "opacity .12s ease, transform .12s ease";
@@ -2768,6 +2789,7 @@ function gantiHalamanFade(pTarget){
       targetEl.style.opacity = "";
       targetEl.style.transform = "";
       targetEl.style.willChange = "";
+      document.body.classList.remove("nav-transisi-berlangsung");
       sedangTransisiNav = false;
       lanjutkanAntreanNav();
     }, 200);
