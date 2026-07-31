@@ -519,7 +519,10 @@
       box-shadow: 0 0 0 3px var(--color-primary-soft);
     }
     .neu-nav-flat{
-      background: #FFFFFF;
+      background: rgba(255,255,255,.35);
+      -webkit-backdrop-filter: blur(24px) saturate(200%);
+      backdrop-filter: blur(24px) saturate(200%);
+      border: 1px solid rgba(255,255,255,.6);
     }
     .neu-modal{
       background: #FFFFFF !important;
@@ -940,12 +943,12 @@
     }
     /* 4. Navigasi bawah — glass juga, konsisten sama card */
     .neu-nav-flat {
-      background: #FFFFFF !important;
+      background: rgba(255,255,255,.35) !important;
       background-image: none !important;
-      -webkit-backdrop-filter: none !important;
-      backdrop-filter: none !important;
-      border: none !important;
-      box-shadow: 0 14px 34px rgba(166,175,195,.25) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(200%) !important;
+      backdrop-filter: blur(24px) saturate(200%) !important;
+      border: 1px solid rgba(255,255,255,.6) !important;
+      box-shadow: 0 14px 34px rgba(166,175,195,.25), inset 0 1px 0 rgba(255,255,255,.7) !important;
     }
   </style>
 </head>
@@ -2524,7 +2527,7 @@ let historyTabAktif = false;
       dataTendik = json.tendik.slice(1).filter(r => r[1] && String(r[1]).trim() !== "");
       renderListPegawai('tendik');
       const elRincianTendikBeranda = document.getElementById('rincianTendikBeranda');
-      if(elRincianTendikBeranda) elRincianTendikBeranda.textContent = buatRincianStatusTendik(dataTendik);
+      if(elRincianTendikBeranda) elRincianTendikBeranda.innerHTML = buatRincianStatusTendik(dataTendik);
       const elTotTendik = document.getElementById('totTendik');
       const elSpinTendik = document.getElementById('totTendikSpin');
       if(elTotTendik){
@@ -3326,7 +3329,7 @@ function muatDataTendik(){
       dataTendik = json.data.slice(1).filter(r => r[1] && String(r[1]).trim() !== "");
       renderListPegawai('tendik');
       const elRincianTendik = document.getElementById('rincianTendikBeranda');
-      if(elRincianTendik) elRincianTendik.textContent = buatRincianStatusTendik(dataTendik);
+      if(elRincianTendik) elRincianTendik.innerHTML = buatRincianStatusTendik(dataTendik);
       const elTot = document.getElementById('totTendik');
       const elSpin = document.getElementById('totTendikSpin');
       if(elTot){
@@ -3349,7 +3352,7 @@ function muatDataTendik(){
           dataTendik = json.data.slice(1).filter(r => r[1] && String(r[1]).trim() !== "");
           renderListPegawai('tendik');
           const elRincianTendikRetry = document.getElementById('rincianTendikBeranda');
-          if(elRincianTendikRetry) elRincianTendikRetry.textContent = buatRincianStatusTendik(dataTendik);
+          if(elRincianTendikRetry) elRincianTendikRetry.innerHTML = buatRincianStatusTendik(dataTendik);
           const elTot = document.getElementById('totTendik');
           const elSpin = document.getElementById('totTendikSpin');
           if(elTot){
@@ -3445,24 +3448,36 @@ function renderStatusGuru(data){
   elLbl.innerHTML = segmen.map(s => `<span style="white-space:nowrap;">${s.status} ${s.jml} org</span>`).join('<span style="color:#B9B7C9; margin:0 2px;">&middot;</span>');
 }
 
+function singkatJabatanTendik(jabatan){
+  const j = String(jabatan || '').trim();
+  const jl = j.toLowerCase();
+  if(jl.includes('kepala sekolah')) return 'Kepsek';
+  if(jl.includes('tata usaha')) return 'TU';
+  if(jl.includes('pustaka') || jl.includes('perpustakaan')) return 'Pustakawan';
+  if(jl.includes('satpam') || jl.includes('keamanan')) return 'Satpam';
+  if(jl.includes('kebun') || jl.includes('bersih')) return 'Kebersihan';
+  if(jl.includes('jaga')) return 'Penjaga';
+  return j || 'Lainnya';
+}
+
 function buatRincianStatusTendik(data){
   if(!data || data.length === 0) return '\u2013';
 
   const hitung = {};
   data.forEach(r => {
-    const status = String(r[3] || '').trim() || 'Lainnya';
-    hitung[status] = (hitung[status] || 0) + 1;
+    const jabatan = singkatJabatanTendik(r[2]);
+    hitung[jabatan] = (hitung[jabatan] || 0) + 1;
   });
 
   const urutan = Object.entries(hitung).sort((a, b) => b[1] - a[1]);
-  const utama = urutan.slice(0, 2).map(([status]) => status);
+  const utama = urutan.slice(0, 2).map(([jabatan]) => jabatan);
   const sisaJenis = urutan.slice(2);
 
-  if(sisaJenis.length > 0){
-    return `${utama.join(' \u2022 ')} \u2022 ${sisaJenis.length}+ lainnya`;
-  }
+  const dot = '<span style="color:#B9B7C9; margin:0 5px; font-size:9px; vertical-align:middle;">&#9679;</span>';
+  const segmen = [...utama];
+  if(sisaJenis.length > 0) segmen.push(`${sisaJenis.length}+`);
 
-  return utama.join(' \u2022 ');
+  return segmen.join(dot);
 }
 
 function warnaJabatanTendik(jabatan){
