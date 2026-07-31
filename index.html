@@ -229,7 +229,7 @@
       align-items:center;
       justify-content:center;
       gap:0;
-      padding:12px 12px 8px;
+      padding:14px 12px 6px;
       border-radius:9999px;
       transition: background .3s cubic-bezier(.4,0,.2,1), padding .3s cubic-bezier(.4,0,.2,1), box-shadow .3s cubic-bezier(.4,0,.2,1), transform .15s;
     }
@@ -238,7 +238,7 @@
     }
     .nav-active{
       background: #23213A;
-      padding:12px 16px 8px;
+      padding:14px 16px 6px;
       box-shadow: 0 8px 16px -6px rgba(35,33,58,.45);
     }
     .nav-icon-wrap{
@@ -981,7 +981,7 @@
 
   <div id="homeNormalContent">
 
-  <div style="position:relative; overflow:hidden; border-radius:12px;">
+  <div style="position:relative; overflow:hidden; border-radius:12px; -webkit-transform:translateZ(0); transform:translateZ(0); isolation:isolate;">
 
   <div style="position:absolute;width:200px;height:200px;border-radius:50%;background:#F7C99A;top:-50px;left:-60px;opacity:.35; z-index:0; filter:blur(45px);"></div>
   <div style="position:absolute;width:190px;height:190px;border-radius:50%;background:#C9B6F5;bottom:40px;right:-60px;opacity:.35; z-index:0; filter:blur(45px);"></div>
@@ -1022,7 +1022,7 @@
 
   </div>
 
-  <div style="position:relative; display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:12px; margin-bottom:16px; align-items:stretch;">
+  <div style="position:relative; display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:12px; margin-bottom:30px; align-items:stretch;">
 
     <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="position:relative; overflow:hidden; background:rgba(255,255,255,.42); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,.75); border-radius:20px; padding:18px; box-shadow:0 18px 34px -10px rgba(123,97,224,.22), inset 0 1px 0 rgba(255,255,255,.7); min-height:250px; display:flex; flex-direction:column; justify-content:space-between;">
       <div style="display:flex; align-items:center; justify-content:space-between;">
@@ -1799,7 +1799,7 @@ let historyTabAktif = false;
                     <span class="material-symbols-rounded text-[16px]" style="color:#6b7280;">chevron_right</span>
                   </div>
                 </div>
-                <div class="flex items-center justify-between" style="margin-top:8px; font-size:12px; font-weight:700;">
+                <div class="flex items-center justify-between" style="margin-top:8px; font-size:13px; font-weight:700;">
                   <span style="color:#0091EA;">L (${r.L})</span>
                   <span style="color:#D4537E;">P (${r.P})</span>
                 </div>
@@ -2717,12 +2717,10 @@ function gantiHalamanFade(pTarget){
   const currentEl = document.getElementById("p-" + pSekarang);
   const targetEl = document.getElementById("p-" + pTarget);
 
-  // Tab berat (Siswa, Guru, Unduh): lewati animasi fade sepenuhnya,
-  // langsung tampil. Halaman ini berisi chart/list besar yang bikin
-  // animasi terasa patah-patah/lag kalau dipaksa dianimasikan
-  // bersamaan dengan proses render kontennya.
-  const halamanBerat = ["siswa", "guru", "download"];
-  if(halamanBerat.includes(pTarget) || halamanBerat.includes(pSekarang)){
+  // Tab Unduh: lewati animasi fade sepenuhnya, langsung tampil.
+  // Ada bug render/compositing browser yang bikin halaman ini
+  // kelihatan kosong sampai discroll kalau dianimasikan.
+  if(pTarget === "download" || pSekarang === "download"){
     currentEl.classList.add("hidden");
     currentEl.style.cssText = "";
     targetEl.classList.remove("hidden");
