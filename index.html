@@ -2730,23 +2730,38 @@ function gantiHalamanFade(pTarget){
     return;
   }
   if(!pSekarang) return;
-  sedangTransisiNav = true;
 
   const currentEl = document.getElementById("p-" + pSekarang);
   const targetEl = document.getElementById("p-" + pTarget);
+
+  // Jaga-jaga: kalau salah satu elemen halaman tidak ditemukan,
+  // jangan lanjut sama sekali — supaya tidak pernah menyalakan
+  // "nav-transisi-berlangsung" tanpa ada yang mematikannya lagi
+  // (itu yang bikin efek glass semua card hilang permanen).
+  if(!currentEl || !targetEl){
+    updateNavAktif(pTarget);
+    return;
+  }
+
+  sedangTransisiNav = true;
 
   // Tab Unduh: lewati animasi fade sepenuhnya, langsung tampil.
   // Ada bug render/compositing browser yang bikin halaman ini
   // kelihatan kosong sampai discroll kalau dianimasikan.
   if(pTarget === "download" || pSekarang === "download"){
-    currentEl.classList.add("hidden");
-    currentEl.style.cssText = "";
-    targetEl.classList.remove("hidden");
-    targetEl.style.cssText = "";
-    window.scrollTo(0, 0);
-    updateNavAktif(pTarget);
-    sedangTransisiNav = false;
-    lanjutkanAntreanNav();
+    try {
+      currentEl.classList.add("hidden");
+      currentEl.style.cssText = "";
+      targetEl.classList.remove("hidden");
+      targetEl.style.cssText = "";
+      window.scrollTo(0, 0);
+      updateNavAktif(pTarget);
+    } catch(err) {
+      console.error("Error saat pindah tab (unduh):", err);
+    } finally {
+      sedangTransisiNav = false;
+      lanjutkanAntreanNav();
+    }
     return;
   }
 
@@ -2758,38 +2773,57 @@ function gantiHalamanFade(pTarget){
   currentEl.style.opacity = "0";
   currentEl.style.transform = "translateY(6px)";
 
+  // Jaring pengaman terakhir: apa pun yang terjadi, class
+  // "nav-transisi-berlangsung" (yang mematikan backdrop-filter
+  // di semua card) WAJIB dilepas lagi. Kalau ini tidak pernah
+  // kepanggil sampai batas waktu, paksa bersihkan sendiri.
+  const jaringPengamanGlass = setTimeout(function(){
+    document.body.classList.remove("nav-transisi-berlangsung");
+    sedangTransisiNav = false;
+  }, 1500);
+
   setTimeout(function(){
-    currentEl.classList.add("hidden");
-    currentEl.style.transition = "";
-    currentEl.style.opacity = "";
-    currentEl.style.transform = "";
-    currentEl.style.willChange = "";
+    try {
+      currentEl.classList.add("hidden");
+      currentEl.style.transition = "";
+      currentEl.style.opacity = "";
+      currentEl.style.transform = "";
+      currentEl.style.willChange = "";
 
-    window.scrollTo(0, 0);
+      window.scrollTo(0, 0);
 
-    targetEl.classList.remove("hidden");
-    targetEl.style.transition = "none";
-    targetEl.style.opacity = "0";
-    targetEl.style.transform = "translateY(6px)";
+      targetEl.classList.remove("hidden");
+      targetEl.style.transition = "none";
+      targetEl.style.opacity = "0";
+      targetEl.style.transform = "translateY(6px)";
 
-    updateNavAktif(pTarget);
+      updateNavAktif(pTarget);
 
-    requestAnimationFrame(function(){
       requestAnimationFrame(function(){
-        targetEl.style.transition = "opacity .18s ease, transform .18s ease";
-        targetEl.style.opacity = "1";
-        targetEl.style.transform = "translateY(0)";
+        requestAnimationFrame(function(){
+          targetEl.style.transition = "opacity .18s ease, transform .18s ease";
+          targetEl.style.opacity = "1";
+          targetEl.style.transform = "translateY(0)";
+        });
       });
-    });
+    } catch(err) {
+      console.error("Error saat transisi nav:", err);
+    }
 
     setTimeout(function(){
-      targetEl.style.transition = "";
-      targetEl.style.opacity = "";
-      targetEl.style.transform = "";
-      targetEl.style.willChange = "";
-      document.body.classList.remove("nav-transisi-berlangsung");
-      sedangTransisiNav = false;
-      lanjutkanAntreanNav();
+      try {
+        targetEl.style.transition = "";
+        targetEl.style.opacity = "";
+        targetEl.style.transform = "";
+        targetEl.style.willChange = "";
+      } catch(err) {
+        console.error("Error saat beres-beres transisi nav:", err);
+      } finally {
+        clearTimeout(jaringPengamanGlass);
+        document.body.classList.remove("nav-transisi-berlangsung");
+        sedangTransisiNav = false;
+        lanjutkanAntreanNav();
+      }
     }, 200);
 
   }, 160);
