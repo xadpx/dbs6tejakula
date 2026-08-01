@@ -3678,13 +3678,6 @@ function renderDetailPegawaiContent(tipe, idx){
             onclick="event.stopPropagation(); salinTeks('${r[7]}', 'copyNikIcon', 'NIK')">
             content_copy
           </span>
-          <span
-            id="unduhKtpIcon"
-            title="Unduh KTP"
-            class="material-symbols-rounded text-[15px] text-gray-600 cursor-pointer hover:text-blue-600 transition"
-            onclick="event.stopPropagation(); unduhBerkasGuru('${r[6]}', 'ktp', 'unduhKtpIcon')">
-            download
-          </span>
         </div>
       </div>
       <div class="text-gray-800 font-medium">${r[7] || '-'}</div>
@@ -3701,13 +3694,6 @@ function renderDetailPegawaiContent(tipe, idx){
             class="material-symbols-rounded text-[15px] text-gray-600 cursor-pointer hover:text-blue-600 transition"
             onclick="event.stopPropagation(); salinTeks('${r[8]}', 'copyNuptkIcon', 'NUPTK')">
             content_copy
-          </span>
-          <span
-            id="unduhNuptkIcon"
-            title="Unduh NUPTK"
-            class="material-symbols-rounded text-[15px] text-gray-600 cursor-pointer hover:text-blue-600 transition"
-            onclick="event.stopPropagation(); unduhBerkasGuru('${r[6]}', 'nuptk', 'unduhNuptkIcon')">
-            download
           </span>
         </div>
       </div>
@@ -3726,13 +3712,6 @@ function renderDetailPegawaiContent(tipe, idx){
             onclick="event.stopPropagation(); salinTeks('${r[9]}', 'copyNpwpIcon', 'NPWP')">
             content_copy
           </span>
-          <span
-            id="unduhNpwpIcon"
-            title="Unduh NPWP"
-            class="material-symbols-rounded text-[15px] text-gray-600 cursor-pointer hover:text-blue-600 transition"
-            onclick="event.stopPropagation(); unduhBerkasGuru('${r[6]}', 'npwp', 'unduhNpwpIcon')">
-            download
-          </span>
         </div>
       </div>
       <div class="text-gray-800 font-medium">${r[9] || '-'}</div>
@@ -3743,13 +3722,6 @@ function renderDetailPegawaiContent(tipe, idx){
         <div class="flex items-center gap-1.5 text-gray-500 text-[11px] font-semibold">
           <span class="material-symbols-rounded text-[15px]">account_balance</span> No. Rekening
         </div>
-        <span
-          id="unduhRekeningIcon"
-          title="Unduh Buku Rekening"
-          class="material-symbols-rounded text-[15px] text-gray-600 cursor-pointer hover:text-blue-600 transition"
-          onclick="event.stopPropagation(); unduhBerkasGuru('${r[6]}', 'rekening', 'unduhRekeningIcon')">
-          download
-        </span>
       </div>
       <div class="text-gray-800 font-medium">Berkas</div>
     </div>
@@ -3884,84 +3856,6 @@ Status Anak: ${r[14]}`;
   }
 
 }
-
-    // Label file & ekstensi default per jenis berkas, dipakai untuk nama file hasil unduhan
-    const LABEL_BERKAS_GURU = {
-      ktp: 'KTP',
-      nuptk: 'NUPTK',
-      npwp: 'NPWP',
-      rekening: 'Buku Rekening'
-    };
-
-    async function unduhBerkasGuru(nip, jenis, iconId){
-
-      const icon = document.getElementById(iconId);
-      const labelJenis = LABEL_BERKAS_GURU[jenis] || jenis;
-
-      if(!nip){
-        showToast(`NIP tidak ditemukan, tidak bisa mengambil berkas ${labelJenis}`, 2500);
-        return;
-      }
-
-      let iconAsalHTML = null;
-      if(icon){
-        iconAsalHTML = icon.textContent;
-        icon.textContent = 'progress_activity';
-        icon.classList.add('animate-spin');
-        icon.style.pointerEvents = 'none';
-      }
-
-      try{
-
-        const resp = await fetch(`${APPS_SCRIPT_URL}?action=unduhBerkasGuru&nip=${encodeURIComponent(nip)}&jenis=${encodeURIComponent(jenis)}`);
-        const json = await resp.json();
-
-        if(!json || json.error || !json.downloadUrl){
-          showToast(json && json.error ? json.error : `Berkas ${labelJenis} tidak ditemukan`, 2500);
-          return;
-        }
-
-        // Ambil isi file dulu lewat fetch, baru dipaksa download (biar tidak buka tab baru)
-        const fileResp = await fetch(json.downloadUrl);
-        const blob = await fileResp.blob();
-        const objectUrl = URL.createObjectURL(blob);
-
-        const link = document.createElement('a');
-        link.href = objectUrl;
-        link.download = json.namaFile || `${labelJenis}-${nip}`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(objectUrl);
-
-        if(icon){
-          icon.textContent = 'check';
-          icon.classList.remove('text-gray-600');
-          icon.classList.add('text-green-600');
-          setTimeout(function(){
-            icon.textContent = 'download';
-            icon.classList.remove('text-green-600');
-            icon.classList.add('text-gray-600');
-          }, 1200);
-        }
-
-      }catch(err){
-
-        console.error('Gagal mengunduh berkas guru:', err);
-        showToast(`Gagal mengunduh berkas ${labelJenis}`, 2500);
-
-      }finally{
-        if(icon){
-          icon.classList.remove('animate-spin');
-          icon.style.pointerEvents = '';
-          if(icon.textContent === 'progress_activity'){
-            icon.textContent = iconAsalHTML || 'download';
-          }
-        }
-
-      }
-
-    }
 
     window.modalStack = [];
 
