@@ -3916,28 +3916,20 @@ Status Anak: ${r[14]}`;
         const resp = await fetch(`${APPS_SCRIPT_URL}?action=unduhBerkasGuru&nip=${encodeURIComponent(nip)}&jenis=${encodeURIComponent(jenis)}`);
         const json = await resp.json();
 
-        if(!json || json.error){
-          showToast(`Berkas ${labelJenis} tidak ditemukan`, 2500);
+        if(!json || json.error || !json.downloadUrl){
+          showToast(json && json.error ? json.error : `Berkas ${labelJenis} tidak ditemukan`, 2500);
           return;
         }
 
-        // json diharapkan berbentuk { base64: "...", mimeType: "image/jpeg", namaFile: "ktp.jpg" }
-        const byteChars = atob(json.base64);
-        const byteNumbers = new Array(byteChars.length);
-        for(let i = 0; i < byteChars.length; i++){
-          byteNumbers[i] = byteChars.charCodeAt(i);
-        }
-        const byteArray = new Uint8Array(byteNumbers);
-        const blob = new Blob([byteArray], { type: json.mimeType || 'application/octet-stream' });
-
-        const url = URL.createObjectURL(blob);
+        // json berbentuk { downloadUrl: "...", namaFile: "ktp.jpg" } — link sementara dari Supabase
         const link = document.createElement('a');
-        link.href = url;
+        link.href = json.downloadUrl;
         link.download = json.namaFile || `${labelJenis}-${nip}`;
+        link.target = '_blank';
+        link.rel = 'noopener';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        URL.revokeObjectURL(url);
 
         if(icon){
           icon.textContent = 'check';
@@ -3956,7 +3948,6 @@ Status Anak: ${r[14]}`;
         showToast(`Gagal mengunduh berkas ${labelJenis}`, 2500);
 
       }finally{
-
         if(icon){
           icon.classList.remove('animate-spin');
           icon.style.pointerEvents = '';
