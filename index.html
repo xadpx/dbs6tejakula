@@ -1793,6 +1793,35 @@ z-[9999]">
     // ======================================================
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxuBMJOJdrTAYtdSmjIEuuC7Y50RBKDcjv_ND8uiVJCUI3k0VYR6xTjj1l8Mu-idsQs/exec";
 
+    const KATA_GELAR_DIABAIKAN = ['i','ni'];
+    function getInisialNama(nama){
+      if(!nama) return '?';
+      const kata = String(nama).trim().split(/\s+/).filter(k => k && !KATA_GELAR_DIABAIKAN.includes(k.toLowerCase()));
+      const dua = kata.slice(0,2);
+      const hasil = dua.map(k => k.charAt(0).toUpperCase()).join('');
+      return hasil || '?';
+    }
+    const PALET_AVATAR = [
+      ['#9FC3F2','#4A6FC2'],
+      ['#C6B6F0','#6B5CA5'],
+      ['#F0B8CE','#B9548A'],
+      ['#BFE3D0','#4A9B6E'],
+      ['#F6C99A','#C97A2E']
+    ];
+    function getWarnaAvatar(nama){
+      const s = String(nama || '');
+      let hash = 0;
+      for(let i=0;i<s.length;i++){ hash = s.charCodeAt(i) + ((hash << 5) - hash); }
+      const idx = Math.abs(hash) % PALET_AVATAR.length;
+      return PALET_AVATAR[idx];
+    }
+    function avatarInisialHTML(nama, sizePx){
+      const inisial = getInisialNama(nama);
+      const [c1,c2] = getWarnaAvatar(nama);
+      const fontSize = Math.round(sizePx * 0.36);
+      return `<div style="width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,${c1},${c2});display:flex;align-items:center;justify-content:center;font-size:${fontSize}px;font-weight:700;color:#fff;">${inisial}</div>`;
+    }
+
     let d = [];
 let pinPercobaan = 0;
 let halamanSebelumnya = "home";
@@ -1882,7 +1911,7 @@ let historyTabAktif = false;
         isi = `
           ${kartuRingkasanRombel}
           <div class="neu-card-flat" style="padding:4px;">
-            <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-bottom:1px solid #ECEDF0;">
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; background-image:linear-gradient(90deg, transparent, #D8DAE8 15%, #D8DAE8 85%, transparent); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;">
               <div style="display:flex; align-items:center; gap:8px;">
                 <span class="material-symbols-rounded text-[14.5px]" style="color:#0091EA;">groups</span>
                 <span style="font-size:13px; font-weight:700; color:#23213A;">Distribusi Rombel</span>
@@ -1891,7 +1920,7 @@ let historyTabAktif = false;
             </div>
             ${data.map((r,i) => {
               const total = r.L + r.P;
-              const garis = i === data.length - 1 ? '' : 'border-bottom:1px solid #ECEDF0;';
+              const garis = i === data.length - 1 ? '' : 'background-image:linear-gradient(90deg, transparent, #D8DAE8 15%, #D8DAE8 85%, transparent); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;';
               const persenL = total > 0 ? Math.round((r.L / total) * 100) : 50;
               const nomorKelas = r.kelas.replace('Kelas ','');
               return `
@@ -1954,12 +1983,9 @@ let historyTabAktif = false;
                 onpointerdown="buatRipple(event)"
                 onclick="showDetailByNIK('${r[8]}')"
                 class="flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect"
-                style="${i === hasil.length - 1 ? '' : 'border-bottom:1px solid #ECEDF0;'}">
-                <div class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
-                  <span class="material-symbols-rounded text-[13px] text-gray-600"
-                    style="font-variation-settings:'FILL' 1,'wght' 300,'GRAD' 0,'opsz' 24;">
-                    account_circle
-                  </span>
+                style="${i === hasil.length - 1 ? '' : 'background-image:linear-gradient(90deg, transparent, #D8DAE8 15%, #D8DAE8 85%, transparent); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;'}">
+                <div class="w-7 h-7 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
+                  ${avatarInisialHTML(r[1], 28)}
                 </div>
                 <div class="ml-3 flex-1 min-w-0">
                   <div class="text-[13px] font-semibold text-gray-900 truncate">${r[1]}</div>
@@ -2039,7 +2065,7 @@ let historyTabAktif = false;
       const isi = `
         ${kartuRingkasan}
         <div class="neu-card-flat" style="padding:4px;">
-          <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-bottom:1px solid #ECEDF0;">
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; background-image:linear-gradient(90deg, transparent, #D8DAE8 15%, #D8DAE8 85%, transparent); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;">
             <div style="display:flex; align-items:center; gap:8px;">
               <span class="material-symbols-rounded text-[14.5px]" style="color:#6C5DD3;">bar_chart</span>
               <span style="font-size:13px; font-weight:700; color:#23213A;">Distribusi Kesejahteraan</span>
@@ -2053,7 +2079,7 @@ let historyTabAktif = false;
               onpointerdown="buatRipple(event)"
               onclick="tampilkanSiswaDesil('${label}')"
               class="flex flex-col px-7 py-3.5 cursor-pointer active:bg-gray-50 transition ripple-effect"
-              style="${i === arr.length - 1 ? '' : 'border-bottom:1px solid #ECEDF0;'}">
+              style="${i === arr.length - 1 ? '' : 'background-image:linear-gradient(90deg, transparent, #D8DAE8 15%, #D8DAE8 85%, transparent); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;'}">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
                   <div style="width:32px;height:32px;border-radius:12px;background:${WARNA_DESIL[label]}1A;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
@@ -2099,20 +2125,11 @@ let historyTabAktif = false;
                 onpointerdown="buatRipple(event)"
                 onclick="showDetailByNIK('${r[8]}')"
                 class="flex items-center justify-between px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect"
-                style="${i === hasil.length - 1 ? '' : 'border-bottom:1px solid #ECEDF0;'}">
+                style="${i === hasil.length - 1 ? '' : 'background-image:linear-gradient(90deg, transparent, #D8DAE8 15%, #D8DAE8 85%, transparent); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;'}">
                 <div class="flex items-center min-w-0">
-                  <div class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
-                    <span class="material-symbols-rounded text-[13px] text-gray-600"
-                      style="font-variation-settings:'FILL' 1,'wght' 300,'GRAD' 0,'opsz' 24;">
-                      account_circle
-                    </span>
+                  <div class="w-7 h-7 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
+                    ${avatarInisialHTML(r[1], 28)}
                   </div>
-                  <div class="ml-3 flex-1 min-w-0">
-                    <div class="text-[13px] font-semibold text-gray-900 truncate">${r[1]}</div>
-                    <div class="text-[12.5px] text-gray-600 mt-0.5">${r[2]}</div>
-                  </div>
-                </div>
-                <span style="flex-shrink:0; margin-left:8px; font-size:11px; font-weight:700; background:${WARNA_DESIL[label]}26; color:${warnaPekat(WARNA_DESIL[label])}; padding:3px 9px; border-radius:999px; white-space:nowrap;">${label.replace('Desil ','D')}</span>
               </div>
             `).join('')}
           </div>
@@ -2146,7 +2163,7 @@ let historyTabAktif = false;
               onpointerdown="buatRipple(event)"
               onclick="tampilkanSiswaStatusAnak('${label}')"
               class="flex items-center justify-between px-4 py-3 cursor-pointer active:bg-gray-50 transition ripple-effect"
-              style="${i === labels.length - 1 ? '' : 'border-bottom:1px solid #ECEDF0;'}">
+              style="${i === labels.length - 1 ? '' : 'background-image:linear-gradient(90deg, transparent, #D8DAE8 15%, #D8DAE8 85%, transparent); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;'}">
               <div class="flex items-center gap-3">
                 <div style="width:32px;height:32px;border-radius:12px;background:${(WARNA_STATUS_ANAK[label] || '#9871F5')}1A;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                   <span style="color:${WARNA_STATUS_ANAK[label] || '#9871F5'};"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></span>
@@ -2241,7 +2258,7 @@ let historyTabAktif = false;
       }else{isi = `
           ${kartuRingkasanStatus}
           <div class="neu-card-flat" style="padding:4px;">
-            <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-bottom:1px solid #ECEDF0;">
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; background-image:linear-gradient(90deg, transparent, #D8DAE8 15%, #D8DAE8 85%, transparent); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;">
               <div style="display:flex; align-items:center; gap:8px;">
                 <span class="material-symbols-rounded text-[14.5px]" style="color:#6C5DD3;">groups</span>
                 <span style="font-size:13px; font-weight:700; color:#23213A;">Daftar Siswa</span>
@@ -2257,13 +2274,10 @@ let historyTabAktif = false;
                 onpointerdown="buatRipple(event)"
                 onclick="showDetailByNIK('${r[8]}')"
                 class="flex items-center justify-between px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect"
-                style="${i === hasil.length - 1 ? '' : 'border-bottom:1px solid #ECEDF0;'}">
+                style="${i === hasil.length - 1 ? '' : 'background-image:linear-gradient(90deg, transparent, #D8DAE8 15%, #D8DAE8 85%, transparent); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;'}">
                 <div class="flex items-center min-w-0">
-                  <div class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
-                    <span class="material-symbols-rounded text-[13px] text-gray-600"
-                      style="font-variation-settings:'FILL' 1,'wght' 300,'GRAD' 0,'opsz' 24;">
-                      account_circle
-                    </span>
+                  <div class="w-7 h-7 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
+                    ${avatarInisialHTML(r[1], 28)}
                   </div>
                   <div class="ml-3 flex-1 min-w-0">
                     <div class="text-[13px] font-semibold text-gray-900 truncate">${r[1]}</div>
@@ -2962,12 +2976,9 @@ ${hasil.map((r,i)=>`
 onpointerdown="buatRipple(event)"
 onclick="showDetailByNIK('${r[8]}')"
 class="flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect"
-style="${i === hasil.length - 1 ? '' : 'border-bottom:1px solid #ECEDF0;'}">
-  <div class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
-    <span class="material-symbols-rounded text-[13px] text-gray-400"
-      style="font-variation-settings:'FILL' 1,'wght' 300,'GRAD' 0,'opsz' 24;">
-      account_circle
-    </span>
+style="${i === hasil.length - 1 ? '' : 'background-image:linear-gradient(90deg, transparent, #D8DAE8 15%, #D8DAE8 85%, transparent); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;'}">
+  <div class="w-7 h-7 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
+    ${avatarInisialHTML(r[1], 28)}
   </div>
   <div class="ml-3 flex-1 min-w-0">
     <div class="text-[13px] font-semibold text-gray-900 truncate">${r[1]}</div>
@@ -3101,7 +3112,7 @@ hasil.sort((a, b) => {
 ${hasil.map((r,i)=>{
 
 const belumLengkap = r.some(v => !String(v).trim());
-const garis = i === hasil.length - 1 ? '' : 'border-bottom:1px solid #ECEDF0;';
+const garis = i === hasil.length - 1 ? '' : 'background-image:linear-gradient(90deg, transparent, #D8DAE8 15%, #D8DAE8 85%, transparent); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;';
 
 return `
 
@@ -3111,12 +3122,9 @@ onclick="showDetailByNIK('${r[8]}')"
 class="flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect"
 style="${garis}">
 
-  <div class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 ${belumLengkap ? 'opacity-40' : ''}">
+  <div class="w-7 h-7 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0 ${belumLengkap ? 'opacity-40' : ''}">
 
-    <span class="material-symbols-rounded text-[13px] text-gray-600"
-      style="font-variation-settings:'FILL' 1,'wght' 300,'GRAD' 0,'opsz' 24;">
-      account_circle
-    </span>
+    ${avatarInisialHTML(r[1], 28)}
 
   </div>
 
@@ -3178,8 +3186,8 @@ function renderDetailSiswaContent(nik){
       data-link="${String(r[10] || '').trim().replace(/"/g, '&quot;')}"
       onclick="bukaDriveGuru(this.dataset.link)"
       class="w-[52px] h-[52px] sm:w-[92px] sm:h-[92px] rounded-full overflow-hidden flex items-center justify-center shrink-0 avatar-press cursor-pointer"
-      style="background:#eef1f4; box-shadow: 0 6px 16px rgba(110,110,118,.35);">
-      <span class="material-symbols-rounded" style="font-size:28px; color:#aab3bd; font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;">person</span>
+      style="box-shadow: 0 6px 16px rgba(110,110,118,.35);">
+      ${avatarInisialHTML(r[1], 52)}
     </div>
     <div class="text-center">
       <div class="text-[14.5px] sm:text-[16px] font-bold text-gray-900">${r[1]}</div>
@@ -3581,17 +3589,14 @@ ${sumber.map((r,i)=>{
 onpointerdown="buatRipple(event)"
 onclick="showDetailPegawai('${tipe}', ${i})"
 class="flex items-center justify-between px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect"
-style="${i === sumber.length - 1 ? '' : 'border-bottom:1px solid #ECEDF0;'}">
+style="${i === sumber.length - 1 ? '' : 'background-image:linear-gradient(90deg, transparent, #D8DAE8 15%, #D8DAE8 85%, transparent); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;'}">
   <div class="flex items-center min-w-0 flex-1">
     <div
       data-link="${String(r[10] || '').trim().replace(/"/g, '&quot;')}"
       onpointerdown="event.stopPropagation();"
       onclick="event.stopPropagation(); bukaDriveGuru(this.dataset.link)"
-      class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 avatar-press">
-      <span class="material-symbols-rounded text-[13px] text-gray-600"
-        style="font-variation-settings:'FILL' 1,'wght' 300,'GRAD' 0,'opsz' 24;">
-        account_circle
-      </span>
+      class="w-7 h-7 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0 avatar-press">
+      ${avatarInisialHTML(r[1], 28)}
     </div>
     <div class="ml-3 flex-1 min-w-0">
       <div class="text-[13px] font-semibold text-gray-900 truncate">${r[1]}</div>
@@ -3645,8 +3650,8 @@ function renderDetailPegawaiContent(tipe, idx){
       data-link="${String(r[10] || '').trim().replace(/"/g, '&quot;')}"
       onclick="bukaDriveGuru(this.dataset.link)"
       class="w-[52px] h-[52px] sm:w-[92px] sm:h-[92px] rounded-full overflow-hidden flex items-center justify-center shrink-0 avatar-press cursor-pointer"
-      style="background:#eef1f4; box-shadow: 0 6px 16px rgba(110,110,118,.35);">
-      <span class="material-symbols-rounded" style="font-size:28px; color:#aab3bd; font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;">person</span>
+      style="box-shadow: 0 6px 16px rgba(110,110,118,.35);">
+      ${avatarInisialHTML(r[1], 52)}
     </div>
 
     <div class="text-center">
@@ -4661,11 +4666,8 @@ function renderPegawaiKategori(step){
             onpointerdown="buatRipple(event)"
             onclick="showDetailPegawai('${item.tipe}', ${item.idx})"
             class="neu-card flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect">
-            <div class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
-              <span class="material-symbols-rounded text-[13px] text-gray-600"
-                style="font-variation-settings:'FILL' 1,'wght' 300,'GRAD' 0,'opsz' 24;">
-                account_circle
-              </span>
+            <div class="w-7 h-7 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
+              ${avatarInisialHTML(item.r[1], 28)}
             </div>
             <div class="ml-3 flex-1 min-w-0">
               <div class="text-[13px] font-semibold text-gray-900 truncate">${item.r[1]}</div>
@@ -4844,7 +4846,7 @@ function tampilkanSiswaKategori(kolom, label){
     document.getElementById("list-kategori").innerHTML = `
       <div class="neu-card-flat" style="padding:4px;">
         ${hasil.map((r,i) => `
-          <div class="flex items-center px-4 py-2.5" style="${i === hasil.length - 1 ? '' : 'border-bottom:1px solid #ECEDF0;'}">
+          <div class="flex items-center px-4 py-2.5" style="${i === hasil.length - 1 ? '' : 'background-image:linear-gradient(90deg, transparent, #D8DAE8 15%, #D8DAE8 85%, transparent); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;'}">
             <div class="flex-1 min-w-0">
               <div class="text-[13px] font-semibold text-gray-900 truncate">${r[1]}</div>
               <div class="text-[11px] text-gray-600 mt-0.5">${r[2]}</div>
