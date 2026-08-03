@@ -1586,7 +1586,10 @@ Unduh Data
 class="hidden detail-fullpage-overlay fixed inset-0 z-[60] overflow-y-auto">
     <div id="modalBox" class="detail-fullpage-box relative w-full min-h-full px-5 py-6 sm:px-10 md:px-16" style="max-width:480px; margin-left:auto; margin-right:auto; background:transparent; box-shadow: none; border-radius: 20px;">
 
-     <div style="position:sticky; top:0; z-index:20; margin:-24px -20px 0; padding-top:24px; background:rgba(246,245,251,.85); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);">
+     <div id="modalStickyHeader" style="position:sticky; top:0; z-index:20; margin:-24px -20px 0; padding-top:14px; background:rgba(246,245,251,.85); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); touch-action:none;">
+     <div style="display:flex; justify-content:center; padding-bottom:10px;">
+       <div style="width:36px; height:4px; border-radius:999px; background:#C7C9DC;"></div>
+     </div>
      <div class="flex items-center justify-between mb-8" style="padding-top:8px; padding-bottom:8px; padding-left:20px; padding-right:20px;">
         <button
           onclick="mundurModal()"
@@ -3918,6 +3921,52 @@ Status Anak: ${r[14]}`;
         closeModal();
       }
     }
+
+    (function(){
+      let startY = 0;
+      let currentY = 0;
+      let dragging = false;
+      const header = document.getElementById('modalStickyHeader');
+      const box = document.getElementById('modalBox');
+      if(!header || !box) return;
+
+      function onStart(y){
+        startY = y;
+        currentY = y;
+        dragging = true;
+        box.style.transition = 'none';
+      }
+      function onMove(y){
+        if(!dragging) return;
+        currentY = y;
+        const delta = Math.max(0, currentY - startY);
+        box.style.transform = `translateY(${delta}px)`;
+      }
+      function onEnd(){
+        if(!dragging) return;
+        dragging = false;
+        const delta = Math.max(0, currentY - startY);
+        box.style.transition = 'transform .25s cubic-bezier(.4,0,.2,1)';
+        if(delta > 90){
+          box.style.transform = `translateY(100%)`;
+          setTimeout(() => {
+            box.style.transition = 'none';
+            box.style.transform = '';
+            mundurModal();
+          }, 220);
+        } else {
+          box.style.transform = '';
+        }
+      }
+
+      header.addEventListener('touchstart', e => onStart(e.touches[0].clientY), { passive: true });
+      header.addEventListener('touchmove', e => onMove(e.touches[0].clientY), { passive: true });
+      header.addEventListener('touchend', onEnd);
+
+      header.addEventListener('pointerdown', e => { header.setPointerCapture(e.pointerId); onStart(e.clientY); });
+      header.addEventListener('pointermove', e => onMove(e.clientY));
+      header.addEventListener('pointerup', onEnd);
+    })();
 
     function renderModalStep(step){
       if(step.type === 'daftarKelas'){
