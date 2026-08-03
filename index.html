@@ -1648,9 +1648,11 @@ class="hidden detail-fullpage-overlay fixed inset-0 z-[60]">
       </div>
       </div>
 
-      <div style="flex:1 1 auto; min-height:0; overflow-y:auto; padding:16px 20px 24px;">
-        <div id="detail-content" class="text-sm space-y-2 text-gray-600"></div>
-        <div style="position:sticky; bottom:-24px; left:0; right:0; height:40px; margin-top:-40px; background:linear-gradient(rgba(255,255,255,0), rgba(255,255,255,.98) 70%); pointer-events:none;"></div>
+      <div style="position:relative; flex:1 1 auto; min-height:0;">
+        <div style="position:absolute; inset:0; overflow-y:auto; padding:16px 20px 24px;">
+          <div id="detail-content" class="text-sm space-y-2 text-gray-600"></div>
+        </div>
+        <div style="position:absolute; left:0; right:0; bottom:0; height:40px; background:linear-gradient(rgba(255,255,255,0), rgba(255,255,255,.98) 70%); pointer-events:none;"></div>
       </div>
     </div>
   </div>
