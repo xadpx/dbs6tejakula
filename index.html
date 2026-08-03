@@ -566,15 +566,16 @@
     }
     .pillbar-row::-webkit-scrollbar{ display:none; }
     .pillbar-col {
-      position: relative;
-      display: flex; flex-direction: column; align-items: center;
-      gap: 7px;
-      flex: 1 0 auto; min-width: 34px;
-      cursor: pointer;
-      border-radius: 10px;
-      transition: transform .12s ease;
-      overflow: visible;
-    }
+  position: relative;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 7px;
+  flex: 1 0 auto; min-width: 34px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: transform .12s ease;
+  overflow: visible;
+  will-change: transform;
+}
     .pillbar-col:active { transform: scale(.96); }
     .pillbar-bar-wrap {
       position: relative;
