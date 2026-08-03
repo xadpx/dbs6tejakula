@@ -811,10 +811,10 @@
       transition: transform .35s cubic-bezier(.16,1,.3,1), opacity .3s cubic-bezier(.16,1,.3,1);
     }
     .premium-popup-overlay.show .premium-popup-box { transform: scale(1) translateY(0); opacity: 1; }
-    .detail-fullpage-overlay { opacity: 0; background: rgba(246,245,251,.75); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); transition: opacity .3s cubic-bezier(.16,1,.3,1); }
+    .detail-fullpage-overlay { opacity: 0; background: rgba(35,33,58,.55); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); transition: opacity .3s cubic-bezier(.16,1,.3,1); }
     .detail-fullpage-overlay.show { opacity: 1; }
-    .detail-fullpage-box { transform: translateY(14px); opacity: 0; transition: transform .3s cubic-bezier(.16,1,.3,1), opacity .3s cubic-bezier(.16,1,.3,1); }
-    .detail-fullpage-overlay.show .detail-fullpage-box { transform: translateY(0); opacity: 1; }
+    .detail-fullpage-box { transform: translateY(100%); transition: transform .32s cubic-bezier(.16,1,.3,1); }
+    .detail-fullpage-overlay.show .detail-fullpage-box { transform: translateY(0); }
     .carousel-grafik-wrap{
       position:relative;
       margin-bottom:16px;
@@ -1583,14 +1583,15 @@ Unduh Data
 </div>
     </div>
   <div id="modal"
-class="hidden detail-fullpage-overlay fixed inset-0 z-[60] overflow-y-auto">
-    <div id="modalBox" class="detail-fullpage-box relative w-full min-h-full px-5 py-6 sm:px-10 md:px-16" style="max-width:480px; margin-left:auto; margin-right:auto; background:transparent; box-shadow: none; border-radius: 20px;">
+onclick="if(event.target===this) mundurModal();"
+class="hidden detail-fullpage-overlay fixed inset-0 z-[60] flex items-end justify-center">
+    <div id="modalBox" class="detail-fullpage-box relative w-full" style="max-width:480px; max-height:82vh; background:#ffffff; border-radius:22px 22px 0 0; box-shadow:0 -12px 30px rgba(35,33,58,.25); display:flex; flex-direction:column; overflow:hidden;">
 
-     <div id="modalStickyHeader" style="position:sticky; top:0; z-index:20; margin:-24px -20px 0; padding-top:14px; background:rgba(246,245,251,.85); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); touch-action:none;">
-     <div style="display:flex; justify-content:center; padding-bottom:10px;">
+     <div id="modalStickyHeader" style="flex-shrink:0; touch-action:none;">
+     <div style="display:flex; justify-content:center; padding-top:10px; padding-bottom:10px;">
        <div style="width:36px; height:4px; border-radius:999px; background:#C7C9DC;"></div>
      </div>
-     <div class="flex items-center justify-between mb-8" style="padding-top:8px; padding-bottom:8px; padding-left:20px; padding-right:20px;">
+     <div class="flex items-center justify-between" style="padding-bottom:10px; padding-left:20px; padding-right:20px; border-bottom:1px solid #F1F1F6;">
         <button
           onclick="mundurModal()"
           class="flex items-center justify-center shrink-0 glass-icon-btn"
@@ -1632,7 +1633,9 @@ class="hidden detail-fullpage-overlay fixed inset-0 z-[60] overflow-y-auto">
       </div>
       </div>
 
-            <div id="detail-content" class="text-sm space-y-2 text-gray-600"></div>
+      <div style="flex:1 1 auto; min-height:0; overflow-y:auto; padding:16px 20px 24px;">
+        <div id="detail-content" class="text-sm space-y-2 text-gray-600"></div>
+      </div>
     </div>
   </div>
 <!-- MODAL PIN -->
