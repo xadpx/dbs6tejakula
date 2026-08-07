@@ -142,6 +142,7 @@
     }
     #app-scroll {
       min-height: 100vh;
+      padding-top: env(safe-area-inset-top, 0px);
       box-shadow: 0 25px 60px rgba(70,61,130,.18);
       border-left: 1px solid var(--glass-border);
       border-right: 1px solid var(--glass-border);
@@ -1092,7 +1093,7 @@
 
   </div>
   <div id="p-home" class="p-5" style="padding-bottom:140px;">
-  <div class="mb-6">
+  <div class="mb-4">
 
   <div id="greetingBlock">
 
@@ -1138,13 +1139,13 @@
     <div style="position:absolute;width:150px;height:150px;border-radius:50%;background:#F7C99A;top:-40px;left:-40px;opacity:.35; z-index:0; filter:blur(35px); pointer-events:none;"></div>
     <div style="position:absolute;width:140px;height:140px;border-radius:50%;background:#C9B6F5;bottom:-30px;right:-30px;opacity:.35; z-index:0; filter:blur(35px); pointer-events:none;"></div>
 
-    <div style="position:relative; z-index:1; flex:1; min-width:0; padding:20px 16px 22px 20px;">
-      <div style="margin:0 0 16px;">
+    <div style="position:relative; z-index:1; flex:1; min-width:0; padding:16px 16px 18px 20px;">
+      <div style="margin:0 0 10px;">
         <p style="font-size:13px; font-weight:700; color:rgba(255,255,255,.85); line-height:1.35; margin:0;">SD Negeri 6 Tejakula</p>
         <p style="font-size:10px; color:rgba(255,255,255,.65); font-weight:600; margin:2px 0 0;">Tahun Ajaran 2026/2027</p>
       </div>
       <p style="font-size:12px; font-weight:700; letter-spacing:.06em; color:rgba(255,255,255,.8); margin:0; text-transform:uppercase;">Total siswa</p>
-      <div style="font-size:44px; font-weight:800; color:#fff; margin:10px 0 4px; line-height:1; font-family:var(--font-family);" class="relative inline-flex items-center">
+      <div style="font-size:40px; font-weight:800; color:#fff; margin:8px 0 3px; line-height:1; font-family:var(--font-family);" class="relative inline-flex items-center">
         <span id="tot" class="hidden tabular-nums">0</span>
         <span id="totSpin" class="spinner-ring-gray" style="width:24px;height:24px;"></span>
       </div>
