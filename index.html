@@ -570,20 +570,15 @@
     .rombel-row.open { background: rgba(255,255,255,.55); }
     .rombel-row:last-child { margin-bottom: 0; }
     @keyframes shimmerSweep { 0%{background-position:-200% 0;} 100%{background-position:200% 0;} }
-    @keyframes namaMarqueeScroll {
-      0%, 12% { transform: translateX(0); }
-      88%, 100% { transform: translateX(var(--marquee-jarak, -60px)); }
-    }
     .nama-marquee-wrap {
-      overflow: hidden;
+      overflow-x: hidden;
       white-space: nowrap;
       position: relative;
       -webkit-mask-image: linear-gradient(to right, #000 88%, transparent 100%);
       mask-image: linear-gradient(to right, #000 88%, transparent 100%);
     }
-    .nama-marquee-wrap.marquee-aktif .nama-marquee-text {
+    .nama-marquee-text {
       display: inline-block;
-      animation: namaMarqueeScroll 5s ease-in-out infinite;
     }
     .skeleton-shimmer {
       background: linear-gradient(90deg,#E4E1F0 25%,#F3F0FA 37%,#E4E1F0 63%);
@@ -1898,17 +1893,50 @@ z-[9999]">
       requestAnimationFrame(() => {
         const wrap = document.getElementById(idWrap);
         if(!wrap) return;
+        if(wrap._marqueeStop){ wrap._marqueeStop(); wrap._marqueeStop = null; }
         const teks = wrap.querySelector('.nama-marquee-text');
         if(!teks) return;
-        wrap.classList.remove('marquee-aktif');
-        teks.style.animation = 'none';
-        const lebihPanjang = teks.scrollWidth - wrap.clientWidth;
-        if(lebihPanjang > 4){
-          wrap.style.setProperty('--marquee-jarak', (-(lebihPanjang + 16)) + 'px');
-          wrap.classList.add('marquee-aktif');
-          void teks.offsetWidth;
-          teks.style.animation = '';
+        wrap.scrollLeft = 0;
+        const jarak = teks.scrollWidth - wrap.clientWidth;
+        if(jarak <= 4) return;
+
+        let dihentikan = false;
+        wrap._marqueeStop = () => { dihentikan = true; };
+
+        const jedaAwal = 900;
+        const jedaAkhir = 900;
+        const kecepatan = 32;
+        const durasiJalan = (jarak / kecepatan) * 1000;
+
+        function animasikan(mulai, tujuan, durasi, laluLanjut){
+          const t0 = performance.now();
+          function langkah(t){
+            if(dihentikan) return;
+            const p = Math.min(1, (t - t0) / durasi);
+            wrap.scrollLeft = mulai + (tujuan - mulai) * p;
+            if(p < 1){
+              requestAnimationFrame(langkah);
+            }else if(laluLanjut){
+              laluLanjut();
+            }
+          }
+          requestAnimationFrame(langkah);
         }
+
+        function siklus(){
+          if(dihentikan) return;
+          setTimeout(() => {
+            if(dihentikan) return;
+            animasikan(0, jarak, durasiJalan, () => {
+              if(dihentikan) return;
+              setTimeout(() => {
+                if(dihentikan) return;
+                animasikan(jarak, 0, durasiJalan, siklus);
+              }, jedaAkhir);
+            });
+          }, jedaAwal);
+        }
+        siklus();
       });
     }
 
