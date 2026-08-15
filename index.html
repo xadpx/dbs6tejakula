@@ -1036,6 +1036,33 @@
       border-top: 1px solid #ECEDF0 !important;
       box-shadow: 0 -2px 16px rgba(20,20,43,.06) !important;
     }
+
+    /* 5. NEUMORPHIC — elemen bulat (ring donut, badge ikon, tombol lonceng/copy/unduh)
+       ikut warna kartu di sekitarnya (bukan kontras) + shadow dua-arah (terang
+       kiri-atas, gelap kanan-bawah) supaya kelihatan timbul, persis seperti
+       lingkaran "Sales 4%" / "Visitor Insights" / badge ikon di referensi. */
+    .neu-ring-wrap,
+    .fab-copy,
+    .ring-center-raised,
+    .center-label.show,
+    .legend-chip-neu,
+    .chart-glass-wrap,
+    .neu-search-icon,
+    .glass-icon-btn,
+    .btn-unduh-chart-icon {
+      background: #EEF1F6 !important;
+      background-image: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+      border: none !important;
+      box-shadow: 6px 6px 14px rgba(163,177,198,.45), -6px -6px 14px rgba(255,255,255,.9) !important;
+    }
+    .center-label.show:active,
+    .btn-unduh-chart-icon:active,
+    .btn-unduh-chart-icon.sedang-unduh,
+    .legend-chip-neu.legend-chip-pressed {
+      box-shadow: inset 4px 4px 10px rgba(163,177,198,.4), inset -4px -4px 10px rgba(255,255,255,.85) !important;
+    }
   </style>
 </head>
 <body class="text-base">
