@@ -31,8 +31,8 @@
       --color-bg-app-1:   #EEF1F6;
       --color-bg-app-2:   #EEF1F6;
       --color-bg-app-3:   #EEF1F6;
-      --color-bg-card:    #FFFFFF;
-      --color-bg-card-solid: #FFFFFF;
+      --color-bg-card:    #EEF1F6;
+      --color-bg-card-solid: #EEF1F6;
 
       --color-primary:      #6C5DD3;
       --color-primary-deep: #4B39B5;
@@ -204,24 +204,24 @@
       box-shadow: inset 0 2px 5px rgba(20,20,43,.18);
     }
     .toggle-track{
-      background: #FDFDFE !important;
-      border: 1px solid #E7E8EC !important;
-      box-shadow: inset 2px 2px 5px rgba(190,190,200,.2), inset -2px -2px 5px rgba(255,255,255,.8) !important;
+      background: #EEF1F6 !important;
+      border: none !important;
+      box-shadow: inset 3px 3px 7px rgba(163,177,198,.4), inset -3px -3px 7px rgba(255,255,255,.85) !important;
       overflow: hidden;
     }
     .toggle-track.on{
       background: var(--grad2) !important;
       border-color: transparent !important;
-      box-shadow: 0 4px 10px rgba(108,93,211,.3) !important;
+      box-shadow: inset 2px 2px 6px rgba(60,45,150,.35) !important;
     }
     .toggle-knob-neu{
-      background:#ffffff !important;
-      border: 1px solid rgba(255,255,255,.9) !important;
-      box-shadow: 0 1px 2px rgba(60,60,70,.35) !important;
+      background:#EEF1F6 !important;
+      border: none !important;
+      box-shadow: 2px 2px 5px rgba(163,177,198,.5), -1px -1px 3px rgba(255,255,255,.9) !important;
     }
     .toggle-knob-neu.on{
       background:#ffffff !important;
-      box-shadow: 0 1px 2px rgba(30,80,130,.3) !important;
+      box-shadow: 1px 1px 3px rgba(30,20,80,.35) !important;
     }
     #p-siswa, #p-guru{
       overflow-x:clip;
@@ -432,39 +432,39 @@
     }
     .neu-bg{ background: transparent; }
     .neu-card{
-      background-color: #E8ECF3;
+      background-color: #EEF1F6;
       border-radius: var(--radius-md);
-      border: 1.5px solid rgba(255,255,255,.55);
-      box-shadow: 0 10px 26px rgba(20,20,43,.1);
+      border: none;
+      box-shadow: var(--neu-raised-sm);
     }
     .neu-card-flat{
-      background-color: #FFFFFF;
+      background-color: #EEF1F6;
       border-radius: var(--radius-md);
       border: none;
-      box-shadow: 0 2px 8px rgba(20,20,30,.06);
+      box-shadow: var(--neu-raised-sm);
     }
     .neu-btn{
-      background-color: #FFFFFF;
+      background-color: #EEF1F6;
       border-radius: var(--radius-sm);
       border: none;
-      box-shadow: 0 2px 6px rgba(20,20,30,.05);
+      box-shadow: var(--neu-raised-sm);
       transition: box-shadow .12s ease;
     }
     .neu-btn:active{
-      box-shadow: inset 0 2px 5px rgba(20,20,43,.18);
+      box-shadow: var(--neu-pressed-sm);
     }
     .neu-nav{
-      background-color: #FFFFFF;
-      box-shadow: 0 -2px 12px rgba(20,20,30,.06);
-      border-top: 1px solid #ECEDF0;
+      background-color: #EEF1F6;
+      box-shadow: 0 -8px 20px rgba(163,177,198,.35), 0 -1px 0 rgba(255,255,255,.6);
+      border-top: none;
     }
     .neu-search{
       -webkit-appearance: none !important;
       appearance: none !important;
-      background-color: #FFFFFF !important;
-      border: 1px solid #ECEDF0 !important;
+      background-color: #EEF1F6 !important;
+      border: none !important;
       border-radius: 9999px;
-      box-shadow: 0 2px 8px rgba(20,20,30,.05) !important;
+      box-shadow: var(--neu-pressed-sm) !important;
     }
     /* Fallback global: pastikan SEMUA permukaan kaca (baik lewat class maupun inline style)
        benar-benar menampilkan efek blur, bukan cuma warna transparan datar. */
@@ -609,10 +609,10 @@
       position: relative;
       width: 100%; height: 132px;
       display: flex; align-items: flex-end; justify-content: center;
-      background: #FFFFFF;
-      border: 1.5px solid rgba(255,255,255,.7);
+      background: #EEF1F6;
+      border: none;
       border-radius: 24px;
-      box-shadow: inset 0 2px 6px rgba(20,20,43,.08), 0 6px 16px -8px rgba(139,92,199,.18);
+      box-shadow: inset 3px 3px 8px rgba(163,177,198,.4), inset -3px -3px 8px rgba(255,255,255,.7);
       padding: 4px 3px;
       box-sizing: border-box;
     }
@@ -684,16 +684,16 @@
     }
     .neu-ring-wrap {
       border-radius: 50%; flex-shrink: 0; position: relative;
-      border: 1.5px solid rgba(255,255,255,.55);
-      box-shadow: 0 6px 18px rgba(20,20,43,.1);
+      border: none;
+      box-shadow: var(--neu-raised-sm);
       display: flex; align-items: center; justify-content: center;
-      background: #E8ECF3;
+      background: #EEF1F6;
     }
     .fab-copy {
       width: 34px; height: 34px; border-radius: 50%;
-      background: #E8ECF3;
-      border: 1.5px solid rgba(255,255,255,.55);
-      box-shadow: 0 6px 16px rgba(20,20,43,.12);
+      background: #EEF1F6;
+      border: none;
+      box-shadow: var(--neu-raised-sm);
       display: flex; align-items: center; justify-content: center;
       color: var(--color-text-secondary);
     }
@@ -710,10 +710,10 @@
     }
     .chart-glass-wrap {
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      box-shadow: inset 0 2px 8px rgba(20,20,43,.14);
-      background: #FFFFFF;
-      -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm);
-      border: 1px solid var(--glass-border);
+      box-shadow: inset 3px 3px 8px rgba(163,177,198,.4), inset -3px -3px 8px rgba(255,255,255,.7);
+      background: #EEF1F6;
+      -webkit-backdrop-filter: none; backdrop-filter: none;
+      border: none;
       padding: 0; margin: 0 auto;
       position: relative;
     }
@@ -723,16 +723,16 @@
       transform: translate(-50%, -50%);
       width: 70px; height: 70px;
       border-radius: 50%;
-      background: #E8ECF3;
-      border: 1.5px solid rgba(255,255,255,.55);
-      box-shadow: 0 4px 12px rgba(20,20,43,.1);
+      background: #EEF1F6;
+      border: none;
+      box-shadow: var(--neu-raised-sm);
       z-index: 0;
     }
     .legend-chip-neu {
       display: flex; flex-direction: row; align-items: center; gap: 8px; justify-content: space-between;
-      background: #E8ECF3; border-radius: 999px; padding: 9px 14px;
-      border: 1.5px solid rgba(255,255,255,.55);
-      box-shadow: 0 4px 12px rgba(20,20,43,.1);
+      background: #EEF1F6; border-radius: 999px; padding: 9px 14px;
+      border: none;
+      box-shadow: var(--neu-raised-sm);
       position: relative; overflow: hidden;
     }
     .ripple-effect { position: relative; overflow: hidden; }
@@ -760,9 +760,9 @@
       width: 136px;
       height: 136px;
       border-radius: 50%;
-      background: #E8ECF3;
-      border: 1.5px solid rgba(255,255,255,.55);
-      box-shadow: 0 6px 18px rgba(20,20,43,.1);
+      background: #EEF1F6;
+      border: none;
+      box-shadow: var(--neu-raised-sm);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -774,7 +774,7 @@
       z-index: 10;
     }
     .center-label.show:active {
-      box-shadow: inset 0 2px 6px rgba(20,20,43,.2);
+      box-shadow: inset 3px 3px 8px rgba(163,177,198,.4), inset -3px -3px 8px rgba(255,255,255,.7);
       transform: translate(-50%, -50%) scale(0.96);
     }
     .cl-name { font-size: 11px; font-weight: 600; color: var(--color-text-secondary); }
@@ -782,12 +782,12 @@
     .center-label .cl-name { display:block; font-size: 11px; font-weight: 600; color: var(--color-text-secondary); order: 1; }
     .center-label .cl-pct { display:block; font-size: 19px; font-weight: 800; color: var(--color-text-primary); margin-top:3px; order: 2; }
     .legend-chip-neu.legend-chip-selected {
-      box-shadow: 0 0 0 2px rgba(20,20,43,.3);
+      box-shadow: 0 0 0 2px rgba(108,93,211,.35), var(--neu-raised-sm);
       transform: translateY(-1px);
     }
     .legend-chip-neu.legend-chip-pressed {
       transform: scale(0.94);
-      box-shadow: inset 0 2px 6px rgba(20,20,43,.18);
+      box-shadow: inset 3px 3px 8px rgba(163,177,198,.4), inset -3px -3px 8px rgba(255,255,255,.7);
     }
     .card-collapse-head { cursor: pointer; position: relative; }
     .card-collapse-chev {
@@ -892,9 +892,9 @@
     .chart-card-carousel{
       scroll-snap-align:start;
       flex:0 0 100%;
-      background-color: #E8ECF3;
-      border: 1.5px solid rgba(255,255,255,.55);
-      box-shadow: 0 10px 26px rgba(20,20,43,.1);
+      background-color: var(--neu-bg, #EEF1F6);
+      border: none;
+      box-shadow: var(--neu-raised-md, 6px 6px 16px rgba(163,177,198,.5), -6px -6px 16px rgba(255,255,255,.85));
       border-radius:var(--radius-lg);
       padding:12px;
       box-sizing:border-box;
@@ -979,62 +979,77 @@
     #loginSpinner:not(.hidden){
       display: flex;
     }
-    /* ===== DESIGN TOKENS — EDGE ANALYTICS (flat card, soft shadow, ungu-indigo) ===== */
+    /* ===== DESIGN TOKENS — NEUMORPHISM (kartu & background satu warna, timbul via shadow) ===== */
     :root {
       --ink: #1E1B39;
       --sub: #9497AA;
-      --card: #FFFFFF;
+      --card: #EEF1F6;
       --card-border: #ECEDF0;
       --grad1: linear-gradient(135deg, #8B7EE8 0%, #6C5DD3 100%);
       --grad2: linear-gradient(90deg, #7B6EE0 0%, #6C5DD3 100%);
+      /* Dua warna kunci neumorphism: highlight (terang, arah kiri-atas)
+         dan shadow (gelap, arah kanan-bawah), keduanya diturunkan dari
+         base color #EEF1F6 supaya elemen kelihatan "timbul" dari
+         permukaan yang sama, bukan kartu kontras di atas background. */
+      --neu-bg: #EEF1F6;
+      --neu-light: rgba(255,255,255,.85);
+      --neu-dark: rgba(163,177,198,.5);
+      --neu-dark-soft: rgba(163,177,198,.35);
+      /* Shadow timbul (convex) — dipakai untuk kartu, tombol, nav dalam kondisi normal */
+      --neu-raised-sm: 4px 4px 10px var(--neu-dark), -4px -4px 10px var(--neu-light);
+      --neu-raised-md: 6px 6px 16px var(--neu-dark), -6px -6px 16px var(--neu-light);
+      --neu-raised-lg: 9px 9px 22px var(--neu-dark), -9px -9px 22px var(--neu-light);
+      /* Shadow cekung (concave/pressed) — dipakai saat elemen ditekan/aktif */
+      --neu-pressed-sm: inset 3px 3px 7px var(--neu-dark), inset -3px -3px 7px var(--neu-light);
+      --neu-pressed-md: inset 4px 4px 10px var(--neu-dark), inset -4px -4px 10px var(--neu-light);
     }
     body {
-      background: #EEF1F6 !important;
+      background: var(--neu-bg) !important;
       color: var(--ink);
     }
-    /* 1. Card utama — putih solid, shadow lembut netral, tanpa blur (khas Edge Analytics) */
+    /* 1. Card utama — warna sama dengan background app, timbul lewat shadow dua-arah */
     .neu-card, .neu-card-flat {
-      background: #FFFFFF !important;
+      background: var(--neu-bg) !important;
       background-image: none !important;
       -webkit-backdrop-filter: none !important;
       backdrop-filter: none !important;
       border: none !important;
-      box-shadow: 0 10px 30px rgba(20,20,43,.06) !important;
+      box-shadow: var(--neu-raised-md) !important;
       border-radius: 20px !important;
       color: var(--ink);
     }
     .neu-card.tint-danger,
     .neu-card.tint-safe,
     .neu-card.tint-purple{
-      background: #FFFFFF !important;
+      background: var(--neu-bg) !important;
     }
     .neu-search {
-      background: #FFFFFF !important;
-      border: 1px solid var(--card-border) !important;
-      box-shadow: 0 4px 14px rgba(20,20,43,.05) !important;
+      background: var(--neu-bg) !important;
+      border: none !important;
+      box-shadow: var(--neu-pressed-sm) !important;
       color: var(--ink) !important;
     }
-    /* 3. Tombol aksi utama — ungu-indigo solid khas Edge Analytics */
+    /* 3. Tombol aksi utama — tetap ungu-indigo solid supaya jadi titik aksen,
+       tapi shadownya diselaraskan gaya neumorphism (lembut, dua warna, timbul) */
     .btn-unduh-neu {
       background: var(--grad2) !important;
       border: none !important;
-      box-shadow: 0 10px 24px rgba(108,93,211,.35) !important;
+      box-shadow: 6px 6px 14px rgba(108,93,211,.35), -4px -4px 12px rgba(255,255,255,.5) !important;
       color: #fff !important;
-      transition: transform .12s ease;
+      transition: transform .12s ease, box-shadow .12s ease;
     }
     .btn-unduh-neu:active {
       transform: scale(0.98);
-      box-shadow: 0 4px 12px rgba(108,93,211,.3) !important;
+      box-shadow: inset 3px 3px 8px rgba(70,55,150,.45), inset -3px -3px 8px rgba(180,165,255,.35) !important;
     }
-    /* 4. Navigasi bawah — putih solid, shadow lembut, konsisten sama card */
+    /* 4. Navigasi bawah — satu warna dengan app, timbul lewat shadow, tanpa border/garis */
     .neu-nav-flat {
-      background: #FFFFFF !important;
+      background: var(--neu-bg) !important;
       background-image: none !important;
       -webkit-backdrop-filter: none !important;
       backdrop-filter: none !important;
       border: none !important;
-      border-top: 1px solid #ECEDF0 !important;
-      box-shadow: 0 -2px 16px rgba(20,20,43,.06) !important;
+      box-shadow: 0 -8px 20px rgba(163,177,198,.35), 0 -1px 0 rgba(255,255,255,.6) !important;
     }
 
     /* 5. NEUMORPHIC — elemen bulat (ring donut, badge ikon, tombol lonceng/copy/unduh)
@@ -1050,26 +1065,26 @@
     .neu-search-icon,
     .glass-icon-btn,
     .btn-unduh-chart-icon {
-      background: #EEF1F6 !important;
+      background: var(--neu-bg) !important;
       background-image: none !important;
       -webkit-backdrop-filter: none !important;
       backdrop-filter: none !important;
       border: none !important;
-      box-shadow: 6px 6px 14px rgba(163,177,198,.45), -6px -6px 14px rgba(255,255,255,.9) !important;
+      box-shadow: var(--neu-raised-sm) !important;
     }
     .center-label.show:active,
     .btn-unduh-chart-icon:active,
     .btn-unduh-chart-icon.sedang-unduh,
     .legend-chip-neu.legend-chip-pressed {
-      box-shadow: inset 4px 4px 10px rgba(163,177,198,.4), inset -4px -4px 10px rgba(255,255,255,.85) !important;
+      box-shadow: var(--neu-pressed-sm) !important;
     }
 
-    /* ===== EDGE ANALYTICS — "Today's Revenue" style mini stat cards ===== */
+    /* ===== Kartu ringkasan mini (dulu "Today's Revenue") — konsisten neu-card ===== */
     .revenue-wrap-card{
-      background:#FFFFFF;
+      background: var(--neu-bg);
       border-radius:20px;
       padding:16px;
-      box-shadow:0 10px 30px rgba(20,20,43,.06);
+      box-shadow: var(--neu-raised-md);
       margin-bottom:16px;
     }
     .revenue-wrap-title{
@@ -1104,10 +1119,62 @@
       font-size:9.5px; font-weight:600; color:rgba(255,255,255,.85); margin-top:4px;
       white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
     }
-    .stat-mini-pink{   background:linear-gradient(160deg,#FBB6C0,#F4808F); box-shadow:0 10px 20px -6px rgba(244,128,143,.5); }
-    .stat-mini-blue{   background:linear-gradient(160deg,#9BD1F7,#5FA8ED); box-shadow:0 10px 20px -6px rgba(95,168,237,.5); }
-    .stat-mini-yellow{ background:linear-gradient(160deg,#FBDE9B,#F0BB55); box-shadow:0 10px 20px -6px rgba(240,187,85,.5); }
-    .stat-mini-purple{ background:linear-gradient(160deg,#CBB8F7,#A385ED); box-shadow:0 10px 20px -6px rgba(163,133,237,.5); }
+    /* Tile warna-warni dipertahankan sebagai aksen (colored neumorphism) —
+       shadow diselaraskan jadi lembut & menyatu, bukan flat drop-shadow tajam. */
+    .stat-mini-pink{   background:linear-gradient(160deg,#FBB6C0,#F4808F); box-shadow:5px 5px 12px rgba(244,128,143,.4), -3px -3px 10px rgba(255,255,255,.5); }
+    .stat-mini-blue{   background:linear-gradient(160deg,#9BD1F7,#5FA8ED); box-shadow:5px 5px 12px rgba(95,168,237,.4), -3px -3px 10px rgba(255,255,255,.5); }
+    .stat-mini-yellow{ background:linear-gradient(160deg,#FBDE9B,#F0BB55); box-shadow:5px 5px 12px rgba(240,187,85,.4), -3px -3px 10px rgba(255,255,255,.5); }
+    .stat-mini-purple{ background:linear-gradient(160deg,#CBB8F7,#A385ED); box-shadow:5px 5px 12px rgba(163,133,237,.4), -3px -3px 10px rgba(255,255,255,.5); }
+
+    /* ===== Komponen tambahan yang belum neumorphic — diseragamkan di sini ===== */
+    .kategori-chip{
+      background: var(--neu-bg) !important;
+      border: none !important;
+      box-shadow: var(--neu-raised-sm) !important;
+      color: #4B5563 !important;
+    }
+    .kategori-chip:has(.kategori:checked){
+      background: var(--neu-bg) !important;
+      color: #6C5DD3 !important;
+      box-shadow: var(--neu-pressed-sm) !important;
+    }
+    .neu-mini-pill{
+      background: var(--neu-bg) !important;
+      border: none !important;
+      box-shadow: var(--neu-raised-sm) !important;
+    }
+    .neu-mini-pill:active,
+    .neu-mini-pill.pressed{
+      box-shadow: var(--neu-pressed-sm) !important;
+    }
+    .rombel-row{
+      background: var(--neu-bg) !important;
+      border: none !important;
+      box-shadow: var(--neu-raised-sm) !important;
+    }
+    .rombel-row.open{ box-shadow: var(--neu-pressed-sm) !important; }
+    .pillbar-bar-wrap{
+      background: var(--neu-bg) !important;
+      border: none !important;
+      box-shadow: var(--neu-pressed-sm), 0 1px 0 rgba(255,255,255,.5) !important;
+    }
+    .neu-dropdown, .neu-dropdown-inset{
+      background: var(--neu-bg) !important;
+      border: none !important;
+      box-shadow: var(--neu-pressed-sm) !important;
+    }
+    .neu-modal{
+      background: var(--neu-bg) !important;
+      border: none !important;
+      box-shadow: 14px 14px 32px rgba(163,177,198,.5), -10px -10px 26px rgba(255,255,255,.7) !important;
+    }
+    .neu-modal-close{
+      background: var(--neu-bg) !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+      border: none !important;
+      box-shadow: var(--neu-raised-sm) !important;
+    }
   </style>
 </head>
 <body class="text-base">
@@ -1146,9 +1213,9 @@
     <div style="position:absolute; top:160px; left:-90px; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle, rgba(184,140,255,.45), transparent 70%); filter:blur(2px); pointer-events:none;"></div>
     <div style="position:absolute; bottom:200px; right:-50px; width:180px; height:180px; border-radius:50%; background:radial-gradient(circle, rgba(255,168,168,.5), transparent 70%); filter:blur(2px); pointer-events:none;"></div>
 
-    <div style="position:relative; z-index:1; background: #FFFFFF; -webkit-backdrop-filter:none; backdrop-filter:none; border:1px solid rgba(255,255,255,.75); border-radius:28px; padding:28px 24px; box-shadow:0 24px 48px -12px rgba(70,60,140,.35), inset 0 1px 0 rgba(255,255,255,.7);">
+    <div style="position:relative; z-index:1; background: #F1EFFA; -webkit-backdrop-filter:none; backdrop-filter:none; border:none; border-radius:28px; padding:28px 24px; box-shadow: 10px 10px 24px rgba(60,45,130,.28), -8px -8px 20px rgba(255,255,255,.55);">
 
-      <div style="width:56px;height:56px;border-radius:18px;background: #FFFFFF; -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); border:1px solid rgba(255,255,255,.85); box-shadow:0 8px 18px rgba(108,93,211,.18); display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:16px;">
+      <div style="width:56px;height:56px;border-radius:18px;background: #F1EFFA; -webkit-backdrop-filter:none; backdrop-filter:none; border:none; box-shadow: 5px 5px 12px rgba(60,45,130,.22), -4px -4px 10px rgba(255,255,255,.6); display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:16px;">
         <img src="logo-sekolah.png" alt="Logo SD Negeri 6 Tejakula" style="width:40px;height:40px;object-fit:contain;">
       </div>
 
@@ -1170,7 +1237,7 @@
           data-client_id="183272939624-9hm3c0ruqm5s5uo73vkk16v2lvu2cr6b.apps.googleusercontent.com"
           data-callback="handleGoogleCredential">
         </div>
-        <div style="border-radius:9999px; background: #FFFFFF; border:1px solid rgba(255,255,255,.85); box-shadow:0 8px 18px rgba(108,93,211,.18); padding:3px;">
+        <div style="border-radius:9999px; background: #F1EFFA; border:none; box-shadow: inset 3px 3px 8px rgba(60,45,130,.2), inset -3px -3px 8px rgba(255,255,255,.6); padding:3px;">
           <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="filled_white" data-size="large" data-text="continue_with" data-logo_alignment="left" data-width="300"></div>
         </div>
       </div>
@@ -1201,8 +1268,8 @@
         <span class="material-symbols-rounded" style="font-size:14.5px;color:#585A75;">notifications</span>
         <span id="notifDot" class="hidden" style="position:absolute;top:3px;right:4px;width:7px;height:7px;border-radius:50%;background:var(--color-primary);border:1.5px solid #fff;"></span>
       </button>
-      <div id="notifDropdown" class="hidden" style="position:absolute;top:42px;right:0;width:210px;background:#FFFFFF;border-radius:16px;padding:12px;z-index:50;
-             box-shadow: 12px 16px 32px rgba(20,20,43,.2), -8px -8px 20px rgba(255,255,255,.9);">
+      <div id="notifDropdown" class="hidden" style="position:absolute;top:42px;right:0;width:210px;background:var(--neu-bg);border:none;border-radius:16px;padding:12px;z-index:50;
+             box-shadow: 12px 16px 32px rgba(163,177,198,.5), -8px -8px 20px rgba(255,255,255,.9);">
         <p style="font-size:11px;font-weight:700;color:#374151;margin:0 0 8px;">Pembaruan Terakhir</p>
         <div id="notifList" style="display:flex;flex-direction:column;gap:6px;"></div>
       </div>
@@ -1224,7 +1291,7 @@
 
   <p style="position:relative; font-size:11px; font-weight:600; color:#A6A399; margin:0 0 10px; letter-spacing:.05em; text-transform:uppercase;">Ringkasan data</p>
 
-  <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="background:#fff; border-radius:20px; padding:16px; box-shadow:0 10px 30px rgba(20,20,43,.06); margin-bottom:16px; display:flex; align-items:center; gap:16px;">
+  <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="background:var(--neu-bg); border-radius:20px; padding:16px; box-shadow: var(--neu-raised-md); margin-bottom:16px; display:flex; align-items:center; gap:16px;">
     <div style="flex:1; min-width:0;">
       <p style="font-size:14px; font-weight:800; color:#1E1B39; margin:0;">Total siswa</p>
       <p style="font-size:11px; color:#9497AA; margin:2px 0 0;">Ringkasan jumlah &amp; sebaran</p>
@@ -1401,7 +1468,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
 
     <div class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-5 pb-32 pt-2 max-w-full">
       <div id="list-siswa">
-        <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:#FFFFFF; border: 1px solid #ECEDF0;">
+        <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:var(--neu-bg); border:none; box-shadow: var(--neu-raised-md);">
           <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">keyboard</span>
           <p class="text-sm text-gray-600 font-medium">Ketik minimal 3 huruf Nama siswa</p>
         </div>
@@ -1426,10 +1493,10 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
         Guru & Tendik
       </h1>
 
-      <div id="dataTabTrack" data-no-ripple class="flex items-center mb-4" style="background: #FFFFFF;-webkit-backdrop-filter:none;backdrop-filter:none;border:1px solid rgba(255,255,255,.6);border-radius:9999px;padding:4px;gap:0;box-shadow: 0 4px 14px rgba(20,20,43,.08);">
+      <div id="dataTabTrack" data-no-ripple class="flex items-center mb-4" style="background: var(--neu-bg);-webkit-backdrop-filter:none;backdrop-filter:none;border:none;border-radius:9999px;padding:4px;gap:0;box-shadow: var(--neu-pressed-sm);">
         <button id="tabDataGuru" onclick="switchDataTab('guru')"
           class="flex-1 flex items-center justify-center gap-1.5 text-[13px] font-semibold py-2.5 px-1 rounded-full transition-all duration-200"
-          style="background: #FFFFFF;-webkit-backdrop-filter:none;backdrop-filter:none;color:#3454B4;border:1px solid rgba(255,255,255,.8);box-shadow: 0 4px 12px rgba(74,111,194,.18), inset 0 1px 0 rgba(255,255,255,.8);">
+          style="background: var(--neu-bg);-webkit-backdrop-filter:none;backdrop-filter:none;color:#3454B4;border:none;box-shadow: var(--neu-raised-sm);">
           <span class="material-symbols-rounded text-[14.5px]">school</span>
           Guru
         </button>
@@ -1666,7 +1733,7 @@ Unduh Data
   <div id="modal"
 onclick="if(event.target===this) mundurModal();"
 class="hidden detail-fullpage-overlay fixed inset-0 z-[60]">
-    <div id="modalBox" class="detail-fullpage-box relative w-full" style="max-width:480px; height:82vh; max-height:82vh; background:#ffffff; border-radius:22px 22px 0 0; box-shadow:0 -12px 30px rgba(30,27,57,.25); display:flex; flex-direction:column; overflow:hidden;">
+    <div id="modalBox" class="detail-fullpage-box relative w-full" style="max-width:480px; height:82vh; max-height:82vh; background:var(--neu-bg); border-radius:22px 22px 0 0; box-shadow:0 -14px 34px rgba(163,177,198,.45); display:flex; flex-direction:column; overflow:hidden;">
 
      <div id="modalStickyHeader" style="flex-shrink:0; touch-action:none; transition:background .2s ease;">
      <div id="modalDragHandleRow" style="display:flex; justify-content:center; padding-top:10px; padding-bottom:10px;">
@@ -1699,8 +1766,8 @@ class="hidden detail-fullpage-overlay fixed inset-0 z-[60]">
             </svg>
           </button>
 
-          <div id="detailDotsMenu" class="hidden" style="position:absolute;right:0;top:44px;width:190px;background:#FFFFFF;border-radius:14px;padding:6px;z-index:20;
-               box-shadow: 0 6px 18px rgba(20,20,43,.3);">
+          <div id="detailDotsMenu" class="hidden" style="position:absolute;right:0;top:44px;width:190px;background:var(--neu-bg);border:none;border-radius:14px;padding:6px;z-index:20;
+               box-shadow: 12px 16px 30px rgba(163,177,198,.5), -8px -8px 18px rgba(255,255,255,.9);">
             <div onclick="salinDataSiswa()" class="cursor-pointer flex items-center gap-2 px-3 py-2 rounded-[10px] text-[13px] text-gray-700 hover:bg-gray-100">
               <span class="material-symbols-rounded text-[14.5px]">content_copy</span> Salin data
             </div>
@@ -1740,7 +1807,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
         oninput="cekIsiPIN()"
         onkeydown="tekanEnterPIN(event)"
         class="w-full h-9 px-4 rounded-xl text-sm outline-none"
-        style="background:#FFFFFF; border:1px solid #ECEDF0; box-shadow: 0 2px 6px rgba(16,24,40,.06);">
+        style="background:var(--neu-bg); border:none; box-shadow: var(--neu-pressed-sm);">
 
       <div
         id="pinError"
@@ -1994,7 +2061,7 @@ let historyTabAktif = false;
         tendik: { btn: document.getElementById('tabDataTendik'),panel: document.getElementById('panelDataTendik') }
       };
 
-      const aktif       = 'background: #FFFFFF;-webkit-backdrop-filter:none;backdrop-filter:none;color:#3454B4;border:1px solid rgba(255,255,255,.8);box-shadow: 0 4px 12px rgba(74,111,194,.18), inset 0 1px 0 rgba(255,255,255,.8);';
+      const aktif       = 'background: var(--neu-bg);-webkit-backdrop-filter:none;backdrop-filter:none;color:#3454B4;border:none;box-shadow: var(--neu-raised-sm);';
       const nonaktif    = 'background:transparent;color:#6B7280;border:1px solid transparent;box-shadow:none;';
 
       const aktifStyle = { guru: aktif, tendik: aktif };
@@ -2074,7 +2141,7 @@ let historyTabAktif = false;
                 <span class="material-symbols-rounded text-[14.5px]" style="color:#0091EA;">groups</span>
                 <span style="font-size:13px; font-weight:700; color:#1E1B39;">Distribusi Rombel</span>
               </div>
-              <span style="font-size:11px; font-weight:700; color:#4b5563; background:#FFFFFF; padding:5px 10px; border-radius:999px;">${data.length} kelas</span>
+              <span style="font-size:11px; font-weight:700; color:#4b5563; background:var(--neu-bg); padding:5px 10px; border-radius:999px; box-shadow: var(--neu-raised-sm);">${data.length} kelas</span>
             </div>
             ${data.map((r,i) => {
               const total = r.L + r.P;
@@ -2228,7 +2295,7 @@ let historyTabAktif = false;
               <span class="material-symbols-rounded text-[14.5px]" style="color:#6C5DD3;">bar_chart</span>
               <span style="font-size:13px; font-weight:700; color:#1E1B39;">Distribusi Kesejahteraan</span>
             </div>
-            <span style="font-size:11px; font-weight:700; color:#4b5563; background:#FFFFFF; padding:5px 10px; border-radius:999px;">Desil 1&ndash;10</span>
+            <span style="font-size:11px; font-weight:700; color:#4b5563; background:var(--neu-bg); padding:5px 10px; border-radius:999px; box-shadow: var(--neu-raised-sm);">Desil 1&ndash;10</span>
           </div>
           ${Object.keys(desil).map((label,i,arr) => {
             const persenBar = Math.round((desil[label] / totalSemuaDesil) * 100);
@@ -2421,7 +2488,7 @@ let historyTabAktif = false;
                 <span class="material-symbols-rounded text-[14.5px]" style="color:#6C5DD3;">groups</span>
                 <span style="font-size:13px; font-weight:700; color:#1E1B39;">Daftar Siswa</span>
               </div>
-              <span style="font-size:12.5px; font-weight:700; color:#4b5563; background:#FFFFFF; padding:5px 10px; border-radius:999px;">${hasil.length} siswa</span>
+              <span style="font-size:12.5px; font-weight:700; color:#4b5563; background:var(--neu-bg); padding:5px 10px; border-radius:999px; box-shadow: var(--neu-raised-sm);">${hasil.length} siswa</span>
             </div>
             ${hasil.map((r,i) => {
               let statusR = String(r[14]).trim();
@@ -3213,7 +3280,7 @@ function filterSiswa() {
   if(q === ""){
     btnHapus.classList.add("hidden");
     document.getElementById("list-siswa").innerHTML = `
-      <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:#FFFFFF; border: 1px solid #ECEDF0;">
+      <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:var(--neu-bg); border:none; box-shadow: var(--neu-raised-md);">
         <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">keyboard</span>
         <p class="text-sm text-gray-600 font-medium">Ketik minimal 3 huruf Nama siswa</p>
       </div>
@@ -3225,7 +3292,7 @@ function filterSiswa() {
   if (q.length < 3) {
     const sisa = 3 - q.length;
     document.getElementById("list-siswa").innerHTML = `
-      <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:#FFFFFF; border: 1px solid #ECEDF0;">
+      <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:var(--neu-bg); border:none; box-shadow: var(--neu-raised-md);">
         <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2"> </span>
         <p class="text-sm text-gray-600 font-medium">Ketik ${sisa} huruf lagi</p>
       </div>
@@ -3660,7 +3727,7 @@ function renderListPegawai(tipe){
    const guruKelasCount = sumber.filter(r => String(r[2]).trim() === 'Guru Kelas').length;
    const guruMapelCount = sumber.length - guruKelasCount;
    kartuRingkasanGuru = `
-<div style="background: #FFFFFF; -webkit-backdrop-filter:none; backdrop-filter:none; border:1px solid rgba(255,255,255,.65); border-radius:22px; padding:14px 12px; margin-bottom:16px; display:flex; align-items:center; justify-content:space-between; gap:4px; box-shadow:0 10px 26px -10px rgba(20,20,43,.14), inset 0 1px 0 rgba(255,255,255,.7);">
+<div style="background: var(--neu-bg); -webkit-backdrop-filter:none; backdrop-filter:none; border:none; border-radius:22px; padding:14px 12px; margin-bottom:16px; display:flex; align-items:center; justify-content:space-between; gap:4px; box-shadow: var(--neu-raised-md);">
   <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:0;">
     <div style="width:38px;height:38px;border-radius:12px;background:rgba(108,92,231,.16);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span class="material-symbols-rounded text-[16px]" style="color:#6C5CE7;">groups</span></div>
     <div style="min-width:0;"><p style="font-size:19px; font-weight:800; color:#1E1E2C; margin:0; line-height:1;">${sumber.length}</p><p style="font-size:10px; color:#6B7280; margin:3px 0 0; line-height:1.15;">Total Guru</p></div>
