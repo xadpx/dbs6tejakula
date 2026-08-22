@@ -5792,10 +5792,12 @@ function animasikanAngkaDanRing(idAngka, idRing, idPersenText, nilaiAkhir, total
 function tutupPopupPremium(overlayId, boxId, callback){
   const overlay = document.getElementById(overlayId);
   overlay.classList.remove('show');
+  // Jeda disamakan dengan durasi transisi CSS terpanjang (detail-fullpage-box: .42s)
+  // supaya animasi fade-out sempat terlihat penuh sebelum overlay disembunyikan.
   setTimeout(function(){
     overlay.classList.add('hidden');
     if(callback) callback();
-  }, 300);
+  }, 440);
 }
     function warnaDesil(nilai){
   const v = String(nilai).trim();
