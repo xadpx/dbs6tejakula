@@ -190,18 +190,17 @@
       display:inline;
     }
     .neu-mini-pill{
-      background: #FFFFFF;
-      -webkit-backdrop-filter: var(--blur-glass-sm); backdrop-filter: var(--blur-glass-sm);
-      -webkit-backdrop-filter: var(--blur-glass-sm);
+      background: #EEF1F6;
+      -webkit-backdrop-filter: none; backdrop-filter: none;
       border-radius:10px;
       padding:4px 8px;
-      border: 1px solid var(--glass-border);
-      box-shadow: 0 3px 10px rgba(20,20,43,.1);
+      border: none;
+      box-shadow: var(--neu-raised-sm);
       transition:.15s;
     }
     .neu-mini-pill:active,
     .neu-mini-pill.pressed{
-      box-shadow: inset 0 2px 5px rgba(20,20,43,.18);
+      box-shadow: var(--neu-pressed-sm);
     }
     .toggle-track{
       background: #EEF1F6 !important;
@@ -385,9 +384,9 @@
       width: 28px;
       height: 28px;
       border-radius: 9999px;
-      background: #FFFFFF;
-      border: 1px solid var(--glass-border);
-      box-shadow: 0 2px 8px rgba(20,20,43,.1);
+      background: #EEF1F6;
+      border: none;
+      box-shadow: var(--neu-raised-sm);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -401,7 +400,7 @@
     }
     .btn-unduh-chart-icon:active,
     .btn-unduh-chart-icon.sedang-unduh{
-      box-shadow: inset 0 2px 5px rgba(20,20,43,.18);
+      box-shadow: var(--neu-pressed-sm);
     }
     .btn-unduh-chart-icon:active .material-symbols-rounded,
     .btn-unduh-chart-icon.sedang-unduh .material-symbols-rounded{
@@ -470,13 +469,12 @@
        benar-benar menampilkan efek blur, bukan cuma warna transparan datar. */
 
     .btn-unduh-neu{
-      background: #0091EA;
-      border: 1.5px solid rgba(255,255,255,.55);
-      
+      background: var(--grad2);
+      border: none;
       transition: box-shadow .1s ease, transform .1s ease;
     }
     .btn-unduh-neu:active{
-      box-shadow: inset 2px 2px 5px rgba(0,50,90,.4), inset -2px -2px 5px rgba(120,180,240,.3);
+      box-shadow: inset 3px 3px 7px rgba(60,45,150,.45), inset -3px -3px 7px rgba(255,255,255,.35);
       transform: scale(0.98);
     }
     #searchStickyWrap{
@@ -493,37 +491,36 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #FFFFFF;
-      border: 1.5px solid rgba(255,255,255,.55);
-      box-shadow: 0 4px 12px rgba(20,20,43,.1);
+      background: #EEF1F6;
+      border: none;
+      box-shadow: var(--neu-raised-sm);
     }
     .neu-search-icon .material-symbols-rounded{
-      color: #0091EA !important;
+      color: #6C5DD3 !important;
     }
     .neu-dropdown-inset{
-      background: #FFFFFF;
-      border: 1px solid var(--card-border);
+      background: #EEF1F6;
+      border: none;
       border-radius: 9999px;
-      box-shadow: 0 2px 8px rgba(20,20,43,.08);
+      box-shadow: var(--neu-pressed-sm);
     }
     .neu-dropdown{
-      background: #FFFFFF;
-      border: 1px solid var(--card-border);
+      background: #EEF1F6;
+      border: none;
       border-radius: 9999px !important;
-      box-shadow: 0 2px 8px rgba(20,20,43,.08);
+      box-shadow: var(--neu-pressed-sm);
       transition: box-shadow .15s ease;
     }
     .neu-dropdown:focus{
       outline: none;
-      border-color: var(--color-primary);
-      box-shadow: 0 0 0 3px var(--color-primary-soft);
+      box-shadow: var(--neu-pressed-sm), 0 0 0 3px var(--color-primary-soft);
     }
     .neu-nav-flat{
       position: relative;
-      background: #FFFFFF;
+      background: #EEF1F6;
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
-      border: 1px solid rgba(255,255,255,.6);
+      border: none;
     }
     .nav-slider-pill{
       position: absolute;
@@ -537,38 +534,36 @@
       pointer-events: none;
     }
     .neu-modal{
-      background: #FFFFFF !important;
-      border: 1px solid #ECEDF0 !important;
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,.2),
-        0 25px 55px rgba(30,27,57,.35),
-        inset 0 0 60px rgba(20,20,43,.08),
-        inset 0 0 3px 1px rgba(255,255,255,.5) !important;
+      background: #EEF1F6 !important;
+      border: none !important;
+      box-shadow: var(--neu-raised-lg) !important;
     }
     .neu-modal-close{
-      background: #FFFFFF !important;
-      -webkit-backdrop-filter: var(--blur-glass-sm) !important;
-      backdrop-filter: var(--blur-glass-sm) !important;
-      border: 1px solid var(--glass-border) !important;
-      box-shadow: 0 3px 10px rgba(30,27,57,.2) !important;
+      background: #EEF1F6 !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+      border: none !important;
+      box-shadow: var(--neu-raised-sm) !important;
     }
-    /* Tombol ikon bulat kaca — dipakai untuk lonceng notifikasi,
+    /* Tombol ikon bulat neumorphic — dipakai untuk lonceng notifikasi,
        tombol back, dan tombol titik-4 (menu) di popup, supaya
-       semuanya konsisten pakai efek glass. */
+       semuanya konsisten timbul dari background yang sama. */
     .glass-icon-btn{
-      background: #FFFFFF;
-      -webkit-backdrop-filter: var(--blur-glass-sm);
-      backdrop-filter: var(--blur-glass-sm);
-      border: 1.5px solid var(--glass-border);
+      background: #EEF1F6;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      border: none;
+      box-shadow: var(--neu-raised-sm);
     }
     .rombel-row {
       padding: 13px 16px; border-radius: 16px; cursor: pointer;
-      background: #FFFFFF; margin-bottom: 8px;
-      border: 1px solid var(--glass-border);
-      transition: background .15s ease;
+      background: #EEF1F6; margin-bottom: 8px;
+      border: none;
+      box-shadow: var(--neu-raised-sm);
+      transition: background .15s ease, box-shadow .15s ease;
       display: flex; align-items: center; gap: 10px;
     }
-    .rombel-row.open { background: #FFFFFF; }
+    .rombel-row.open { background: #EEF1F6; box-shadow: var(--neu-pressed-sm); }
     .rombel-row:last-child { margin-bottom: 0; }
     @keyframes shimmerSweep { 0%{background-position:-200% 0;} 100%{background-position:200% 0;} }
     .nama-marquee-wrap {
@@ -1034,13 +1029,13 @@
     .btn-unduh-neu {
       background: var(--grad2) !important;
       border: none !important;
-      box-shadow: 6px 6px 14px rgba(108,93,211,.35), -4px -4px 12px rgba(255,255,255,.5) !important;
+      box-shadow: 6px 6px 16px rgba(108,93,211,.4), -6px -6px 16px rgba(255,255,255,.5) !important;
       color: #fff !important;
       transition: transform .12s ease, box-shadow .12s ease;
     }
     .btn-unduh-neu:active {
       transform: scale(0.98);
-      box-shadow: inset 3px 3px 8px rgba(70,55,150,.45), inset -3px -3px 8px rgba(180,165,255,.35) !important;
+      box-shadow: inset 4px 4px 10px rgba(70,55,150,.45), inset -4px -4px 10px rgba(180,165,255,.35) !important;
     }
     /* 4. Navigasi bawah — satu warna dengan app, timbul lewat shadow, tanpa border/garis */
     .neu-nav-flat {
@@ -1121,10 +1116,10 @@
     }
     /* Tile warna-warni dipertahankan sebagai aksen (colored neumorphism) —
        shadow diselaraskan jadi lembut & menyatu, bukan flat drop-shadow tajam. */
-    .stat-mini-pink{   background:linear-gradient(160deg,#FBB6C0,#F4808F); box-shadow:5px 5px 12px rgba(244,128,143,.4), -3px -3px 10px rgba(255,255,255,.5); }
-    .stat-mini-blue{   background:linear-gradient(160deg,#9BD1F7,#5FA8ED); box-shadow:5px 5px 12px rgba(95,168,237,.4), -3px -3px 10px rgba(255,255,255,.5); }
-    .stat-mini-yellow{ background:linear-gradient(160deg,#FBDE9B,#F0BB55); box-shadow:5px 5px 12px rgba(240,187,85,.4), -3px -3px 10px rgba(255,255,255,.5); }
-    .stat-mini-purple{ background:linear-gradient(160deg,#CBB8F7,#A385ED); box-shadow:5px 5px 12px rgba(163,133,237,.4), -3px -3px 10px rgba(255,255,255,.5); }
+    .stat-mini-pink{   background:linear-gradient(160deg,#FBB6C0,#F4808F); box-shadow:4px 4px 10px rgba(244,128,143,.45), -4px -4px 10px rgba(255,255,255,.5); }
+    .stat-mini-blue{   background:linear-gradient(160deg,#9BD1F7,#5FA8ED); box-shadow:4px 4px 10px rgba(95,168,237,.45), -4px -4px 10px rgba(255,255,255,.5); }
+    .stat-mini-yellow{ background:linear-gradient(160deg,#FBDE9B,#F0BB55); box-shadow:4px 4px 10px rgba(240,187,85,.45), -4px -4px 10px rgba(255,255,255,.5); }
+    .stat-mini-purple{ background:linear-gradient(160deg,#CBB8F7,#A385ED); box-shadow:4px 4px 10px rgba(163,133,237,.45), -4px -4px 10px rgba(255,255,255,.5); }
 
     /* ===== Komponen tambahan yang belum neumorphic — diseragamkan di sini ===== */
     .kategori-chip{
@@ -1213,9 +1208,9 @@
     <div style="position:absolute; top:160px; left:-90px; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle, rgba(184,140,255,.45), transparent 70%); filter:blur(2px); pointer-events:none;"></div>
     <div style="position:absolute; bottom:200px; right:-50px; width:180px; height:180px; border-radius:50%; background:radial-gradient(circle, rgba(255,168,168,.5), transparent 70%); filter:blur(2px); pointer-events:none;"></div>
 
-    <div style="position:relative; z-index:1; background: #F1EFFA; -webkit-backdrop-filter:none; backdrop-filter:none; border:none; border-radius:28px; padding:28px 24px; box-shadow: 10px 10px 24px rgba(60,45,130,.28), -8px -8px 20px rgba(255,255,255,.55);">
+    <div style="position:relative; z-index:1; background: var(--neu-bg); -webkit-backdrop-filter:none; backdrop-filter:none; border:none; border-radius:28px; padding:28px 24px; box-shadow: var(--neu-raised-lg);">
 
-      <div style="width:56px;height:56px;border-radius:18px;background: #F1EFFA; -webkit-backdrop-filter:none; backdrop-filter:none; border:none; box-shadow: 5px 5px 12px rgba(60,45,130,.22), -4px -4px 10px rgba(255,255,255,.6); display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:16px;">
+      <div style="width:56px;height:56px;border-radius:18px;background: var(--neu-bg); -webkit-backdrop-filter:none; backdrop-filter:none; border:none; box-shadow: var(--neu-raised-sm); display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:16px;">
         <img src="logo-sekolah.png" alt="Logo SD Negeri 6 Tejakula" style="width:40px;height:40px;object-fit:contain;">
       </div>
 
@@ -1237,7 +1232,7 @@
           data-client_id="183272939624-9hm3c0ruqm5s5uo73vkk16v2lvu2cr6b.apps.googleusercontent.com"
           data-callback="handleGoogleCredential">
         </div>
-        <div style="border-radius:9999px; background: #F1EFFA; border:none; box-shadow: inset 3px 3px 8px rgba(60,45,130,.2), inset -3px -3px 8px rgba(255,255,255,.6); padding:3px;">
+        <div style="border-radius:9999px; background: var(--neu-bg); border:none; box-shadow: var(--neu-pressed-sm); padding:3px;">
           <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="filled_white" data-size="large" data-text="continue_with" data-logo_alignment="left" data-width="300"></div>
         </div>
       </div>
