@@ -1304,13 +1304,17 @@
       </p>
     </div>
     <div style="display:flex; flex-direction:column; align-items:center; gap:8px; flex-shrink:0;">
-      <div style="position:relative; width:82px; height:82px;">
+      <div style="position:relative; width:82px; height:82px; border-radius:50%; background:var(--neu-bg); box-shadow: var(--neu-pressed-sm); display:flex; align-items:center; justify-content:center;">
         <svg viewBox="0 0 100 100" style="width:100%; height:100%;">
-          <circle cx="50" cy="50" r="42" fill="none" stroke="#E3E7F0" stroke-width="9"/>
-          <circle id="ringSiswaLP" cx="50" cy="50" r="42" fill="none" stroke="#6C5DD3" stroke-width="9" stroke-linecap="round" stroke-dasharray="264" stroke-dashoffset="264" transform="rotate(-90 50 50)" style="transition:stroke-dashoffset .8s ease;"/>
+          <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(163,177,198,.2)" stroke-width="9"/>
+          <circle id="ringSiswaP" cx="50" cy="50" r="42" fill="none" stroke="#B49BEF" stroke-width="9" stroke-linecap="round" stroke-dasharray="0 264" stroke-dashoffset="0" transform="rotate(-90 50 50)" style="transition:stroke-dasharray .8s ease, stroke-dashoffset .8s ease;"/>
+          <circle id="ringSiswaLP" cx="50" cy="50" r="42" fill="none" stroke="#F6B36B" stroke-width="9" stroke-linecap="round" stroke-dasharray="0 264" stroke-dashoffset="0" transform="rotate(-90 50 50)" style="transition:stroke-dasharray .8s ease, stroke-dashoffset .8s ease;"/>
         </svg>
       </div>
-      <p style="font-size:11px; color:#9497AA; margin:0; white-space:nowrap;">L:<span id="pctL" style="color:#1E1B39; font-weight:700;">&ndash;</span>&nbsp; P:<span id="pctP" style="color:#1E1B39; font-weight:700;">&ndash;</span></p>
+      <p style="font-size:11px; color:#9497AA; margin:0; white-space:nowrap; display:flex; align-items:center; gap:8px;">
+        <span style="display:inline-flex; align-items:center; gap:3px;"><span style="width:7px;height:7px;border-radius:50%;background:#F6B36B;display:inline-block;"></span>L:<span id="pctL" style="color:#1E1B39; font-weight:700;">&ndash;</span></span>
+        <span style="display:inline-flex; align-items:center; gap:3px;"><span style="width:7px;height:7px;border-radius:50%;background:#B49BEF;display:inline-block;"></span>P:<span id="pctP" style="color:#1E1B39; font-weight:700;">&ndash;</span></span>
+      </p>
     </div>
   </div>
 
@@ -2867,9 +2871,18 @@ let historyTabAktif = false;
       if(elBarL) elBarL.style.width = pctLaki + '%';
       if(elBarP) elBarP.style.width = pctPerempuan + '%';
       const elRingSiswaLP = document.getElementById('ringSiswaLP');
-      if(elRingSiswaLP){
+      const elRingSiswaP = document.getElementById('ringSiswaP');
+      if(elRingSiswaLP && elRingSiswaP){
         const keliling = 264;
-        elRingSiswaLP.style.strokeDashoffset = (keliling - (keliling * pctLaki / 100)) + '';
+        // Kecilkan sedikit tiap busur (gap 2 satuan) supaya ada celah tipis
+        // antara warna laki-laki & perempuan, biar terlihat sebagai 2 segmen.
+        const gap = (totalLaki > 0 && totalPerempuan > 0) ? 2 : 0;
+        const lakiLen = Math.max(0, (keliling * pctLaki / 100) - gap);
+        const perempuanLen = Math.max(0, (keliling * pctPerempuan / 100) - gap);
+        elRingSiswaLP.style.strokeDasharray = `${lakiLen} ${keliling - lakiLen}`;
+        elRingSiswaLP.style.strokeDashoffset = '0';
+        elRingSiswaP.style.strokeDasharray = `${perempuanLen} ${keliling - perempuanLen}`;
+        elRingSiswaP.style.strokeDashoffset = `${-(lakiLen + gap)}`;
       }
 
       
