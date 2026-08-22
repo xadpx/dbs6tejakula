@@ -1319,7 +1319,8 @@
   </div>
 
   <div style="display:flex; gap:12px; margin-bottom:12px;">
-    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="flex:1; min-width:0; background:var(--neu-bg); border-radius:18px; padding:14px; box-shadow: var(--neu-raised-sm); display:flex; flex-direction:column; gap:10px;">
+    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="position:relative; flex:1; min-width:0; background:var(--neu-bg); border-radius:18px; padding:14px; box-shadow: var(--neu-raised-sm); display:flex; flex-direction:column; gap:10px;">
+      <span class="material-symbols-rounded" style="position:absolute; top:14px; right:12px; font-size:20px; color:#B7BACC;">chevron_right</span>
       <div style="width:30px; height:30px; border-radius:9px; background:linear-gradient(160deg,#9BD1F7,#5FA8ED); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
         <span class="material-symbols-rounded" style="font-size:16px; color:#fff;">school</span>
       </div>
@@ -1330,7 +1331,8 @@
         </p>
       </div>
     </div>
-    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer" style="flex:1; min-width:0; background:var(--neu-bg); border-radius:18px; padding:14px; box-shadow: var(--neu-raised-sm); display:flex; flex-direction:column; gap:10px;">
+    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer" style="position:relative; flex:1; min-width:0; background:var(--neu-bg); border-radius:18px; padding:14px; box-shadow: var(--neu-raised-sm); display:flex; flex-direction:column; gap:10px;">
+      <span class="material-symbols-rounded" style="position:absolute; top:14px; right:12px; font-size:20px; color:#B7BACC;">chevron_right</span>
       <div style="width:30px; height:30px; border-radius:9px; background:linear-gradient(160deg,#FBDE9B,#F0BB55); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
         <span class="material-symbols-rounded" style="font-size:16px; color:#fff;">badge</span>
       </div>
@@ -1348,7 +1350,10 @@
       <p style="font-size:14px; font-weight:800; color:#1E1B39; margin:0;">Kesejahteraan</p>
       <p id="subKesejahteraanBeranda" style="font-size:11.5px; color:#9497AA; margin:5px 0 0;"></p>
     </div>
-    <div id="pctKesejahteraanBeranda" style="font-size:24px; font-weight:800; color:#F4808F; flex-shrink:0;">&ndash;</div>
+    <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
+      <div id="pctKesejahteraanBeranda" style="font-size:24px; font-weight:800; color:#F4808F;">&ndash;</div>
+      <span class="material-symbols-rounded" style="font-size:20px; color:#B7BACC;">chevron_right</span>
+    </div>
   </div>
 
   <div onclick="bukaKategoriStatusAnakDariBeranda()" class="cursor-pointer" style="background:var(--neu-bg); border-radius:18px; padding:16px; box-shadow: var(--neu-raised-sm); margin-bottom:16px; display:flex; align-items:center; justify-content:space-between; gap:12px;">
@@ -1356,7 +1361,10 @@
       <p style="font-size:14px; font-weight:800; color:#1E1B39; margin:0;">Status Anak</p>
       <p id="subStatusAnakBeranda" style="font-size:11.5px; color:#9497AA; margin:5px 0 0;"></p>
     </div>
-    <div id="pctStatusAnakBeranda" style="font-size:24px; font-weight:800; color:#A385ED; flex-shrink:0;">&ndash;</div>
+    <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
+      <div id="pctStatusAnakBeranda" style="font-size:24px; font-weight:800; color:#A385ED;">&ndash;</div>
+      <span class="material-symbols-rounded" style="font-size:20px; color:#B7BACC;">chevron_right</span>
+    </div>
   </div>
 
   <!-- Kept hidden for JS compatibility (data masih dihitung, tapi tidak lagi ditampilkan visual di sini) -->
