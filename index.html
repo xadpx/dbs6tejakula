@@ -818,25 +818,31 @@
       transition: transform .35s cubic-bezier(.16,1,.3,1), opacity .3s cubic-bezier(.16,1,.3,1);
     }
     .premium-popup-overlay.show .premium-popup-box { transform: scale(1) translateY(0); opacity: 1; }
-    .detail-fullpage-overlay { opacity: 0; background: rgba(30,27,57,.55); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); transition: opacity .45s cubic-bezier(.16,1,.3,1); }
-    .detail-fullpage-overlay.show { opacity: 1; }
-    .detail-fullpage-overlay:not(.hidden) { display: flex; align-items: flex-end; justify-content: center; }
-    .detail-fullpage-box { transform: translateY(100%); transition: transform .48s cubic-bezier(.16,1,.3,1); }
-    .detail-fullpage-overlay.show .detail-fullpage-box { transform: translateY(0); }
-
-    /* Mode lama: full-page, dipakai khusus Kesejahteraan & Status Anak */
-    #modal.modal-fullpage-mode { align-items: stretch; background: rgba(246,245,251,.9); }
-    #modal.modal-fullpage-mode .detail-fullpage-box {
-      max-height: 100% !important;
-      height: 100%;
-      border-radius: 0 !important;
-      box-shadow: none !important;
-      transform: translateY(14px);
+    /* Modal detail — dulu bottom-sheet (muncul dari bawah), sekarang selalu
+       memenuhi layar penuh dengan transisi fade + naik tipis yang halus. */
+    .detail-fullpage-overlay {
       opacity: 0;
-      transition: transform .3s cubic-bezier(.16,1,.3,1), opacity .3s cubic-bezier(.16,1,.3,1);
+      background: rgba(238,241,246,.98);
+      transition: opacity .38s cubic-bezier(.16,1,.3,1);
     }
-    #modal.modal-fullpage-mode.show .detail-fullpage-box { transform: translateY(0); opacity: 1; }
-    #modal.modal-fullpage-mode #modalDragHandleRow { display: none; }
+    .detail-fullpage-overlay.show { opacity: 1; }
+    .detail-fullpage-overlay:not(.hidden) { display: flex; align-items: stretch; justify-content: center; }
+    .detail-fullpage-box {
+      width: 100%;
+      max-width: 480px;
+      height: 100%;
+      max-height: 100%;
+      border-radius: 0;
+      box-shadow: none;
+      transform: translateY(16px) scale(.985);
+      opacity: 0;
+      transition: transform .42s cubic-bezier(.16,1,.3,1), opacity .36s cubic-bezier(.16,1,.3,1);
+    }
+    .detail-fullpage-overlay.show .detail-fullpage-box {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    #modalDragHandleRow { display: none; }
     @media (min-width: 768px) {
       #modalBox { max-width: 560px !important; }
     }
@@ -1728,7 +1734,7 @@ Unduh Data
   <div id="modal"
 onclick="if(event.target===this) mundurModal();"
 class="hidden detail-fullpage-overlay fixed inset-0 z-[60]">
-    <div id="modalBox" class="detail-fullpage-box relative w-full" style="max-width:480px; height:82vh; max-height:82vh; background:var(--neu-bg); border-radius:22px 22px 0 0; box-shadow:0 -14px 34px rgba(163,177,198,.45); display:flex; flex-direction:column; overflow:hidden;">
+    <div id="modalBox" class="detail-fullpage-box relative" style="background:var(--neu-bg); display:flex; flex-direction:column; overflow:hidden;">
 
      <div id="modalStickyHeader" style="flex-shrink:0; touch-action:none; transition:background .2s ease;">
      <div id="modalDragHandleRow" style="display:flex; justify-content:center; padding-top:10px; padding-bottom:10px;">
@@ -3994,56 +4000,12 @@ Status Anak: ${r[14]}`;
     }
 
     (function(){
-      let startY = 0;
-      let currentY = 0;
-      let dragging = false;
-      const header = document.getElementById('modalStickyHeader');
-      const box = document.getElementById('modalBox');
-      if(!header || !box) return;
-
-      function onStart(y){
-        if(document.getElementById('modal').classList.contains('modal-fullpage-mode')) return;
-        startY = y;
-        currentY = y;
-        dragging = true;
-        box.style.transition = 'none';
-      }
-      function onMove(y){
-        if(!dragging) return;
-        currentY = y;
-        const delta = Math.max(0, currentY - startY);
-        box.style.transform = `translateY(${delta}px)`;
-      }
-      function onEnd(){
-        if(!dragging) return;
-        dragging = false;
-        const delta = Math.max(0, currentY - startY);
-        box.style.transition = 'transform .25s cubic-bezier(.4,0,.2,1)';
-        if(delta > 90){
-          box.style.transform = `translateY(100%)`;
-          setTimeout(() => {
-            box.style.transition = 'none';
-            box.style.transform = '';
-            mundurModal();
-          }, 220);
-        } else {
-          box.style.transform = '';
-        }
-      }
-
-      header.addEventListener('touchstart', e => onStart(e.touches[0].clientY), { passive: true });
-      header.addEventListener('touchmove', e => onMove(e.touches[0].clientY), { passive: true });
-      header.addEventListener('touchend', onEnd);
-
-      header.addEventListener('pointerdown', e => { header.setPointerCapture(e.pointerId); onStart(e.clientY); });
-      header.addEventListener('pointermove', e => onMove(e.clientY));
-      header.addEventListener('pointerup', onEnd);
+      // Modal detail sekarang selalu memenuhi layar penuh, jadi gestur
+      // swipe-turun-untuk-tutup ala bottom-sheet sudah tidak dipakai lagi.
+      // Penutupan dilakukan lewat tombol back di header.
     })();
 
     function renderModalStep(step){
-      const tipeFullPage = ['daftarDesil','siswaDesil','daftarStatusAnak','siswaStatusAnak'];
-      document.getElementById('modal').classList.toggle('modal-fullpage-mode', tipeFullPage.includes(step.type));
-
       if(step.type === 'daftarKelas'){
         renderDaftarKelas();
       }else if(step.type === 'siswaKelas'){
