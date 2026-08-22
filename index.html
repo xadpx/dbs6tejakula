@@ -1292,55 +1292,67 @@
 
   <p style="position:relative; font-size:11px; font-weight:600; color:#A6A399; margin:0 0 10px; letter-spacing:.05em; text-transform:uppercase;">Ringkasan data</p>
 
-  <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="background:var(--neu-bg); border-radius:20px; padding:16px; box-shadow: var(--neu-raised-md); margin-bottom:16px; display:flex; align-items:center; gap:16px;">
+  <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="background:var(--neu-bg); border-radius:20px; padding:16px; box-shadow: var(--neu-raised-md); margin-bottom:12px; display:flex; align-items:center; gap:14px;">
     <div style="flex:1; min-width:0;">
-      <p style="font-size:14px; font-weight:800; color:#1E1B39; margin:0;">Total siswa</p>
-      <p style="font-size:11px; color:#9497AA; margin:2px 0 0;">Ringkasan jumlah &amp; sebaran</p>
-      <p style="font-size:12px; color:#9497AA; margin:14px 0 0;">L <span id="pctL" style="color:#1E1B39; font-weight:700;">&ndash;</span> &middot; P <span id="pctP" style="color:#1E1B39; font-weight:700;">&ndash;</span></p>
+      <p style="font-size:14px; font-weight:800; color:#1E1B39; margin:0;">Total Siswa</p>
+      <p style="margin:4px 0 0; display:flex; align-items:center; gap:8px; min-height:30px;">
+        <span id="tot" class="hidden tabular-nums" style="font-size:28px; font-weight:800; color:#1E1B39; line-height:1;">0</span>
+        <span id="totSpin" class="spinner-ring-gray" style="width:20px;height:20px;"></span>
+      </p>
+      <p style="font-size:12.5px; color:#6C5DD3; font-weight:700; margin:12px 0 0; display:flex; align-items:center; gap:2px;">
+        Lihat rincian<span class="material-symbols-rounded" style="font-size:15px;">arrow_forward</span>
+      </p>
     </div>
-    <div style="position:relative; width:96px; height:96px; flex-shrink:0;">
-      <svg viewBox="0 0 100 100" style="width:100%; height:100%;">
-        <circle cx="50" cy="50" r="42" fill="none" stroke="#EEF1F6" stroke-width="9"/>
-        <circle id="ringSiswaLP" cx="50" cy="50" r="42" fill="none" stroke="#6C5DD3" stroke-width="9" stroke-linecap="round" stroke-dasharray="264" stroke-dashoffset="264" transform="rotate(-90 50 50)" style="transition:stroke-dashoffset .8s ease;"/>
-      </svg>
-      <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;">
-        <span id="tot" class="hidden tabular-nums" style="font-size:20px; font-weight:800; color:#1E1B39; line-height:1;">0</span>
-        <span id="totSpin" class="spinner-ring-gray" style="width:18px;height:18px;"></span>
-        <span style="font-size:9px; color:#9497AA; margin-top:2px;">siswa</span>
+    <div style="display:flex; flex-direction:column; align-items:center; gap:8px; flex-shrink:0;">
+      <div style="position:relative; width:82px; height:82px;">
+        <svg viewBox="0 0 100 100" style="width:100%; height:100%;">
+          <circle cx="50" cy="50" r="42" fill="none" stroke="#E3E7F0" stroke-width="9"/>
+          <circle id="ringSiswaLP" cx="50" cy="50" r="42" fill="none" stroke="#6C5DD3" stroke-width="9" stroke-linecap="round" stroke-dasharray="264" stroke-dashoffset="264" transform="rotate(-90 50 50)" style="transition:stroke-dashoffset .8s ease;"/>
+        </svg>
+      </div>
+      <p style="font-size:11px; color:#9497AA; margin:0; white-space:nowrap;">L:<span id="pctL" style="color:#1E1B39; font-weight:700;">&ndash;</span>&nbsp; P:<span id="pctP" style="color:#1E1B39; font-weight:700;">&ndash;</span></p>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:12px; margin-bottom:12px;">
+    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="flex:1; min-width:0; background:var(--neu-bg); border-radius:18px; padding:14px; box-shadow: var(--neu-raised-sm); display:flex; flex-direction:column; gap:10px;">
+      <div style="width:30px; height:30px; border-radius:9px; background:linear-gradient(160deg,#9BD1F7,#5FA8ED); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+        <span class="material-symbols-rounded" style="font-size:16px; color:#fff;">school</span>
+      </div>
+      <div>
+        <p style="font-size:12px; color:#9497AA; margin:0; font-weight:600;">Guru</p>
+        <p style="font-size:20px; font-weight:800; color:#1E1B39; margin:3px 0 0; line-height:1;">
+          <span id="totGuru" class="hidden tabular-nums">0</span><span id="totGuruSpin" class="spinner-ring-gray" style="width:14px;height:14px;"></span>
+        </p>
+      </div>
+    </div>
+    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer" style="flex:1; min-width:0; background:var(--neu-bg); border-radius:18px; padding:14px; box-shadow: var(--neu-raised-sm); display:flex; flex-direction:column; gap:10px;">
+      <div style="width:30px; height:30px; border-radius:9px; background:linear-gradient(160deg,#FBDE9B,#F0BB55); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+        <span class="material-symbols-rounded" style="font-size:16px; color:#fff;">badge</span>
+      </div>
+      <div>
+        <p style="font-size:12px; color:#9497AA; margin:0; font-weight:600;">Tendik</p>
+        <p style="font-size:20px; font-weight:800; color:#1E1B39; margin:3px 0 0; line-height:1;">
+          <span id="totTendik" class="hidden tabular-nums">0</span><span id="totTendikSpin" class="spinner-ring-gray" style="width:14px;height:14px;"></span>
+        </p>
       </div>
     </div>
   </div>
 
-  <div class="revenue-wrap-card">
-    <p class="revenue-wrap-title">Ringkasan Data</p>
-    <p class="revenue-wrap-sub">Guru, tendik &amp; kondisi siswa</p>
-    <div class="stat-mini-row">
-
-      <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer stat-mini-card stat-mini-blue">
-        <div class="stat-mini-icon"><span class="material-symbols-rounded">school</span></div>
-        <div class="stat-mini-num"><span id="totGuru" class="hidden tabular-nums">0</span><span id="totGuruSpin" class="spinner-ring-gray" style="width:14px;height:14px;"></span></div>
-        <div class="stat-mini-lbl">Guru</div>
-      </div>
-
-      <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer stat-mini-card stat-mini-yellow">
-        <div class="stat-mini-icon"><span class="material-symbols-rounded">badge</span></div>
-        <div class="stat-mini-num"><span id="totTendik" class="hidden tabular-nums">0</span><span id="totTendikSpin" class="spinner-ring-gray" style="width:14px;height:14px;"></span></div>
-        <div class="stat-mini-lbl">Tendik</div>
-      </div>
-
-      <div onclick="bukaKategoriKesejahteraanDariBeranda()" class="cursor-pointer stat-mini-card stat-mini-pink">
-        <div class="stat-mini-icon"><span class="material-symbols-rounded">volunteer_activism</span></div>
-        <div class="stat-mini-num"><span id="pctKesejahteraanBeranda">&ndash;</span></div>
-        <div class="stat-mini-lbl">Kesejahteraan</div>
-      </div>
-
-      <div onclick="bukaKategoriStatusAnakDariBeranda()" class="cursor-pointer stat-mini-card stat-mini-purple">
-        <div class="stat-mini-icon"><span class="material-symbols-rounded">shield</span></div>
-        <div class="stat-mini-num"><span id="pctStatusAnakBeranda">&ndash;</span></div>
-        <div class="stat-mini-lbl">Status anak</div>
-      </div>
-
+  <div onclick="bukaKategoriKesejahteraanDariBeranda()" class="cursor-pointer" style="background:var(--neu-bg); border-radius:18px; padding:16px; box-shadow: var(--neu-raised-sm); margin-bottom:12px; display:flex; align-items:center; justify-content:space-between; gap:12px;">
+    <div style="min-width:0;">
+      <p style="font-size:14px; font-weight:800; color:#1E1B39; margin:0;">Kesejahteraan</p>
+      <p id="subKesejahteraanBeranda" style="font-size:11.5px; color:#9497AA; margin:5px 0 0;"></p>
     </div>
+    <div id="pctKesejahteraanBeranda" style="font-size:24px; font-weight:800; color:#F4808F; flex-shrink:0;">&ndash;</div>
+  </div>
+
+  <div onclick="bukaKategoriStatusAnakDariBeranda()" class="cursor-pointer" style="background:var(--neu-bg); border-radius:18px; padding:16px; box-shadow: var(--neu-raised-sm); margin-bottom:16px; display:flex; align-items:center; justify-content:space-between; gap:12px;">
+    <div style="min-width:0;">
+      <p style="font-size:14px; font-weight:800; color:#1E1B39; margin:0;">Status Anak</p>
+      <p id="subStatusAnakBeranda" style="font-size:11.5px; color:#9497AA; margin:5px 0 0;"></p>
+    </div>
+    <div id="pctStatusAnakBeranda" style="font-size:24px; font-weight:800; color:#A385ED; flex-shrink:0;">&ndash;</div>
   </div>
 
   <!-- Kept hidden for JS compatibility (data masih dihitung, tapi tidak lagi ditampilkan visual di sini) -->
@@ -1350,8 +1362,6 @@
     <div id="barTendikBeranda"></div>
     <span id="rincianTendikBeranda"></span>
     <div id="barKesejahteraanBeranda"></div>
-    <div id="subKesejahteraanBeranda"></div>
-    <div id="subStatusAnakBeranda"></div>
     <svg><circle id="ringStatusAnak"/></svg>
   </div>
 
@@ -2850,8 +2860,8 @@ let historyTabAktif = false;
       const pctPerempuan = 100 - pctLaki;
       const elPctL = document.getElementById('pctL');
       const elPctP = document.getElementById('pctP');
-      if(elPctL) elPctL.textContent = `${pctLaki}%`;
-      if(elPctP) elPctP.textContent = `${pctPerempuan}%`;
+      if(elPctL) elPctL.textContent = totalLaki;
+      if(elPctP) elPctP.textContent = totalPerempuan;
       const elBarL = document.getElementById('barLPL');
       const elBarP = document.getElementById('barLPP');
       if(elBarL) elBarL.style.width = pctLaki + '%';
@@ -4549,7 +4559,7 @@ function buatChart(){
     const elBadge = document.getElementById('badgeKesejahteraanBeranda');
     const elSub = document.getElementById('subKesejahteraanBeranda');
     if(elPct) elPct.textContent = pct.toFixed(pct < 10 ? 1 : 0) + '%';
-    if(elSub) elSub.textContent = `${bawah} siswa di Desil 1\u20134`;
+    if(elSub) elSub.textContent = `${bawah} dari ${totalSemua} siswa \u2022 Desil 1\u20134`;
     const elBarKesejahteraan = document.getElementById('barKesejahteraanBeranda');
     if(elBarKesejahteraan){
       const maxDesil = Math.max(...nilaiKesejahteraan, 1);
@@ -4606,7 +4616,7 @@ function buatChart(){
     const elBadge = document.getElementById('badgeStatusAnakBeranda');
     const elSub = document.getElementById('subStatusAnakBeranda');
     if(elPct) elPct.textContent = pct.toFixed(pct < 10 ? 1 : 0) + '%';
-    if(elSub) elSub.textContent = `${perluPerhatian} siswa yatim/piatu`;
+    if(elSub) elSub.textContent = `${perluPerhatian} dari ${totalSemua} siswa \u2022 Yatim/Piatu`;
     const elBarStatusAnak = document.getElementById('barStatusAnakBeranda');
     if(elBarStatusAnak) elBarStatusAnak.style.width = Math.min(100, pct) + '%';
     const elRingStatusAnak = document.getElementById('ringStatusAnak');
