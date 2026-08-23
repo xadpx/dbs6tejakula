@@ -110,16 +110,7 @@
        halaman login. Fixed & pointer-events:none supaya tidak ikut
        tergulung saat scroll dan tidak menghalangi klik. */
     .app-bg-decor{
-      position: fixed;
-      top: 0;
-      left: 50%;
-      width: 100%;
-      max-width: 480px;
-      height: 100dvh;
-      transform: translateX(-50%);
-      z-index: 0;
-      overflow: hidden;
-      pointer-events: none;
+      display: none;
     }
     .app-bg-decor span{
       position: absolute;
@@ -1206,11 +1197,7 @@
   </div>
   <div id="app-scroll">
 
-  <div id="p-login" class="hidden flex flex-col justify-center" style="min-height:100vh; min-height:100dvh; position:relative; overflow-y:auto; background:var(--grad2); padding:32px 24px 44px; box-sizing:border-box;">
-
-    <div style="position:absolute; top:-70px; right:-70px; width:240px; height:240px; border-radius:50%; background:radial-gradient(circle, rgba(255,208,123,.55), transparent 70%); filter:blur(2px); pointer-events:none;"></div>
-    <div style="position:absolute; top:160px; left:-90px; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle, rgba(184,140,255,.45), transparent 70%); filter:blur(2px); pointer-events:none;"></div>
-    <div style="position:absolute; bottom:200px; right:-50px; width:180px; height:180px; border-radius:50%; background:radial-gradient(circle, rgba(255,168,168,.5), transparent 70%); filter:blur(2px); pointer-events:none;"></div>
+  <div id="p-login" class="hidden flex flex-col justify-center" style="min-height:100vh; min-height:100dvh; position:relative; overflow-y:auto; background:var(--neu-bg); padding:32px 24px 44px; box-sizing:border-box;">
 
     <div style="position:relative; z-index:1; background: var(--neu-bg); -webkit-backdrop-filter:none; backdrop-filter:none; border:none; border-radius:28px; padding:28px 24px; box-shadow: var(--neu-raised-lg);">
 
@@ -1226,9 +1213,9 @@
       </p>
 
       <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
-        <div style="flex:1; height:1px; background:rgba(20,20,43,.25);"></div>
+        <div style="flex:1; height:1px; background:rgba(163,177,198,.4);"></div>
         <span style="color:#8B8AA3; font-size:11px; white-space:nowrap;">Silakan login</span>
-        <div style="flex:1; height:1px; background:rgba(20,20,43,.25);"></div>
+        <div style="flex:1; height:1px; background:rgba(163,177,198,.4);"></div>
       </div>
 
      <div style="display:flex; justify-content:center;">
@@ -1236,7 +1223,7 @@
           data-client_id="183272939624-9hm3c0ruqm5s5uo73vkk16v2lvu2cr6b.apps.googleusercontent.com"
           data-callback="handleGoogleCredential">
         </div>
-        <div style="border-radius:9999px; background: var(--neu-bg); border:none; box-shadow: var(--neu-pressed-sm); padding:3px;">
+        <div style="border-radius:9999px; background: var(--neu-bg); border:none; box-shadow: var(--neu-raised-md); padding:5px;">
           <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="filled_white" data-size="large" data-text="continue_with" data-logo_alignment="left" data-width="300"></div>
         </div>
       </div>
@@ -1304,7 +1291,7 @@
       </p>
     </div>
 
-    <p style="font-size:11.5px; color:#9497AA; margin:12px 0 8px; display:flex; align-items:center; gap:5px;">
+    <p style="font-size:11.5px; color:#6B6E85; font-weight:600; margin:12px 0 8px; display:flex; align-items:center; gap:5px;">
       <span class="material-symbols-rounded" style="font-size:14px;">apartment</span>
       <span id="totRombelBerandaKtx" class="tabular-nums">&ndash;</span> kelas &middot; rata-rata <span id="rataSiswaKelasBerandaKtx" class="tabular-nums">&ndash;</span> siswa/kelas
     </p>
@@ -1320,25 +1307,29 @@
   </div>
 
   <div style="display:flex; gap:12px; margin-bottom:12px;">
-    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="position:relative; flex:1; min-width:0; background:linear-gradient(160deg,#9BD1F7,#5FA8ED); border-radius:18px; padding:14px; box-shadow:5px 5px 12px rgba(95,168,237,.4), -3px -3px 8px rgba(255,255,255,.4);">
-      <div style="display:flex; align-items:center; justify-content:space-between;">
-        <span class="material-symbols-rounded" style="font-size:20px; color:#fff;">school</span>
-        <span class="material-symbols-rounded" style="font-size:16px; color:rgba(255,255,255,.7);">chevron_right</span>
+    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="flex:1; min-width:0; background:var(--neu-bg); border-radius:20px; padding:8px; box-shadow: var(--neu-raised-md);">
+      <div style="position:relative; background:linear-gradient(160deg,#BFE0FA,#7FBBF0); border-radius:14px; padding:14px; box-shadow:4px 4px 10px rgba(95,168,237,.45), -3px -3px 8px rgba(255,255,255,.55);">
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <span class="material-symbols-rounded" style="font-size:20px; color:#0C447C;">school</span>
+          <span class="material-symbols-rounded" style="font-size:16px; color:#0C447C; opacity:.55;">chevron_right</span>
+        </div>
+        <p style="font-size:22px; font-weight:800; color:#0C447C; margin:12px 0 0; line-height:1;">
+          <span id="totGuru" class="hidden tabular-nums">0</span><span id="totGuruSpin" class="spinner-ring-gray" style="width:14px;height:14px;"></span>
+        </p>
+        <p style="font-size:11.5px; color:#185FA5; margin:2px 0 0; font-weight:600;">Guru aktif</p>
       </div>
-      <p style="font-size:22px; font-weight:800; color:#fff; margin:12px 0 0; line-height:1;">
-        <span id="totGuru" class="hidden tabular-nums">0</span><span id="totGuruSpin" class="spinner-ring-gray" style="width:14px;height:14px;"></span>
-      </p>
-      <p style="font-size:11.5px; color:rgba(255,255,255,.85); margin:2px 0 0;">Guru aktif</p>
     </div>
-    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer" style="position:relative; flex:1; min-width:0; background:linear-gradient(160deg,#FBDE9B,#F0BB55); border-radius:18px; padding:14px; box-shadow:5px 5px 12px rgba(240,187,85,.4), -3px -3px 8px rgba(255,255,255,.4);">
-      <div style="display:flex; align-items:center; justify-content:space-between;">
-        <span class="material-symbols-rounded" style="font-size:20px; color:#fff;">badge</span>
-        <span class="material-symbols-rounded" style="font-size:16px; color:rgba(255,255,255,.7);">chevron_right</span>
+    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer" style="flex:1; min-width:0; background:var(--neu-bg); border-radius:20px; padding:8px; box-shadow: var(--neu-raised-md);">
+      <div style="position:relative; background:linear-gradient(160deg,#FCE3AE,#F3C267); border-radius:14px; padding:14px; box-shadow:4px 4px 10px rgba(240,187,85,.45), -3px -3px 8px rgba(255,255,255,.55);">
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <span class="material-symbols-rounded" style="font-size:20px; color:#854F0B;">badge</span>
+          <span class="material-symbols-rounded" style="font-size:16px; color:#854F0B; opacity:.55;">chevron_right</span>
+        </div>
+        <p style="font-size:22px; font-weight:800; color:#854F0B; margin:12px 0 0; line-height:1;">
+          <span id="totTendik" class="hidden tabular-nums">0</span><span id="totTendikSpin" class="spinner-ring-gray" style="width:14px;height:14px;"></span>
+        </p>
+        <p style="font-size:11.5px; color:#996616; margin:2px 0 0; font-weight:600;">Tendik aktif</p>
       </div>
-      <p style="font-size:22px; font-weight:800; color:#fff; margin:12px 0 0; line-height:1;">
-        <span id="totTendik" class="hidden tabular-nums">0</span><span id="totTendikSpin" class="spinner-ring-gray" style="width:14px;height:14px;"></span>
-      </p>
-      <p style="font-size:11.5px; color:rgba(255,255,255,.85); margin:2px 0 0;">Tendik aktif</p>
     </div>
   </div>
 
@@ -1350,7 +1341,7 @@
   <div onclick="bukaKategoriKesejahteraanDariBeranda()" class="cursor-pointer" style="background:var(--neu-bg); border-radius:18px; padding:16px; box-shadow: var(--neu-raised-sm); margin-bottom:12px; display:flex; align-items:center; justify-content:space-between; gap:12px;">
     <div style="min-width:0;">
       <p style="font-size:14px; font-weight:800; color:#1E1B39; margin:0;">Kesejahteraan</p>
-      <p id="subKesejahteraanBeranda" style="font-size:11.5px; color:#9497AA; margin:5px 0 0;"></p>
+      <p id="subKesejahteraanBeranda" style="font-size:11.5px; color:#6B6E85; font-weight:600; margin:5px 0 0;"></p>
     </div>
     <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
       <div id="pctKesejahteraanBeranda" style="font-size:24px; font-weight:800; color:#F4808F;">&ndash;</div>
@@ -1361,7 +1352,7 @@
   <div onclick="bukaKategoriStatusAnakDariBeranda()" class="cursor-pointer" style="background:var(--neu-bg); border-radius:18px; padding:16px; box-shadow: var(--neu-raised-sm); margin-bottom:16px; display:flex; align-items:center; justify-content:space-between; gap:12px;">
     <div style="min-width:0;">
       <p style="font-size:14px; font-weight:800; color:#1E1B39; margin:0;">Status Anak</p>
-      <p id="subStatusAnakBeranda" style="font-size:11.5px; color:#9497AA; margin:5px 0 0;"></p>
+      <p id="subStatusAnakBeranda" style="font-size:11.5px; color:#6B6E85; font-weight:600; margin:5px 0 0;"></p>
     </div>
     <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
       <div id="pctStatusAnakBeranda" style="font-size:24px; font-weight:800; color:#A385ED;">&ndash;</div>
