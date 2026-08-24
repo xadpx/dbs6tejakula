@@ -270,6 +270,8 @@
     }
     .nav-active{
       background: var(--color-primary-soft);
+      padding-top:10px;
+      padding-bottom:4px;
     }
     .nav-btn{ position: relative; z-index: 1; }
     .nav-icon-wrap{
@@ -278,6 +280,10 @@
       justify-content:center;
       color: var(--color-nav-inactive);
       transition: color .25s;
+      line-height:1;
+    }
+    .nav-icon-wrap .nav-icon{
+      line-height:1;
     }
     .nav-active .nav-icon-wrap{
       color: var(--color-primary);
@@ -291,6 +297,7 @@
       color: var(--color-nav-inactive);
       white-space:nowrap;
       letter-spacing:-0.02em;
+      line-height:1;
       transition: color .25s;
     }
     .nav-active .nav-label{
