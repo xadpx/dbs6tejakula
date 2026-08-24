@@ -714,17 +714,17 @@
       position: relative; overflow: hidden;
     }
     .ripple-effect { position: relative; overflow: hidden; }
-    .ripple-span-global { position: absolute; border-radius: 50%; transform: scale(0); animation: rippleAnim .55s ease-out; background: rgba(20,20,43,.16); pointer-events: none; }
+    .ripple-span-global { position: absolute; border-radius: 50%; transform: scale(0); animation: rippleAnim .5s ease-out; background: rgba(20,20,43,.10); pointer-events: none; }
     .ripple-span {
       position: absolute;
       border-radius: 50%;
       transform: scale(0);
-      animation: rippleAnim .55s ease-out;
-      background: rgba(20,20,43,.2);
+      animation: rippleAnim .5s ease-out;
+      background: rgba(20,20,43,.12);
       pointer-events: none;
     }
     @keyframes rippleAnim {
-      to { transform: scale(2.6); opacity: 0; }
+      to { transform: scale(1.6); opacity: 0; }
     }
     .legend-chip-lbl {
       font-size: 11px; font-weight: 700; color: var(--color-text-secondary);
@@ -4291,7 +4291,7 @@ function cekPIN(){
   const rect = target.getBoundingClientRect();
   // Sama seperti ripple otomatis: diameter dibatasi supaya tidak
   // melebar berlebihan di elemen yang lebar/panjang (baris daftar, dsb).
-  const diameter = Math.min(Math.max(rect.width, rect.height), 160);
+  const diameter = Math.min(Math.max(rect.width, rect.height), 110);
   const radius = diameter / 2;
   const x = (event.clientX ?? (event.touches && event.touches[0] ? event.touches[0].clientX : rect.left + rect.width/2)) - rect.left - radius;
   const y = (event.clientY ?? (event.touches && event.touches[0] ? event.touches[0].clientY : rect.top + rect.height/2)) - rect.top - radius;
@@ -5680,7 +5680,7 @@ document.addEventListener('pointerdown', function(e){
   // Batasi diameter ripple maksimum, supaya saat elemen yang disentuh
   // berukuran besar (kartu penuh, dsb), ripple-nya tidak "membanjiri"
   // seluruh layar — cukup melebar wajar dari titik sentuh.
-  const diameter = Math.min(Math.max(rect.width, rect.height), 160);
+  const diameter = Math.min(Math.max(rect.width, rect.height), 110);
   const radius = diameter / 2;
   const x = (e.clientX ?? rect.left + rect.width/2) - rect.left - radius;
   const y = (e.clientY ?? rect.top + rect.height/2) - rect.top - radius;
