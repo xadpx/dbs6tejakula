@@ -1397,7 +1397,7 @@
           </div>
           <p class="font-bold text-[14.5px] text-gray-800 m-0">Data per Rombel</p>
         </div>
-        <div id="btnCopyRekap" onclick="event.stopPropagation(); copyRekap()" class="fab-copy cursor-pointer transition" style="width:26px;height:26px;">
+        <div id="btnCopyRekap" onclick="event.stopPropagation(); bagikanRekap()" class="fab-copy cursor-pointer transition" style="width:26px;height:26px;">
           <span id="copyRekapIcon" class="material-symbols-rounded" style="font-size:13px;">ios_share</span>
         </div>
       </div>
@@ -4127,19 +4127,11 @@ Status Anak: ${r[14]}`;
         return;
       }
     });
-    async function copyRekap(){
+    async function bagikanRekap(){
   let text = buatTeksRekap();
-  try{
-    window.focus();
+  const icon = document.getElementById("copyRekapIcon");
 
-    const salinDenganTimeout = Promise.race([
-      navigator.clipboard.writeText(text),
-      new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 2000))
-    ]);
-
-    await salinDenganTimeout;
-
-    const icon = document.getElementById("copyRekapIcon");
+  function tandaiSukses(){
     if(icon){
       icon.textContent = "check";
       icon.classList.remove("text-gray-600");
@@ -4150,10 +4142,36 @@ Status Anak: ${r[14]}`;
         icon.classList.add("text-gray-600");
       },1000);
     }
-    showToast("Rekap disalin");
+  }
+
+  if(navigator.share){
+    try{
+      window.focus();
+      await navigator.share({ text: text, title: 'Rekap Data per Kelas' });
+      tandaiSukses();
+    }catch(err){
+      // Pengguna membatalkan share sheet -> tidak perlu tampilkan error apa pun.
+      if(err && err.name !== 'AbortError'){
+        console.error(err);
+        showToast("Gagal membagikan, coba ketuk lagi", 2500);
+      }
+    }
+    return;
+  }
+
+  // Fallback untuk browser yang belum dukung Web Share API: salin ke clipboard.
+  try{
+    window.focus();
+    const salinDenganTimeout = Promise.race([
+      navigator.clipboard.writeText(text),
+      new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 2000))
+    ]);
+    await salinDenganTimeout;
+    tandaiSukses();
+    showToast("Rekap disalin (share tidak didukung browser ini)");
   }catch(err){
     console.error(err);
-    showToast("Gagal menyalin, coba ketuk lagi", 2500);
+    showToast("Gagal membagikan, coba ketuk lagi", 2500);
   }
 }
 function showToast(text, durasi = 1800){
