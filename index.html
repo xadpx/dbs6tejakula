@@ -83,7 +83,7 @@
       --shadow-hero: 0 16px 34px rgba(108,93,211,.28);
 
       /* Font */
-      --font-family: 'Sora', 'Inter', sans-serif;
+      --font-family: 'Inter', 'Sora', sans-serif;
     }
     html {
       overflow-x: clip;
@@ -1371,7 +1371,7 @@
       <p id="subKesejahteraanBeranda" style="font-size:11.5px; color:#6B6E85; font-weight:600; margin:5px 0 0;"></p>
     </div>
     <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
-      <div id="pctKesejahteraanBeranda" style="font-size:24px; font-weight:800; color:#F4808F;">&ndash;</div>
+      <div id="pctKesejahteraanBeranda" style="font-size:20px; font-weight:800; color:#F4808F;">&ndash;</div>
       <span class="material-symbols-rounded" style="font-size:20px; color:#B7BACC;">chevron_right</span>
     </div>
   </div>
@@ -1382,7 +1382,7 @@
       <p id="subStatusAnakBeranda" style="font-size:11.5px; color:#6B6E85; font-weight:600; margin:5px 0 0;"></p>
     </div>
     <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
-      <div id="pctStatusAnakBeranda" style="font-size:24px; font-weight:800; color:#A385ED;">&ndash;</div>
+      <div id="pctStatusAnakBeranda" style="font-size:20px; font-weight:800; color:#A385ED;">&ndash;</div>
       <span class="material-symbols-rounded" style="font-size:20px; color:#B7BACC;">chevron_right</span>
     </div>
   </div>
@@ -2026,24 +2026,34 @@ z-[9999]">
         if(wrap._marqueeStop){ wrap._marqueeStop(); wrap._marqueeStop = null; }
         const teks = wrap.querySelector('.nama-marquee-text');
         if(!teks) return;
-        wrap.scrollLeft = 0;
+        teks.style.transform = 'translateX(0)';
         const jarak = teks.scrollWidth - wrap.clientWidth;
         if(jarak <= 4) return;
 
         let dihentikan = false;
-        wrap._marqueeStop = () => { dihentikan = true; };
+        wrap._marqueeStop = () => {
+          dihentikan = true;
+          teks.style.willChange = 'auto';
+        };
 
         const jedaAwal = 900;
         const jedaAkhir = 900;
         const kecepatan = 32;
         const durasiJalan = (jarak / kecepatan) * 1000;
 
+        // Animasikan lewat transform (bukan scrollLeft) supaya diproses di
+        // compositor thread oleh GPU, tidak memicu reflow/layout berulang
+        // yang bikin scroll di seluruh halaman jadi berat & patah-patah
+        // saat banyak nama sedang berjalan bersamaan dalam satu daftar.
+        teks.style.willChange = 'transform';
+
         function animasikan(mulai, tujuan, durasi, laluLanjut){
           const t0 = performance.now();
           function langkah(t){
             if(dihentikan) return;
             const p = Math.min(1, (t - t0) / durasi);
-            wrap.scrollLeft = mulai + (tujuan - mulai) * p;
+            const posisi = mulai + (tujuan - mulai) * p;
+            teks.style.transform = `translateX(${-posisi}px)`;
             if(p < 1){
               requestAnimationFrame(langkah);
             }else if(laluLanjut){
@@ -2089,7 +2099,8 @@ z-[9999]">
           } else if(wrap._marqueeStop){
             wrap._marqueeStop();
             wrap._marqueeStop = null;
-            wrap.scrollLeft = 0;
+            const teks = wrap.querySelector('.nama-marquee-text');
+            if(teks) teks.style.transform = 'translateX(0)';
           }
         });
       }, { threshold: 0.01 });
@@ -2452,7 +2463,7 @@ let historyTabAktif = false;
                 </div>
                 <div class="ml-3 flex-1 min-w-0">
                   <div class="nama-marquee-wrap"><span class="nama-marquee-text text-[13px] font-semibold text-gray-900">${r[1]}</span></div>
-                  <div class="text-[11px] text-gray-600 mt-0.5">Kelas: ${r[2]}</div>
+                  <div class="text-[11px] text-gray-600 mt-0.5">${r[2]}</div>
                 </div>
               </div>
             `).join('')}
@@ -2892,6 +2903,7 @@ let historyTabAktif = false;
     verifikasiSesiKeServer();
   }
 
+  const _waktuMulaiFetchBeranda = (typeof performance !== 'undefined' && performance.now) ? performance.now() : 0;
   fetch(`${APPS_SCRIPT_URL}?action=getDataGabungan`)
     .then(res => res.json())
     .then(json => {
@@ -2918,9 +2930,7 @@ let historyTabAktif = false;
       const elTotGuru = document.getElementById('totGuru');
       const elSpinGuru = document.getElementById('totGuruSpin');
       if(elTotGuru){
-        elTotGuru.classList.remove('hidden');
-        elSpinGuru.classList.add('hidden');
-        animasikanAngka('totGuru', dataGuru.length, 700);
+        tampilkanTotalSetelahMuat('totGuru', 'totGuruSpin', dataGuru.length, _waktuMulaiFetchBeranda);
       }
       guruSiap = true;
 
@@ -2950,9 +2960,7 @@ let historyTabAktif = false;
       const elTotTendik = document.getElementById('totTendik');
       const elSpinTendik = document.getElementById('totTendikSpin');
       if(elTotTendik){
-        elTotTendik.classList.remove('hidden');
-        elSpinTendik.classList.add('hidden');
-        animasikanAngka('totTendik', dataTendik.length, 700);
+        tampilkanTotalSetelahMuat('totTendik', 'totTendikSpin', dataTendik.length, _waktuMulaiFetchBeranda);
       }
       tendikSiap = true;
 
@@ -3626,6 +3634,7 @@ function cobaBuatChartKepegawaian(){
 function muatDataGuru(){
   if(sudahMuatGuru) return;
   sudahMuatGuru = true;
+  const _waktuMulaiGuru = (typeof performance !== 'undefined' && performance.now) ? performance.now() : 0;
   fetch(`${APPS_SCRIPT_URL}?action=getDataGuru`)
     .then(res => res.json())
     .then(json => {
@@ -3651,15 +3660,14 @@ function muatDataGuru(){
       const elTot = document.getElementById('totGuru');
       const elSpin = document.getElementById('totGuruSpin');
       if(elTot){
-        elTot.classList.remove('hidden');
-        elSpin.classList.add('hidden');
-        animasikanAngka('totGuru', dataGuru.length, 700);
+        tampilkanTotalSetelahMuat('totGuru', 'totGuruSpin', dataGuru.length, _waktuMulaiGuru);
       }
       guruSiap = true;
       cobaBuatChartKepegawaian();
     })
     .catch(err => {
       console.error('Percobaan 1 gagal (guru):', err);
+      const _waktuMulaiGuruRetry = (typeof performance !== 'undefined' && performance.now) ? performance.now() : 0;
       fetch(`${APPS_SCRIPT_URL}?action=getDataGuru`)
         .then(res => res.json())
         .then(json => {
@@ -3674,9 +3682,7 @@ function muatDataGuru(){
           const elTot = document.getElementById('totGuru');
           const elSpin = document.getElementById('totGuruSpin');
           if(elTot){
-            elTot.classList.remove('hidden');
-            elSpin.classList.add('hidden');
-            animasikanAngka('totGuru', dataGuru.length, 700);
+            tampilkanTotalSetelahMuat('totGuru', 'totGuruSpin', dataGuru.length, _waktuMulaiGuruRetry);
           }
           guruSiap = true;
           cobaBuatChartKepegawaian();
@@ -3691,6 +3697,7 @@ function muatDataGuru(){
 function muatDataTendik(){
   if(sudahMuatTendik) return;
   sudahMuatTendik = true;
+  const _waktuMulaiTendik = (typeof performance !== 'undefined' && performance.now) ? performance.now() : 0;
   fetch(`${APPS_SCRIPT_URL}?action=getDataTendik`)
     .then(res => res.json())
     .then(json => {
@@ -3705,15 +3712,14 @@ function muatDataTendik(){
       const elTot = document.getElementById('totTendik');
       const elSpin = document.getElementById('totTendikSpin');
       if(elTot){
-        elTot.classList.remove('hidden');
-        elSpin.classList.add('hidden');
-        animasikanAngka('totTendik', dataTendik.length, 700);
+        tampilkanTotalSetelahMuat('totTendik', 'totTendikSpin', dataTendik.length, _waktuMulaiTendik);
       }
       tendikSiap = true;
       cobaBuatChartKepegawaian();
     })
     .catch(err => {
       console.error('Percobaan 1 gagal (tendik):', err);
+      const _waktuMulaiTendikRetry = (typeof performance !== 'undefined' && performance.now) ? performance.now() : 0;
       fetch(`${APPS_SCRIPT_URL}?action=getDataTendik`)
         .then(res => res.json())
         .then(json => {
@@ -3728,9 +3734,7 @@ function muatDataTendik(){
           const elTot = document.getElementById('totTendik');
           const elSpin = document.getElementById('totTendikSpin');
           if(elTot){
-            elTot.classList.remove('hidden');
-            elSpin.classList.add('hidden');
-            animasikanAngka('totTendik', dataTendik.length, 700);
+            tampilkanTotalSetelahMuat('totTendik', 'totTendikSpin', dataTendik.length, _waktuMulaiTendikRetry);
           }
           tendikSiap = true;
           cobaBuatChartKepegawaian();
@@ -5851,6 +5855,21 @@ document.addEventListener('pointerdown', function(e){
 // tertahan/tertangkap oleh kode ini di halaman manapun. Pindah tab
 // sekarang murni lewat tap tombol nav bawah.)
 // ======================================================
+    // Supaya spinner loading di card Guru/Tendik selalu sempat terlihat
+    // (tidak "kedip" lalu langsung hilang kalau responsnya sangat cepat),
+    // angka baru ditampilkan setelah spinner tampil minimal SPINNER_MIN_MS.
+    const SPINNER_MIN_MS = 450;
+    function tampilkanTotalSetelahMuat(idAngka, idSpinner, nilai, waktuMulai){
+      const berlalu = (typeof performance !== 'undefined' && performance.now) ? (performance.now() - waktuMulai) : SPINNER_MIN_MS;
+      const sisa = Math.max(0, SPINNER_MIN_MS - berlalu);
+      setTimeout(function(){
+        const elAngka = document.getElementById(idAngka);
+        const elSpinner = document.getElementById(idSpinner);
+        if(elAngka) elAngka.classList.remove('hidden');
+        if(elSpinner) elSpinner.classList.add('hidden');
+        animasikanAngka(idAngka, nilai, 700);
+      }, sisa);
+    }
     function animasikanAngka(id, nilaiAkhir, durasi, callbackSelesai){
   const el = document.getElementById(id);
   if(!el) return;
