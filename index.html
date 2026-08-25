@@ -61,7 +61,7 @@
       --glass-shadow-col: 20,20,43;
 
       --color-nav-active-bg: #6C5DD3;
-      --color-nav-inactive:  #A6A9CC;
+      --color-nav-inactive:  #6B6E8F;
 
       /* Spacing */
       --space-xs: 4px;
@@ -229,7 +229,7 @@
     .nav-icon{
       font-variation-settings:
         'FILL' 0,
-        'wght' 400,
+        'wght' 500,
         'GRAD' 0,
         'opsz' 24;
       transition: .2s;
@@ -1275,7 +1275,7 @@
       </div>
       <div style="min-width:0;">
         <p class="text-[12.5px] font-semibold m-0" style="color:#8B8AA3;"><span id="greetingText">Selamat datang</span>,</p>
-        <p class="text-[22px] font-extrabold m-0" id="namaGuruAktif" style="color:#1E1E24; letter-spacing:-0.02em; margin-top:2px;"></p>
+        <p class="text-[19px] font-extrabold m-0" id="namaGuruAktif" style="color:#1E1E24; letter-spacing:-0.02em; margin-top:2px;"></p>
       </div>
     </div>
     <div class="relative" id="notifWrap">
@@ -1571,7 +1571,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
 
 </div>
 
-  <div id="p-download" class="hidden p-5" style="padding-bottom:140px;">
+  <div id="p-download" class="hidden p-5" style="padding-bottom:calc(160px + env(safe-area-inset-bottom, 0px));">
   <h1 class="text-xl font-bold text-gray-800 flex items-center gap-2 mb-5">
   <span class="material-symbols-rounded text-[23px]">
     download_for_offline
@@ -3263,10 +3263,16 @@ function gantiHalamanFade(pTarget){
 
   sedangTransisiNav = true;
 
-  // Tab Unduh: lewati animasi fade sepenuhnya, langsung tampil.
-  // Ada bug render/compositing browser yang bikin halaman ini
-  // kelihatan kosong sampai discroll kalau dianimasikan.
-  if(pTarget === "download" || pSekarang === "download"){
+  // Tab Unduh: lewati animasi fade untuk pasangan Beranda/Siswa <-> Unduh.
+  // Ada bug render/compositing browser lama yang bikin halaman ini
+  // kelihatan kosong sampai discroll kalau dianimasikan. Khusus pasangan
+  // Unduh <-> Data GTK sudah aman dianimasikan lagi karena efek blur/glass
+  // (sumber bug compositing-nya) sekarang sudah dimatikan total di app ini.
+  const kombinasiAmanDitransisi =
+    (pTarget === "guru" && pSekarang === "download") ||
+    (pTarget === "download" && pSekarang === "guru");
+
+  if((pTarget === "download" || pSekarang === "download") && !kombinasiAmanDitransisi){
     try {
       currentEl.classList.add("hidden");
       currentEl.style.cssText = "";
