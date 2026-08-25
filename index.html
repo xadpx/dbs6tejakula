@@ -2001,9 +2001,9 @@ z-[9999]">
       return `<div style="width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,${c1},${c2});display:flex;align-items:center;justify-content:center;font-size:${fontSize}px;font-weight:700;color:#fff;">${inisial}</div>`;
     }
 
-    function aturMarqueeNama(idWrap){
+    function aturMarqueeNama(target){
       requestAnimationFrame(() => {
-        const wrap = document.getElementById(idWrap);
+        const wrap = typeof target === "string" ? document.getElementById(target) : target;
         if(!wrap) return;
         if(wrap._marqueeStop){ wrap._marqueeStop(); wrap._marqueeStop = null; }
         const teks = wrap.querySelector('.nama-marquee-text');
@@ -2050,6 +2050,33 @@ z-[9999]">
         }
         siklus();
       });
+    }
+
+    // Aktifkan marquee HANYA untuk nama yang sedang kelihatan di layar.
+    // Kalau daftarnya panjang (banyak siswa/guru/tendik), ini mencegah
+    // puluhan-ratusan animasi jalan bersamaan sekaligus — yang bisa
+    // bikin scroll jadi berat/patah-patah. Nama yang scroll keluar
+    // layar otomatis dihentikan & di-reset ke posisi awal, jadi nanti
+    // muncul lagi dari awal, bukan nyangkut di tengah.
+    function pasangMarqueeList(container){
+      if(!container) return;
+      const daftarWrap = container.querySelectorAll(".nama-marquee-wrap");
+      if(daftarWrap.length === 0) return;
+
+      const pengamat = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const wrap = entry.target;
+          if(entry.isIntersecting){
+            aturMarqueeNama(wrap);
+          } else if(wrap._marqueeStop){
+            wrap._marqueeStop();
+            wrap._marqueeStop = null;
+            wrap.scrollLeft = 0;
+          }
+        });
+      }, { threshold: 0.01 });
+
+      daftarWrap.forEach(wrap => pengamat.observe(wrap));
     }
 
     function barisDetailHTML(label, value, opsi){
@@ -2264,7 +2291,7 @@ let historyTabAktif = false;
                   ${avatarInisialHTML(r[1], 28)}
                 </div>
                 <div class="ml-3 flex-1 min-w-0">
-                  <div class="text-[13px] font-semibold text-gray-900 truncate">${r[1]}</div>
+                  <div class="nama-marquee-wrap"><span class="nama-marquee-text text-[13px] font-semibold text-gray-900">${r[1]}</span></div>
                   <div class="text-[11px] text-gray-600 mt-0.5">${namaKelas}</div>
                 </div>
               </div>
@@ -2406,7 +2433,7 @@ let historyTabAktif = false;
                   ${avatarInisialHTML(r[1], 28)}
                 </div>
                 <div class="ml-3 flex-1 min-w-0">
-                  <div class="text-[13px] font-semibold text-gray-900 truncate">${r[1]}</div>
+                  <div class="nama-marquee-wrap"><span class="nama-marquee-text text-[13px] font-semibold text-gray-900">${r[1]}</span></div>
                   <div class="text-[11px] text-gray-600 mt-0.5">Kelas: ${r[2]}</div>
                 </div>
               </div>
@@ -2559,7 +2586,7 @@ let historyTabAktif = false;
                     ${avatarInisialHTML(r[1], 28)}
                   </div>
                   <div class="ml-3 flex-1 min-w-0">
-                    <div class="text-[13px] font-semibold text-gray-900 truncate">${r[1]}</div>
+                    <div class="nama-marquee-wrap"><span class="nama-marquee-text text-[13px] font-semibold text-gray-900">${r[1]}</span></div>
                     <div class="text-[12.5px] text-gray-600 mt-0.5">${r[2]}</div>
                   </div>
                 </div>
@@ -3305,13 +3332,14 @@ style="${i === hasil.length - 1 ? '' : 'background-image:linear-gradient(90deg, 
     ${avatarInisialHTML(r[1], 28)}
   </div>
   <div class="ml-3 flex-1 min-w-0">
-    <div class="text-[13px] font-semibold text-gray-900 truncate">${r[1]}</div>
+    <div class="nama-marquee-wrap"><span class="nama-marquee-text text-[13px] font-semibold text-gray-900">${r[1]}</span></div>
     <div class="text-[11px] text-gray-600 mt-0.5">${r[2]}</div>
   </div>
 </div>
 `).join("")}
 </div>
 `;
+  pasangMarqueeList(el);
 }
 
 function masukModeCariBeranda(){
@@ -3454,8 +3482,8 @@ style="${garis}">
 
   <div class="ml-3 flex-1 min-w-0">
 
-    <div class="text-[13px] font-semibold text-gray-900 truncate">
-      ${r[1]}
+    <div class="nama-marquee-wrap">
+      <span class="nama-marquee-text text-[13px] font-semibold text-gray-900">${r[1]}</span>
     </div>
 
     <div class="text-[11px] text-gray-600 mt-0.5">
@@ -3472,8 +3500,8 @@ style="${garis}">
 </div>
 
 `;
+  pasangMarqueeList(document.getElementById("list-siswa"));
 }
-function hapusPencarianSiswa(){
   document.getElementById("srch").value = "";
   filterSiswa();
   document.getElementById("srch").focus();
@@ -3531,7 +3559,7 @@ function renderDetailSiswaContent(nik){
 </div>
 
 `;
-  aturMarqueeNama('namaMarqueeWrapSiswa');
+  // marquee-nya diaktifkan otomatis lewat pasangMarqueeList() di renderModalStep()
 }
 
 let dataGuru = [];
@@ -3852,7 +3880,9 @@ style="${i === sumber.length - 1 ? '' : 'background-image:linear-gradient(90deg,
       ${avatarInisialHTML(r[1], 28)}
     </div>
     <div class="ml-3 flex-1 min-w-0">
-      <div class="text-[13px] font-semibold text-gray-900 truncate">${r[1]}</div>
+      <div class="nama-marquee-wrap">
+        <span class="nama-marquee-text text-[13px] font-semibold text-gray-900">${r[1]}</span>
+      </div>
       <div class="text-[11px] text-gray-600 mt-0.5 truncate">${jabatanR || '-'}</div>
     </div>
   </div>
@@ -3864,6 +3894,7 @@ style="${i === sumber.length - 1 ? '' : 'background-image:linear-gradient(90deg,
 `;}).join('')}
 </div>
 `;
+  pasangMarqueeList(el);
 }
 
 function bukaDriveGuru(link){
@@ -3928,7 +3959,7 @@ function renderDetailPegawaiContent(tipe, idx){
 </div>
 
 `;
-  aturMarqueeNama('namaMarqueeWrapPegawai');
+  // marquee-nya diaktifkan otomatis lewat pasangMarqueeList() di renderModalStep()
 }
    
     function toggleDetailMenu(e){
@@ -4093,6 +4124,8 @@ Status Anak: ${r[14]}`;
         document.getElementById('detailDotsWrap').classList.remove('hidden');
         renderDetailPegawaiContent(step.tipe, step.idx);
       }
+
+      pasangMarqueeList(document.getElementById('detail-content'));
     }
 
     function tutupModalVisual() {
@@ -4858,7 +4891,7 @@ function renderPegawaiKategori(step){
               ${avatarInisialHTML(item.r[1], 28)}
             </div>
             <div class="ml-3 flex-1 min-w-0">
-              <div class="text-[13px] font-semibold text-gray-900 truncate">${item.r[1]}</div>
+              <div class="nama-marquee-wrap"><span class="nama-marquee-text text-[13px] font-semibold text-gray-900">${item.r[1]}</span></div>
               <div class="text-[11px] text-gray-600 mt-0.5">${item.tipe === 'guru' ? 'Guru' : 'Tendik'} &middot; ${item.r[2] || '-'}</div>
             </div>
           </div>
@@ -5036,7 +5069,7 @@ function tampilkanSiswaKategori(kolom, label){
         ${hasil.map((r,i) => `
           <div class="flex items-center px-4 py-2.5" style="${i === hasil.length - 1 ? '' : 'background-image:linear-gradient(90deg, transparent, #D8DAE8 15%, #D8DAE8 85%, transparent); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;'}">
             <div class="flex-1 min-w-0">
-              <div class="text-[13px] font-semibold text-gray-900 truncate">${r[1]}</div>
+              <div class="nama-marquee-wrap"><span class="nama-marquee-text text-[13px] font-semibold text-gray-900">${r[1]}</span></div>
               <div class="text-[11px] text-gray-600 mt-0.5">${r[2]}</div>
             </div>
           </div>
@@ -5045,6 +5078,7 @@ function tampilkanSiswaKategori(kolom, label){
     `;
   }
 
+  pasangMarqueeList(document.getElementById('list-kategori'));
   setNavDisabled(true);
   kunciScroll(true);
   document.getElementById('list-kategori').scrollTop = 0;
