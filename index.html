@@ -3036,6 +3036,7 @@ function pillbarRipple(el, evt){
   wrap.appendChild(ripple);
   setTimeout(function(){ ripple.remove(); }, 650);
 }
+let _rombelPopupCloseTimer = null;
 function bukaPopupRombel(i, evt){
   if(evt && evt.currentTarget){
     pillbarRipple(evt.currentTarget, evt);
@@ -3046,6 +3047,12 @@ function bukaPopupRombel(i, evt){
   document.getElementById('rombelPopupP').textContent = r.P;
   const overlay = document.getElementById('rombelPopupOverlay');
   const box = document.getElementById('rombelPopupBox');
+
+  if(_rombelPopupCloseTimer){
+    clearTimeout(_rombelPopupCloseTimer);
+    _rombelPopupCloseTimer = null;
+  }
+
   overlay.classList.remove('hidden');
   setNavDisabled(true);
   kunciScroll(true);
@@ -3066,7 +3073,10 @@ function tutupPopupRombelVisual(){
   box.style.opacity = '0';
   setNavDisabled(false);
   kunciScroll(false);
-  setTimeout(function(){
+
+  if(_rombelPopupCloseTimer) clearTimeout(_rombelPopupCloseTimer);
+  _rombelPopupCloseTimer = setTimeout(function(){
+    _rombelPopupCloseTimer = null;
     overlay.classList.add('hidden');
   }, 260);
 }
@@ -5831,9 +5841,22 @@ function animasikanAngkaDanRing(idAngka, idRing, idPersenText, nilaiAkhir, total
   btn.addEventListener('mouseup', lepas);
   btn.addEventListener('mouseleave', lepas);
 })();
+    // Menyimpan id setTimeout penutup popup per overlay, supaya kalau
+    // popup dibuka lagi sebelum animasi tutup sebelumnya selesai, timer
+    // lama itu bisa dibatalkan. Tanpa ini, timer lama akan tetap
+    // menambahkan class "hidden" ~440ms kemudian dan popup yang baru saja
+    // dibuka ulang jadi ikut ketutup paksa / gagal balik ke tampilan default.
+    const _popupCloseTimers = {};
+
     function bukaPopupPremium(overlayId, boxId){
   const overlay = document.getElementById(overlayId);
   const box = document.getElementById(boxId);
+
+  if(_popupCloseTimers[overlayId]){
+    clearTimeout(_popupCloseTimers[overlayId]);
+    delete _popupCloseTimers[overlayId];
+  }
+
   overlay.classList.remove('hidden');
   requestAnimationFrame(function(){
     requestAnimationFrame(function(){
@@ -5844,9 +5867,15 @@ function animasikanAngkaDanRing(idAngka, idRing, idPersenText, nilaiAkhir, total
 function tutupPopupPremium(overlayId, boxId, callback){
   const overlay = document.getElementById(overlayId);
   overlay.classList.remove('show');
+
+  if(_popupCloseTimers[overlayId]){
+    clearTimeout(_popupCloseTimers[overlayId]);
+  }
+
   // Jeda disamakan dengan durasi transisi CSS terpanjang (detail-fullpage-box: .42s)
   // supaya animasi fade-out sempat terlihat penuh sebelum overlay disembunyikan.
-  setTimeout(function(){
+  _popupCloseTimers[overlayId] = setTimeout(function(){
+    delete _popupCloseTimers[overlayId];
     overlay.classList.add('hidden');
     if(callback) callback();
   }, 440);
