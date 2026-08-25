@@ -518,6 +518,23 @@
       backdrop-filter: none;
       border: none;
     }
+    /* Auto-hide bottom nav saat scroll ke bawah.
+       Pakai transform + opacity (bukan display/visibility) supaya
+       animasinya jalan di compositor thread, tidak memicu reflow,
+       dan tidak bikin scroll jadi patah-patah. */
+    #bottomNav{
+      transform: translate(-50%, 0);
+      opacity: 1;
+      transition: transform .28s cubic-bezier(.22,.68,0,1), opacity .22s ease;
+      will-change: transform;
+    }
+    #bottomNav.nav-hidden{
+      transform: translate(-50%, 140%);
+      opacity: 0;
+    }
+    #bottomNav.nav-hidden .neu-nav-flat{
+      pointer-events: none;
+    }
     .neu-modal{
       background: #EEF1F6 !important;
       border: none !important;
@@ -1474,7 +1491,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
       </div>
     </div>
 
-    <div class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-5 pb-32 pt-2 max-w-full">
+    <div id="scrollSiswa" class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-5 pb-32 pt-2 max-w-full">
       <div id="list-siswa">
         <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:var(--neu-bg); border:none; box-shadow: var(--neu-raised-md);">
           <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">keyboard</span>
@@ -1870,7 +1887,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
     </div>
   </div>
 </div>  
-  <nav class="fixed bottom-0 flex justify-center z-50" style="left:50%; transform:translateX(-50%); width:100%; max-width:480px; padding:0 20px max(18px, env(safe-area-inset-bottom, 18px)); pointer-events:none;">
+  <nav id="bottomNav" class="fixed bottom-0 flex justify-center z-50" style="left:50%; width:100%; max-width:480px; padding:0 20px max(18px, env(safe-area-inset-bottom, 18px)); pointer-events:none;">
   <div class="neu-nav-flat flex items-center" style="width:100%; border-radius:9999px; padding:3px 6px; gap:4px; pointer-events:auto;">
 <button
 id="nav-home"
@@ -5522,6 +5539,7 @@ function halamanAktifSaatIni(){
   return urutanHalamanSwipe.find(id => !document.getElementById("p-"+id).classList.contains("hidden"));
 }
 function updateNavAktif(p){
+  if(typeof tampilkanNavBawah === "function") tampilkanNavBawah();
   ["home","siswa","guru","download"].forEach(id=>{
     const btn=document.getElementById("nav-"+id);
     if(id===p){
@@ -5893,6 +5911,101 @@ function tutupPopupPremium(overlayId, boxId, callback){
   }
   return { bg:"#e3f6ea", text:"#2f9e5c" }; // hijau (Desil 6-10)
 }
+
+// ===== Auto-hide bottom nav saat scroll =====
+// Aturan: scroll ke bawah -> nav sembunyi. Scroll ke atas ATAU
+// berhenti scroll (diam) -> nav muncul lagi.
+// Ditulis supaya ringan & tidak bikin scroll patah-patah:
+// - listener pakai {passive:true} (tidak pernah panggil preventDefault,
+//   jadi browser bisa langsung mulai scroll tanpa nunggu JS).
+// - update DOM di-throttle pakai requestAnimationFrame (rAF), jadi
+//   walau event "scroll" nembak puluhan kali, style cuma ditulis
+//   maksimal sekali per frame.
+// - cuma baca scrollTop/scrollY (murah) dan ubah transform+opacity
+//   (di-composite GPU), tidak ada getBoundingClientRect/reflow di sini.
+(function(){
+  const nav = document.getElementById("bottomNav");
+  if(!nav) return;
+
+  const AMBANG_GESER   = 6;    // px minimal gerak biar ga flicker karena jitter kecil
+  const ZONA_ATAS      = 24;   // px dari atas: nav selalu tampil
+  const JEDA_DIAM_MS   = 220;  // ms tanpa event scroll dianggap "diam"
+
+  let timerDiam = null;
+
+  function tampilkanNavBawah(){
+    nav.classList.remove("nav-hidden");
+  }
+  function sembunyikanNavBawah(){
+    nav.classList.add("nav-hidden");
+  }
+  window.tampilkanNavBawah = tampilkanNavBawah;
+
+  function jadwalkanMuncul(){
+    clearTimeout(timerDiam);
+    timerDiam = setTimeout(tampilkanNavBawah, JEDA_DIAM_MS);
+  }
+
+  // Bikin satu "pengawas" scroll untuk satu kontainer (window ATAU
+  // elemen internal seperti panel data siswa/guru).
+  function pasangPengawasScroll(getScrollTop, getScrollMax){
+    let posisiTerakhir = Math.max(0, getScrollTop());
+    let sudahDijadwalkan = false;
+
+    function tangani(){
+      const posisi = Math.max(0, getScrollTop());
+      const maksimal = getScrollMax();
+      const delta = posisi - posisiTerakhir;
+      posisiTerakhir = posisi;
+
+      if(posisi <= ZONA_ATAS){
+        tampilkanNavBawah();
+      } else if(maksimal - posisi <= 2){
+        // di ujung bawah (termasuk rubber-band iOS): jangan diutak-atik,
+        // biarkan status terakhir + timer "diam" yang menentukan.
+      } else if(delta > AMBANG_GESER){
+        sembunyikanNavBawah();
+      } else if(delta < -AMBANG_GESER){
+        tampilkanNavBawah();
+      }
+
+      jadwalkanMuncul();
+    }
+
+    return function onScroll(){
+      if(sudahDijadwalkan) return;
+      sudahDijadwalkan = true;
+      requestAnimationFrame(function(){
+        tangani();
+        sudahDijadwalkan = false;
+      });
+    };
+  }
+
+  // 1) Scroll utama (dipakai halaman Beranda & Unduh)
+  window.addEventListener(
+    "scroll",
+    pasangPengawasScroll(
+      () => window.scrollY || document.documentElement.scrollTop,
+      () => document.documentElement.scrollHeight - window.innerHeight
+    ),
+    { passive: true }
+  );
+
+  // 2) Kontainer scroll internal (Data Siswa, Data GTK)
+  ["scrollSiswa", "panelDataGuru", "panelDataTendik"].forEach(function(id){
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.addEventListener(
+      "scroll",
+      pasangPengawasScroll(
+        () => el.scrollTop,
+        () => el.scrollHeight - el.clientHeight
+      ),
+      { passive: true }
+    );
+  });
+})();
   </script>
 </body>
 </html>
