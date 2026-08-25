@@ -1269,9 +1269,11 @@
 
   <div class="flex items-center justify-between">
     <div class="flex items-center" style="min-width:0; gap:10px;">
-      <div id="avatarGuruWrap" class="flex items-center justify-center" style="width:42px;height:42px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--neu-bg);box-shadow:var(--neu-raised-sm);">
-        <img id="avatarGuruImg" src="" class="hidden" style="width:100%;height:100%;object-fit:cover;">
-        <span id="avatarGuruFallback" class="material-symbols-rounded" style="font-size:22px;color:#9497AA;">person</span>
+      <div class="flex items-center justify-center" style="width:48px;height:48px;border-radius:50%;flex-shrink:0;background:var(--neu-bg);box-shadow:var(--neu-raised-md);padding:4px;">
+        <div id="avatarGuruWrap" class="flex items-center justify-center" style="width:100%;height:100%;border-radius:50%;overflow:hidden;flex-shrink:0;">
+          <img id="avatarGuruImg" src="" class="hidden" style="width:100%;height:100%;object-fit:cover;">
+          <span id="avatarGuruFallback" class="material-symbols-rounded" style="font-size:22px;color:#9497AA;">person</span>
+        </div>
       </div>
       <div style="min-width:0;">
         <p class="text-[12.5px] font-semibold m-0" style="color:#8B8AA3;"><span id="greetingText">Selamat datang</span>,</p>
@@ -4131,18 +4133,20 @@ Status Anak: ${r[14]}`;
         setNavDisabled(true);
         kunciScroll(true);
         bukaPopupPremium('modal', 'modalBox');
-        history.pushState({ modalDetailSiswa: true }, '');
       }
       window.modalStack.push(step);
+      // Setiap step (bukan cuma saat modal pertama dibuka) mendapat entry
+      // history sendiri, supaya tombol back HP mundur satu layar demi satu
+      // layar—persis seperti tombol back di pojok popup.
+      history.pushState({ modalDetailSiswa: true, modalStepDepth: window.modalStack.length }, '');
       renderModalStep(step);
     }
 
     function mundurModal(){
-      if(window.modalStack.length > 1){
-        window.modalStack.pop();
-        renderModalStep(window.modalStack[window.modalStack.length - 1]);
-      }else{
-        closeModal();
+      // Selalu lewat history.back() supaya perilakunya identik dengan
+      // tombol back fisik/HP (sama-sama ditangani oleh listener popstate).
+      if(window.modalStack.length > 0){
+        history.back();
       }
     }
 
@@ -4193,7 +4197,10 @@ Status Anak: ${r[14]}`;
     }
     function closeModal() {
       if(history.state && history.state.modalDetailSiswa){
-        history.back();
+        // Lompat langsung melewati semua step yang tersisa di modal ini
+        // (mis. saat close via tombol X / klik di luar popup), tetap
+        // menghasilkan satu event popstate di tujuan akhir.
+        history.go(-window.modalStack.length);
       }else{
         tutupModalVisual();
       }
@@ -4201,7 +4208,17 @@ Status Anak: ${r[14]}`;
     window.addEventListener('popstate', function(){
       // 1) Modal detail (siswa/pegawai/rombel/kategori berjenjang)
       if(!document.getElementById('modal').classList.contains('hidden')){
-        tutupModalVisual();
+        const st = history.state;
+        if(st && st.modalDetailSiswa && st.modalStepDepth){
+          // Mundur satu step sesuai depth history saat ini, bukan langsung
+          // menutup seluruh modal.
+          while(window.modalStack.length > st.modalStepDepth){
+            window.modalStack.pop();
+          }
+          renderModalStep(window.modalStack[window.modalStack.length - 1]);
+        }else{
+          tutupModalVisual();
+        }
         return;
       }
       // 2) Modal daftar siswa per kategori chart
