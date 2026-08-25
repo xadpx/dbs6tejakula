@@ -1791,7 +1791,7 @@ class="hidden detail-fullpage-overlay fixed inset-0 z-[60]">
       </div>
 
       <div style="position:relative; flex:1 1 auto; min-height:0;">
-        <div style="position:absolute; inset:0; overflow-y:auto; padding:16px 20px 24px;">
+        <div id="modalScrollArea" style="position:absolute; inset:0; overflow-y:auto; padding:16px 20px 24px;">
           <div id="detail-content" class="text-sm space-y-2 text-gray-600"></div>
         </div>
         <div style="position:absolute; left:0; right:0; bottom:0; height:40px; background:linear-gradient(rgba(255,255,255,0), rgba(255,255,255,.98) 70%); pointer-events:none;"></div>
@@ -4068,6 +4068,9 @@ Status Anak: ${r[14]}`;
     })();
 
     function renderModalStep(step){
+      const _modalScrollArea = document.getElementById('modalScrollArea');
+      if(_modalScrollArea) _modalScrollArea.scrollTop = 0;
+
       if(step.type === 'daftarKelas'){
         renderDaftarKelas();
       }else if(step.type === 'siswaKelas'){
