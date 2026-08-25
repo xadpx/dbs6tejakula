@@ -2089,6 +2089,36 @@ let historyTabAktif = false;
       if(tab === 'tendik') muatDataTendik();
     }
 
+    // Mengembalikan tampilan halaman Guru & Tendik dan halaman Unduh ke
+    // kondisi default (tab awal, filter kosong). Dipanggil setiap kali
+    // pengguna menekan tombol back ke Beranda, supaya saat menu yang sama
+    // dibuka lagi tampilannya bersih seperti pertama kali. Halaman Siswa
+    // sengaja tidak disentuh di sini supaya hasil pencarian tetap tersimpan.
+    function resetTampilanHalaman(p){
+      if(p === 'guru'){
+        switchDataTab('guru');
+        const pg = document.getElementById('panelDataGuru');
+        const pt = document.getElementById('panelDataTendik');
+        if(pg) pg.scrollTop = 0;
+        if(pt) pt.scrollTop = 0;
+      }else if(p === 'download'){
+        const kelasDownload = document.getElementById('kelasDownload');
+        if(kelasDownload) kelasDownload.value = 'SEMUA';
+
+        if(modeRentang) toggleRentang();
+
+        const kelasAwal = document.getElementById('kelasAwal');
+        if(kelasAwal) kelasAwal.value = 'Kelas 1';
+        if(typeof updateKelasAkhir === 'function') updateKelasAkhir();
+
+        document.querySelectorAll('#p-download .kategori').forEach(c=>{
+          c.checked = false;
+          c.disabled = false;
+          c.parentElement.classList.remove('opacity-50');
+        });
+      }
+    }
+
     function bukaDataRombelDariBeranda(){
       window.modalStack = [];
       dorongModalStep({ type: 'daftarKelas' });
@@ -2363,7 +2393,7 @@ let historyTabAktif = false;
                 </div>
                 <div class="ml-3 flex-1 min-w-0">
                   <div class="text-[13px] font-semibold text-gray-900 truncate">${r[1]}</div>
-                  <div class="text-[11px] text-gray-600 mt-0.5">NISN: ${r[5]}</div>
+                  <div class="text-[11px] text-gray-600 mt-0.5">Kelas: ${r[2]}</div>
                 </div>
               </div>
             `).join('')}
@@ -4094,6 +4124,11 @@ Status Anak: ${r[14]}`;
         historyTabAktif = false;
         halamanSebelumnya = 'home';
         gantiHalamanFade('home');
+        // Reset tampilan Guru & Tendik dan Unduh ke default supaya saat
+        // dibuka lagi tidak membawa state sebelumnya (tab/filter terakhir).
+        // Halaman Siswa sengaja dikecualikan agar pencarian tetap tersimpan.
+        resetTampilanHalaman('guru');
+        resetTampilanHalaman('download');
         return;
       }
     });
