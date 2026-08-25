@@ -2854,6 +2854,28 @@ let historyTabAktif = false;
       location.reload();
     }
 
+    // Cek ulang ke server (spreadsheet) setiap kali app dibuka, apakah
+    // email guru yang sedang login masih ada di daftar yang diizinkan.
+    // Dipanggil sesudah UI ditampilkan (pakai sesi localStorage dulu) supaya
+    // app tetap terasa instan; kalau ternyata sudah dicabut, baru dipaksa logout.
+    function verifikasiSesiKeServer(){
+      if(!window.guruAktif || !window.guruAktif.email) return;
+
+      fetch(`${APPS_SCRIPT_URL}?action=cekEmailAktif&email=${encodeURIComponent(window.guruAktif.email)}`)
+        .then(res => res.json())
+        .then(json => {
+          if(!json.valid){
+            alert('Akses Anda ke aplikasi ini sudah dicabut oleh admin. Silakan hubungi admin sekolah jika ini keliru.');
+            logoutGuru();
+          }
+        })
+        .catch(err => {
+          // Kalau gagal terhubung (mis. sinyal buruk), jangan logout paksa —
+          // biarkan guru tetap pakai sesi yang tersimpan, coba lagi nanti.
+          console.error('Gagal verifikasi sesi ke server:', err);
+        });
+    }
+
   
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -2866,6 +2888,7 @@ let historyTabAktif = false;
   if(sudahLogin){
     nav("home");
     window.scrollTo(0, 0);
+    verifikasiSesiKeServer();
   }
 
   fetch(`${APPS_SCRIPT_URL}?action=getDataGabungan`)
