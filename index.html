@@ -89,6 +89,7 @@
       overflow-x: clip;
       width: 100%;
       color-scheme: light only;
+      background: #EEF1F6;
     }
     body {
       margin: 0;
@@ -1176,6 +1177,11 @@
       border: none !important;
       box-shadow: var(--neu-raised-sm) !important;
     }
+    /* Popup "Data per Rombel" saja yang shadow-nya dihilangkan,
+       modal lain yang juga pakai .neu-modal (pin, kategori) tidak ikut. */
+    #rombelPopupBox{
+      box-shadow: none !important;
+    }
   </style>
 </head>
 <body class="text-base">
@@ -1187,6 +1193,15 @@
     // beranda kelihatan dulu sebelum berpindah ke halaman login.
     // Style ini hanya sementara & dihapus lagi oleh cekSesiLogin().
     (function(){
+      // Browser secara default suka "mengingat" posisi scroll terakhir
+      // dan mengembalikannya lagi setelah halaman di-refresh (F5).
+      // Dimatikan di sini supaya app SELALU mulai dari paling atas
+      // setiap kali di-refresh, bukan nyangkut di posisi scroll lama.
+      try{
+        if('scrollRestoration' in history){ history.scrollRestoration = 'manual'; }
+      }catch(e){}
+      window.scrollTo(0, 0);
+
       var sudahLogin = false;
       try{ sudahLogin = !!localStorage.getItem('guruLogin'); }catch(e){}
       var css = sudahLogin
@@ -1538,12 +1553,14 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
 
     <div id="panelDataGuru" class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-5 pb-32 pt-3 max-w-full">
       <div class="flex flex-col items-center justify-center text-center pt-14 px-6">
+        <span class="spinner-ring-gray" style="width:26px;height:26px;margin-bottom:10px;"></span>
         <p class="teks-berdenyut text-[12px] text-gray-600 font-semibold m-0">Memuat data...</p>
       </div>
     </div>
 
     <div id="panelDataTendik" class="hidden flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-5 pb-32 pt-3 max-w-full">
       <div class="flex flex-col items-center justify-center text-center pt-14 px-6">
+        <span class="spinner-ring-gray" style="width:26px;height:26px;margin-bottom:10px;"></span>
         <p class="teks-berdenyut text-[12px] text-gray-600 font-semibold m-0">Memuat data...</p>
       </div>
     </div>
@@ -2840,9 +2857,15 @@ let historyTabAktif = false;
   
 
     document.addEventListener('DOMContentLoaded', () => {
+  // Pastikan setiap kali app dimuat/di-refresh, posisinya selalu
+  // di Beranda paling atas -- bukan nyangkut di tab/scroll terakhir.
+  window.scrollTo(0, 0);
+  historyTabAktif = false;
+
   const sudahLogin = cekSesiLogin();
   if(sudahLogin){
     nav("home");
+    window.scrollTo(0, 0);
   }
 
   fetch(`${APPS_SCRIPT_URL}?action=getDataGabungan`)
