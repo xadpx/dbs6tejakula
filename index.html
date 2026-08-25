@@ -1398,7 +1398,7 @@
           <p class="font-bold text-[14.5px] text-gray-800 m-0">Data per Rombel</p>
         </div>
         <div id="btnCopyRekap" onclick="event.stopPropagation(); copyRekap()" class="fab-copy cursor-pointer transition" style="width:26px;height:26px;">
-          <span id="copyRekapIcon" class="material-symbols-rounded" style="font-size:13px;">content_copy</span>
+          <span id="copyRekapIcon" class="material-symbols-rounded" style="font-size:13px;">ios_share</span>
         </div>
       </div>
       <p class="text-[10.5px] text-gray-600 m-0 mb-2" id="subtitleRombel"><span class="skeleton-shimmer" style="display:inline-block;width:90px;height:9px;border-radius:5px;vertical-align:middle;"></span></p>
@@ -1781,9 +1781,6 @@ class="hidden detail-fullpage-overlay fixed inset-0 z-[60]">
             </div>
             <div onclick="bagikanDataSiswa()" class="cursor-pointer flex items-center gap-2 px-3 py-2 rounded-[10px] text-[13px] text-gray-700 hover:bg-gray-100">
               <span class="material-symbols-rounded text-[14.5px]">ios_share</span> Bagikan
-            </div>
-            <div onclick="unduhGambarSiswa()" class="cursor-pointer flex items-center gap-2 px-3 py-2 rounded-[10px] text-[13px] text-gray-700 hover:bg-gray-100">
-              <span class="material-symbols-rounded text-[14.5px]">image</span> Unduh sebagai gambar
             </div>
           </div>
         </div>
@@ -3991,21 +3988,6 @@ Status Anak: ${r[14]}`;
       }
     }
 
-    async function unduhGambarSiswa(){
-      toggleDetailMenu();
-      const box = document.getElementById('modalBox');
-      if(!box || typeof html2canvas === 'undefined') return;
-      try{
-        const canvas = await html2canvas(box, { backgroundColor: '#ffffff', scale: 2 });
-        const link = document.createElement('a');
-        link.download = `detail-${window.currentDetailTipe || 'siswa'}-${window.currentDetailKey || 'data'}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-      }catch(err){
-        console.error('Gagal membuat gambar:', err);
-      }
-    }
-
     async function salinTeks(teks, iconId, labelToast){
 
   try{
@@ -4163,7 +4145,7 @@ Status Anak: ${r[14]}`;
       icon.classList.remove("text-gray-600");
       icon.classList.add("text-green-600");
       setTimeout(function(){
-        icon.textContent = "content_copy";
+        icon.textContent = "ios_share";
         icon.classList.remove("text-green-600");
         icon.classList.add("text-gray-600");
       },1000);
