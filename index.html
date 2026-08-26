@@ -6119,8 +6119,14 @@ function tutupPopupPremium(overlayId, boxId, callback){
       if(posisi <= ZONA_ATAS){
         tampilkanNavBawah();
       } else if(maksimal - posisi <= 2){
-        // di ujung bawah (termasuk rubber-band iOS): jangan diutak-atik,
-        // biarkan status terakhir + timer "diam" yang menentukan.
+        // Di ujung bawah (termasuk rubber-band iOS): paksa nav tetap
+        // TAMPIL, jangan biarkan tersembunyi di sini. Kalau dibiarkan
+        // sembunyi lalu nanti muncul lagi lewat timer "diam", nav akan
+        // "menutup ulang" konten paling bawah (mis. kotak Informasi di
+        // halaman Unduh) tepat setelah user melepas jarinya — padahal
+        // posisi scroll-nya sama sekali tidak berubah. Supaya konsisten,
+        // nav memang harus selalu kelihatan persis di ujung bawah.
+        tampilkanNavBawah();
       } else if(delta > AMBANG_GESER){
         sembunyikanNavBawah();
       } else if(delta < -AMBANG_GESER){
