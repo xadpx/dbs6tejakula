@@ -1590,13 +1590,20 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
 
 </div>
 
-  <div id="p-download" class="hidden p-5" style="padding-bottom:140px; min-height:calc(100vh + 120px); min-height:calc(100dvh + 120px);">
-  <h1 class="text-xl font-bold text-gray-800 flex items-center gap-2 mb-5">
-  <span class="material-symbols-rounded text-[23px]">
-    download_for_offline
-  </span>
-  Unduh Data
-</h1>
+  <div id="p-download" class="hidden fixed inset-0 z-10 overflow-x-hidden w-full max-w-[100vw]">
+
+  <div class="h-full w-full max-w-full flex flex-col pt-5 overflow-x-hidden">
+
+    <div class="shrink-0 px-5">
+      <h1 class="text-xl font-bold text-gray-800 flex items-center gap-2 mb-5">
+      <span class="material-symbols-rounded text-[23px]">
+        download_for_offline
+      </span>
+      Unduh Data
+    </h1>
+    </div>
+
+    <div id="scrollDownload" class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-5 max-w-full" style="padding-bottom:calc(140px + env(safe-area-inset-bottom, 0px));">
 
   <div class="neu-card p-5">
 <label class="font-semibold text-sm">Pilih Kelas</label>
@@ -1792,7 +1799,13 @@ Unduh Data
 </div>
 
 </div>
+
     </div>
+
+    </div>
+
+  </div>
+
   <div id="modal"
 class="hidden detail-fullpage-overlay fixed inset-0 z-[60]">
     <div id="modalBox" class="detail-fullpage-box relative" style="background:var(--neu-bg); display:flex; flex-direction:column; overflow:hidden;">
@@ -5726,7 +5739,7 @@ function selesaikanSwipeKeHalaman(p){
 
   const target = document.getElementById("p-"+p);
   target.classList.remove("hidden");
-  target.style.display = (p==="siswa"||p==="guru") ? "block" : "";
+  target.style.display = (p==="siswa"||p==="guru"||p==="download") ? "block" : "";
 
   window.scrollTo(0, 0);
   updateNavAktif(p);
@@ -5735,7 +5748,7 @@ function selesaikanSwipeKeHalaman(p){
   // Teknik opacity doang kadang belum cukup di Safari/iOS.
   target.style.display = "none";
   void target.offsetHeight;
-  target.style.display = (p==="siswa"||p==="guru") ? "block" : "";
+  target.style.display = (p==="siswa"||p==="guru"||p==="download") ? "block" : "";
 
 }
     let sedangTransisiNav = false;
@@ -5760,7 +5773,7 @@ function jalankanTransisiNav(pTarget){
     });
     const target = document.getElementById("p-" + pTarget);
     target.classList.remove("hidden");
-    target.style.display = (pTarget === "siswa"||pTarget === "guru") ? "block" : "";
+    target.style.display = (pTarget === "siswa"||pTarget === "guru"||pTarget === "download") ? "block" : "";
     window.scrollTo(0, 0);
     updateNavAktif(pTarget);
     if(pTarget !== "download"){
@@ -6156,7 +6169,7 @@ function tutupPopupPremium(overlayId, boxId, callback){
     };
   }
 
-  // 1) Scroll utama (dipakai halaman Beranda & Unduh)
+  // 1) Scroll utama (dipakai halaman Beranda)
   window.addEventListener(
     "scroll",
     pasangPengawasScroll(
@@ -6167,7 +6180,7 @@ function tutupPopupPremium(overlayId, boxId, callback){
   );
 
   // 2) Kontainer scroll internal (Data Siswa, Data GTK)
-  ["scrollSiswa", "panelDataGuru", "panelDataTendik"].forEach(function(id){
+  ["scrollSiswa", "panelDataGuru", "panelDataTendik", "scrollDownload"].forEach(function(id){
     const el = document.getElementById(id);
     if(!el) return;
     el.addEventListener(
