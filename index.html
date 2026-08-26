@@ -3232,6 +3232,16 @@ function nav(p){
     halamanSebelumnya=p;
   }
 
+  // Pengaman: tab utama (Beranda/Siswa/GTK/Unduh) TIDAK PERNAH boleh
+  // dalam kondisi scroll terkunci. Kalau ada popup manapun yang gagal
+  // "membuka kunci" scroll saat ditutup (mis. ditutup lewat jalur yang
+  // tidak terduga), body/html bisa tersangkut permanen di
+  // overflow:hidden — akibatnya SEMUA halaman termasuk Unduh jadi
+  // tidak bisa discroll sama sekali, walau tidak ada hubungan langsung
+  // dengan halaman itu sendiri. Reset paksa di sini setiap pindah tab.
+  kunciScroll(false);
+  setNavDisabled(false);
+
   // Nav bawah harus tetap berfungsi walau sedang di mode pencarian.
   // Tutup dulu mode carinya (tanpa menunggu animasi/popstate), gabungkan
   // entry history-nya jadi satu lewat replaceState supaya tidak ada
