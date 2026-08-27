@@ -1003,10 +1003,11 @@
       --neu-light: rgba(255,255,255,.85);
       --neu-dark: rgba(163,177,198,.5);
       --neu-dark-soft: rgba(163,177,198,.35);
-      /* Shadow timbul (convex) — dipakai untuk kartu, tombol, nav dalam kondisi normal */
-      --neu-raised-sm: 4px 4px 10px var(--neu-dark), -4px -4px 10px var(--neu-light);
-      --neu-raised-md: 6px 6px 16px var(--neu-dark), -6px -6px 16px var(--neu-light);
-      --neu-raised-lg: 9px 9px 22px var(--neu-dark), -9px -9px 22px var(--neu-light);
+      /* Shadow timbul (convex) — gaya "floating" seperti tombol lonceng notifikasi:
+         satu arah (ke bawah), warna gelap pekat, bukan dua-sisi abu-abu netral. */
+      --neu-raised-sm: 0 4px 10px rgba(20,20,43,.22);
+      --neu-raised-md: 0 8px 18px rgba(20,20,43,.3);
+      --neu-raised-lg: 0 12px 26px rgba(20,20,43,.35);
       /* Shadow cekung (concave/pressed) — dipakai saat elemen ditekan/aktif */
       --neu-pressed-sm: inset 3px 3px 7px var(--neu-dark), inset -3px -3px 7px var(--neu-light);
       --neu-pressed-md: inset 4px 4px 10px var(--neu-dark), inset -4px -4px 10px var(--neu-light);
