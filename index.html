@@ -585,28 +585,20 @@
     }
     .pillbar-row {
       position: relative;
-      display: flex; align-items: flex-end; gap: 10px;
-      padding: 48px 20px 0; overflow-x: auto; scrollbar-width: none;
-      overflow-y: visible;
+      display: flex; align-items: flex-end; gap: 6px;
+      padding: 48px 14px 0;
+      overflow: visible;
     }
-    .pillbar-row::-webkit-scrollbar{ display:none; }
-    @keyframes pillbarHintGeser {
-      0%, 100% { transform: translateX(0); opacity:.55; }
-      50% { transform: translateX(3px); opacity:1; }
-    }
-    /* Di layar sempit (mis. Android budget ~360px CSS width), kolom
-       dibuat sedikit lebih ramping supaya lebih banyak kelas yang muat
-       tanpa perlu digeser dulu. */
-    @media (max-width: 380px){
-      .pillbar-row{ gap: 7px; padding-left:14px; padding-right:14px; }
-      .pillbar-col{ min-width: 29px; }
-      .pillbar-bar{ width: 22px; }
-    }
+    /* Grafik ini sengaja TIDAK discroll -- semua kolom (kelas) selalu
+       menyusut/melebar bareng-bareng supaya selalu muat penuh di layar
+       berapa pun ukurannya (flex:1 1 0 = semua kolom berbagi rata
+       lebar yang tersedia, min-width:0 supaya boleh menyusut sekecil
+       apa pun kalau kelasnya banyak). */
     .pillbar-col {
   position: relative;
   display: flex; flex-direction: column; align-items: center;
   gap: 7px;
-  flex: 1 0 auto; min-width: 34px;
+  flex: 1 1 0; min-width: 0;
   cursor: pointer;
   border-radius: 10px;
   transition: transform .12s ease;
@@ -628,10 +620,10 @@
     .pillbar-bar {
       position: relative;
       z-index: 1;
-      width: 26px; max-width: 30px;
+      width: 70%; max-width: 30px;
       border-radius: 20px;
       background: linear-gradient(180deg,#F0B8CE 0%,#C89EDD 45%,#6C5DD3 100%);
-      transition: height .6s cubic-bezier(.34,1.15,.64,1);
+      transition: height .6s cubic-bezier(.34,1.15,.64,1), width .2s ease;
       overflow: visible;
     }
     .pillbar-val {
@@ -661,6 +653,7 @@
     }
     .pillbar-name {
       font-size: 11px; font-weight: 700; color: var(--color-text-secondary); white-space: nowrap;
+      max-width: 100%; overflow: hidden; text-overflow: ellipsis;
     }
     .pillbar-ripple-wrap {
       position: absolute; inset: 0; overflow: hidden; border-radius: 20px; pointer-events: none; z-index: 0;
@@ -1450,18 +1443,13 @@
         </div>
       </div>
       <p class="text-[10.5px] text-gray-600 m-0 mb-2" id="subtitleRombel"><span class="skeleton-shimmer" style="display:inline-block;width:90px;height:9px;border-radius:5px;vertical-align:middle;"></span></p>
-      <div id="pillbarsScrollWrap" style="position:relative;">
-        <div id="pillbars" class="pillbar-row" data-no-ripple>
-          <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:70%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
-          <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:85%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
-          <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:100%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
-          <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:60%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
-          <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:75%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
-          <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:90%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
-        </div>
-        <div id="pillbarScrollHint" class="hidden" style="position:absolute; top:48px; bottom:0; right:0; width:40px; pointer-events:none; background:linear-gradient(to right, rgba(255,255,255,0), var(--neu-bg) 75%); display:flex; align-items:center; justify-content:flex-end; padding-right:2px;">
-          <span class="material-symbols-rounded" style="font-size:16px; color:#9B9FC2; animation: pillbarHintGeser 1.4s ease-in-out infinite;">chevron_right</span>
-        </div>
+      <div id="pillbars" class="pillbar-row" data-no-ripple>
+        <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:70%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
+        <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:85%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
+        <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:100%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
+        <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:60%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
+        <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:75%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
+        <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:90%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
       </div>
       <div id="tabelRombelSpin" class="flex justify-center py-6">
         <p class="teks-berdenyut text-[12px] text-gray-600 font-semibold m-0">Memuat data...</p>
@@ -3111,26 +3099,6 @@ document.getElementById('pillbars').innerHTML = window.rombelData.map((r, i) => 
           tip.classList.remove('show');
         }, 3000);
       }, 400);
-
-      // Fade + panah di ujung kanan cuma muncul kalau isi grafik memang
-      // lebih lebar dari layar (berarti masih ada kelas yang belum
-      // kelihatan). Sembunyi otomatis begitu sudah discroll sampai habis.
-      (function(){
-        const wrap = document.getElementById('pillbars');
-        const hint = document.getElementById('pillbarScrollHint');
-        if(!wrap || !hint) return;
-        function perbaruiHintScroll(){
-          const sisaScroll = wrap.scrollWidth - wrap.clientWidth - wrap.scrollLeft;
-          if(wrap.scrollWidth > wrap.clientWidth + 4 && sisaScroll > 8){
-            hint.classList.remove('hidden');
-          }else{
-            hint.classList.add('hidden');
-          }
-        }
-        perbaruiHintScroll();
-        wrap.addEventListener('scroll', perbaruiHintScroll, { passive: true });
-        window.addEventListener('resize', perbaruiHintScroll);
-      })();
 
       buatChart();
     })
