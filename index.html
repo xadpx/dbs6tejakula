@@ -2135,7 +2135,7 @@ z-[9999]">
       const copyBtn = opsi.copyId
         ? `<span id="${opsi.copyId}" class="material-symbols-rounded text-[14.5px] text-gray-400 cursor-pointer hover:text-blue-600 transition sm:text-[16px]" style="margin-left:8px;flex-shrink:0;" onclick="event.stopPropagation(); salinTeks('${String(value).replace(/'/g,"\\'")}', '${opsi.copyId}', '${(opsi.copyLabel||label).replace(/'/g,"\\'")}')">content_copy</span>`
         : '';
-      const isLast = opsi.last ? '' : 'border-bottom:1px solid #F1F1F4;';
+      const isLast = opsi.last ? '' : 'background-image:linear-gradient(90deg, transparent, #D8DAE8 15%, #D8DAE8 85%, transparent); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;';
       return `
 <div class="flex items-center justify-between" style="padding:12px 20px; ${isLast}">
   <span class="text-gray-500 sm:text-[13.5px]" style="font-size:12px;">${label}</span>
