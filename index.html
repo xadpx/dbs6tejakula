@@ -1274,7 +1274,7 @@
     </div>
 
   </div>
-  <div id="p-home" class="p-5" style="padding-bottom:140px;">
+  <div id="p-home" class="p-5" style="padding-bottom:calc(140px + env(safe-area-inset-bottom, 0px));">
   <div class="mb-4">
 
   <div id="greetingBlock">
@@ -3335,10 +3335,19 @@ function gantiHalamanFade(pTarget){
 
   if((pTarget === "download" || pSekarang === "download") && !kombinasiAmanDitransisi){
     try {
+      // PENTING: jangan pakai style.cssText = "" di sini -- itu akan
+      // menghapus SEMUA inline style di halaman (termasuk misalnya
+      // padding-bottom penyesuaian safe-area di Beranda), bukan cuma
+      // sisa-sisa animasi. Reset hanya properti yang mungkin ditinggalkan
+      // oleh jalur animasi fade normal (opacity/transform/transition).
+      [currentEl, targetEl].forEach(function(el){
+        el.style.opacity = "";
+        el.style.transform = "";
+        el.style.transition = "";
+        el.style.willChange = "";
+      });
       currentEl.classList.add("hidden");
-      currentEl.style.cssText = "";
       targetEl.classList.remove("hidden");
-      targetEl.style.cssText = "";
       window.scrollTo(0, 0);
       updateNavAktif(pTarget);
     } catch(err) {
@@ -5734,7 +5743,10 @@ function selesaikanSwipeKeHalaman(p){
   halaman.forEach(id=>{
     const el = document.getElementById(id);
     el.classList.add("hidden");
-    el.style.cssText = "";
+    el.style.opacity = "";
+    el.style.transform = "";
+    el.style.transition = "";
+    el.style.willChange = "";
   });
 
   const target = document.getElementById("p-"+p);
@@ -5769,7 +5781,10 @@ function jalankanTransisiNav(pTarget){
     halaman.forEach(id=>{
       const el = document.getElementById(id);
       el.classList.add("hidden");
-      el.style.cssText = "";
+      el.style.opacity = "";
+      el.style.transform = "";
+      el.style.transition = "";
+      el.style.willChange = "";
     });
     const target = document.getElementById("p-" + pTarget);
     target.classList.remove("hidden");
