@@ -537,6 +537,9 @@
     #bottomNav.nav-hidden .neu-nav-flat{
       pointer-events: none;
     }
+    #bottomNav.nav-hidden + #bottomNavBlur{
+      opacity: 0;
+    }
     .neu-modal{
       background: #EEF1F6 !important;
       border: none !important;
@@ -1927,7 +1930,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
     </div>
   </div>
 </div>  
-  <nav id="bottomNav" class="fixed bottom-0 flex justify-center z-50" style="left:50%; width:100%; max-width:480px; padding:0 20px max(18px, env(safe-area-inset-bottom, 18px)); pointer-events:none;">
+  <nav id="bottomNav" class="fixed bottom-0 flex justify-center z-50" style="left:50%; width:100%; max-width:480px; padding:0 20px max(10px, env(safe-area-inset-bottom, 10px)); pointer-events:none;">
   <div class="neu-nav-flat flex items-center" style="width:100%; border-radius:9999px; padding:3px 6px; gap:4px; pointer-events:auto;">
 <button
 id="nav-home"
@@ -1990,6 +1993,7 @@ download_for_offline
 </button>
   </div>
 </nav>
+<div id="bottomNavBlur" style="position:fixed; left:0; right:0; bottom:0; height:max(10px, env(safe-area-inset-bottom, 10px)); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); background:rgba(238,241,246,.55); z-index:49; pointer-events:none; transition:opacity .22s ease;"></div>
   <div id="toast"
 class="fixed bottom-24 left-1/2 -translate-x-1/2
 bg-gray-900 text-white
