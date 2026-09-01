@@ -159,7 +159,7 @@
       color:#4B5563;
       border:1px solid #D2D5DC;
       font-size:13px;
-      font-weight:500;
+      font-weight:600;
       line-height:1;
       cursor:pointer;
       white-space:nowrap;
@@ -169,17 +169,17 @@
     .kategori-chip:has(.kategori:checked){
       background:#EDEBFC;
       color:#6C5DD3;
-      font-weight:600;
       border-color:#C9A8F5;
     }
     .kategori-chip .chip-check{
-      display:none;
+      display:inline;
+      visibility:hidden;
       font-size:13px;
       font-weight:700;
       line-height:1;
     }
     .kategori-chip:has(.kategori:checked) .chip-check{
-      display:inline;
+      visibility:visible;
     }
     .neu-mini-pill{
       background: #EEF1F6;
@@ -1145,6 +1145,7 @@
       border: none !important;
       box-shadow: var(--neu-raised-sm) !important;
       color: #4B5563 !important;
+      font-weight: 600 !important;
     }
     .kategori-chip:has(.kategori:checked){
       background: var(--neu-bg) !important;
