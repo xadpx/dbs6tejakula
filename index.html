@@ -172,14 +172,25 @@
       border-color:#C9A8F5;
     }
     .kategori-chip .chip-check{
-      display:inline;
-      visibility:hidden;
-      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      flex:0 0 16px;
+      width:16px;
+      height:16px;
+      border-radius:50%;
+      border:1.5px solid #C7CAD1;
+      background:transparent;
+      color:transparent;
+      font-size:10px;
       font-weight:700;
       line-height:1;
+      transition:.15s;
     }
     .kategori-chip:has(.kategori:checked) .chip-check{
-      visibility:visible;
+      background:#6C5DD3;
+      border-color:#6C5DD3;
+      color:#fff;
     }
     .neu-mini-pill{
       background: #EEF1F6;
@@ -1151,6 +1162,11 @@
       background: var(--neu-bg) !important;
       color: #6C5DD3 !important;
       box-shadow: var(--neu-pressed-sm) !important;
+    }
+    .kategori-chip:has(.kategori:checked) .chip-check{
+      background:#6C5DD3 !important;
+      border-color:#6C5DD3 !important;
+      color:#fff !important;
     }
     .neu-mini-pill{
       background: var(--neu-bg) !important;
