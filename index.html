@@ -192,6 +192,9 @@
       border-color:#6C5DD3;
       color:#fff;
     }
+    .kategori-list{
+      justify-content:space-between;
+    }
     .neu-mini-pill{
       background: #EEF1F6;
       -webkit-backdrop-filter: none; backdrop-filter: none;
@@ -1703,7 +1706,7 @@ class="neu-dropdown-inset w-24 min-w-[96px] h-9 rounded-xl px-2 text-sm">
 </div>
 <label class="font-semibold text-sm">Pilih Kategori</label>
 
-<div class="flex flex-wrap gap-2 mt-2">
+<div class="flex flex-wrap gap-2 mt-2 kategori-list" id="kategoriList">
 
   <label class="kategori-chip">
     <input class="kategori" type="checkbox" value="NIPD">
@@ -2025,6 +2028,18 @@ z-[9999]">
 </div>
 
   <script>
+
+    // Acak urutan pill kategori setiap halaman dimuat
+    (function shuffleKategoriChips(){
+      const container = document.getElementById('kategoriList');
+      if (!container) return;
+      const chips = Array.from(container.children);
+      for (let i = chips.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [chips[i], chips[j]] = [chips[j], chips[i]];
+      }
+      chips.forEach(chip => container.appendChild(chip));
+    })();
 
     // ======================================================
     // GANTI URL DI BAWAH INI dengan URL Web App Apps Script Anda
