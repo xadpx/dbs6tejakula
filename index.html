@@ -2306,44 +2306,29 @@ let historyTabAktif = false;
                 <span class="material-symbols-rounded text-[14.5px]" style="color:#0091EA;">groups</span>
                 <span style="font-size:13px; font-weight:700; color:#1E1B39;">Distribusi Rombel</span>
               </div>
-              <span style="font-size:11px; font-weight:700; color:#4b5563; background:var(--neu-bg); padding:5px 10px; border-radius:999px; box-shadow: var(--neu-raised-sm);">${data.length} kelas</span>
+              <div style="display:flex; align-items:center; gap:8px;"><span style="font-size:11px; font-weight:700; color:#4b5563; background:var(--neu-bg); padding:5px 10px; border-radius:999px; box-shadow: var(--neu-raised-sm);">${data.length} kelas</span><div onclick="event.stopPropagation(); bagikanRekap(this.querySelector('span'))" class="fab-copy cursor-pointer transition" style="width:26px;height:26px;" aria-label="Bagikan rekap"><span class="material-symbols-rounded" style="font-size:13px;">ios_share</span></div></div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 46px 46px 50px 16px; align-items:center; padding:2px 10px 0; font-size:12px; font-weight:700; text-align:center;">
+              <div style="text-align:left; padding:8px 0 8px 6px; color:#585A75;">Kelas</div>
+              <div style="padding:8px 0; color:#0873BF; background:rgba(0,145,234,.08);">L</div>
+              <div style="padding:8px 0; color:#B83463; background:rgba(212,83,126,.08);">P</div>
+              <div style="padding:8px 0; color:#585A75;">Total</div>
+              <div></div>
             </div>
             ${data.map((r,i) => {
               const total = r.L + r.P;
               const garis = i === data.length - 1 ? '' : 'background-image:linear-gradient(90deg, transparent, #D8DAE8 15%, #D8DAE8 85%, transparent); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;';
-              const nomorKelas = r.kelas.replace('Kelas ','');
               return `
               <div
                 onpointerdown="buatRipple(event)"
                 onclick="tampilkanSiswaKelas('${r.kelas}')"
-                class="flex flex-col px-7 py-3.5 cursor-pointer active:bg-gray-50 transition ripple-effect"
-                style="${garis}">
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <div style="width:32px;height:32px;border-radius:12px;background:#7C93C71A;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                      <span style="font-size:13px; font-weight:800; color:#0091EA;">${nomorKelas}</span>
-                    </div>
-                    <div>
-                      <div class="text-[13px] font-semibold text-gray-900">${r.kelas}</div>
-                    </div>
-                  </div>
-                  <div class="flex items-center gap-2">
-                    <span class="text-[13px] font-bold text-gray-700">${total}</span>
-                    <span class="material-symbols-rounded text-[14.5px]" style="color:#6b7280;">chevron_right</span>
-                  </div>
-                </div>
-                <div style="display:flex; align-items:center; gap:10px; margin-top:10px;">
-                  <span style="display:inline-flex; align-items:center; gap:3px; min-width:52px; justify-content:center; padding:4px 9px; border-radius:999px; background:rgba(0,145,234,.14); color:#0873BF; font-size:13px; font-weight:800;">
-                    <span class="material-symbols-rounded" style="font-size:16px;">male</span>${r.L}
-                  </span>
-                  <div style="flex:1; height:12px; display:flex; gap:3px;">
-                    ${r.L > 0 ? `<div style="flex:${r.L}; height:100%; border-radius:999px; background:#0091EA;"></div>` : ''}
-                    ${r.P > 0 ? `<div style="flex:${r.P}; height:100%; border-radius:999px; background:#E8578A;"></div>` : ''}
-                  </div>
-                  <span style="display:inline-flex; align-items:center; gap:3px; min-width:52px; justify-content:center; padding:4px 9px; border-radius:999px; background:rgba(212,83,126,.14); color:#B83463; font-size:13px; font-weight:800;">
-                    <span class="material-symbols-rounded" style="font-size:16px;">female</span>${r.P}
-                  </span>
-                </div>
+                class="cursor-pointer active:bg-gray-50 transition ripple-effect"
+                style="display:grid; grid-template-columns:1fr 46px 46px 50px 16px; align-items:center; padding:0 10px; text-align:center; ${garis}">
+                <div class="text-[13px] font-semibold text-gray-900" style="text-align:left; padding:13px 0 13px 6px;">${r.kelas}</div>
+                <div class="text-[13px] font-semibold text-gray-900 tabular-nums" style="padding:13px 0; background:rgba(0,145,234,.08);">${r.L}</div>
+                <div class="text-[13px] font-semibold text-gray-900 tabular-nums" style="padding:13px 0; background:rgba(212,83,126,.08);">${r.P}</div>
+                <div class="text-[13px] font-bold text-gray-900 tabular-nums">${total}</div>
+                <span class="material-symbols-rounded" style="font-size:16px; color:#6b7280;">chevron_right</span>
               </div>
               `;
             }).join('')}
@@ -4327,9 +4312,9 @@ Status Anak: ${r[14]}`;
         return;
       }
     });
-    async function bagikanRekap(){
+    async function bagikanRekap(iconEl){
   let text = buatTeksRekap();
-  const icon = document.getElementById("copyRekapIcon");
+  const icon = iconEl || document.getElementById("copyRekapIcon");
 
   function tandaiSukses(){
     if(icon){
