@@ -1227,7 +1227,54 @@
     border:1px solid rgba(255,255,255,.75) !important;
     box-shadow:none !important;
   }
-  </style>
+  
+  /* ===== Putaran 2: tombol, pop up, chip diwarnai lembut ===== */
+  #btnNotifUpdate{
+    background:linear-gradient(145deg,rgba(184,204,240,.22),rgba(120,150,210,.14)) !important;
+    border:1px solid rgba(255,255,255,.75) !important;
+    box-shadow:none !important;
+  }
+  #p-home p[style*="--neu-dark"]{
+    background:linear-gradient(145deg,rgba(184,204,240,.22),rgba(120,150,210,.14)) !important;
+    border:1px solid rgba(255,255,255,.75) !important;
+    box-shadow:none !important;
+  }
+  /* kotak pop up */
+  .neu-modal, #notifDropdown{
+    background:linear-gradient(145deg,rgba(184,204,240,.22),rgba(120,150,210,.14)) !important;
+    border:1px solid rgba(255,255,255,.75) !important;
+    box-shadow:none !important;
+    -webkit-backdrop-filter:blur(14px) !important; backdrop-filter:blur(14px) !important;
+  }
+  #rombelPopupBox{box-shadow:none !important}
+  .neu-modal-close{
+    background:linear-gradient(145deg,rgba(184,204,240,.22),rgba(120,150,210,.14)) !important;
+    border:1px solid rgba(255,255,255,.75) !important;
+    box-shadow:none !important;
+  }
+  /* card di dalam semua pop up / halaman detail */
+  .neu-modal .neu-card, .neu-modal .neu-card-flat, .neu-modal div[style*="--neu-raised"],
+  .detail-fullpage-overlay .neu-card, .detail-fullpage-overlay .neu-card-flat,
+  .detail-fullpage-overlay div[style*="--neu-raised"]{
+    background:linear-gradient(145deg,rgba(184,204,240,.22),rgba(120,150,210,.14)) !important;
+    border:1px solid rgba(255,255,255,.75) !important;
+    box-shadow:none !important;
+  }
+  /* tombol kategori di Unduh */
+  .kategori-chip{
+    background:linear-gradient(145deg,rgba(184,204,240,.40),rgba(120,150,210,.24)) !important;
+    border:1px solid rgba(255,255,255,.8) !important;
+    box-shadow:none !important;
+    color:#1B2347 !important;
+  }
+  .kategori-chip:has(.kategori:checked){
+    background:linear-gradient(145deg,rgba(108,93,211,.26),rgba(31,42,85,.20)) !important;
+    border:1px solid rgba(31,42,85,.35) !important;
+    color:#161F45 !important;
+    box-shadow:none !important;
+  }
+  .kategori-chip:has(.kategori:checked) .chip-check{background:#1F2A55 !important;border-color:#1F2A55 !important;color:#fff !important}
+</style>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style id="tema-liquid">
   /* ===== TEMA LIQUID GLASS (menimpa gaya neumorph; fungsi tidak diubah) ===== */
@@ -1472,8 +1519,8 @@
   </div>
 
   <div style="display:flex; gap:12px; margin-bottom:12px;">
-    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="flex:1; min-width:0; background:var(--neu-bg); border-radius:18px; padding:6px; box-shadow: var(--neu-raised-md);">
-      <div style="position:relative; background:linear-gradient(160deg,#BFE0FA,#7FBBF0); border-radius:12px; padding:10px 12px; box-shadow:4px 4px 10px rgba(95,168,237,.45), -3px -3px 8px rgba(255,255,255,.55);">
+    <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="flex:1; min-width:0; background:none; border-radius:20px; padding:0; box-shadow:none;">
+      <div style="position:relative; background:linear-gradient(145deg,rgba(142,205,247,.42),rgba(74,144,217,.24)); border:1px solid rgba(255,255,255,.75); border-radius:20px; padding:13px 16px; box-shadow:none;">
         <div style="display:flex; align-items:center; justify-content:space-between;">
           <span class="material-symbols-rounded" style="font-size:18px; color:#0C447C;">school</span>
           <span class="material-symbols-rounded" style="font-size:15px; color:#0C447C; opacity:.55;">chevron_right</span>
@@ -1484,16 +1531,16 @@
         <p style="font-size:13px; color:#185FA5; margin:1px 0 0; font-weight:600;">Guru aktif</p>
       </div>
     </div>
-    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer" style="flex:1; min-width:0; background:var(--neu-bg); border-radius:18px; padding:6px; box-shadow: var(--neu-raised-md);">
-      <div style="position:relative; background:linear-gradient(160deg,#FCE3AE,#F3C267); border-radius:12px; padding:10px 12px; box-shadow:4px 4px 10px rgba(240,187,85,.45), -3px -3px 8px rgba(255,255,255,.55);">
+    <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer" style="flex:1; min-width:0; background:none; border-radius:20px; padding:0; box-shadow:none;">
+      <div style="position:relative; background:linear-gradient(145deg,rgba(247,168,168,.45),rgba(226,100,100,.24)); border:1px solid rgba(255,255,255,.75); border-radius:20px; padding:13px 16px; box-shadow:none;">
         <div style="display:flex; align-items:center; justify-content:space-between;">
-          <span class="material-symbols-rounded" style="font-size:18px; color:#854F0B;">badge</span>
-          <span class="material-symbols-rounded" style="font-size:15px; color:#854F0B; opacity:.55;">chevron_right</span>
+          <span class="material-symbols-rounded" style="font-size:18px; color:#8E2A2A;">badge</span>
+          <span class="material-symbols-rounded" style="font-size:15px; color:#8E2A2A; opacity:.55;">chevron_right</span>
         </div>
-        <p style="font-size:20px; font-weight:800; color:#854F0B; margin:6px 0 0; line-height:1;">
-          <span id="totTendik" class="hidden tabular-nums">0</span><span id="totTendikSpin" class="spinner-ring-gray" style="width:14px;height:14px;background:conic-gradient(from 0deg, transparent 0%, #854F0B 100%);"></span>
+        <p style="font-size:20px; font-weight:800; color:#8E2A2A; margin:6px 0 0; line-height:1;">
+          <span id="totTendik" class="hidden tabular-nums">0</span><span id="totTendikSpin" class="spinner-ring-gray" style="width:14px;height:14px;background:conic-gradient(from 0deg, transparent 0%, #8E2A2A 100%);"></span>
         </p>
-        <p style="font-size:13px; color:#996616; margin:1px 0 0; font-weight:600;">Tendik aktif</p>
+        <p style="font-size:13px; color:#A63B3B; margin:1px 0 0; font-weight:600;">Tendik aktif</p>
       </div>
     </div>
   </div>
