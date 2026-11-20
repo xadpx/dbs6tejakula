@@ -1778,7 +1778,7 @@ class="neu-dropdown-inset w-24 min-w-[96px] h-9 rounded-xl px-2 text-sm">
 
 <button
 id="btnUnduh"
-onclick="bukaPINUnduh()"
+onclick="mulaiUnduh()"
 class="btn-unduh-neu mt-4 w-full h-[46px] flex items-center justify-center gap-2 text-white text-sm font-semibold"
 style="border-radius:9999px;">
 
@@ -1874,53 +1874,6 @@ class="hidden detail-fullpage-overlay fixed inset-0 z-[60]">
         <div style="position:absolute; left:0; right:0; bottom:0; height:40px; background:linear-gradient(rgba(255,255,255,0), rgba(255,255,255,.98) 70%); pointer-events:none;"></div>
       </div>
     </div>
-  </div>
-<!-- MODAL PIN -->
-<div id="pinModal"
-class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-6">
-  <div id="pinModalBox" class="premium-popup-box neu-modal w-[84%] max-w-[300px] rounded-2xl overflow-hidden">
-    <div class="px-5 pt-5 pb-4">
-
-      <div class="text-sm text-center font-medium text-gray-900 mb-3">
-        Masukkan Kode Unduh
-      </div>
-
-      <input
-        id="pinInput"
-        type="password"
-        placeholder="Kode Unduh"
-        oninput="cekIsiPIN()"
-        onkeydown="tekanEnterPIN(event)"
-        class="w-full h-9 px-4 rounded-xl text-sm outline-none"
-        style="background:var(--neu-bg); border:none; box-shadow: var(--neu-pressed-sm);">
-
-      <div
-        id="pinError"
-        class="hidden text-center text-red-500 text-xs mt-2">
-        Kode salah
-      </div>
-
-    </div>
-
-    <div class="border-t border-gray-300 flex h-11">
-
-      <div
-        onclick="batalPIN()"
-        class="flex-1 flex items-center justify-center text-[#3E50A8] text-sm font-medium cursor-pointer active:bg-gray-100">
-        Batal
-      </div>
-
-      <div class="w-px bg-gray-300"></div>
-
-      <div
-        id="btnPIN"
-        onclick="cekPIN()"
-        class="flex-1 flex items-center justify-center text-[#3E50A8] text-sm font-semibold cursor-pointer">
-        OK
-      </div>
-    </div>
-    </div>
-
   </div>
 <!-- MODAL KATEGORI (daftar siswa per kategori chart) -->
 <div id="modalKategori"
@@ -2027,6 +1980,37 @@ transition-all duration-300
 z-[9999]">
 </div>
 
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
+  import { getAuth, GoogleAuthProvider, signInWithCredential, onAuthStateChanged, signOut }
+    from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc }
+    from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyByiJG1p3l6AqRYzBCzceeQyObkF4sme3M",
+    authDomain: "dashboard-siswa-32538.firebaseapp.com",
+    projectId: "dashboard-siswa-32538",
+    storageBucket: "dashboard-siswa-32538.firebasestorage.app",
+    messagingSenderId: "183272939624",
+    appId: "1:183272939624:web:11c96a94292522b5739bdd"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  window.FB = {
+    masukDenganGoogle: (idToken) => signInWithCredential(auth, GoogleAuthProvider.credential(idToken)),
+    keluar: () => signOut(auth),
+    pantauAuth: (callback) => onAuthStateChanged(auth, callback),
+    bacaDok: async (koleksi, id) => {
+      const snap = await getDoc(doc(db, koleksi, id));
+      return snap.exists() ? snap.data() : null;
+    }
+  };
+  window.dispatchEvent(new Event('fb-ready'));
+</script>
   <script>
 
     // Acak urutan pill kategori setiap halaman dimuat
@@ -2042,11 +2026,77 @@ z-[9999]">
     })();
 
     // ======================================================
-    // GANTI URL DI BAWAH INI dengan URL Web App Apps Script Anda
-    // (Deploy > New deployment > Web app > Execute as: Me > Who has access: Anyone)
-    // Pastikan pakai URL yang berakhiran /exec, BUKAN /dev
+    // FIREBASE (menggantikan Apps Script)
+    // Modul Firebase dimuat oleh <script type="module"> di atas dan
+    // menyediakan window.FB. Data dibaca dari Firestore:
+    //   data/siswa, data/guru, data/tendik -> isi sheet (JSON 2D array)
+    //   data/meta                          -> waktu & riwayat pembaruan
+    //   akunLogin/{email}                  -> daftar akun yang diizinkan
     // ======================================================
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyI-cRi8CsfbqrAM__UQjcjhnfikSBg9xMKd7HlXDZXLS__6HWPHfEiQ0fygv4crImp/exec";
+    let _fbPromise = null;
+    function tungguFirebase(){
+      if(window.FB) return Promise.resolve(window.FB);
+      if(!_fbPromise){
+        _fbPromise = new Promise((resolve, reject) => {
+          window.addEventListener('fb-ready', () => resolve(window.FB), { once: true });
+          setTimeout(() => reject(new Error('Firebase gagal dimuat')), 20000);
+        });
+      }
+      return _fbPromise;
+    }
+
+    const _cacheDok = {};
+    function bacaDokData(nama){
+      if(!_cacheDok[nama]){
+        _cacheDok[nama] = tungguFirebase()
+          .then(fb => fb.bacaDok('data', nama))
+          .catch(err => { delete _cacheDok[nama]; throw err; });
+      }
+      return _cacheDok[nama];
+    }
+
+    let _sudahCabut = false;
+    function aksesDicabut(){
+      if(_sudahCabut) return;
+      _sudahCabut = true;
+      alert('Akun Anda tidak punya akses ke aplikasi ini (belum terdaftar atau akses sudah dicabut). Silakan hubungi admin sekolah jika ini keliru.');
+      logoutGuru();
+    }
+    function tanganiErrorFirebase(err){
+      if(err && err.code === 'permission-denied') aksesDicabut();
+      throw err;
+    }
+
+    function ambilDataGabungan(){
+      return Promise.all([bacaDokData('siswa'), bacaDokData('guru'), bacaDokData('tendik')])
+        .then(([siswa, guru, tendik]) => {
+          const ada = x => x && typeof x.json === 'string';
+          if(!ada(siswa) || !ada(guru) || !ada(tendik)){
+            return { siswa: [], guru: [], tendik: [], error: 'Data belum tersedia di database. Jalankan sinkronisasi dari Google Sheets.' };
+          }
+          return { siswa: JSON.parse(siswa.json), guru: JSON.parse(guru.json), tendik: JSON.parse(tendik.json), error: null };
+        })
+        .catch(tanganiErrorFirebase);
+    }
+
+    function ambilDataSheet(nama){
+      return bacaDokData(nama)
+        .then(dok => {
+          if(!dok || typeof dok.json !== 'string') return { data: [], error: 'Data belum tersedia di database' };
+          return { data: JSON.parse(dok.json), error: null };
+        })
+        .catch(tanganiErrorFirebase);
+    }
+
+    function ambilMeta(){
+      return tungguFirebase()
+        .then(fb => fb.bacaDok('data', 'meta'))
+        .then(m => {
+          if(!m) return { lastUpdated: null, riwayat: [], error: null };
+          return { lastUpdated: m.updatedAt || null, riwayat: Array.isArray(m.riwayat) ? m.riwayat : [], error: null };
+        })
+        .catch(tanganiErrorFirebase);
+    }
 
     const KATA_GELAR_DIABAIKAN = ['i','ni'];
     function getInisialNama(nama){
@@ -2183,7 +2233,6 @@ z-[9999]">
     }
 
     let d = [];
-let pinPercobaan = 0;
 let halamanSebelumnya = "home";
 let modeRentang = false;
 let carouselGrafikSudahInit = false;
@@ -2863,34 +2912,38 @@ let historyTabAktif = false;
       errEl.classList.add('hidden');
       spinnerEl.classList.remove('hidden');
 
-      fetch(APPS_SCRIPT_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: 'action=verifyGoogleLogin&idToken=' + encodeURIComponent(idToken)
-      })
-        .then(res => res.json())
-        .then(json => {
+      let fbRef = null;
+      tungguFirebase()
+        .then(fb => { fbRef = fb; return fb.masukDenganGoogle(idToken); })
+        .then(cred => {
+          const email = String(cred.user.email || '').toLowerCase();
+          return fbRef.bacaDok('akunLogin', email).then(akun => ({ akun, email }));
+        })
+        .then(({ akun, email }) => {
           spinnerEl.classList.add('hidden');
 
-          if(json.success){
-            window.guruAktif = { nama: json.nama, email: json.email, foto: fotoGoogle };
-            localStorage.setItem('guruLogin', JSON.stringify(window.guruAktif));
-            try{
-              selesaiLogin();
-            }catch(errSelesai){
-              console.error('Gagal selesaiLogin:', errSelesai);
-              errEl.textContent = 'Login berhasil tapi gagal membuka beranda: ' + errSelesai.message;
-              errEl.classList.remove('hidden');
-            }
-          }else{
-            errEl.textContent = json.error || 'Email ini tidak terdaftar';
+          if(!akun){
+            errEl.textContent = 'Email ini tidak terdaftar sebagai guru/tendik';
+            errEl.classList.remove('hidden');
+            return fbRef.keluar();
+          }
+
+          window.guruAktif = { nama: akun.nama || email, email: email, foto: fotoGoogle };
+          localStorage.setItem('guruLogin', JSON.stringify(window.guruAktif));
+          try{
+            selesaiLogin();
+          }catch(errSelesai){
+            console.error('Gagal selesaiLogin:', errSelesai);
+            errEl.textContent = 'Login berhasil tapi gagal membuka beranda: ' + errSelesai.message;
             errEl.classList.remove('hidden');
           }
+          mulaiMuatData();
         })
         .catch(err => {
           console.error(err);
           spinnerEl.classList.add('hidden');
-          errEl.textContent = 'Gagal terhubung ke server';
+          const kode = err && (err.code || err.message) ? ' (' + (err.code || err.message) + ')' : '';
+          errEl.textContent = 'Gagal masuk' + kode;
           errEl.classList.remove('hidden');
         });
     }
@@ -2909,34 +2962,64 @@ let historyTabAktif = false;
       if(window.google && google.accounts && google.accounts.id){
         google.accounts.id.disableAutoSelect();
       }
-      location.reload();
+      const muatUlang = () => location.reload();
+      if(window.FB){
+        window.FB.keluar().then(muatUlang, muatUlang);
+      }else{
+        muatUlang();
+      }
     }
 
-    // Cek ulang ke server (spreadsheet) setiap kali app dibuka, apakah
-    // email guru yang sedang login masih ada di daftar yang diizinkan.
-    // Dipanggil sesudah UI ditampilkan (pakai sesi localStorage dulu) supaya
-    // app tetap terasa instan; kalau ternyata sudah dicabut, baru dipaksa logout.
-    function verifikasiSesiKeServer(){
-      if(!window.guruAktif || !window.guruAktif.email) return;
+    // Dipanggil sekali saat aplikasi dibuka. Firebase Auth menyimpan sesi
+    // sendiri; localStorage 'guruLogin' hanya dipakai agar tampilan langsung
+    // muncul tanpa menunggu. Hak akses yang sebenarnya dijaga oleh
+    // Security Rules di server: kalau akun dihapus dari daftar akunLogin,
+    // pembacaan data otomatis ditolak dan pengguna dikeluarkan.
+    function mulaiSesiFirebase(sudahLogin){
+      tungguFirebase().then(fb => {
+        let awal = true;
+        fb.pantauAuth(user => {
+          if(!awal) return;
+          awal = false;
 
-      fetch(`${APPS_SCRIPT_URL}?action=cekEmailAktif&email=${encodeURIComponent(window.guruAktif.email)}`)
-        .then(res => res.json())
-        .then(json => {
-          if(!json.valid){
-            alert('Akses Anda ke aplikasi ini sudah dicabut oleh admin. Silakan hubungi admin sekolah jika ini keliru.');
-            logoutGuru();
+          if(!user){
+            if(sudahLogin){
+              // sesi localStorage ada tapi sesi Firebase tidak ada -> login ulang
+              localStorage.removeItem('guruLogin');
+              window.guruAktif = null;
+              location.reload();
+            }
+            return;
           }
-        })
-        .catch(err => {
-          // Kalau gagal terhubung (mis. sinyal buruk), jangan logout paksa —
-          // biarkan guru tetap pakai sesi yang tersimpan, coba lagi nanti.
-          console.error('Gagal verifikasi sesi ke server:', err);
+
+          const email = String(user.email || '').toLowerCase();
+          fb.bacaDok('akunLogin', email).then(akun => {
+            if(!akun){ aksesDicabut(); return; }
+
+            const perluSimpan = !window.guruAktif ||
+              String(window.guruAktif.email || '').toLowerCase() !== email;
+            if(perluSimpan){
+              window.guruAktif = { nama: akun.nama || email, email: email, foto: user.photoURL || '' };
+              localStorage.setItem('guruLogin', JSON.stringify(window.guruAktif));
+            }
+            if(!sudahLogin){
+              selesaiLogin();
+            }else if(perluSimpan){
+              tampilkanNamaGuru();
+            }
+            mulaiMuatData();
+          }).catch(err => {
+            console.error('Gagal memeriksa akun:', err);
+            showToast('Tidak bisa memeriksa akses akun', 3000);
+          });
         });
+      }).catch(err => {
+        console.error(err);
+        showToast('Gagal memuat layanan Firebase', 4000);
+      });
     }
 
-  
-
-    document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   // Pastikan setiap kali app dimuat/di-refresh, posisinya selalu
   // di Beranda paling atas -- bukan nyangkut di tab/scroll terakhir.
   window.scrollTo(0, 0);
@@ -2946,12 +3029,18 @@ let historyTabAktif = false;
   if(sudahLogin){
     nav("home");
     window.scrollTo(0, 0);
-    verifikasiSesiKeServer();
   }
+  mulaiSesiFirebase(sudahLogin);
+});
+
+// Data hanya diambil setelah Firebase memastikan pengguna sudah login.
+let _dataDimuat = false;
+function mulaiMuatData(){
+  if(_dataDimuat) return;
+  _dataDimuat = true;
 
   const _waktuMulaiFetchBeranda = (typeof performance !== 'undefined' && performance.now) ? performance.now() : 0;
-  fetch(`${APPS_SCRIPT_URL}?action=getDataGabungan`)
-    .then(res => res.json())
+  ambilDataGabungan()
     .then(json => {
       if (json.error) {
         showToast("Gagal memuat data: " + json.error, 3000);
@@ -3134,8 +3223,7 @@ document.getElementById('pillbars').innerHTML = window.rombelData.map((r, i) => 
     });
 
   // Dipanggil terpisah, tidak menghalangi tampilan data siswa di atas
-  fetch(`${APPS_SCRIPT_URL}?action=getLastUpdated`)
-    .then(res => res.json())
+  ambilMeta()
     .then(json => {
       if (!json.error) {
         terapkanTanggalUpdate(json.lastUpdated, json.riwayat);
@@ -3144,7 +3232,7 @@ document.getElementById('pillbars').innerHTML = window.rombelData.map((r, i) => 
     .catch(err => {
       console.error("Gagal ambil tanggal update:", err);
     });
-});
+}
 
 let rombelRowTerbuka = null;
 function toggleRombelRow(i){
@@ -3228,7 +3316,6 @@ function tutupPopupRombel(){
 function nav(p){
   if(
     !document.getElementById("modal").classList.contains("hidden") ||
-    !document.getElementById("pinModal").classList.contains("hidden") ||
     !document.getElementById("modalKategori").classList.contains("hidden") ||
     !document.getElementById("rombelPopupOverlay").classList.contains("hidden")
   ){
@@ -3706,8 +3793,7 @@ function muatDataGuru(){
   if(sudahMuatGuru) return;
   sudahMuatGuru = true;
   const _waktuMulaiGuru = (typeof performance !== 'undefined' && performance.now) ? performance.now() : 0;
-  fetch(`${APPS_SCRIPT_URL}?action=getDataGuru`)
-    .then(res => res.json())
+  ambilDataSheet('guru')
     .then(json => {
       if(json.error){
         showToast("Gagal memuat data guru: " + json.error, 3000);
@@ -3739,8 +3825,7 @@ function muatDataGuru(){
     .catch(err => {
       console.error('Percobaan 1 gagal (guru):', err);
       const _waktuMulaiGuruRetry = (typeof performance !== 'undefined' && performance.now) ? performance.now() : 0;
-      fetch(`${APPS_SCRIPT_URL}?action=getDataGuru`)
-        .then(res => res.json())
+      ambilDataSheet('guru')
         .then(json => {
           if(json.error){
             showToast("Gagal memuat data guru: " + json.error, 3000);
@@ -3769,8 +3854,7 @@ function muatDataTendik(){
   if(sudahMuatTendik) return;
   sudahMuatTendik = true;
   const _waktuMulaiTendik = (typeof performance !== 'undefined' && performance.now) ? performance.now() : 0;
-  fetch(`${APPS_SCRIPT_URL}?action=getDataTendik`)
-    .then(res => res.json())
+  ambilDataSheet('tendik')
     .then(json => {
       if(json.error){
         showToast("Gagal memuat data tendik: " + json.error, 3000);
@@ -3791,8 +3875,7 @@ function muatDataTendik(){
     .catch(err => {
       console.error('Percobaan 1 gagal (tendik):', err);
       const _waktuMulaiTendikRetry = (typeof performance !== 'undefined' && performance.now) ? performance.now() : 0;
-      fetch(`${APPS_SCRIPT_URL}?action=getDataTendik`)
-        .then(res => res.json())
+      ambilDataSheet('tendik')
         .then(json => {
           if(json.error){
             showToast("Gagal memuat data tendik: " + json.error, 3000);
@@ -4378,33 +4461,9 @@ function showToast(text, durasi = 1800){
   }, durasi);
 
 }
-    function cekIsiPIN(){
+function mulaiUnduh(){
 
-  const isi = document.getElementById("pinInput").value.trim();
-  document.getElementById("pinError").classList.add("hidden");
-  const btn = document.getElementById("btnPIN");
-
-  if(isi==""){
-
-    btn.classList.remove("text-[#3E50A8]");
-    btn.classList.add("text-gray-600");
-
-    btn.style.pointerEvents = "none";
-
-  }else{
-
-    btn.classList.remove("text-gray-600");
-    btn.classList.add("text-[#3E50A8]");
-
-    btn.style.pointerEvents = "auto";
-
-  }
-
-}
-
-function bukaPINUnduh(){
-
-  // Cek dulu apakah kategori sudah dipilih, sebelum minta kode unduh
+  // Cek dulu apakah kategori sudah dipilih sebelum mengunduh
   const semua = document.getElementById("semuaData").checked;
   let pilih = [];
 
@@ -4439,85 +4498,6 @@ document.querySelectorAll(".kategori").forEach(c=>{
     // Langsung unduh, tanpa minta kode unduh lagi
     downloadCSV();
   }, 1000);
-}
-function tutupPinModalAnimasi(){
-  tutupPopupPremium('pinModal', 'pinModalBox');
-}
-function batalPIN(){
-  selesaiLoadingPIN();
-  document.getElementById("pinInput").value="";
-  document.getElementById("pinError").classList.add("hidden");
-  tutupPinModalAnimasi();
-  setNavDisabled(false);
-  kunciScroll(false);
-  pinPercobaan=0;
-}
-function mulaiLoadingPIN(){
-
-  const btn = document.getElementById("btnPIN");
-
-  btn.textContent = "Memeriksa...";
-  btn.classList.remove("text-[#3E50A8]");
-  btn.classList.add("text-gray-600");
-
-  btn.style.pointerEvents = "none";
-
-}
-
-function selesaiLoadingPIN(){
-
-  const btn = document.getElementById("btnPIN");
-
-  btn.textContent = "OK";
-
-  cekIsiPIN();
-
-}
-
-function cekPIN(){
-
-  let pin = document.getElementById("pinInput").value;
-
-  mulaiLoadingPIN();
-
-  fetch(`${APPS_SCRIPT_URL}?action=validatePin&pin=${encodeURIComponent(pin)}`)
-    .then(res => res.json())
-    .then(json => {
-      const valid = json.valid === true;
-
-      selesaiLoadingPIN();
-
-      if(valid){
-        pinPercobaan = 0;
-        tutupPinModalAnimasi();
-        setNavDisabled(false);
-        kunciScroll(false);
-        nav("download");
-        
-        setTimeout(() => downloadCSV(), 200);
-      }else{
-        pinPercobaan++;
-        document.getElementById("pinInput").value="";
-        cekIsiPIN();
-        document.getElementById("pinError").classList.remove("hidden");
-        document.getElementById("pinInput").focus();
-        if(pinPercobaan>=3){
-          pinPercobaan=0;
-          tutupPinModalAnimasi();
-          setNavDisabled(false);
-          kunciScroll(false);
-          showToast("Terlalu banyak percobaan. Coba lagi nanti.", 3000);
-          
-          nav(halamanSebelumnya);
-        }
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      selesaiLoadingPIN();
-      showToast("Gagal memeriksa kode, coba lagi", 3000);
-    });
-
 }
     function buatRipple(event){
   const target = event.currentTarget;
@@ -5591,17 +5571,6 @@ function updateKelasAkhir(){
   }
 
 }
-function tekanEnterPIN(e){
-
-  if(e.key==="Enter"){
-
-    e.preventDefault();
-
-    cekPIN();
-
-  }
-
-}
 function toggleSemuaData(){
 
   const semua = document.getElementById("semuaData").checked;
@@ -5850,7 +5819,6 @@ function jalankanTransisiNav(pTarget){
 function modalSedangTerbuka(){
   return (
     !document.getElementById("modal").classList.contains("hidden") ||
-    !document.getElementById("pinModal").classList.contains("hidden") ||
     !document.getElementById("modalKategori").classList.contains("hidden")
   );
 }
