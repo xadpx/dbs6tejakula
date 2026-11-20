@@ -1214,6 +1214,78 @@
       box-shadow: none !important;
     }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style id="tema-liquid">
+  /* ===== TEMA LIQUID GLASS (menimpa gaya neumorph; fungsi tidak diubah) ===== */
+  :root{
+    --font-family:'Outfit','Plus Jakarta Sans','Inter',sans-serif;
+    --neu-bg:#F2F6FC;
+    --ink:#1B2347;
+    --neu-dark:rgba(70,100,160,.20); --neu-dark-soft:rgba(70,100,160,.12); --neu-light:rgba(255,255,255,.9);
+    --neu-raised-sm:0 8px 24px rgba(70,100,160,.14), inset 0 1px 0 rgba(255,255,255,.9);
+    --neu-raised-md:var(--neu-raised-sm); --neu-raised-lg:var(--neu-raised-sm);
+    --neu-pressed-sm:inset 0 2px 6px rgba(70,100,160,.20); --neu-pressed-md:inset 0 3px 8px rgba(70,100,160,.22);
+    --color-primary:#1F2A55; --color-primary-deep:#161F45; --color-primary-soft:rgba(31,42,85,.10);
+    --color-nav-active-bg:#1F2A55; --color-nav-inactive:#4F5878;
+    --color-text-primary:#1B2347; --color-text-secondary:#4F5878;
+    --blur-glass:blur(18px); --blur-glass-sm:blur(12px); --blur-nav:blur(18px);
+  }
+  body{
+    background:radial-gradient(circle at 88% 6%,#B7CBF1 0,transparent 34%),radial-gradient(circle at 4% 55%,#D6E1F6 0,transparent 40%),linear-gradient(#EDF2FB,#F8FAFD) fixed !important;
+    color:#1B2347;
+  }
+  /* kartu: kaca terang (tanpa blur agar daftar panjang tetap ringan) */
+  .neu-card,.neu-card-flat,.neu-ring-wrap{
+    background:linear-gradient(145deg,rgba(255,255,255,.9),rgba(255,255,255,.55)) !important;
+    border:1px solid rgba(255,255,255,.95) !important;
+    box-shadow:var(--neu-raised-sm) !important;
+  }
+  .neu-btn,.neu-mini-pill{
+    background:linear-gradient(145deg,rgba(255,255,255,.92),rgba(255,255,255,.6)) !important;
+    border:1px solid rgba(255,255,255,.95) !important;
+    box-shadow:var(--neu-raised-sm) !important;
+  }
+  .neu-btn:active,.neu-mini-pill:active,.neu-mini-pill.pressed{box-shadow:var(--neu-pressed-sm) !important}
+  /* kolom cari & dropdown */
+  .neu-search,.neu-dropdown,.neu-dropdown-inset{
+    background:rgba(255,255,255,.75) !important;
+    border:1px solid rgba(255,255,255,.95) !important;
+    box-shadow:inset 0 1px 3px rgba(70,100,160,.18),0 4px 14px rgba(70,100,160,.08) !important;
+    color:#1B2347 !important;
+  }
+  /* menu bawah */
+  .neu-nav,.neu-nav-flat{
+    background:linear-gradient(145deg,rgba(255,255,255,.9),rgba(255,255,255,.6)) !important;
+    border:1px solid rgba(255,255,255,.95) !important;
+    box-shadow:0 10px 30px rgba(70,100,160,.2),inset 0 1px 0 rgba(255,255,255,.9) !important;
+    -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px);
+  }
+  .nav-active{
+    background:linear-gradient(180deg,#2B3868,#161F45) !important;
+    box-shadow:0 8px 18px rgba(22,31,69,.35),inset 0 1px 0 rgba(255,255,255,.22) !important;
+  }
+  .nav-active .nav-label,.nav-active .nav-icon-wrap,.nav-active .nav-icon-wrap .nav-icon{color:#fff !important}
+  /* kartu utama berwarna navy */
+  .hero-card{
+    background:linear-gradient(135deg,#2B3868 0%,#161F45 100%) !important;
+    border:1px solid rgba(255,255,255,.25) !important;
+    box-shadow:0 14px 34px rgba(22,31,69,.35),inset 0 1px 0 rgba(255,255,255,.2) !important;
+  }
+  /* chip kategori */
+  .kategori-chip{background:rgba(255,255,255,.8) !important;border:1px solid rgba(255,255,255,.95) !important;color:#1B2347 !important;box-shadow:0 4px 12px rgba(70,100,160,.1)}
+  .kategori-chip:has(.kategori:checked){
+    background:linear-gradient(180deg,#2B3868,#161F45) !important;color:#fff !important;
+    box-shadow:0 6px 14px rgba(22,31,69,.3) !important;
+  }
+  .kategori-chip:has(.kategori:checked) .chip-check{background:#fff !important;border-color:#fff !important;color:#1F2A55 !important}
+  .icon-badge-purple{background:linear-gradient(160deg,#2B3868,#161F45)}
+  /* popup & halaman detail */
+  .neu-modal{
+    background:linear-gradient(145deg,#FBFCFF,#EEF3FB) !important;
+    border:1px solid #fff !important;
+    box-shadow:0 24px 60px rgba(40,60,110,.28) !important;
+  }
+  </style>
 </head>
 <body class="text-base">
   <script>
