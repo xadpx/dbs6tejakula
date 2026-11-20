@@ -1285,6 +1285,26 @@
     border:1px solid #fff !important;
     box-shadow:0 24px 60px rgba(40,60,110,.28) !important;
   }
+  /* ===== Halaman Guru & Tendik: tanpa daftar putih, tab terlihat jelas ===== */
+  #dataTabTrack{
+    background:rgba(255,255,255,.55) !important;
+    border:1px solid rgba(255,255,255,.95) !important;
+    box-shadow:inset 0 2px 6px rgba(70,100,160,.18) !important;
+  }
+  #panelDataGuru > div:first-child:not(.neu-card-flat),
+  #panelDataTendik > .neu-card:first-child{
+    background:linear-gradient(145deg,rgba(255,255,255,.55),rgba(184,204,240,.38)) !important;
+    border:1px solid rgba(255,255,255,.9) !important;
+    box-shadow:var(--neu-raised-sm) !important;
+  }
+  #panelDataGuru .neu-card-flat,
+  #panelDataTendik .neu-card-flat{
+    background:linear-gradient(145deg,rgba(184,204,240,.22),rgba(120,150,210,.14)) !important;
+    border:1px solid rgba(255,255,255,.75) !important;
+    box-shadow:none !important;
+  }
+  #panelDataGuru .neu-card-flat > div:active,
+  #panelDataTendik .neu-card-flat > div:active{background:rgba(31,42,85,.06) !important}
   </style>
 </head>
 <body class="text-base">
@@ -1642,14 +1662,14 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
       <div id="dataTabTrack" data-no-ripple class="flex items-center mb-4" style="background: var(--neu-bg);-webkit-backdrop-filter:none;backdrop-filter:none;border:none;border-radius:9999px;padding:3px;gap:0;box-shadow: var(--neu-pressed-sm);">
         <button id="tabDataGuru" onclick="switchDataTab('guru')"
           class="flex-1 flex items-center justify-center gap-1 text-[12.5px] font-semibold py-1.5 px-2 rounded-full transition-all duration-200"
-          style="background: var(--neu-bg);-webkit-backdrop-filter:none;backdrop-filter:none;color:#3454B4;border:none;box-shadow: var(--neu-raised-sm);">
+          style="background:linear-gradient(180deg,#2B3868,#161F45);color:#FFFFFF;border:none;box-shadow:0 6px 14px rgba(22,31,69,.3),inset 0 1px 0 rgba(255,255,255,.2);">
           <span class="material-symbols-rounded text-[13px]">school</span>
           Guru
         </button>
         <div id="divGuruTendik" style="width:1px;height:14px;background:#C3CAD4;flex-shrink:0;opacity:0;"></div>
         <button id="tabDataTendik" onclick="switchDataTab('tendik')"
           class="flex-1 flex items-center justify-center gap-1 text-[12.5px] font-semibold py-1.5 px-2 rounded-full transition-all duration-200"
-          style="background:transparent;color:#6B7280;border:1px solid transparent;box-shadow:none;">
+          style="background:transparent;color:#4F5878;border:1px solid transparent;box-shadow:none;">
           <span class="material-symbols-rounded text-[13px]">badge</span>
           Tendik
         </button>
@@ -2317,8 +2337,8 @@ let historyTabAktif = false;
         tendik: { btn: document.getElementById('tabDataTendik'),panel: document.getElementById('panelDataTendik') }
       };
 
-      const aktif       = 'background: var(--neu-bg);-webkit-backdrop-filter:none;backdrop-filter:none;color:#3454B4;border:none;box-shadow: var(--neu-raised-sm);';
-      const nonaktif    = 'background:transparent;color:#6B7280;border:1px solid transparent;box-shadow:none;';
+      const aktif       = 'background:linear-gradient(180deg,#2B3868,#161F45);color:#FFFFFF;border:none;box-shadow:0 6px 14px rgba(22,31,69,.3),inset 0 1px 0 rgba(255,255,255,.2);';
+      const nonaktif    = 'background:transparent;color:#4F5878;border:1px solid transparent;box-shadow:none;';
 
       const aktifStyle = { guru: aktif, tendik: aktif };
 
