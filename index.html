@@ -1573,14 +1573,7 @@
     </div>
   </div>
 
-  <div id="berandaRombelCard" class="hidden" style="background:linear-gradient(145deg,rgba(184,204,240,.22),rgba(120,150,210,.14)); border:1px solid rgba(255,255,255,.75); border-radius:22px; padding:6px 6px 8px; margin-bottom:16px;">
-    <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="display:flex; align-items:center; justify-content:space-between; padding:12px 14px 10px;">
-      <div style="display:flex; align-items:center; gap:8px;">
-        <span class="material-symbols-rounded" style="font-size:20px; color:#0091EA;">groups</span>
-        <span style="font-size:17px; font-weight:800; color:#1E1B39;">Distribusi Rombel</span>
-      </div>
-      <span style="display:flex; align-items:center; font-size:14px; font-weight:700; color:#4A5578;">Lihat semua<span class="material-symbols-rounded" style="font-size:20px;">chevron_right</span></span>
-    </div>
+  <div id="berandaRombelCard" class="hidden" style="background:linear-gradient(145deg,rgba(184,204,240,.22),rgba(120,150,210,.14)); border:1px solid rgba(255,255,255,.75); border-radius:22px; padding:4px; margin-bottom:16px;">
     <div id="berandaRombelBody"></div>
   </div>
 
@@ -2460,33 +2453,42 @@ let historyTabAktif = false;
       }
     }
 
-    window._berandaRombelIdx = 0;
-    function pilihRombelBeranda(i){ window._berandaRombelIdx = i; renderBerandaRombel(); }
     function renderBerandaRombel(){
       const box=document.getElementById('berandaRombelBody'), card=document.getElementById('berandaRombelCard');
       const data=window.rombelData||[];
       if(!box||!card||!data.length) return;
-      const idx=Math.min(window._berandaRombelIdx||0, data.length-1);
-      const r=data[idx], total=(r.L+r.P)||1;
-      const pctL=Math.round(r.L/total*100), pctP=100-pctL;
-      const scrollLama=(box.querySelector('#berandaRombelChips')||{}).scrollLeft||0;
-      const chips=data.map((x,n)=>{
-        const on=n===idx;
-        return `<button type="button" onclick="pilihRombelBeranda(${n})" style="flex:none; height:44px; padding:0 18px; border-radius:22px; border:1px solid rgba(255,255,255,.8); font-size:16px; font-weight:700; cursor:pointer; background:${on?'#2E5BD8':'rgba(255,255,255,.6)'}; color:${on?'#fff':'#1B2347'};">${x.kelas}</button>`;
-      }).join('');
+      const kol='display:grid; grid-template-columns:1fr 46px 46px 50px 16px; align-items:center; padding:0 10px; text-align:center;';
+      const garisBawah='background-image:linear-gradient(90deg, transparent, #D8DAE8 15%, #D8DAE8 85%, transparent); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;';
       box.innerHTML=`
-        <div id="berandaRombelChips" style="display:flex; gap:10px; overflow-x:auto; padding:2px 14px 16px; scrollbar-width:none; -webkit-overflow-scrolling:touch;">${chips}</div>
-        <div style="display:flex; align-items:center; gap:18px; padding:0 14px 12px;">
-          <div style="position:relative; width:104px; height:104px; flex-shrink:0; border-radius:50%; background:conic-gradient(#6FA8E8 0 ${pctL}%, #F0A0B8 ${pctL}% 100%);">
-            <div style="position:absolute; inset:14px; border-radius:50%; background:#E6EDFB; display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:800; color:#1B2347;">${r.L+r.P}</div>
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; ${garisBawah}">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="material-symbols-rounded" style="font-size:20px; color:#0091EA;">groups</span>
+            <span style="font-size:17px; font-weight:800; color:#1E1B39;">Distribusi Rombel</span>
           </div>
-          <div style="flex:1; min-width:0; font-size:16px; line-height:1.9; color:#1B2347;">
-            <div style="display:flex; justify-content:space-between;"><span style="color:#2E6FC8; font-weight:700;">Laki-laki</span><b class="tabular-nums">${r.L} <span style="font-weight:600; color:#4A5578;">(${pctL}%)</span></b></div>
-            <div style="display:flex; justify-content:space-between;"><span style="color:#D9708F; font-weight:700;">Perempuan</span><b class="tabular-nums">${r.P} <span style="font-weight:600; color:#4A5578;">(${pctP}%)</span></b></div>
-            <div onclick="window.modalStack=[]; dorongModalStep({type:'daftarKelas'}); tampilkanSiswaKelas('${r.kelas}')" class="cursor-pointer" style="color:#2E5BD8; font-weight:700; font-size:15px;">Lihat daftar siswa ›</div>
-          </div>
-        </div>`;
-      const c=box.querySelector('#berandaRombelChips'); if(c) c.scrollLeft=scrollLama;
+          <div onclick="event.stopPropagation(); bagikanRekap(this.querySelector('.material-symbols-rounded'))" class="cursor-pointer transition" role="button" aria-label="Bagikan rekap" style="display:flex; align-items:center; gap:6px; font-size:14px; font-weight:700; color:#4b5563; background:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.8); padding:6px 12px; border-radius:999px;"><span class="material-symbols-rounded" style="font-size:16px; color:#4b5563;">ios_share</span>Bagikan</div>
+        </div>
+        <div style="${kol} padding-top:2px; font-size:14px; font-weight:700;">
+          <div style="text-align:left; padding:8px 0 8px 6px; color:#585A75;">Kelas</div>
+          <div style="padding:8px 0; color:#0873BF; background:rgba(0,145,234,.08);">L</div>
+          <div style="padding:8px 0; color:#B83463; background:rgba(212,83,126,.08);">P</div>
+          <div style="padding:8px 0; color:#585A75;">Total</div>
+          <div></div>
+        </div>
+        ${data.map((r,i)=>{
+          const total=r.L+r.P;
+          const garis=i===data.length-1?'':garisBawah;
+          return `
+          <div onpointerdown="buatRipple(event)"
+               onclick="window.modalStack=[]; dorongModalStep({type:'daftarKelas'}); tampilkanSiswaKelas('${r.kelas}')"
+               class="cursor-pointer active:bg-gray-50 transition ripple-effect"
+               style="${kol} ${garis}">
+            <div style="text-align:left; padding:13px 0 13px 6px; font-size:16px; font-weight:600; color:#1E1B39;">${r.kelas}</div>
+            <div class="tabular-nums" style="padding:13px 0; font-size:16px; font-weight:600; color:#1E1B39; background:rgba(0,145,234,.08);">${r.L}</div>
+            <div class="tabular-nums" style="padding:13px 0; font-size:16px; font-weight:600; color:#1E1B39; background:rgba(212,83,126,.08);">${r.P}</div>
+            <div class="tabular-nums" style="font-size:16px; font-weight:700; color:#1E1B39;">${total}</div>
+            <span class="material-symbols-rounded" style="font-size:16px; color:#6b7280;">chevron_right</span>
+          </div>`;
+        }).join('')}`;
       card.classList.remove('hidden');
     }
 
