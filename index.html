@@ -1274,6 +1274,27 @@
     box-shadow:none !important;
   }
   .kategori-chip:has(.kategori:checked) .chip-check{background:#1F2A55 !important;border-color:#1F2A55 !important;color:#fff !important}
+
+  /* ===== Card Grafik Data: glass seperti card lain ===== */
+  .chart-card-carousel{
+    background:linear-gradient(145deg,rgba(184,204,240,.22),rgba(120,150,210,.14)) !important;
+    border:1px solid rgba(255,255,255,.75) !important;
+    box-shadow:none !important;
+  }
+  .chart-card-carousel .legend-chip-neu{
+    background:rgba(255,255,255,.55) !important;
+    border:1px solid rgba(255,255,255,.8) !important;
+    box-shadow:none !important;
+  }
+  .chart-card-carousel .fab-copy{
+    background:linear-gradient(145deg,rgba(184,204,240,.22),rgba(120,150,210,.14)) !important;
+    border:1px solid rgba(255,255,255,.75) !important;
+    box-shadow:none !important;
+  }
+  .chart-card-carousel .pillbar-bar-wrap{
+    background:rgba(255,255,255,.45) !important;
+    box-shadow:none !important;
+  }
 </style>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style id="tema-liquid">
@@ -1518,6 +1539,35 @@
     </div>
   </div>
 
+    <p class="text-[13px] font-bold text-gray-600 uppercase m-0 mt-3 mb-2" style="letter-spacing:.04em;">Grafik Data</p>
+
+    <div class="chart-card-carousel" id="cardDataRombel" style="width:100%; margin-bottom:16px;">
+      <div class="flex items-center justify-between mb-0.5">
+        <div class="flex items-center gap-1.5">
+          <div style="width:24px;height:24px;border-radius:8px;background:linear-gradient(135deg,#B7A6F5,#F0B8CE);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 8px -2px rgba(139,92,199,.4);">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+          </div>
+          <p class="font-bold text-[16px] text-gray-800 m-0">Data per Rombel</p>
+        </div>
+        <div id="btnCopyRekap" onclick="event.stopPropagation(); bagikanRekap()" class="fab-copy cursor-pointer transition" style="width:26px;height:26px;">
+          <span id="copyRekapIcon" class="material-symbols-rounded" style="font-size:13px;">ios_share</span>
+        </div>
+      </div>
+      <p class="text-[12px] text-gray-600 m-0 mb-2" id="subtitleRombel"><span class="skeleton-shimmer" style="display:inline-block;width:90px;height:9px;border-radius:5px;vertical-align:middle;"></span></p>
+      <div id="pillbars" class="pillbar-row" data-no-ripple>
+        <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:70%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
+        <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:85%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
+        <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:100%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
+        <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:60%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
+        <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:75%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
+        <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:90%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
+      </div>
+      <div id="tabelRombelSpin" class="flex justify-center py-6">
+        <p class="teks-berdenyut text-[14px] text-gray-600 font-semibold m-0">Memuat data...</p>
+      </div>
+    </div>
+
+
   <div style="display:flex; gap:12px; margin-bottom:12px;">
     <div onclick="bukaDataPegawaiDariBeranda('guru')" class="cursor-pointer" style="flex:1; min-width:0; background:none; border-radius:20px; padding:0; box-shadow:none;">
       <div style="position:relative; background:linear-gradient(145deg,rgba(142,205,247,.42),rgba(74,144,217,.24)); border:1px solid rgba(255,255,255,.75); border-radius:20px; padding:13px 16px; box-shadow:none;">
@@ -1573,10 +1623,6 @@
     </div>
   </div>
 
-  <div id="berandaRombelCard" class="hidden" style="background:linear-gradient(145deg,rgba(184,204,240,.22),rgba(120,150,210,.14)); border:1px solid rgba(255,255,255,.75); border-radius:22px; padding:4px; margin-bottom:16px;">
-    <div id="berandaRombelBody"></div>
-  </div>
-
   <!-- Kept hidden for JS compatibility (data masih dihitung, tapi tidak lagi ditampilkan visual di sini) -->
   <div style="display:none;">
     <span id="lblGuruKelas"></span>
@@ -1610,33 +1656,6 @@
   </div>
 
 
-    <p class="text-[13px] font-bold text-gray-600 uppercase m-0 mt-3 mb-2" style="letter-spacing:.04em;">Grafik Data</p>
-
-    <div class="chart-card-carousel" id="cardDataRombel" style="width:100%;">
-      <div class="flex items-center justify-between mb-0.5">
-        <div class="flex items-center gap-1.5">
-          <div style="width:24px;height:24px;border-radius:8px;background:linear-gradient(135deg,#B7A6F5,#F0B8CE);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 8px -2px rgba(139,92,199,.4);">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
-          </div>
-          <p class="font-bold text-[16px] text-gray-800 m-0">Data per Rombel</p>
-        </div>
-        <div id="btnCopyRekap" onclick="event.stopPropagation(); bagikanRekap()" class="fab-copy cursor-pointer transition" style="width:26px;height:26px;">
-          <span id="copyRekapIcon" class="material-symbols-rounded" style="font-size:13px;">ios_share</span>
-        </div>
-      </div>
-      <p class="text-[12px] text-gray-600 m-0 mb-2" id="subtitleRombel"><span class="skeleton-shimmer" style="display:inline-block;width:90px;height:9px;border-radius:5px;vertical-align:middle;"></span></p>
-      <div id="pillbars" class="pillbar-row" data-no-ripple>
-        <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:70%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
-        <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:85%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
-        <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:100%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
-        <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:60%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
-        <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:75%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
-        <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:90%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
-      </div>
-      <div id="tabelRombelSpin" class="flex justify-center py-6">
-        <p class="teks-berdenyut text-[14px] text-gray-600 font-semibold m-0">Memuat data...</p>
-      </div>
-    </div>
 
 <div id="rombelPopupOverlay"
 class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-6">
@@ -2451,45 +2470,6 @@ let historyTabAktif = false;
           c.parentElement.classList.remove('opacity-50');
         });
       }
-    }
-
-    function renderBerandaRombel(){
-      const box=document.getElementById('berandaRombelBody'), card=document.getElementById('berandaRombelCard');
-      const data=window.rombelData||[];
-      if(!box||!card||!data.length) return;
-      const kol='display:grid; grid-template-columns:1fr 46px 46px 50px 16px; align-items:center; padding:0 10px; text-align:center;';
-      const garisBawah='background-image:linear-gradient(90deg, transparent, #D8DAE8 15%, #D8DAE8 85%, transparent); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;';
-      box.innerHTML=`
-        <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; ${garisBawah}">
-          <div style="display:flex; align-items:center; gap:8px;">
-            <span class="material-symbols-rounded" style="font-size:20px; color:#0091EA;">groups</span>
-            <span style="font-size:17px; font-weight:800; color:#1E1B39;">Distribusi Rombel</span>
-          </div>
-          <div onclick="event.stopPropagation(); bagikanRekap(this.querySelector('.material-symbols-rounded'))" class="cursor-pointer transition" role="button" aria-label="Bagikan rekap" style="display:flex; align-items:center; gap:6px; font-size:14px; font-weight:700; color:#4b5563; background:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.8); padding:6px 12px; border-radius:999px;"><span class="material-symbols-rounded" style="font-size:16px; color:#4b5563;">ios_share</span>Bagikan</div>
-        </div>
-        <div style="${kol} padding-top:2px; font-size:14px; font-weight:700;">
-          <div style="text-align:left; padding:8px 0 8px 6px; color:#585A75;">Kelas</div>
-          <div style="padding:8px 0; color:#0873BF; background:rgba(0,145,234,.08);">L</div>
-          <div style="padding:8px 0; color:#B83463; background:rgba(212,83,126,.08);">P</div>
-          <div style="padding:8px 0; color:#585A75;">Total</div>
-          <div></div>
-        </div>
-        ${data.map((r,i)=>{
-          const total=r.L+r.P;
-          const garis=i===data.length-1?'':garisBawah;
-          return `
-          <div onpointerdown="buatRipple(event)"
-               onclick="window.modalStack=[]; dorongModalStep({type:'daftarKelas'}); tampilkanSiswaKelas('${r.kelas}')"
-               class="cursor-pointer active:bg-gray-50 transition ripple-effect"
-               style="${kol} ${garis}">
-            <div style="text-align:left; padding:13px 0 13px 6px; font-size:16px; font-weight:600; color:#1E1B39;">${r.kelas}</div>
-            <div class="tabular-nums" style="padding:13px 0; font-size:16px; font-weight:600; color:#1E1B39; background:rgba(0,145,234,.08);">${r.L}</div>
-            <div class="tabular-nums" style="padding:13px 0; font-size:16px; font-weight:600; color:#1E1B39; background:rgba(212,83,126,.08);">${r.P}</div>
-            <div class="tabular-nums" style="font-size:16px; font-weight:700; color:#1E1B39;">${total}</div>
-            <span class="material-symbols-rounded" style="font-size:16px; color:#6b7280;">chevron_right</span>
-          </div>`;
-        }).join('')}`;
-      card.classList.remove('hidden');
     }
 
     function bukaDataRombelDariBeranda(){
@@ -3346,7 +3326,6 @@ function mulaiMuatData(){
         return { kelas: k, L: siswaL.length, P: siswaP.length, namaL: siswaL, namaP: siswaP };
       });
 
-      renderBerandaRombel();
       const maxTotalRombel = Math.max(...window.rombelData.map(r => r.L + r.P), 1);
 
       const elSubtitleRombel = document.getElementById('subtitleRombel');
