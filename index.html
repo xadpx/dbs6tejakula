@@ -1494,32 +1494,21 @@
 <style id="revisi-ui-standar">
 /* ===== Menu bawah: ikon saja ===== */
 .neu-nav-flat{padding:6px 12px !important;gap:0 !important;justify-content:space-around !important;border:1px solid #E2E5F5 !important}
-.nav-btn{flex:0 1 76px !important;min-height:48px;padding:0 !important;border-radius:9999px;justify-content:center}
+.nav-btn{flex:0 1 76px !important;min-height:46px;padding:0 !important;border-radius:9999px;justify-content:center}
 .nav-active{padding:0 !important}
-.nav-icon.material-symbols-rounded{font-size:26px !important}
+.nav-icon.material-symbols-rounded{font-size:25px !important}
 .nav-label{display:none !important}
 :root{--color-nav-inactive:#475569}
 
-/* ===== Tipografi: minimal 13px, skala naik satu tingkat (bukan ikon) ===== */
-body.text-base{font-size:16px}
-.text-xs:not(.material-symbols-rounded){font-size:14px !important}
-[class*="text-[12px]"]:not(.material-symbols-rounded){font-size:13px !important}
-[class*="text-[13px]"]:not(.material-symbols-rounded){font-size:14px !important}
-[class*="text-[14px]"]:not(.material-symbols-rounded){font-size:15px !important}
-[class*="text-[15px]"]:not(.material-symbols-rounded){font-size:16px !important}
-.text-xl{font-size:22px !important;line-height:1.3 !important}
-[style*="font-size:11px"]:not(.material-symbols-rounded){font-size:13px !important}
-[style*="font-size:12px"]:not(.material-symbols-rounded){font-size:13px !important}
-[style*="font-size:13px"]:not(.material-symbols-rounded){font-size:14px !important}
-[style*="font-size:14px"]:not(.material-symbols-rounded){font-size:15px !important}
-[style*="font-size:15px"]:not(.material-symbols-rounded){font-size:16px !important}
-#p-home p[style*="font-size:20px"]{font-size:24px !important}
-.pillbar-name{font-size:13px !important}
-.pillbar-val{font-size:14px !important}
-#rombelSummary .rs-nama,#rombelSummary .rs-l,#rombelSummary .rs-p{font-size:15px !important}
-.legend-chip-lbl{font-size:14px !important}.legend-chip-val{font-size:15px !important}
+/* ===== Tipografi: kembali ke skala padat, hanya teks terlalu kecil dinaikkan ===== */
+body.text-base{font-size:15px}
+.text-xs:not(.material-symbols-rounded){font-size:13px !important;line-height:1.4 !important}
+.text-sm:not(.material-symbols-rounded){font-size:15px !important;line-height:1.45 !important}
+[style*="font-size:11px"]:not(.material-symbols-rounded){font-size:12px !important}
+.pillbar-name{font-size:12px !important}
+.pillbar-val{font-size:13px !important}
 
-/* ===== Kontras warna teks (target WCAG AA 4.5:1) ===== */
+/* ===== Kontras warna teks (WCAG AA) ===== */
 .text-gray-300{color:#94A3B8 !important}
 .text-gray-400{color:#64748B !important}
 .text-gray-500{color:#475569 !important}
@@ -1533,40 +1522,22 @@ input::placeholder{color:#64748B !important;opacity:1}
 
 /* ===== Area sentuh minimal 44px ===== */
 #btnNotifUpdate{width:44px !important;height:44px !important}
-#btnNotifUpdate .material-symbols-rounded{font-size:22px !important}
-#notifDot{top:9px !important;right:10px !important;width:9px !important;height:9px !important}
-#notifDropdown{top:52px !important;width:250px !important;padding:14px !important}
+#btnNotifUpdate .material-symbols-rounded{font-size:21px !important}
+#notifDot{top:10px !important;right:11px !important;width:8px !important;height:8px !important}
+#notifDropdown{top:50px !important;width:230px !important}
 #modalBackBtn,#detailDotsBtn{width:44px !important;height:44px !important}
 #modalBackIcon{font-size:24px !important}
-#modalDotsSvg{width:22px;height:22px}
-#modalHeaderTitle{font-size:17px !important}
-#btnCopyRekap{width:40px !important;height:40px !important}
-#btnCopyRekap .material-symbols-rounded{font-size:20px !important}
-.btn-unduh-chart-icon{width:40px;height:40px}
-.neu-modal-close{width:40px !important;height:40px !important}
+#modalHeaderTitle{font-size:16px !important}
+#btnCopyRekap{width:44px !important;height:44px !important}
+#btnCopyRekap .material-symbols-rounded{font-size:19px !important}
+.btn-unduh-chart-icon{width:44px;height:44px}
+.neu-modal-close{width:44px !important;height:44px !important}
 .neu-modal-close .material-symbols-rounded{font-size:22px !important}
-#dataTabTrack{padding:4px !important}
-#tabDataGuru,#tabDataTendik{min-height:44px;font-size:15px !important}
-#tabDataGuru .material-symbols-rounded,#tabDataTendik .material-symbols-rounded{font-size:18px !important}
-.neu-search input{height:52px !important;font-size:16px !important}
-.neu-search-icon{width:36px !important;height:36px !important}
-.neu-search-icon .material-symbols-rounded{font-size:20px !important}
-#btnHapusSrch{font-size:24px !important}
-select,.neu-dropdown{font-size:16px !important}
-.neu-dropdown{height:48px !important}
-.neu-dropdown-inset{height:44px !important;font-size:15px !important;width:104px !important}
-.kategori-chip{padding:12px 18px !important;font-size:15px !important;min-height:44px}
-.btn-unduh-neu{height:52px !important;font-size:16px !important;font-weight:600 !important}
-.btn-unduh-neu .material-symbols-rounded{font-size:22px !important}
-.rombel-row{padding:15px 16px}
-
-/* ===== Kartu & baris daftar lebih lega ===== */
-.neu-card{padding:20px !important}
-#p-home div[style*="padding:13px 16px"]{padding:16px 18px !important}
-.py-2\.5{padding-top:12px !important;padding-bottom:12px !important}
-.chart-card-carousel{padding:16px !important}
-.pillbar-bar-wrap,.chart-card-carousel .pillbar-bar-wrap{height:124px !important}
-#toast{font-size:14px !important;padding:12px 18px !important}
+#tabDataGuru,#tabDataTendik{min-height:44px}
+.neu-dropdown{height:46px !important}
+.neu-dropdown-inset{height:44px !important}
+.kategori-chip{min-height:44px}
+.btn-unduh-neu{height:48px !important}
 </style>
 </head>
 <body class="text-base">
@@ -2768,8 +2739,8 @@ let historyTabAktif = false;
                 onclick="showDetailByNIK('${r[8]}')"
                 class="flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect"
                 style="${i === hasil.length - 1 ? '' : 'background-image:linear-gradient(#ECF0F3, #ECF0F3); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;'}">
-                <div class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
-                  ${avatarInisialHTML(r[1], 40)}
+                <div class="w-9 h-9 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
+                  ${avatarInisialHTML(r[1], 36)}
                 </div>
                 <div class="ml-3 flex-1 min-w-0">
                   <div class="nama-marquee-wrap"><span class="nama-marquee-text text-[15px] font-medium text-gray-900">${r[1]}</span></div>
@@ -2910,8 +2881,8 @@ let historyTabAktif = false;
                 onclick="showDetailByNIK('${r[8]}')"
                 class="flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect"
                 style="${i === hasil.length - 1 ? '' : 'background-image:linear-gradient(#ECF0F3, #ECF0F3); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;'}">
-                <div class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
-                  ${avatarInisialHTML(r[1], 40)}
+                <div class="w-9 h-9 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
+                  ${avatarInisialHTML(r[1], 36)}
                 </div>
                 <div class="ml-3 flex-1 min-w-0">
                   <div class="nama-marquee-wrap"><span class="nama-marquee-text text-[15px] font-medium text-gray-900">${r[1]}</span></div>
@@ -3063,8 +3034,8 @@ let historyTabAktif = false;
                 class="flex items-center justify-between px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect"
                 style="${i === hasil.length - 1 ? '' : 'background-image:linear-gradient(#ECF0F3, #ECF0F3); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;'}">
                 <div class="flex items-center min-w-0">
-                  <div class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
-                    ${avatarInisialHTML(r[1], 40)}
+                  <div class="w-9 h-9 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
+                    ${avatarInisialHTML(r[1], 36)}
                   </div>
                   <div class="ml-3 flex-1 min-w-0">
                     <div class="nama-marquee-wrap"><span class="nama-marquee-text text-[15px] font-medium text-gray-900">${r[1]}</span></div>
@@ -3908,8 +3879,8 @@ onpointerdown="buatRipple(event)"
 onclick="showDetailByNIK('${r[8]}')"
 class="flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect"
 style="${i === hasil.length - 1 ? '' : 'background-image:linear-gradient(#ECF0F3, #ECF0F3); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;'}">
-  <div class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
-    ${avatarInisialHTML(r[1], 40)}
+  <div class="w-9 h-9 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
+    ${avatarInisialHTML(r[1], 36)}
   </div>
   <div class="ml-3 flex-1 min-w-0">
     <div class="nama-marquee-wrap"><span class="nama-marquee-text text-[15px] font-medium text-gray-900">${r[1]}</span></div>
@@ -4054,9 +4025,9 @@ onclick="showDetailByNIK('${r[8]}')"
 class="flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect"
 style="${garis}">
 
-  <div class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0 ${belumLengkap ? 'opacity-40' : ''}">
+  <div class="w-9 h-9 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0 ${belumLengkap ? 'opacity-40' : ''}">
 
-    ${avatarInisialHTML(r[1], 40)}
+    ${avatarInisialHTML(r[1], 36)}
 
   </div>
 
@@ -4449,8 +4420,8 @@ style="${i === sumber.length - 1 ? '' : 'background-image:linear-gradient(#ECF0F
       data-link="${String(r[10] || '').trim().replace(/"/g, '&quot;')}"
       onpointerdown="event.stopPropagation();"
       onclick="event.stopPropagation(); bukaDriveGuru(this.dataset.link)"
-      class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0 avatar-press">
-      ${avatarInisialHTML(r[1], 40)}
+      class="w-9 h-9 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0 avatar-press">
+      ${avatarInisialHTML(r[1], 36)}
     </div>
     <div class="ml-3 flex-1 min-w-0">
       <div class="text-[15px] font-medium text-gray-900 truncate">${r[1]}</div>
@@ -5362,8 +5333,8 @@ function renderPegawaiKategori(step){
             onpointerdown="buatRipple(event)"
             onclick="showDetailPegawai('${item.tipe}', ${item.idx})"
             class="neu-card flex items-center px-4 py-2.5 cursor-pointer active:bg-gray-50 transition ripple-effect">
-            <div class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
-              ${avatarInisialHTML(item.r[1], 40)}
+            <div class="w-9 h-9 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
+              ${avatarInisialHTML(item.r[1], 36)}
             </div>
             <div class="ml-3 flex-1 min-w-0">
               <div class="nama-marquee-wrap"><span class="nama-marquee-text text-[15px] font-medium text-gray-900">${item.r[1]}</span></div>
