@@ -4371,9 +4371,9 @@ const KELAS_GURU = {
   'Luh Yuli Arini': 'Kelas 5',
   'Ni Luh Maliastri': 'Kelas 2',
   'Ni Made Sukrami': 'Kelas 1',
-  'Wayan Suriani': 'Kelas 4'
-  'I Ketut Ari Darma Putra': 'Kelas 3'
-  'Kadek Dian Primawan': 'Guru PJOK'
+  'Wayan Suriani': 'Kelas 4',
+  'I Ketut Ari Darma Putra': 'Kelas 3',
+  'Kadek Dian Primawan': 'Guru PJOK',
   'Ketut Artana': 'Guru Agama'
 };
 function ketBawahNama(tipe, r, jabatan){
@@ -4383,7 +4383,8 @@ function ketBawahNama(tipe, r, jabatan){
   Object.keys(KELAS_GURU).forEach(k => { peta[k.trim().toLowerCase()] = KELAS_GURU[k]; });
   const kelas = peta[String(r[1] || '').trim().toLowerCase()];
   if(!kelas) return dasar;
-  return jabatan === 'Guru Kelas' ? 'Guru ' + kelas : dasar + ' \u00b7 ' + kelas;
+  if(jabatan === 'Guru Kelas') return 'Guru ' + kelas;
+  return /^kelas/i.test(kelas) ? dasar + ' \u00b7 ' + kelas : kelas;
 }
 
 function renderListPegawai(tipe){
