@@ -1543,6 +1543,15 @@ input::placeholder{color:#64748B !important;opacity:1}
   background:#FFFFFF !important;border-radius:20px !important;padding:4px !important;
   border:none !important;box-shadow:none !important;overflow:hidden}
 .badge-gtk{font-size:10.5px !important;font-weight:600;line-height:1.2;padding:1px 6px !important;border-radius:999px;white-space:nowrap}
+#p-akun{width:100%;max-width:480px;margin-left:auto;margin-right:auto;box-sizing:border-box;overflow-x:clip}
+#p-akun.hidden{pointer-events:none !important}
+.akun-baris{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 4px;border-bottom:1px solid #ECF0F3}
+.akun-baris:last-child{border-bottom:none}
+.akun-lbl{font-size:13px;color:#475569}
+.akun-val{font-size:15px;font-weight:500;color:#1E293B;word-break:break-all;margin-top:2px}
+.akun-aksi{display:flex;gap:8px;flex-shrink:0}
+.akun-btn{width:40px;height:40px;border-radius:50%;background:#ECEEFD;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#475569}
+.akun-btn .material-symbols-rounded{font-size:20px}
 </style>
 </head>
 <body class="text-base">
@@ -2156,6 +2165,20 @@ Unduh Data
 
   </div>
 
+  <div id="p-akun" class="hidden fixed inset-0 z-10 overflow-x-hidden w-full max-w-[100vw]">
+    <div class="h-full w-full max-w-full flex flex-col pt-5 overflow-x-hidden">
+      <div class="shrink-0 px-5">
+        <h1 class="text-xl font-semibold text-gray-800 flex items-center gap-2 mb-4">
+          <span class="material-symbols-rounded text-[23px]">key</span>
+          Akun
+        </h1>
+      </div>
+      <div id="scrollAkun" class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-5 max-w-full" style="padding-bottom:calc(140px + env(safe-area-inset-bottom, 0px));">
+        <div id="akunKonten"></div>
+      </div>
+    </div>
+  </div>
+
   <div id="modal"
 class="hidden detail-fullpage-overlay fixed inset-0 z-[60]">
     <div id="modalBox" class="detail-fullpage-box relative" style="background:var(--neu-bg); display:flex; flex-direction:column; overflow:hidden;">
@@ -2293,6 +2316,20 @@ class="nav-inactive nav-btn transition-colors duration-150">
 <span class="nav-icon-wrap">
 <span class="material-symbols-rounded nav-icon text-[22px]">
 download_for_offline
+</span>
+</span>
+
+</button>
+
+<button
+id="nav-akun"
+onclick="nav('akun')" aria-label="Akun" title="Akun"
+data-no-ripple
+class="hidden nav-inactive nav-btn transition-colors duration-150">
+
+<span class="nav-icon-wrap">
+<span class="material-symbols-rounded nav-icon text-[22px]">
+key
 </span>
 </span>
 
@@ -2611,6 +2648,8 @@ let historyTabAktif = false;
         const pt = document.getElementById('panelDataTendik');
         if(pg) pg.scrollTop = 0;
         if(pt) pt.scrollTop = 0;
+      }else if(p === 'akun'){
+        sembunyikanPasswordAkun();
       }else if(p === 'download'){
         const kelasDownload = document.getElementById('kelasDownload');
         if(kelasDownload) kelasDownload.value = 'SEMUA';
@@ -3183,9 +3222,78 @@ let historyTabAktif = false;
     }
     setInterval(perbaruiTanggalWaktuBeranda, 30000);
 
+    function terapkanPeran(){
+      const tombol = document.getElementById('nav-akun');
+      if(!tombol) return;
+      const guru = !!(window.guruAktif && String(window.guruAktif.peran || '').toLowerCase() === 'guru');
+      tombol.classList.toggle('hidden', !guru);
+    }
+
+    let _passwordAkun = '';
+    let _timerPasswordAkun = null;
+    function escHtml(t){
+      return String(t == null ? '' : t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+    function muatAkunSaya(){
+      const area = document.getElementById('akunKonten');
+      if(!area || !window.guruAktif) return;
+      _passwordAkun = '';
+      area.innerHTML = '<div class="flex flex-col items-center justify-center text-center pt-14"><span class="spinner-ring-gray" style="width:26px;height:26px;margin-bottom:10px;"></span><p class="teks-berdenyut text-[14px] font-medium m-0" style="color:#475569;">Memuat data...</p></div>';
+      const email = String(window.guruAktif.email || '').toLowerCase();
+      tungguFirebase()
+        .then(fb => fb.bacaDok('akunLogin', email))
+        .then(akun => {
+          const gmail = akun && akun.gmail ? String(akun.gmail) : '';
+          const pw = akun && akun.password ? String(akun.password) : '';
+          if(!gmail && !pw){
+            area.innerHTML = '<div class="neu-card" style="text-align:center;"><p style="font-size:15px;color:#475569;margin:0;">Data akun belum diisi. Silakan hubungi admin sekolah.</p></div>';
+            return;
+          }
+          _passwordAkun = pw;
+          const namaAkun = (akun && (akun.namaAkun || akun.nama)) || '-';
+          area.innerHTML = `
+            <div class="neu-card" style="padding:6px 16px !important;">
+              <div class="akun-baris"><div style="min-width:0;"><div class="akun-lbl">Nama Akun</div><div class="akun-val">${escHtml(namaAkun)}</div></div></div>
+              <div class="akun-baris"><div style="min-width:0;"><div class="akun-lbl">Email</div><div class="akun-val">${escHtml(gmail || '-')}</div></div>
+                <div class="akun-aksi"><button class="akun-btn" aria-label="Salin email" onclick="salinTeks(${JSON.stringify(gmail).replace(/"/g,'&quot;')}, 'copyEmailAkunIcon', 'Email')"><span id="copyEmailAkunIcon" class="material-symbols-rounded">content_copy</span></button></div></div>
+              <div class="akun-baris"><div style="min-width:0;"><div class="akun-lbl">Password</div><div class="akun-val" id="akunPwTeks">••••••••••</div></div>
+                <div class="akun-aksi">
+                  <button class="akun-btn" aria-label="Tampilkan password" onclick="togglePasswordAkun()"><span id="akunPwIkon" class="material-symbols-rounded">visibility</span></button>
+                  <button class="akun-btn" aria-label="Salin password" onclick="salinTeks(_passwordAkun, 'copyPwAkunIcon', 'Password')"><span id="copyPwAkunIcon" class="material-symbols-rounded">content_copy</span></button>
+                </div></div>
+            </div>
+            <p style="font-size:13px;color:#475569;margin:12px 4px 0;line-height:1.5;">Jangan bagikan password ini kepada siapa pun.</p>`;
+        })
+        .catch(err => {
+          console.error('Gagal memuat akun:', err);
+          area.innerHTML = '<div class="neu-card" style="text-align:center;"><p style="font-size:15px;color:#475569;margin:0;">Data akun tidak dapat dimuat. Coba lagi nanti.</p></div>';
+        });
+    }
+    function sembunyikanPasswordAkun(){
+      clearTimeout(_timerPasswordAkun);
+      const t = document.getElementById('akunPwTeks');
+      const i = document.getElementById('akunPwIkon');
+      if(t) t.textContent = '••••••••••';
+      if(i) i.textContent = 'visibility';
+    }
+    function togglePasswordAkun(){
+      const t = document.getElementById('akunPwTeks');
+      const i = document.getElementById('akunPwIkon');
+      if(!t || !i) return;
+      if(i.textContent === 'visibility'){
+        t.textContent = _passwordAkun || '-';
+        i.textContent = 'visibility_off';
+        clearTimeout(_timerPasswordAkun);
+        _timerPasswordAkun = setTimeout(sembunyikanPasswordAkun, 15000);
+      }else{
+        sembunyikanPasswordAkun();
+      }
+    }
+
     function tampilkanNamaGuru(){
       const elNama = document.getElementById('namaGuruAktif');
       if(!window.guruAktif) return;
+      terapkanPeran();
       if(elNama){
         elNama.textContent = ambilNamaSingkat(window.guruAktif.nama) + '!';
       }
@@ -3261,7 +3369,7 @@ let historyTabAktif = false;
             return fbRef.keluar();
           }
 
-          window.guruAktif = { nama: akun.nama || email, email: email, foto: fotoGoogle };
+          window.guruAktif = { nama: akun.nama || email, email: email, foto: fotoGoogle, peran: String(akun.peran || '').trim().toLowerCase() };
           localStorage.setItem('guruLogin', JSON.stringify(window.guruAktif));
           try{
             selesaiLogin();
@@ -3329,10 +3437,12 @@ let historyTabAktif = false;
           fb.bacaDok('akunLogin', email).then(akun => {
             if(!akun){ aksesDicabut(); return; }
 
+            const peranBaru = String(akun.peran || '').trim().toLowerCase();
             const perluSimpan = !window.guruAktif ||
-              String(window.guruAktif.email || '').toLowerCase() !== email;
+              String(window.guruAktif.email || '').toLowerCase() !== email ||
+              String(window.guruAktif.peran || '') !== peranBaru;
             if(perluSimpan){
-              window.guruAktif = { nama: akun.nama || email, email: email, foto: user.photoURL || '' };
+              window.guruAktif = { nama: akun.nama || email, email: email, foto: user.photoURL || '', peran: peranBaru };
               localStorage.setItem('guruLogin', JSON.stringify(window.guruAktif));
             }
             if(!sudahLogin){
@@ -3657,6 +3767,9 @@ function tutupPopupRombel(){
   history.back();
 }
 function nav(p){
+  if(p === "akun"){
+    if(!(window.guruAktif && String(window.guruAktif.peran || "").toLowerCase() === "guru")) return;
+  }
   if(
     !document.getElementById("modal").classList.contains("hidden") ||
     !document.getElementById("modalKategori").classList.contains("hidden") ||
@@ -3668,6 +3781,7 @@ function nav(p){
   if(p!="download"){
     halamanSebelumnya=p;
   }
+  if(p === "akun") muatAkunSaya();
 
   // Pengaman: tab utama (Beranda/Siswa/GTK/Unduh) TIDAK PERNAH boleh
   // dalam kondisi scroll terkunci. Kalau ada popup manapun yang gagal
@@ -4761,6 +4875,7 @@ Status Anak: ${r[14]}`;
         // Halaman Siswa sengaja dikecualikan agar pencarian tetap tersimpan.
         resetTampilanHalaman('guru');
         resetTampilanHalaman('download');
+        resetTampilanHalaman('akun');
         return;
       }
     });
@@ -6033,14 +6148,14 @@ window.addEventListener('load', resetZoomPaksa);
 // ======================================================
 // GESTUR SWIPE ANTAR-HALAMAN DENGAN EFEK MENGIKUTI JARI
 // ======================================================
-const urutanHalamanSwipe = ["home", "siswa", "guru", "download"];
+const urutanHalamanSwipe = ["home", "siswa", "guru", "download", "akun"];
 
 function halamanAktifSaatIni(){
   return urutanHalamanSwipe.find(id => !document.getElementById("p-"+id).classList.contains("hidden"));
 }
 function updateNavAktif(p){
   if(typeof tampilkanNavBawah === "function") tampilkanNavBawah();
-  ["home","siswa","guru","download"].forEach(id=>{
+  ["home","siswa","guru","download","akun"].forEach(id=>{
     const btn=document.getElementById("nav-"+id);
     if(id===p){
       btn.classList.remove("nav-inactive");
@@ -6519,7 +6634,7 @@ function tutupPopupPremium(overlayId, boxId, callback){
   );
 
   // 2) Kontainer scroll internal (Data Siswa, Data GTK)
-  ["scrollSiswa", "panelDataGuru", "panelDataTendik", "scrollDownload"].forEach(function(id){
+  ["scrollSiswa", "panelDataGuru", "panelDataTendik", "scrollDownload", "scrollAkun"].forEach(function(id){
     const el = document.getElementById(id);
     if(!el) return;
     el.addEventListener(
