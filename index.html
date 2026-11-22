@@ -1538,6 +1538,10 @@ input::placeholder{color:#64748B !important;opacity:1}
 .neu-dropdown-inset{height:44px !important}
 .kategori-chip{min-height:44px}
 .btn-unduh-neu{height:48px !important}
+/* ===== Daftar Guru & Tendik: kembalikan card putih ===== */
+#panelDataGuru .neu-card-flat,#panelDataTendik .neu-card-flat{
+  background:#FFFFFF !important;border-radius:20px !important;padding:4px !important;
+  border:none !important;box-shadow:none !important;overflow:hidden}
 </style>
 </head>
 <body class="text-base">
@@ -4424,7 +4428,7 @@ style="${i === sumber.length - 1 ? '' : 'background-image:linear-gradient(#ECF0F
       ${avatarInisialHTML(r[1], 36)}
     </div>
     <div class="ml-3 flex-1 min-w-0">
-      <div class="text-[15px] font-medium text-gray-900 truncate">${r[1]}</div>
+      <div class="nama-marquee-wrap"><span class="nama-marquee-text text-[15px] font-medium text-gray-900">${r[1]}</span></div>
       <div class="text-[13px] text-gray-600 mt-0.5 truncate">${jabatanR || '-'}</div>
     </div>
   </div>
@@ -4436,6 +4440,7 @@ style="${i === sumber.length - 1 ? '' : 'background-image:linear-gradient(#ECF0F
 `;}).join('')}
 </div>
 `;
+  pasangMarqueeList(el);
 }
 
 function bukaDriveGuru(link){
