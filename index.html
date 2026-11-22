@@ -1542,6 +1542,7 @@ input::placeholder{color:#64748B !important;opacity:1}
 #panelDataGuru .neu-card-flat,#panelDataTendik .neu-card-flat{
   background:#FFFFFF !important;border-radius:20px !important;padding:4px !important;
   border:none !important;box-shadow:none !important;overflow:hidden}
+.badge-gtk{font-size:10.5px !important;font-weight:600;line-height:1.2;padding:1px 6px !important;border-radius:999px;white-space:nowrap}
 </style>
 </head>
 <body class="text-base">
@@ -4361,6 +4362,27 @@ function warnaJabatanTendik(jabatan){
   return ['#5b4fa8','#7B81BE33'];
 }
 
+// ===== Kelas yang dipegang tiap guru kelas =====
+// Isi nilai kelas di sini (contoh: 'Kelas 3'). Kunci = nama persis seperti di sheet
+// (huruf besar/kecil tidak berpengaruh). Kalau dikosongkan atau nama tidak ada,
+// keterangan di bawah nama tetap memakai jabatan dari sheet.
+const KELAS_GURU = {
+  'Luh Setiamini': '',
+  'Luh Yuli Arini': '',
+  'Ni Luh Maliastri': '',
+  'Ni Made Sukrami': '',
+  'Wayan Suriani': ''
+};
+function ketBawahNama(tipe, r, jabatan){
+  const dasar = jabatan || '-';
+  if(tipe !== 'guru') return dasar;
+  const peta = {};
+  Object.keys(KELAS_GURU).forEach(k => { peta[k.trim().toLowerCase()] = KELAS_GURU[k]; });
+  const kelas = peta[String(r[1] || '').trim().toLowerCase()];
+  if(!kelas) return dasar;
+  return jabatan === 'Guru Kelas' ? 'Guru ' + kelas : dasar + ' \u00b7 ' + kelas;
+}
+
 function renderListPegawai(tipe){
   const sumber = tipe === 'guru' ? dataGuru : dataTendik;
   const el = document.getElementById(tipe === 'guru' ? 'panelDataGuru' : 'panelDataTendik');
@@ -4429,11 +4451,11 @@ style="${i === sumber.length - 1 ? '' : 'background-image:linear-gradient(#ECF0F
     </div>
     <div class="ml-3 flex-1 min-w-0">
       <div class="nama-marquee-wrap"><span class="nama-marquee-text text-[15px] font-medium text-gray-900">${r[1]}</span></div>
-      <div class="text-[13px] text-gray-600 mt-0.5 truncate">${jabatanR || '-'}</div>
+      <div class="text-[13px] text-gray-600 mt-0.5 truncate">${ketBawahNama(tipe, r, jabatanR)}</div>
     </div>
   </div>
   <div class="flex items-center gap-2 flex-shrink-0 ml-2">
-    ${kategoriBadge ? `<span style="font-size:12px; font-weight:600; color:${warnaBadge[0]}; background:${warnaBadge[1]}; padding:3px 9px; border-radius:999px; white-space:nowrap;">${kategoriBadge}</span>` : ''}
+    ${kategoriBadge ? `<span class="badge-gtk" style="color:${warnaBadge[0]}; background:${warnaBadge[1]};">${kategoriBadge}</span>` : ''}
     <span class="material-symbols-rounded text-[14.5px]" style="color:#6b7280;">chevron_right</span>
   </div>
 </div>
