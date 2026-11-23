@@ -1572,7 +1572,9 @@ input::placeholder{color:#64748B !important;opacity:1}
 #tabDataGuru,#tabDataTendik{min-height:44px}
 .neu-dropdown{height:46px !important}
 .neu-dropdown-inset{height:44px !important}
-.kategori-chip{min-height:44px}
+.kategori-chip{min-height:34px !important;padding:6px 12px !important;gap:5px !important;font-size:13px !important;font-weight:400 !important}
+.kategori-chip .chip-check{flex:0 0 14px !important;width:14px !important;height:14px !important;font-size:10px !important;font-weight:500 !important}
+.kategori-chip:has(.kategori:checked){font-weight:500 !important}
 .btn-unduh-neu{height:48px !important}
 /* ===== Daftar Guru & Tendik: kembalikan card putih ===== */
 #panelDataGuru .neu-card-flat,#panelDataTendik .neu-card-flat{
@@ -1752,7 +1754,7 @@ input::placeholder{color:#64748B !important;opacity:1}
         <p style="margin:6px 0 0; display:flex; align-items:baseline; flex-wrap:wrap; gap:0 10px; min-height:36px;">
           <span id="tot" class="hidden tabular-nums" style="font-size:36px; font-weight:600; letter-spacing:-.02em; color:#FFFFFF; line-height:1;">0</span>
           <span id="totSpin" class="spinner-ring-gray" style="width:20px; height:20px; align-self:center; background:conic-gradient(from 0deg, transparent 0%, #FFFFFF 100%);"></span>
-          <span style="font-size:13px; font-weight:400; color:#BFD3FB;">siswa &middot; &Oslash; <span id="rataSiswaKelasBerandaKtx" class="tabular-nums">&ndash;</span> / kelas</span>
+          <span style="font-size:13px; font-weight:400; color:#BFD3FB;">siswa</span>
         </p>
       </div>
       <div style="position:relative; flex:0 0 auto; width:36px; height:36px; border-radius:12px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.22); display:flex; align-items:center; justify-content:center;">
@@ -1766,9 +1768,9 @@ input::placeholder{color:#64748B !important;opacity:1}
           <span style="font-size:13px; font-weight:400; color:#64748B; white-space:nowrap;">Laki-laki</span>
           <span style="width:8px; height:8px; border-radius:50%; background:#1E40AF; flex-shrink:0;"></span>
         </div>
-        <div style="display:flex; align-items:baseline; justify-content:space-between; gap:6px; margin-top:10px;">
+        <div style="display:flex; align-items:baseline; justify-content:flex-start; gap:6px; margin-top:10px;">
           <span id="pctL" class="tabular-nums" style="font-size:20px; font-weight:600; color:#0F172A; line-height:1;">&ndash;</span>
-          <span id="pctLTxt" class="tabular-nums" style="font-size:13px; font-weight:500; color:#1E40AF;">&ndash;</span>
+          <span id="pctLTxt" class="tabular-nums" style="font-size:11px; font-weight:500; color:#1E40AF;">&ndash;</span>
         </div>
       </div>
       <div style="flex:1 1 auto; min-width:0; box-sizing:border-box; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:14px; padding:11px 10px 12px;">
@@ -1776,9 +1778,9 @@ input::placeholder{color:#64748B !important;opacity:1}
           <span style="font-size:13px; font-weight:400; color:#64748B; white-space:nowrap;">Perempuan</span>
           <span style="width:8px; height:8px; border-radius:50%; background:#D97706; flex-shrink:0;"></span>
         </div>
-        <div style="display:flex; align-items:baseline; justify-content:space-between; gap:6px; margin-top:10px;">
+        <div style="display:flex; align-items:baseline; justify-content:flex-start; gap:6px; margin-top:10px;">
           <span id="pctP" class="tabular-nums" style="font-size:20px; font-weight:600; color:#0F172A; line-height:1;">&ndash;</span>
-          <span id="pctPTxt" class="tabular-nums" style="font-size:13px; font-weight:500; color:#B45309;">&ndash;</span>
+          <span id="pctPTxt" class="tabular-nums" style="font-size:11px; font-weight:500; color:#B45309;">&ndash;</span>
         </div>
       </div>
       <div style="flex:1 1 auto; min-width:0; box-sizing:border-box; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:14px; padding:11px 10px 12px;">
@@ -1786,9 +1788,9 @@ input::placeholder{color:#64748B !important;opacity:1}
           <span style="font-size:13px; font-weight:400; color:#64748B; white-space:nowrap;">Rombel</span>
           <span style="width:8px; height:8px; border-radius:50%; background:#334155; flex-shrink:0;"></span>
         </div>
-        <div style="display:flex; align-items:baseline; justify-content:space-between; gap:6px; margin-top:10px;">
+        <div style="display:flex; align-items:baseline; justify-content:flex-start; gap:6px; margin-top:10px;">
           <span id="totRombelBerandaKtx" class="tabular-nums" style="font-size:20px; font-weight:600; color:#0F172A; line-height:1;">&ndash;</span>
-          <span style="font-size:13px; font-weight:500; color:#64748B;">Kelas</span>
+          <span style="font-size:11px; font-weight:500; color:#64748B;">Kelas</span>
         </div>
       </div>
     </div>
