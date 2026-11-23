@@ -1559,9 +1559,9 @@ input::placeholder{color:#64748B !important;opacity:1}
 .dok-badge .material-symbols-rounded{font-size:14px}
 .akun-judul{font-size:14px;font-weight:600;color:#1E293B;margin:16px 4px 8px}
 .akun-judul:first-child{margin-top:4px}
-#sheetAkunOverlay{position:fixed;inset:0;z-index:70;background:rgba(15,23,42,0);transition:background .22s ease}
+#sheetAkunOverlay{touch-action:none;overscroll-behavior:none;position:fixed;inset:0;z-index:70;background:rgba(15,23,42,0);transition:background .22s ease}
 #sheetAkunOverlay.show{background:rgba(15,23,42,.45)}
-#sheetAkun{position:absolute;left:50%;bottom:0;width:100%;max-width:480px;max-height:85vh;overflow-y:auto;overflow-x:hidden;background:#F3F4FC;border-radius:24px 24px 0 0;padding:8px 16px calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,100%);transition:transform .25s cubic-bezier(.2,.8,.2,1);box-sizing:border-box;overscroll-behavior:contain}
+#sheetAkun{touch-action:pan-y;position:absolute;left:50%;bottom:0;width:100%;max-width:480px;max-height:85vh;overflow-y:auto;overflow-x:hidden;background:#F3F4FC;border-radius:24px 24px 0 0;padding:8px 16px calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,100%);transition:transform .25s cubic-bezier(.2,.8,.2,1);box-sizing:border-box;overscroll-behavior:contain}
 #sheetAkunOverlay.show #sheetAkun{transform:translate(-50%,0)}
 .sheet-handle{width:40px;height:4px;border-radius:999px;background:#CBD0E6;margin:4px auto 6px}
 .sheet-head{display:flex;align-items:center;justify-content:space-between;padding:4px 4px 4px}
@@ -2189,7 +2189,7 @@ Unduh Data
 
   </div>
 
-  <div id="sheetAkunOverlay" class="hidden" onclick="if(event.target===this)tutupSheetAkun()">
+  <div id="sheetAkunOverlay" class="hidden" onclick="if(event.target===this)tutupSheetAkun()" ontouchstart="event.stopPropagation()" ontouchmove="event.stopPropagation()" ontouchend="event.stopPropagation()">
     <div id="sheetAkun" role="dialog" aria-modal="true" aria-label="Akun Saya">
       <div class="sheet-handle"></div>
       <div class="sheet-head">
@@ -3253,6 +3253,7 @@ let historyTabAktif = false;
       const ov = document.getElementById('sheetAkunOverlay');
       if(!ov) return;
       _sheetAkunTerbuka = true;
+      kunciScroll(true);
       history.pushState({ sheetAkun: true }, '');
       muatAkunSaya();
       ov.classList.remove('hidden');
@@ -3265,6 +3266,7 @@ let historyTabAktif = false;
     function tutupSheetAkunVisual(){
       if(!_sheetAkunTerbuka) return;
       _sheetAkunTerbuka = false;
+      kunciScroll(false);
       const ov = document.getElementById('sheetAkunOverlay');
       sembunyikanPasswordAkun();
       _daftarAkunSaya = [];
