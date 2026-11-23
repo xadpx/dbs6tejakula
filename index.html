@@ -1592,7 +1592,9 @@ input::placeholder{color:#64748B !important;opacity:1}
 .dok-card{background:#fff;margin:0 12px 8px;border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(15,23,42,.04)}
 .dok-row{display:flex;align-items:center;justify-content:space-between;padding:0 16px;min-height:48px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .dok-row:active{background:#F5F8FE}
-.dok-nama{font-size:15px;font-weight:500;color:#1E293B}
+.dok-nama{font-size:15px;font-weight:500;color:#1E293B;display:block}
+.dok-sub{display:block;font-size:12.5px;color:#64748B;margin-top:1px}
+.dok-semua{background:#F7F9FE;padding-top:8px;padding-bottom:8px}
 .dok-badge{display:inline-flex;align-items:center;gap:3px;background:#E9EFFB;color:#3B3F9E;font-size:12px;font-weight:600;line-height:1;padding:5px 9px 5px 7px;border-radius:999px}
 .dok-badge .material-symbols-rounded{font-size:14px}
 .dok-spin{display:none;width:12px;height:12px;margin:0 1px;border:2px solid #C3C7F0;border-top-color:#3B3F9E;border-radius:50%;box-sizing:border-box;animation:dokSpin .7s linear infinite}
@@ -4924,13 +4926,19 @@ function bagianDokumenHTML(tipe, idx){
   const baris = daftar.map((d, i) => `
   <div class="dok-row" role="button" tabindex="0" aria-label="Unduh ${d[1]}"
        onclick="unduhDokumenPegawai('${d[0]}',${idx},this)"
-       style="${i === daftar.length - 1 ? '' : 'border-bottom:1px solid #ECF0F3;'}">
+       style="border-bottom:1px solid #ECF0F3;">
     <span class="dok-nama">${d[1]}</span>
     <span class="dok-badge"><span class="material-symbols-rounded">download</span><span class="dok-spin"></span>Unduh</span>
   </div>`).join('');
+  const gabungan = `
+  <div class="dok-row dok-semua" role="button" tabindex="0" aria-label="Unduh semua dokumen sebagai satu berkas Word"
+       onclick="unduhDokumenGabungan(${idx},this)">
+    <span><span class="dok-nama">Semua dokumen</span><span class="dok-sub">Satu berkas Word, bisa disunting</span></span>
+    <span class="dok-badge"><span class="material-symbols-rounded">download</span><span class="dok-spin"></span>Unduh</span>
+  </div>`;
   return `
 <div class="dok-judul">DOKUMEN</div>
-<div class="dok-card">${baris}
+<div class="dok-card">${baris}${gabungan}
 </div>`;
 }
 const _namaDokumen = { nik: 'KTP', nuptk: 'NUPTK', npwp: 'NPWP', rekening: 'Rekening' };
@@ -5026,6 +5034,155 @@ async function unduhDokumenPegawai(jenis, idx, tombol){
   }catch(err){
     console.error('Gagal unduh dokumen:', err);
     showToast('Gagal mengunduh. Coba lagi.', 2500);
+  }finally{
+    if(badge) badge.classList.remove('memuat');
+    if(tombol){ tombol.dataset.sibuk = '0'; tombol.removeAttribute('aria-busy'); }
+  }
+}
+
+// ===== Dokumen gabungan (.docx) — dibuat di browser, tanpa pustaka luar =====
+function _crc32(buf){
+  if(!_crc32.t){
+    _crc32.t = new Uint32Array(256);
+    for(let n = 0; n < 256; n++){ let c = n; for(let k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1); _crc32.t[n] = c >>> 0; }
+  }
+  let crc = -1;
+  for(let i = 0; i < buf.length; i++) crc = _crc32.t[(crc ^ buf[i]) & 255] ^ (crc >>> 8);
+  return (crc ^ -1) >>> 0;
+}
+function _buatZip(files, mime){
+  const enc = new TextEncoder(), parts = [], pusat = [];
+  let offset = 0;
+  files.forEach(f => {
+    const nama = enc.encode(f.name), crc = _crc32(f.data), ukuran = f.data.length;
+    const lh = new DataView(new ArrayBuffer(30));
+    lh.setUint32(0, 0x04034b50, true); lh.setUint16(4, 20, true); lh.setUint16(6, 0x0800, true);
+    lh.setUint16(12, 0x21, true); lh.setUint32(14, crc, true); lh.setUint32(18, ukuran, true);
+    lh.setUint32(22, ukuran, true); lh.setUint16(26, nama.length, true);
+    parts.push(new Uint8Array(lh.buffer), nama, f.data);
+    const ch = new DataView(new ArrayBuffer(46));
+    ch.setUint32(0, 0x02014b50, true); ch.setUint16(4, 20, true); ch.setUint16(6, 20, true); ch.setUint16(8, 0x0800, true);
+    ch.setUint16(14, 0x21, true); ch.setUint32(16, crc, true); ch.setUint32(20, ukuran, true); ch.setUint32(24, ukuran, true);
+    ch.setUint16(28, nama.length, true); ch.setUint32(42, offset, true);
+    pusat.push(new Uint8Array(ch.buffer), nama);
+    offset += 30 + nama.length + ukuran;
+  });
+  let ukuranPusat = 0;
+  pusat.forEach(c => { ukuranPusat += c.length; });
+  const akhir = new DataView(new ArrayBuffer(22));
+  akhir.setUint32(0, 0x06054b50, true); akhir.setUint16(8, files.length, true); akhir.setUint16(10, files.length, true);
+  akhir.setUint32(12, ukuranPusat, true); akhir.setUint32(16, offset, true);
+  return new Blob(parts.concat(pusat, [new Uint8Array(akhir.buffer)]), { type: mime });
+}
+async function _siapkanGambarDoc(blob, maks){
+  let bmp;
+  try{ bmp = await createImageBitmap(blob, { imageOrientation: 'from-image' }); }
+  catch(e){ bmp = await createImageBitmap(blob); }
+  const skala = Math.min(1, maks / Math.max(bmp.width, bmp.height));
+  const w = Math.max(1, Math.round(bmp.width * skala)), h = Math.max(1, Math.round(bmp.height * skala));
+  const cv = document.createElement('canvas');
+  cv.width = w; cv.height = h;
+  const ctx = cv.getContext('2d');
+  ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0, 0, w, h);
+  ctx.drawImage(bmp, 0, 0, w, h);
+  if(bmp.close) bmp.close();
+  const out = await new Promise(res => cv.toBlob(res, 'image/jpeg', 0.9));
+  return { data: new Uint8Array(await out.arrayBuffer()), w: w, h: h };
+}
+function _xmlGambarDoc(id, rid, cx, cy, nama){
+  const A = 'http://schemas.openxmlformats.org/drawingml/2006/main';
+  return '<w:r><w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0"><wp:extent cx="' + cx + '" cy="' + cy + '"/>' +
+    '<wp:docPr id="' + id + '" name="' + nama + '" descr="' + nama + '"/>' +
+    '<wp:cNvGraphicFramePr><a:graphicFrameLocks xmlns:a="' + A + '" noChangeAspect="1"/></wp:cNvGraphicFramePr>' +
+    '<a:graphic xmlns:a="' + A + '"><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">' +
+    '<pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:nvPicPr><pic:cNvPr id="' + id + '" name="' + nama + '"/><pic:cNvPicPr/></pic:nvPicPr>' +
+    '<pic:blipFill><a:blip r:embed="' + rid + '"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill>' +
+    '<pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="' + cx + '" cy="' + cy + '"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic>' +
+    '</a:graphicData></a:graphic></wp:inline></w:drawing></w:r>';
+}
+// Susunan: baris 1 = KTP + NUPTK (berdampingan), baris 2 = NPWP (tengah), baris 3 = Rekening (lebih besar)
+function _buatDocx(g){
+  const CM = 360000;
+  const kotak = { nik: [8.3, 5.6], nuptk: [8.3, 5.6], npwp: [8.3, 5.6], rekening: [14, 9.5] };
+  const label = { nik: 'KTP', nuptk: 'NUPTK', npwp: 'NPWP', rekening: 'Rekening' };
+  const rels = [], media = [];
+  let nomor = 0;
+  const gambar = jenis => {
+    const x = g[jenis];
+    if(!x) return '';
+    nomor++;
+    const rid = 'rIdImg' + nomor;
+    const [bw, bh] = kotak[jenis];
+    const sk = Math.min(bw / x.w, bh / x.h);
+    const cx = Math.round(x.w * sk * CM), cy = Math.round(x.h * sk * CM);
+    rels.push('<Relationship Id="' + rid + '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/gambar' + nomor + '.jpg"/>');
+    media.push({ name: 'word/media/gambar' + nomor + '.jpg', data: x.data });
+    return _xmlGambarDoc(nomor, rid, cx, cy, label[jenis]);
+  };
+  const sel = (span, lebar, isi) =>
+    '<w:tc><w:tcPr><w:tcW w:w="' + lebar + '" w:type="dxa"/>' + (span > 1 ? '<w:gridSpan w:val="' + span + '"/>' : '') +
+    '<w:vAlign w:val="center"/></w:tcPr><w:p><w:pPr><w:spacing w:before="80" w:after="80"/><w:jc w:val="center"/></w:pPr>' + isi + '</w:p></w:tc>';
+  const baris = isi => '<w:tr><w:trPr><w:cantSplit/></w:trPr>' + isi + '</w:tr>';
+  let rows = '';
+  if(g.nik || g.nuptk) rows += baris(sel(1, 5103, gambar('nik')) + sel(1, 5103, gambar('nuptk')));
+  if(g.npwp) rows += baris(sel(2, 10206, gambar('npwp')));
+  if(g.rekening) rows += baris(sel(2, 10206, gambar('rekening')));
+  const NS = 'xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"';
+  const dokumen = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document ' + NS + '><w:body>' +
+    '<w:tbl><w:tblPr><w:tblW w:w="10206" w:type="dxa"/><w:jc w:val="center"/><w:tblLayout w:type="fixed"/></w:tblPr>' +
+    '<w:tblGrid><w:gridCol w:w="5103"/><w:gridCol w:w="5103"/></w:tblGrid>' + rows + '</w:tbl><w:p><w:pPr><w:spacing w:before="0" w:after="0"/></w:pPr></w:p>' +
+    '<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="850" w:right="850" w:bottom="850" w:left="850" w:header="400" w:footer="400" w:gutter="0"/></w:sectPr></w:body></w:document>';
+  const enc = new TextEncoder();
+  const files = [
+    { name: '[Content_Types].xml', data: enc.encode('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Default Extension="jpg" ContentType="image/jpeg"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>') },
+    { name: '_rels/.rels', data: enc.encode('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>') },
+    { name: 'word/document.xml', data: enc.encode(dokumen) },
+    { name: 'word/_rels/document.xml.rels', data: enc.encode('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' + rels.join('') + '</Relationships>') }
+  ].concat(media);
+  return _buatZip(files, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+}
+async function unduhDokumenGabungan(idx, tombol){
+  const r = dataGuru[idx];
+  if(!r) return;
+  if(tombol && tombol.dataset.sibuk === '1') return;
+  const badge = tombol ? tombol.querySelector('.dok-badge') : null;
+  if(tombol){ tombol.dataset.sibuk = '1'; tombol.setAttribute('aria-busy', 'true'); }
+  if(badge) badge.classList.add('memuat');
+  try{
+    const fb = await tungguFirebase();
+    const idToken = await fb.ambilIdToken();
+    const email = String((window.guruAktif && window.guruAktif.email) || '').toLowerCase();
+    const folder = folderDokumen(r[1]);
+    const jenisSemua = ['nik', 'nuptk', 'npwp', 'rekening'];
+    const hasil = await Promise.all(jenisSemua.map(async jenis => {
+      const resp = await fetch(SUPABASE_FUNGSI, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
+        body: JSON.stringify({ idToken: idToken, email: email, folder: folder, jenis: jenis })
+      });
+      if(resp.status === 404) return null;
+      const j = await resp.json().catch(() => ({}));
+      if(!resp.ok || !j.url) throw new Error(j.error || ('Status ' + resp.status));
+      const berkas = await fetch(j.url);
+      if(!berkas.ok) throw new Error('Berkas tidak dapat diunduh');
+      return _siapkanGambarDoc(await berkas.blob(), 1800);
+    }));
+    const g = {}, hilang = [];
+    jenisSemua.forEach((jenis, i) => { if(hasil[i]) g[jenis] = hasil[i]; else hilang.push(_namaDokumen[jenis]); });
+    if(Object.keys(g).length === 0){ showToast('Belum ada dokumen yang bisa digabung', 2800); return; }
+    const blob = _buatDocx(g);
+    const a = document.createElement('a');
+    const href = URL.createObjectURL(blob);
+    a.href = href;
+    a.download = 'Dokumen - ' + String(r[1]).replace(/[\\/:*?"<>|]/g, '') + '.docx';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(href), 4000);
+    showToast(hilang.length ? ('Diunduh. Belum ada: ' + hilang.join(', ')) : 'Mengunduh dokumen gabungan', hilang.length ? 3200 : 1800);
+  }catch(err){
+    console.error('Gagal membuat dokumen gabungan:', err);
+    showToast('Gagal membuat dokumen. Coba lagi.', 2500);
   }finally{
     if(badge) badge.classList.remove('memuat');
     if(tombol){ tombol.dataset.sibuk = '0'; tombol.removeAttribute('aria-busy'); }
