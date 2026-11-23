@@ -1768,7 +1768,6 @@ input::placeholder{color:#64748B !important;opacity:1}
 
   <div style="display:flex; align-items:center; justify-content:space-between; margin:0 0 10px;">
     <p style="font-size:13px; font-weight:500; color:#64748B; margin:0; letter-spacing:.05em; text-transform:uppercase;">Ringkasan data</p>
-    <span id="semesterLabelBeranda" style="font-size:13px; font-weight:500; color:#64748B;">Semester Ganjil</span>
   </div>
 
   <div onclick="bukaDataRombelDariBeranda()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();bukaDataRombelDariBeranda();}" class="cursor-pointer" role="button" tabindex="0" aria-label="Lihat rincian total siswa" style="border-radius:22px; overflow:hidden; background:#FFFFFF; border:1px solid #E2E8F0; margin-bottom:12px; -webkit-tap-highlight-color:transparent;">
@@ -3880,8 +3879,6 @@ function mulaiMuatData(){
       const elPctPTxt = document.getElementById('pctPTxt');
       if(elPctLTxt) elPctLTxt.textContent = pctLaki + '%';
       if(elPctPTxt) elPctPTxt.textContent = pctPerempuan + '%';
-      const elSemester = document.getElementById('semesterLabelBeranda');
-      if(elSemester) elSemester.textContent = 'Semester ' + ((new Date().getMonth() + 1) >= 7 ? 'Ganjil' : 'Genap');
       const elBarL = document.getElementById('barLPL');
       const elBarP = document.getElementById('barLPP');
       if(elBarL) elBarL.style.width = pctLaki + '%';
