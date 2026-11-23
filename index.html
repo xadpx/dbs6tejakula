@@ -1704,30 +1704,29 @@ input::placeholder{color:#64748B !important;opacity:1}
 
   <p style="position:relative; font-size:13px; font-weight:500; color:#A6A399; margin:0 0 10px; letter-spacing:.05em; text-transform:uppercase;">Ringkasan data</p>
 
-  <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" role="button" aria-label="Lihat rincian total siswa" style="background:var(--neu-bg); border-radius:20px; padding:18px 0 4px; box-shadow: var(--neu-raised-md); margin-bottom:12px; -webkit-tap-highlight-color:transparent;">
-    <div style="padding:0 18px; display:flex; align-items:flex-start; justify-content:space-between;">
-      <div>
-        <p style="font-size:14px; font-weight:500; color:#475569; margin:0;">Total siswa</p>
-        <p style="margin:6px 0 0; display:flex; align-items:center; min-height:40px;">
-          <span id="tot" class="hidden tabular-nums" style="font-size:40px; font-weight:700; color:#1E293B; line-height:1;">0</span>
-          <span id="totSpin" class="spinner-ring-gray" style="width:22px;height:22px;"></span>
-        </p>
-      </div>
-      <span class="material-symbols-rounded" style="font-size:22px; color:#475569; margin-top:-1px;">chevron_right</span>
+  <div onclick="bukaDataRombelDariBeranda()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();bukaDataRombelDariBeranda();}" class="cursor-pointer" role="button" tabindex="0" aria-label="Lihat rincian total siswa" style="display:flex; border-radius:20px; overflow:hidden; background:var(--neu-bg); box-shadow:var(--neu-raised-md); margin-bottom:12px; -webkit-tap-highlight-color:transparent;">
+    <div style="flex:0 0 auto; min-width:140px; box-sizing:border-box; background:#5047E2; padding:18px; color:#FFFFFF;">
+      <p style="font-size:13px; font-weight:500; color:#DEE0F9; margin:0;">Total siswa</p>
+      <p style="margin:8px 0 0; display:flex; align-items:center; min-height:48px;">
+        <span id="tot" class="hidden tabular-nums" style="font-size:48px; font-weight:600; letter-spacing:-.02em; color:#FFFFFF; line-height:1;">0</span>
+        <span id="totSpin" class="spinner-ring-gray" style="width:22px; height:22px; background:conic-gradient(from 0deg, transparent 0%, #FFFFFF 100%);"></span>
+      </p>
+      <p style="font-size:13px; color:#DEE0F9; margin:14px 0 0; line-height:1.45;"><span id="totRombelBerandaKtx" class="tabular-nums">&ndash;</span> kelas<br>rata-rata <span id="rataSiswaKelasBerandaKtx" class="tabular-nums">&ndash;</span></p>
     </div>
-
-    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; margin-top:16px; border-top:1px solid #ECEDF0;">
-      <div style="padding:12px 0 12px 18px;">
-        <p id="pctL" class="tabular-nums" style="font-size:17px; font-weight:600; color:#712B13; margin:0; line-height:1.2;">&ndash;</p>
-        <p style="font-size:13px; color:#475569; margin:2px 0 0;">Laki-laki</p>
+    <div style="flex:1; min-width:0; padding:18px; display:flex; flex-direction:column; justify-content:center;">
+      <div style="margin-bottom:18px;">
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <span style="display:flex; align-items:center; font-size:13px; color:#475569;"><span style="width:8px; height:8px; border-radius:50%; background:#C2410C; margin-right:6px;"></span>Laki-laki</span>
+          <span id="pctL" class="tabular-nums" style="font-size:16px; font-weight:600; color:#1E293B;">&ndash;</span>
+        </div>
+        <div style="height:4px; border-radius:999px; background:#ECEEFD; margin-top:8px;"><div id="barLPL" style="width:0%; height:4px; border-radius:999px; background:#C2410C; transition:width .8s ease;"></div></div>
       </div>
-      <div style="padding:12px 0; text-align:center; border-left:1px solid #ECEDF0; border-right:1px solid #ECEDF0;">
-        <p id="pctP" class="tabular-nums" style="font-size:17px; font-weight:600; color:#3C3489; margin:0; line-height:1.2;">&ndash;</p>
-        <p style="font-size:13px; color:#475569; margin:2px 0 0;">Perempuan</p>
-      </div>
-      <div style="padding:12px 18px 12px 0; text-align:right;">
-        <p id="totRombelBerandaKtx" class="tabular-nums" style="font-size:17px; font-weight:600; color:#1E293B; margin:0; line-height:1.2;">&ndash;</p>
-        <p style="font-size:13px; color:#475569; margin:2px 0 0;">Kelas</p>
+      <div>
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <span style="display:flex; align-items:center; font-size:13px; color:#475569;"><span style="width:8px; height:8px; border-radius:50%; background:#5047E2; margin-right:6px;"></span>Perempuan</span>
+          <span id="pctP" class="tabular-nums" style="font-size:16px; font-weight:600; color:#1E293B;">&ndash;</span>
+        </div>
+        <div style="height:4px; border-radius:999px; background:#ECEEFD; margin-top:8px;"><div id="barLPP" style="width:0%; height:4px; border-radius:999px; background:#5047E2; transition:width .8s ease;"></div></div>
       </div>
     </div>
   </div>
