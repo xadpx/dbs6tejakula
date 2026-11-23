@@ -3704,6 +3704,7 @@ let historyTabAktif = false;
       document.querySelector('nav').classList.remove('hidden');
       tampilkanNamaGuru();
       nav('home');
+      try{ if(window.cekTourPertama) window.cekTourPertama(); }catch(e){}
     }
 
     function logoutGuru(){
@@ -7273,6 +7274,102 @@ function tutupPopupPremium(overlayId, boxId, callback){
     }catch(e){}
   }
   window.addEventListener('load', function(){ sinkronNav(); setTimeout(sinkronNav, 800); });
+})();
+</script>
+<!-- ===== TOUR PERTAMA LOGIN (spotlight, wajib diikuti) ===== -->
+<style id="tourCss">
+#tourOverlay{position:fixed;inset:0;z-index:9000;touch-action:none;overscroll-behavior:contain;font-family:'Inter',sans-serif}
+#tourOverlay.hidden{display:none}
+#tourWrap{position:relative;width:100%;max-width:480px;height:100%;margin:0 auto}
+#tourSpot{position:absolute;left:10px;right:10px;top:calc(env(safe-area-inset-top,0px) + 8px);bottom:240px;border-radius:24px;box-shadow:0 0 0 100vmax rgba(15,23,42,.72);outline:2px solid #fff;transition:bottom .3s ease}
+#tourCard{position:absolute;left:14px;right:14px;bottom:max(14px,env(safe-area-inset-bottom,0px));background:#fff;border-radius:22px;padding:16px;box-shadow:0 12px 32px rgba(0,0,0,.28);animation:tourUp .3s ease}
+#tourCard::after{content:"";position:absolute;top:-7px;left:50%;margin-left:-7px;width:14px;height:14px;background:#fff;transform:rotate(45deg);border-radius:3px}
+@keyframes tourUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+#tourCard .th{display:flex;gap:12px;align-items:flex-start}
+#tourCard .tc{width:42px;height:42px;border-radius:14px;background:#E9EFFB;color:#1E40AF;display:grid;place-items:center;flex-shrink:0}
+#tourCard .tc span{font-size:23px;font-variation-settings:'FILL' 1}
+#tourCard .tn{font-size:11.5px;font-weight:600;color:#64748B;margin:0 0 2px;letter-spacing:.02em}
+#tourCard .tt{font-size:16px;font-weight:700;letter-spacing:-.01em;color:#1E293B;margin:0}
+#tourCard .td{font-size:13px;line-height:1.55;color:#64748B;margin:6px 0 0}
+#tourCard .tf{display:flex;align-items:center;justify-content:space-between;margin-top:14px}
+#tourCard .tdots{display:flex;gap:5px}
+#tourCard .tdots b{width:6px;height:6px;border-radius:9px;background:#cbd5e1;transition:.25s}
+#tourCard .tdots b.on{width:18px;background:#1E40AF}
+#tourCard button{background:#1E40AF;color:#fff;border:0;border-radius:999px;padding:10px 20px;font:600 13px 'Inter',sans-serif;cursor:pointer}
+</style>
+<div id="tourOverlay" class="hidden" role="dialog" aria-modal="true" aria-label="Pengenalan aplikasi">
+  <div id="tourWrap"><div id="tourSpot"></div><div id="tourCard"></div></div>
+</div>
+<script>
+(function(){
+  var LANGKAH = [
+    {p:'home',     ikon:'home',                 judul:'Beranda',  teks:'Ringkasan data sekolah dan pembaruan terbaru. Ketuk ikon lonceng untuk melihat notifikasi.'},
+    {p:'siswa',    ikon:'groups_2',             judul:'Siswa',    teks:'Cari data siswa lewat nama, NIK, atau NISN, lalu saring per kelas.'},
+    {p:'guru',     ikon:'school',               judul:'GTK',      teks:'Data guru dan tenaga kependidikan (GTK) sekolah, dipisah dalam dua tab.'},
+    {p:'download', ikon:'download_for_offline', judul:'Unduh',    teks:'Pilih kelas lalu unduh datanya untuk disimpan dan dipakai offline.'}
+  ];
+  var i = 0, aktif = false;
+
+  function kunci(){
+    var e = ''; try{ e = (window.guruAktif && window.guruAktif.email) || ''; }catch(x){}
+    return 'tourNavSelesai_' + e;
+  }
+  function sudahSelesai(){ try{ return !!localStorage.getItem(kunci()); }catch(e){ return false; } }
+  function tandaiSelesai(){ try{ localStorage.setItem(kunci(), '1'); }catch(e){} }
+
+  function render(){
+    var s = LANGKAH[i], last = i === LANGKAH.length - 1;
+    try{ nav(s.p); }catch(e){}
+    window.scrollTo(0, 0);
+    var dots = LANGKAH.map(function(_, k){ return '<b class="' + (k === i ? 'on' : '') + '"></b>'; }).join('');
+    var card = document.getElementById('tourCard');
+    card.style.animation = 'none'; void card.offsetWidth; card.style.animation = '';
+    card.innerHTML =
+      '<div class="th"><div class="tc"><span class="material-symbols-rounded">' + s.ikon + '</span></div>' +
+      '<div><p class="tn">Menu ' + (i + 1) + ' dari ' + LANGKAH.length + '</p><p class="tt">' + s.judul + '</p><p class="td">' + s.teks + '</p></div></div>' +
+      '<div class="tf"><div class="tdots">' + dots + '</div><button type="button" id="tourNext">' + (last ? 'Mulai' : 'Lanjut') + '</button></div>';
+    document.getElementById('tourNext').onclick = lanjut;
+    document.getElementById('tourSpot').style.bottom = (card.offsetHeight + 28 + 14) + 'px';
+  }
+
+  function lanjut(){
+    if(i < LANGKAH.length - 1){ i++; render(); }
+    else selesai();
+  }
+
+  function selesai(){
+    tandaiSelesai();
+    aktif = false;
+    document.getElementById('tourOverlay').classList.add('hidden');
+    try{ nav('home'); }catch(e){}
+    window.scrollTo(0, 0);
+  }
+
+  window.mulaiTourNav = function(paksa){
+    if(aktif) return;
+    if(!paksa && sudahSelesai()) return;
+    aktif = true; i = 0;
+    var ov = document.getElementById('tourOverlay');
+    ov.classList.remove('hidden');
+    render();
+  };
+
+  // Cegah scroll/geser halaman di belakang selama tour
+  var ov0 = document.getElementById('tourOverlay');
+  ov0.addEventListener('touchmove', function(e){ e.preventDefault(); }, {passive:false});
+  ov0.addEventListener('wheel', function(e){ e.preventDefault(); }, {passive:false});
+
+  // Dipanggil dari selesaiLogin() (login baru). Beri jeda agar Beranda sempat tampil.
+  window.cekTourPertama = function(){ setTimeout(function(){ window.mulaiTourNav(false); }, 600); };
+
+  // Uji coba: buka index.html?tour=1 (paksa tampil walau sudah pernah selesai)
+  document.addEventListener('DOMContentLoaded', function(){
+    try{
+      if(/[?&]tour=1\b/.test(location.search)) setTimeout(function(){
+        if(window.guruAktif) window.mulaiTourNav(true);
+      }, 1500);
+    }catch(e){}
+  });
 })();
 </script>
 </body>
