@@ -1618,6 +1618,30 @@ input::placeholder{color:#64748B !important;opacity:1}
 .avatar-badge{position:absolute;right:-3px;bottom:-3px;width:18px;height:18px;border-radius:50%;background:#4F46E5;color:#fff;border:2px solid #F2F5FC;display:none;align-items:center;justify-content:center}
 .avatar-badge .material-symbols-rounded{font-size:11px;color:#fff}
 #avatarGuruBtn.bisa-diketuk .avatar-badge{display:flex}
+#ultahOverlay{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(15,23,42,0);transition:background .25s ease;touch-action:none;overscroll-behavior:none}
+#ultahOverlay.hidden{display:none}
+#ultahOverlay.show{background:rgba(15,23,42,.6)}
+#ultahCanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#ultahCard{position:relative;width:100%;max-width:380px;max-height:calc(100vh - 40px);overflow:hidden;background:#fff;border-radius:26px;padding:26px 16px 16px;text-align:center;box-shadow:0 24px 60px rgba(15,23,42,.35);opacity:0;transform:translateY(14px) scale(.96);transition:transform .35s cubic-bezier(.2,.9,.3,1.2),opacity .25s ease}
+#ultahOverlay.show #ultahCard{opacity:1;transform:none}
+.ultah-x{position:absolute;top:6px;right:6px;width:44px;height:44px;border:none;background:transparent;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#475569;cursor:pointer}
+.ultah-x:active{background:#F1F5F9}
+.ultah-x .material-symbols-rounded{font-size:22px}
+.ultah-ikon{width:56px;height:56px;border-radius:18px;background:#E9EFFB;margin:0 auto 12px;display:flex;align-items:center;justify-content:center}
+.ultah-ikon .material-symbols-rounded{font-size:32px;color:#1E40AF}
+.ultah-judul{font-size:20px;font-weight:600;color:#0F172A;line-height:1.25;letter-spacing:-.01em}
+.ultah-tgl{font-size:13px;color:#475569;margin-top:4px}
+.ultah-car{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:14px -16px 0;touch-action:pan-x}
+.ultah-car::-webkit-scrollbar{display:none}
+.ultah-sl{flex:0 0 100%;scroll-snap-align:center;padding:14px 28px;min-height:132px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ultah-n{font-size:22px;font-weight:600;color:#0F172A;line-height:1.3;letter-spacing:-.01em;word-break:break-word}
+.ultah-m{font-size:14px;color:#475569;margin-top:8px}
+.ultah-dots{display:flex;gap:6px;justify-content:center;margin-top:6px}
+.ultah-dots i{width:7px;height:7px;border-radius:999px;background:#CBD5E1;transition:width .2s ease,background .2s ease}
+.ultah-dots i.on{width:18px;background:#1E40AF}
+.ultah-hint{font-size:12.5px;color:#64748B;margin-top:8px;min-height:16px}
+.ultah-tutup{margin-top:14px;width:100%;height:50px;border:none;border-radius:14px;background:#1E40AF;color:#fff;font-size:16px;font-weight:600;cursor:pointer}
+.ultah-tutup:active{background:#1B3A9E}
 </style>
 </head>
 <body class="text-base">
@@ -2257,6 +2281,20 @@ Unduh Data
 
     </div>
 
+  </div>
+
+  <div id="ultahOverlay" class="hidden" role="dialog" aria-modal="true" aria-label="Ulang tahun siswa hari ini" onclick="if(event.target===this)tutupUltah()" ontouchstart="event.stopPropagation()" ontouchmove="event.stopPropagation()" ontouchend="event.stopPropagation()">
+    <canvas id="ultahCanvas" aria-hidden="true"></canvas>
+    <div id="ultahCard">
+      <button type="button" class="ultah-x" aria-label="Tutup" onclick="tutupUltah()"><span class="material-symbols-rounded">close</span></button>
+      <div class="ultah-ikon"><span class="material-symbols-rounded">cake</span></div>
+      <div class="ultah-judul">Selamat Ulang Tahun!</div>
+      <div class="ultah-tgl" id="ultahTgl"></div>
+      <div class="ultah-car" id="ultahCar"></div>
+      <div class="ultah-dots" id="ultahDots"></div>
+      <div class="ultah-hint" id="ultahHint"></div>
+      <button type="button" class="ultah-tutup" onclick="tutupUltah()">Tutup</button>
+    </div>
   </div>
 
   <div id="sheetAkunOverlay" class="hidden" onclick="if(event.target===this)tutupSheetAkun()" ontouchstart="event.stopPropagation()" ontouchmove="event.stopPropagation()" ontouchend="event.stopPropagation()">
@@ -3439,6 +3477,126 @@ let historyTabAktif = false;
       }
     }
 
+    // ===== Popup ulang tahun siswa (sekali sehari) =====
+    const KUNCI_ULTAH = 'ultahSiswaTerakhir';
+    let _ultahTerbuka = false, _ultahRaf = 0, _ultahT0 = 0, _ultahPart = [], _ultahRoket = [];
+    const _ultahWarna = ['#60A5FA','#FBBF24','#F472B6','#34D399','#FFFFFF','#A78BFA','#FB923C'];
+
+    function _parseTglLahir(v){
+      const t = String(v == null ? '' : v).trim();
+      let m = t.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/);
+      if(m) return { d: +m[1], m: +m[2], y: +m[3] };
+      m = t.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})/);
+      if(m) return { d: +m[3], m: +m[2], y: +m[1] };
+      return null;
+    }
+    function cekUlangTahunHariIni(){
+      if(_ultahTerbuka || !Array.isArray(d) || d.length === 0) return;
+      const uji = location.hash === '#tesultah';
+      const now = new Date();
+      const kunciHari = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
+      try{ if(!uji && localStorage.getItem(KUNCI_ULTAH) === kunciHari) return; }catch(e){}
+      const bentuk = (r, umur) => ({ nama: String(r[1]).trim(), kelas: String(r[2] || '').trim(), umur: umur });
+      let daftar = [];
+      d.forEach(r => {
+        const t = _parseTglLahir(r[7]);
+        if(t && t.d === now.getDate() && t.m === now.getMonth() + 1) daftar.push(bentuk(r, now.getFullYear() - t.y));
+      });
+      if(uji && daftar.length === 0) daftar = d.slice(0, 3).map(r => bentuk(r, 10));
+      if(daftar.length === 0) return;
+      if(!document.getElementById('modal').classList.contains('hidden')) return;
+      daftar.sort((a, b) => a.kelas.localeCompare(b.kelas, 'id', { numeric: true }) || a.nama.localeCompare(b.nama, 'id'));
+      if(!uji){ try{ localStorage.setItem(KUNCI_ULTAH, kunciHari); }catch(e){} }
+      bukaUltah(daftar, now);
+    }
+    function bukaUltah(daftar, now){
+      const ov = document.getElementById('ultahOverlay');
+      if(!ov || _ultahTerbuka) return;
+      _ultahTerbuka = true;
+      const hari = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+      const bulan = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+      document.getElementById('ultahTgl').textContent = hari[now.getDay()] + ', ' + now.getDate() + ' ' + bulan[now.getMonth()] + ' ' + now.getFullYear();
+      const car = document.getElementById('ultahCar');
+      car.innerHTML = daftar.map(x => {
+        const info = [x.kelas, (x.umur >= 1 && x.umur <= 30) ? x.umur + ' tahun' : ''].filter(Boolean).join(' \u00b7 ');
+        return '<div class="ultah-sl"><div class="ultah-n">' + escHtml(x.nama) + '</div>' + (info ? '<div class="ultah-m">' + escHtml(info) + '</div>' : '') + '</div>';
+      }).join('');
+      car.scrollLeft = 0;
+      const banyak = daftar.length > 1;
+      const dots = document.getElementById('ultahDots');
+      const hint = document.getElementById('ultahHint');
+      dots.innerHTML = banyak ? daftar.map((_, i) => '<i class="' + (i ? '' : 'on') + '"></i>').join('') : '';
+      hint.textContent = banyak ? '1 dari ' + daftar.length + ' \u00b7 geser untuk melihat yang lain' : '';
+      car.onscroll = function(){
+        const i = Math.round(car.scrollLeft / car.clientWidth);
+        Array.prototype.forEach.call(dots.children, (el, j) => el.classList.toggle('on', j === i));
+        hint.textContent = (i + 1) + ' dari ' + daftar.length + ' \u00b7 geser untuk melihat yang lain';
+      };
+      kunciScroll(true);
+      history.pushState({ ultah: true }, '');
+      ov.classList.remove('hidden');
+      requestAnimationFrame(() => requestAnimationFrame(() => ov.classList.add('show')));
+      mulaiKembangApi();
+    }
+    function tutupUltah(){
+      if(!_ultahTerbuka) return;
+      history.back();
+    }
+    function tutupUltahVisual(){
+      if(!_ultahTerbuka) return;
+      _ultahTerbuka = false;
+      kunciScroll(false);
+      cancelAnimationFrame(_ultahRaf);
+      const ov = document.getElementById('ultahOverlay');
+      const cv = document.getElementById('ultahCanvas');
+      if(cv){ const c = cv.getContext('2d'); c.setTransform(1, 0, 0, 1, 0, 0); c.clearRect(0, 0, cv.width, cv.height); }
+      if(!ov) return;
+      ov.classList.remove('show');
+      setTimeout(() => { if(!_ultahTerbuka) ov.classList.add('hidden'); }, 280);
+    }
+    function mulaiKembangApi(){
+      if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const cv = document.getElementById('ultahCanvas');
+      if(!cv) return;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const w = cv.clientWidth, h = cv.clientHeight;
+      cv.width = w * dpr; cv.height = h * dpr;
+      const ctx = cv.getContext('2d');
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      _ultahPart = []; _ultahRoket = []; _ultahT0 = 0;
+      const roket = () => _ultahRoket.push({ x: w * (.15 + Math.random() * .7), y: h, ty: h * (.1 + Math.random() * .3), v: 7 + Math.random() * 2, c: _ultahWarna[Math.random() * _ultahWarna.length | 0] });
+      const ledak = (x, y, c) => {
+        for(let i = 0; i < 46; i++){
+          const a = Math.PI * 2 * i / 46 + Math.random() * .2, sp = 1.6 + Math.random() * 2.6;
+          _ultahPart.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, l: 1, c: Math.random() < .35 ? _ultahWarna[Math.random() * _ultahWarna.length | 0] : c });
+        }
+      };
+      const frame = t => {
+        if(!_ultahTerbuka) return;
+        if(!_ultahT0) _ultahT0 = t;
+        const el = (t - _ultahT0) / 1000;
+        ctx.clearRect(0, 0, w, h);
+        if(el < 5.2 && Math.random() < .045) roket();
+        _ultahRoket = _ultahRoket.filter(r => {
+          r.y -= r.v; ctx.fillStyle = r.c; ctx.fillRect(r.x - 1, r.y, 2, 8);
+          if(r.y <= r.ty){ ledak(r.x, r.y, r.c); return false; }
+          return true;
+        });
+        _ultahPart = _ultahPart.filter(p => {
+          p.x += p.vx; p.y += p.vy; p.vy += .035; p.vx *= .985; p.l -= .011;
+          if(p.l <= 0) return false;
+          ctx.globalAlpha = Math.max(p.l, 0); ctx.fillStyle = p.c;
+          ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, 6.3); ctx.fill(); ctx.globalAlpha = 1;
+          return true;
+        });
+        if(el < 6.5 || _ultahPart.length || _ultahRoket.length) _ultahRaf = requestAnimationFrame(frame);
+        else ctx.clearRect(0, 0, w, h);
+      };
+      roket(); setTimeout(() => { if(_ultahTerbuka) roket(); }, 250);
+      _ultahRaf = requestAnimationFrame(frame);
+    }
+    document.addEventListener('keydown', e => { if(e.key === 'Escape' && _ultahTerbuka) tutupUltah(); });
+
     function tampilkanNamaGuru(){
       const elNama = document.getElementById('namaGuruAktif');
       if(!window.guruAktif) return;
@@ -3641,6 +3799,7 @@ function mulaiMuatData(){
 
       const data = json.siswa;
       d = data.slice(1).filter(r => r[1] && r[1].trim() !== "");
+      setTimeout(cekUlangTahunHariIni, 900);
 
       // ===== GURU =====
       sudahMuatGuru = true;
@@ -5126,6 +5285,11 @@ Status Anak: ${r[14]}`;
       }
     }
     window.addEventListener('popstate', function(){
+      // -1) Popup ulang tahun
+      if(_ultahTerbuka){
+        tutupUltahVisual();
+        return;
+      }
       // 0) Panel Akun Saya
       if(_sheetAkunTerbuka){
         tutupSheetAkunVisual();
