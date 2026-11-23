@@ -1559,6 +1559,8 @@ input::placeholder{color:#64748B !important;opacity:1}
 .dok-nama{font-size:15px;font-weight:500;color:#1E293B}
 .dok-badge{display:inline-flex;align-items:center;gap:3px;background:#ECEEFD;color:#3B3F9E;font-size:12px;font-weight:600;line-height:1;padding:5px 9px 5px 7px;border-radius:999px}
 .dok-badge .material-symbols-rounded{font-size:14px}
+.akun-judul{font-size:14px;font-weight:600;color:#1E293B;margin:16px 4px 8px}
+.akun-judul:first-child{margin-top:4px}
 </style>
 </head>
 <body class="text-base">
@@ -3237,64 +3239,76 @@ let historyTabAktif = false;
       tombol.classList.toggle('hidden', !guru);
     }
 
-    let _passwordAkun = '';
-    let _timerPasswordAkun = null;
+    let _daftarAkunSaya = [];
+    const _timerPasswordAkun = {};
     function escHtml(t){
       return String(t == null ? '' : t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     }
     function muatAkunSaya(){
       const area = document.getElementById('akunKonten');
       if(!area || !window.guruAktif) return;
-      _passwordAkun = '';
+      _daftarAkunSaya = [];
       area.innerHTML = '<div class="flex flex-col items-center justify-center text-center pt-14"><span class="spinner-ring-gray" style="width:26px;height:26px;margin-bottom:10px;"></span><p class="teks-berdenyut text-[14px] font-medium m-0" style="color:#475569;">Memuat data...</p></div>';
       const email = String(window.guruAktif.email || '').toLowerCase();
       tungguFirebase()
         .then(fb => fb.bacaDok('akunLogin', email))
         .then(akun => {
-          const gmail = akun && akun.gmail ? String(akun.gmail) : '';
-          const pw = akun && akun.password ? String(akun.password) : '';
-          if(!gmail && !pw){
+          let daftar = [];
+          try{ daftar = JSON.parse((akun && akun.daftarAkun) || '[]'); }catch(e){ daftar = []; }
+          if(!Array.isArray(daftar)) daftar = [];
+          // data lama (sebelum ada daftarAkun): pakai satu akun
+          if(daftar.length === 0 && akun && (akun.gmail || akun.password)){
+            daftar = [{ label: akun.namaAkun || 'Akun', gmail: akun.gmail || '', password: akun.password || '' }];
+          }
+          daftar = daftar.filter(x => x && (x.gmail || x.password));
+          if(daftar.length === 0){
             area.innerHTML = '<div class="neu-card" style="text-align:center;"><p style="font-size:15px;color:#475569;margin:0;">Data akun belum diisi. Silakan hubungi admin sekolah.</p></div>';
             return;
           }
-          _passwordAkun = pw;
-          const namaAkun = (akun && (akun.namaAkun || akun.nama)) || '-';
-          area.innerHTML = `
+          _daftarAkunSaya = daftar;
+          area.innerHTML = daftar.map((x, i) => `
+            <div class="akun-judul">${escHtml(x.label || ('Akun ' + (i + 1)))}</div>
             <div class="neu-card" style="padding:6px 16px !important;">
-              <div class="akun-baris"><div style="min-width:0;"><div class="akun-lbl">Nama Akun</div><div class="akun-val">${escHtml(namaAkun)}</div></div></div>
-              <div class="akun-baris"><div style="min-width:0;"><div class="akun-lbl">Email</div><div class="akun-val">${escHtml(gmail || '-')}</div></div>
-                <div class="akun-aksi"><button class="akun-btn" aria-label="Salin email" onclick="salinTeks(${JSON.stringify(gmail).replace(/"/g,'&quot;')}, 'copyEmailAkunIcon', 'Email')"><span id="copyEmailAkunIcon" class="material-symbols-rounded">content_copy</span></button></div></div>
-              <div class="akun-baris"><div style="min-width:0;"><div class="akun-lbl">Password</div><div class="akun-val" id="akunPwTeks">••••••••••</div></div>
+              <div class="akun-baris"><div style="min-width:0;"><div class="akun-lbl">Email</div><div class="akun-val">${escHtml(x.gmail || '-')}</div></div>
+                <div class="akun-aksi"><button class="akun-btn" aria-label="Salin email" onclick="salinAkunSaya(${i}, 'gmail')"><span id="copyEmailAkun${i}" class="material-symbols-rounded">content_copy</span></button></div></div>
+              <div class="akun-baris"><div style="min-width:0;"><div class="akun-lbl">Password</div><div class="akun-val" id="akunPwTeks${i}">••••••••••</div></div>
                 <div class="akun-aksi">
-                  <button class="akun-btn" aria-label="Tampilkan password" onclick="togglePasswordAkun()"><span id="akunPwIkon" class="material-symbols-rounded">visibility</span></button>
-                  <button class="akun-btn" aria-label="Salin password" onclick="salinTeks(_passwordAkun, 'copyPwAkunIcon', 'Password')"><span id="copyPwAkunIcon" class="material-symbols-rounded">content_copy</span></button>
+                  <button class="akun-btn" aria-label="Tampilkan password" onclick="togglePasswordAkun(${i})"><span id="akunPwIkon${i}" class="material-symbols-rounded">visibility</span></button>
+                  <button class="akun-btn" aria-label="Salin password" onclick="salinAkunSaya(${i}, 'password')"><span id="copyPwAkun${i}" class="material-symbols-rounded">content_copy</span></button>
                 </div></div>
-            </div>
-            <p style="font-size:13px;color:#475569;margin:12px 4px 0;line-height:1.5;">Jangan bagikan password ini kepada siapa pun.</p>`;
+            </div>`).join('') +
+            '<p style="font-size:13px;color:#475569;margin:12px 4px 0;line-height:1.5;">Jangan bagikan password ini kepada siapa pun.</p>';
         })
         .catch(err => {
           console.error('Gagal memuat akun:', err);
           area.innerHTML = '<div class="neu-card" style="text-align:center;"><p style="font-size:15px;color:#475569;margin:0;">Data akun tidak dapat dimuat. Coba lagi nanti.</p></div>';
         });
     }
-    function sembunyikanPasswordAkun(){
-      clearTimeout(_timerPasswordAkun);
-      const t = document.getElementById('akunPwTeks');
-      const i = document.getElementById('akunPwIkon');
-      if(t) t.textContent = '••••••••••';
-      if(i) i.textContent = 'visibility';
+    function salinAkunSaya(i, jenis){
+      const x = _daftarAkunSaya[i];
+      if(!x) return;
+      if(jenis === 'password') salinTeks(x.password || '', 'copyPwAkun' + i, 'Password');
+      else salinTeks(x.gmail || '', 'copyEmailAkun' + i, 'Email');
     }
-    function togglePasswordAkun(){
-      const t = document.getElementById('akunPwTeks');
-      const i = document.getElementById('akunPwIkon');
-      if(!t || !i) return;
-      if(i.textContent === 'visibility'){
-        t.textContent = _passwordAkun || '-';
-        i.textContent = 'visibility_off';
-        clearTimeout(_timerPasswordAkun);
-        _timerPasswordAkun = setTimeout(sembunyikanPasswordAkun, 15000);
+    function sembunyikanPasswordAkun(i){
+      if(i === undefined){ _daftarAkunSaya.forEach((_, n) => sembunyikanPasswordAkun(n)); return; }
+      clearTimeout(_timerPasswordAkun[i]);
+      const t = document.getElementById('akunPwTeks' + i);
+      const k = document.getElementById('akunPwIkon' + i);
+      if(t) t.textContent = '••••••••••';
+      if(k) k.textContent = 'visibility';
+    }
+    function togglePasswordAkun(i){
+      const t = document.getElementById('akunPwTeks' + i);
+      const k = document.getElementById('akunPwIkon' + i);
+      if(!t || !k || !_daftarAkunSaya[i]) return;
+      if(k.textContent === 'visibility'){
+        t.textContent = _daftarAkunSaya[i].password || '-';
+        k.textContent = 'visibility_off';
+        clearTimeout(_timerPasswordAkun[i]);
+        _timerPasswordAkun[i] = setTimeout(() => sembunyikanPasswordAkun(i), 15000);
       }else{
-        sembunyikanPasswordAkun();
+        sembunyikanPasswordAkun(i);
       }
     }
 
