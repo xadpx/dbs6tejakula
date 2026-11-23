@@ -1543,8 +1543,6 @@ input::placeholder{color:#64748B !important;opacity:1}
   background:#FFFFFF !important;border-radius:20px !important;padding:4px !important;
   border:none !important;box-shadow:none !important;overflow:hidden}
 .badge-gtk{font-size:10.5px !important;font-weight:600;line-height:1.2;padding:1px 6px !important;border-radius:999px;white-space:nowrap}
-#p-akun{width:100%;max-width:480px;margin-left:auto;margin-right:auto;box-sizing:border-box;overflow-x:clip}
-#p-akun.hidden{pointer-events:none !important}
 .akun-baris{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 4px;border-bottom:1px solid #ECF0F3}
 .akun-baris:last-child{border-bottom:none}
 .akun-lbl{font-size:13px;color:#475569}
@@ -1561,6 +1559,22 @@ input::placeholder{color:#64748B !important;opacity:1}
 .dok-badge .material-symbols-rounded{font-size:14px}
 .akun-judul{font-size:14px;font-weight:600;color:#1E293B;margin:16px 4px 8px}
 .akun-judul:first-child{margin-top:4px}
+#sheetAkunOverlay{position:fixed;inset:0;z-index:70;background:rgba(15,23,42,0);transition:background .22s ease}
+#sheetAkunOverlay.show{background:rgba(15,23,42,.45)}
+#sheetAkun{position:absolute;left:50%;bottom:0;width:100%;max-width:480px;max-height:85vh;overflow-y:auto;overflow-x:hidden;background:#F3F4FC;border-radius:24px 24px 0 0;padding:8px 16px calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,100%);transition:transform .25s cubic-bezier(.2,.8,.2,1);box-sizing:border-box;overscroll-behavior:contain}
+#sheetAkunOverlay.show #sheetAkun{transform:translate(-50%,0)}
+.sheet-handle{width:40px;height:4px;border-radius:999px;background:#CBD0E6;margin:4px auto 6px}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;padding:4px 4px 4px}
+.sheet-judul{display:flex;align-items:center;gap:8px;font-size:18px;font-weight:600;color:#1E293B}
+.sheet-judul .material-symbols-rounded{font-size:22px}
+.sheet-tutup{width:44px;height:44px;border:none;background:transparent;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#475569;cursor:pointer;margin-right:-8px}
+.sheet-tutup:active{background:#E4E7F7}
+#avatarGuruBtn{position:relative}
+#avatarGuruBtn.bisa-diketuk{cursor:pointer;-webkit-tap-highlight-color:transparent}
+#avatarGuruBtn.bisa-diketuk:active{transform:scale(.95)}
+.avatar-badge{position:absolute;right:-3px;bottom:-3px;width:18px;height:18px;border-radius:50%;background:#4F46E5;color:#fff;border:2px solid #F3F4FC;display:none;align-items:center;justify-content:center}
+.avatar-badge .material-symbols-rounded{font-size:11px;color:#fff}
+#avatarGuruBtn.bisa-diketuk .avatar-badge{display:flex}
 </style>
 </head>
 <body class="text-base">
@@ -1647,7 +1661,8 @@ input::placeholder{color:#64748B !important;opacity:1}
 
   <div class="flex items-center justify-between">
     <div class="flex items-center" style="min-width:0; gap:10px;">
-      <div class="flex items-center justify-center" style="width:46px;height:46px;border-radius:50%;flex-shrink:0;background:#ECEEFD;box-shadow:none;padding:3px;">
+      <div id="avatarGuruBtn" class="flex items-center justify-center" style="width:46px;height:46px;border-radius:50%;flex-shrink:0;background:#ECEEFD;box-shadow:none;padding:3px;">
+        <span class="avatar-badge"><span class="material-symbols-rounded">key</span></span>
         <div id="avatarGuruWrap" class="flex items-center justify-center" style="width:100%;height:100%;border-radius:50%;overflow:hidden;flex-shrink:0;">
           <img id="avatarGuruImg" src="" class="hidden" style="width:100%;height:100%;object-fit:cover;">
           <span id="avatarGuruFallback" class="material-symbols-rounded" style="font-size:22px;color:#64748B;">person</span>
@@ -2174,17 +2189,14 @@ Unduh Data
 
   </div>
 
-  <div id="p-akun" class="hidden fixed inset-0 z-10 overflow-x-hidden w-full max-w-[100vw]">
-    <div class="h-full w-full max-w-full flex flex-col pt-5 overflow-x-hidden">
-      <div class="shrink-0 px-5">
-        <h1 class="text-xl font-semibold text-gray-800 flex items-center gap-2 mb-4">
-          <span class="material-symbols-rounded text-[23px]">key</span>
-          Akun
-        </h1>
+  <div id="sheetAkunOverlay" class="hidden" onclick="if(event.target===this)tutupSheetAkun()">
+    <div id="sheetAkun" role="dialog" aria-modal="true" aria-label="Akun Saya">
+      <div class="sheet-handle"></div>
+      <div class="sheet-head">
+        <div class="sheet-judul"><span class="material-symbols-rounded">key</span>Akun Saya</div>
+        <button type="button" class="sheet-tutup" aria-label="Tutup" onclick="tutupSheetAkun()"><span class="material-symbols-rounded">close</span></button>
       </div>
-      <div id="scrollAkun" class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-5 max-w-full" style="padding-bottom:calc(140px + env(safe-area-inset-bottom, 0px));">
-        <div id="akunKonten"></div>
-      </div>
+      <div id="akunKonten"></div>
     </div>
   </div>
 
@@ -2330,19 +2342,6 @@ download_for_offline
 
 </button>
 
-<button
-id="nav-akun"
-onclick="nav('akun')" aria-label="Akun" title="Akun"
-data-no-ripple
-class="hidden nav-inactive nav-btn transition-colors duration-150">
-
-<span class="nav-icon-wrap">
-<span class="material-symbols-rounded nav-icon text-[22px]">
-key
-</span>
-</span>
-
-</button>
   </div>
 </nav>
 <div id="bottomNavBlur" style="position:fixed; left:0; right:0; bottom:0; height:max(10px, env(safe-area-inset-bottom, 10px));   background:rgba(238,241,246,.55); z-index:49; pointer-events:none; transition:opacity .22s ease;"></div>
@@ -2658,8 +2657,6 @@ let historyTabAktif = false;
         const pt = document.getElementById('panelDataTendik');
         if(pg) pg.scrollTop = 0;
         if(pt) pt.scrollTop = 0;
-      }else if(p === 'akun'){
-        sembunyikanPasswordAkun();
       }else if(p === 'download'){
         const kelasDownload = document.getElementById('kelasDownload');
         if(kelasDownload) kelasDownload.value = 'SEMUA';
@@ -3233,10 +3230,47 @@ let historyTabAktif = false;
     setInterval(perbaruiTanggalWaktuBeranda, 30000);
 
     function terapkanPeran(){
-      const tombol = document.getElementById('nav-akun');
-      if(!tombol) return;
+      const btn = document.getElementById('avatarGuruBtn');
+      if(!btn) return;
       const guru = !!(window.guruAktif && String(window.guruAktif.peran || '').toLowerCase() === 'guru');
-      tombol.classList.toggle('hidden', !guru);
+      btn.classList.toggle('bisa-diketuk', guru);
+      if(guru){
+        btn.setAttribute('role', 'button');
+        btn.setAttribute('tabindex', '0');
+        btn.setAttribute('aria-label', 'Akun saya');
+        btn.onclick = bukaSheetAkun;
+        btn.onkeydown = function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); bukaSheetAkun(); } };
+      }else{
+        btn.removeAttribute('role'); btn.removeAttribute('tabindex'); btn.removeAttribute('aria-label');
+        btn.onclick = null; btn.onkeydown = null;
+      }
+    }
+
+    let _sheetAkunTerbuka = false;
+    function bukaSheetAkun(){
+      if(!(window.guruAktif && String(window.guruAktif.peran || '').toLowerCase() === 'guru')) return;
+      if(_sheetAkunTerbuka) return;
+      const ov = document.getElementById('sheetAkunOverlay');
+      if(!ov) return;
+      _sheetAkunTerbuka = true;
+      history.pushState({ sheetAkun: true }, '');
+      muatAkunSaya();
+      ov.classList.remove('hidden');
+      requestAnimationFrame(() => requestAnimationFrame(() => ov.classList.add('show')));
+    }
+    function tutupSheetAkun(){
+      if(!_sheetAkunTerbuka) return;
+      history.back();
+    }
+    function tutupSheetAkunVisual(){
+      if(!_sheetAkunTerbuka) return;
+      _sheetAkunTerbuka = false;
+      const ov = document.getElementById('sheetAkunOverlay');
+      sembunyikanPasswordAkun();
+      _daftarAkunSaya = [];
+      if(!ov) return;
+      ov.classList.remove('show');
+      setTimeout(() => { if(!_sheetAkunTerbuka) ov.classList.add('hidden'); }, 260);
     }
 
     let _daftarAkunSaya = [];
@@ -3789,9 +3823,6 @@ function tutupPopupRombel(){
   history.back();
 }
 function nav(p){
-  if(p === "akun"){
-    if(!(window.guruAktif && String(window.guruAktif.peran || "").toLowerCase() === "guru")) return;
-  }
   if(
     !document.getElementById("modal").classList.contains("hidden") ||
     !document.getElementById("modalKategori").classList.contains("hidden") ||
@@ -3803,7 +3834,6 @@ function nav(p){
   if(p!="download"){
     halamanSebelumnya=p;
   }
-  if(p === "akun") muatAkunSaya();
 
   // Pengaman: tab utama (Beranda/Siswa/GTK/Unduh) TIDAK PERNAH boleh
   // dalam kondisi scroll terkunci. Kalau ada popup manapun yang gagal
@@ -4937,6 +4967,11 @@ Status Anak: ${r[14]}`;
       }
     }
     window.addEventListener('popstate', function(){
+      // 0) Panel Akun Saya
+      if(_sheetAkunTerbuka){
+        tutupSheetAkunVisual();
+        return;
+      }
       // 1) Modal detail (siswa/pegawai/rombel/kategori berjenjang)
       if(!document.getElementById('modal').classList.contains('hidden')){
         const st = history.state;
@@ -4977,7 +5012,6 @@ Status Anak: ${r[14]}`;
         // Halaman Siswa sengaja dikecualikan agar pencarian tetap tersimpan.
         resetTampilanHalaman('guru');
         resetTampilanHalaman('download');
-        resetTampilanHalaman('akun');
         return;
       }
     });
@@ -6250,14 +6284,14 @@ window.addEventListener('load', resetZoomPaksa);
 // ======================================================
 // GESTUR SWIPE ANTAR-HALAMAN DENGAN EFEK MENGIKUTI JARI
 // ======================================================
-const urutanHalamanSwipe = ["home", "siswa", "guru", "download", "akun"];
+const urutanHalamanSwipe = ["home", "siswa", "guru", "download"];
 
 function halamanAktifSaatIni(){
   return urutanHalamanSwipe.find(id => !document.getElementById("p-"+id).classList.contains("hidden"));
 }
 function updateNavAktif(p){
   if(typeof tampilkanNavBawah === "function") tampilkanNavBawah();
-  ["home","siswa","guru","download","akun"].forEach(id=>{
+  ["home","siswa","guru","download"].forEach(id=>{
     const btn=document.getElementById("nav-"+id);
     if(id===p){
       btn.classList.remove("nav-inactive");
@@ -6736,7 +6770,7 @@ function tutupPopupPremium(overlayId, boxId, callback){
   );
 
   // 2) Kontainer scroll internal (Data Siswa, Data GTK)
-  ["scrollSiswa", "panelDataGuru", "panelDataTendik", "scrollDownload", "scrollAkun"].forEach(function(id){
+  ["scrollSiswa", "panelDataGuru", "panelDataTendik", "scrollDownload"].forEach(function(id){
     const el = document.getElementById(id);
     if(!el) return;
     el.addEventListener(
