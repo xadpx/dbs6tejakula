@@ -1331,6 +1331,10 @@
     --shadow-card:none; --shadow-fab:none; --shadow-nav:none; --shadow-hero:none;
   }
   .text-blue-600,.hover\:text-blue-600:hover{color:#1E40AF !important}
+  /* subjudul & teks bantu: lebih ringan dari judul */
+  #subtitleRombel,.hero-sub,.revenue-wrap-sub{font-weight:400 !important}
+  .pillbar-name{font-weight:500 !important}
+  .pillbar-col.sel .pillbar-name{font-weight:600 !important}
   html{background:var(--f-page)}
   body{background:var(--f-page) !important;color:var(--f-ink)}
   #app-scroll{box-shadow:none !important;background:var(--f-bg);border:none !important}
@@ -1576,7 +1580,7 @@ input::placeholder{color:#64748B !important;opacity:1}
 .akun-aksi{display:flex;gap:8px;flex-shrink:0}
 .akun-btn{width:40px;height:40px;border-radius:50%;background:#E9EFFB;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#475569}
 .akun-btn .material-symbols-rounded{font-size:20px}
-.dok-judul{font-size:12px;font-weight:600;letter-spacing:.04em;color:#475569;padding:18px 20px 8px}
+.dok-judul{font-size:12px;font-weight:500;letter-spacing:.04em;color:#475569;padding:18px 20px 8px}
 .dok-card{background:#fff;margin:0 12px 8px;border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(15,23,42,.04)}
 .dok-row{display:flex;align-items:center;justify-content:space-between;padding:0 16px;min-height:48px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .dok-row:active{background:#F5F8FE}
@@ -1729,8 +1733,8 @@ input::placeholder{color:#64748B !important;opacity:1}
   <div style="position:relative;">
 
   <div style="display:flex; align-items:center; justify-content:space-between; margin:0 0 10px;">
-    <p style="font-size:13px; font-weight:600; color:#64748B; margin:0; letter-spacing:.05em; text-transform:uppercase;">Ringkasan data</p>
-    <span id="semesterLabelBeranda" style="font-size:13px; font-weight:600; color:#64748B;">Semester Ganjil</span>
+    <p style="font-size:13px; font-weight:500; color:#64748B; margin:0; letter-spacing:.05em; text-transform:uppercase;">Ringkasan data</p>
+    <span id="semesterLabelBeranda" style="font-size:13px; font-weight:500; color:#64748B;">Semester Ganjil</span>
   </div>
 
   <div onclick="bukaDataRombelDariBeranda()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();bukaDataRombelDariBeranda();}" class="cursor-pointer" role="button" tabindex="0" aria-label="Lihat rincian total siswa" style="border-radius:22px; overflow:hidden; background:#FFFFFF; border:1px solid #E2E8F0; margin-bottom:12px; -webkit-tap-highlight-color:transparent;">
@@ -1738,11 +1742,11 @@ input::placeholder{color:#64748B !important;opacity:1}
     <div style="position:relative; background:#1E40AF; padding:18px 22px 20px; display:flex; align-items:center; justify-content:space-between; overflow:hidden;">
       <div aria-hidden="true" style="position:absolute; inset:0; background:rgba(255,255,255,.06); clip-path:polygon(78% 0, 100% 0, 100% 100%, 84% 100%); pointer-events:none;"></div>
       <div style="position:relative; min-width:0;">
-        <p style="font-size:13px; font-weight:600; color:#BFD3FB; margin:0; letter-spacing:.05em; text-transform:uppercase;">Total siswa terdaftar</p>
-        <p style="margin:6px 0 0; display:flex; align-items:baseline; flex-wrap:wrap; gap:0 10px; min-height:48px;">
-          <span id="tot" class="hidden tabular-nums" style="font-size:48px; font-weight:600; letter-spacing:-.02em; color:#FFFFFF; line-height:1;">0</span>
-          <span id="totSpin" class="spinner-ring-gray" style="width:24px; height:24px; align-self:center; background:conic-gradient(from 0deg, transparent 0%, #FFFFFF 100%);"></span>
-          <span style="font-size:13px; font-weight:500; color:#BFD3FB;">siswa &middot; &Oslash; <span id="rataSiswaKelasBerandaKtx" class="tabular-nums">&ndash;</span> / kelas</span>
+        <p style="font-size:13px; font-weight:500; color:#BFD3FB; margin:0; letter-spacing:.05em; text-transform:uppercase;">Total siswa terdaftar</p>
+        <p style="margin:6px 0 0; display:flex; align-items:baseline; flex-wrap:wrap; gap:0 10px; min-height:36px;">
+          <span id="tot" class="hidden tabular-nums" style="font-size:36px; font-weight:600; letter-spacing:-.02em; color:#FFFFFF; line-height:1;">0</span>
+          <span id="totSpin" class="spinner-ring-gray" style="width:20px; height:20px; align-self:center; background:conic-gradient(from 0deg, transparent 0%, #FFFFFF 100%);"></span>
+          <span style="font-size:13px; font-weight:400; color:#BFD3FB;">siswa &middot; &Oslash; <span id="rataSiswaKelasBerandaKtx" class="tabular-nums">&ndash;</span> / kelas</span>
         </p>
       </div>
       <div style="position:relative; flex:0 0 auto; width:36px; height:36px; border-radius:12px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.22); display:flex; align-items:center; justify-content:center;">
@@ -1753,32 +1757,32 @@ input::placeholder{color:#64748B !important;opacity:1}
     <div style="background:#FFFFFF; padding:12px; display:flex; gap:8px;">
       <div style="flex:1 1 auto; min-width:0; box-sizing:border-box; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:14px; padding:11px 10px 12px;">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:6px;">
-          <span style="font-size:13px; font-weight:500; color:#64748B; white-space:nowrap;">Laki-laki</span>
+          <span style="font-size:13px; font-weight:400; color:#64748B; white-space:nowrap;">Laki-laki</span>
           <span style="width:8px; height:8px; border-radius:50%; background:#1E40AF; flex-shrink:0;"></span>
         </div>
         <div style="display:flex; align-items:baseline; justify-content:space-between; gap:6px; margin-top:10px;">
           <span id="pctL" class="tabular-nums" style="font-size:20px; font-weight:600; color:#0F172A; line-height:1;">&ndash;</span>
-          <span id="pctLTxt" class="tabular-nums" style="font-size:13px; font-weight:600; color:#1E40AF;">&ndash;</span>
+          <span id="pctLTxt" class="tabular-nums" style="font-size:13px; font-weight:500; color:#1E40AF;">&ndash;</span>
         </div>
       </div>
       <div style="flex:1 1 auto; min-width:0; box-sizing:border-box; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:14px; padding:11px 10px 12px;">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:6px;">
-          <span style="font-size:13px; font-weight:500; color:#64748B; white-space:nowrap;">Perempuan</span>
+          <span style="font-size:13px; font-weight:400; color:#64748B; white-space:nowrap;">Perempuan</span>
           <span style="width:8px; height:8px; border-radius:50%; background:#D97706; flex-shrink:0;"></span>
         </div>
         <div style="display:flex; align-items:baseline; justify-content:space-between; gap:6px; margin-top:10px;">
           <span id="pctP" class="tabular-nums" style="font-size:20px; font-weight:600; color:#0F172A; line-height:1;">&ndash;</span>
-          <span id="pctPTxt" class="tabular-nums" style="font-size:13px; font-weight:600; color:#B45309;">&ndash;</span>
+          <span id="pctPTxt" class="tabular-nums" style="font-size:13px; font-weight:500; color:#B45309;">&ndash;</span>
         </div>
       </div>
       <div style="flex:1 1 auto; min-width:0; box-sizing:border-box; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:14px; padding:11px 10px 12px;">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:6px;">
-          <span style="font-size:13px; font-weight:500; color:#64748B; white-space:nowrap;">Rombel</span>
+          <span style="font-size:13px; font-weight:400; color:#64748B; white-space:nowrap;">Rombel</span>
           <span style="width:8px; height:8px; border-radius:50%; background:#334155; flex-shrink:0;"></span>
         </div>
         <div style="display:flex; align-items:baseline; justify-content:space-between; gap:6px; margin-top:10px;">
           <span id="totRombelBerandaKtx" class="tabular-nums" style="font-size:20px; font-weight:600; color:#0F172A; line-height:1;">&ndash;</span>
-          <span style="font-size:13px; font-weight:600; color:#64748B;">Kelas</span>
+          <span style="font-size:13px; font-weight:500; color:#64748B;">Kelas</span>
         </div>
       </div>
     </div>
@@ -1797,7 +1801,7 @@ input::placeholder{color:#64748B !important;opacity:1}
         <p style="font-size:20px; font-weight:600; color:#0C447C; margin:6px 0 0; line-height:1;">
           <span id="totGuru" class="hidden tabular-nums">0</span><span id="totGuruSpin" class="spinner-ring-gray" style="width:14px;height:14px;background:conic-gradient(from 0deg, transparent 0%, #0C447C 100%);"></span>
         </p>
-        <p style="font-size:13px; color:#185FA5; margin:1px 0 0; font-weight:500;">Guru aktif</p>
+        <p style="font-size:13px; color:#185FA5; margin:1px 0 0; font-weight:400;">Guru aktif</p>
       </div>
     </div>
     <div onclick="bukaDataPegawaiDariBeranda('tendik')" class="cursor-pointer" style="flex:1; min-width:0; background:none; border-radius:20px; padding:0; box-shadow:none;">
@@ -1809,7 +1813,7 @@ input::placeholder{color:#64748B !important;opacity:1}
         <p style="font-size:20px; font-weight:600; color:#8E2A2A; margin:6px 0 0; line-height:1;">
           <span id="totTendik" class="hidden tabular-nums">0</span><span id="totTendikSpin" class="spinner-ring-gray" style="width:14px;height:14px;background:conic-gradient(from 0deg, transparent 0%, #8E2A2A 100%);"></span>
         </p>
-        <p style="font-size:13px; color:#A63B3B; margin:1px 0 0; font-weight:500;">Tendik aktif</p>
+        <p style="font-size:13px; color:#A63B3B; margin:1px 0 0; font-weight:400;">Tendik aktif</p>
       </div>
     </div>
   </div>
@@ -1823,7 +1827,7 @@ input::placeholder{color:#64748B !important;opacity:1}
   <div onclick="bukaKategoriKesejahteraanDariBeranda()" class="cursor-pointer" style="background:var(--neu-bg); border-radius:18px; padding:12px 16px; box-shadow: var(--neu-raised-sm); margin-bottom:12px; display:flex; align-items:center; justify-content:space-between; gap:12px;">
     <div style="min-width:0;">
       <p style="font-size:16px; font-weight:600; color:#1E293B; margin:0;">Kesejahteraan</p>
-      <p id="subKesejahteraanBeranda" style="font-size:13px; color:#475569; font-weight:500; margin:5px 0 0;"></p>
+      <p id="subKesejahteraanBeranda" style="font-size:13px; color:#475569; font-weight:400; margin:5px 0 0;"></p>
     </div>
     <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
       <div id="pctKesejahteraanBeranda" style="font-size:20px; font-weight:600; color:#F4808F;">&ndash;</div>
@@ -1834,7 +1838,7 @@ input::placeholder{color:#64748B !important;opacity:1}
   <div onclick="bukaKategoriStatusAnakDariBeranda()" class="cursor-pointer" style="background:var(--neu-bg); border-radius:18px; padding:12px 16px; box-shadow: var(--neu-raised-sm); margin-bottom:16px; display:flex; align-items:center; justify-content:space-between; gap:12px;">
     <div style="min-width:0;">
       <p style="font-size:16px; font-weight:600; color:#1E293B; margin:0;">Status Anak</p>
-      <p id="subStatusAnakBeranda" style="font-size:13px; color:#475569; font-weight:500; margin:5px 0 0;"></p>
+      <p id="subStatusAnakBeranda" style="font-size:13px; color:#475569; font-weight:400; margin:5px 0 0;"></p>
     </div>
     <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
       <div id="pctStatusAnakBeranda" style="font-size:20px; font-weight:600; color:#1E40AF;">&ndash;</div>
@@ -1864,7 +1868,7 @@ input::placeholder{color:#64748B !important;opacity:1}
         <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:90%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
       </div>
       <div id="tabelRombelSpin" class="flex justify-center py-6">
-        <p class="teks-berdenyut text-[14px] text-gray-600 font-medium m-0">Memuat data...</p>
+        <p class="teks-berdenyut text-[14px] text-gray-600 font-normal m-0">Memuat data...</p>
       </div>
       <div id="rombelSummary" class="hidden">
         <span class="rs-dot"></span>
@@ -1972,7 +1976,7 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
       <div id="list-siswa">
         <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:var(--neu-bg); border:none; box-shadow: var(--neu-raised-md);">
           <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">keyboard</span>
-          <p class="text-sm text-gray-600 font-medium">Ketik minimal 3 huruf Nama siswa</p>
+          <p class="text-sm text-gray-600 font-normal">Ketik minimal 3 huruf Nama siswa</p>
         </div>
       </div>
     </div>
@@ -2016,14 +2020,14 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
     <div id="panelDataGuru" class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-5 pb-32 pt-3 max-w-full">
       <div class="flex flex-col items-center justify-center text-center pt-14 px-6">
         <span class="spinner-ring-gray" style="width:26px;height:26px;margin-bottom:10px;"></span>
-        <p class="teks-berdenyut text-[14px] text-gray-600 font-medium m-0">Memuat data...</p>
+        <p class="teks-berdenyut text-[14px] text-gray-600 font-normal m-0">Memuat data...</p>
       </div>
     </div>
 
     <div id="panelDataTendik" class="hidden flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-5 pb-32 pt-3 max-w-full">
       <div class="flex flex-col items-center justify-center text-center pt-14 px-6">
         <span class="spinner-ring-gray" style="width:26px;height:26px;margin-bottom:10px;"></span>
-        <p class="teks-berdenyut text-[14px] text-gray-600 font-medium m-0">Memuat data...</p>
+        <p class="teks-berdenyut text-[14px] text-gray-600 font-normal m-0">Memuat data...</p>
       </div>
     </div>
 
@@ -2801,7 +2805,7 @@ let historyTabAktif = false;
                 <span class="material-symbols-rounded text-[14.5px]" style="color:#0091EA;">groups</span>
                 <span style="font-size:15px; font-weight:600; color:#1E293B;">Distribusi Rombel</span>
               </div>
-              <div onclick="event.stopPropagation(); bagikanRekap(this.querySelector('.material-symbols-rounded'))" class="cursor-pointer transition" role="button" aria-label="Bagikan rekap" style="display:flex; align-items:center; gap:6px; font-size:13px; font-weight:600; color:#4b5563; background:var(--neu-bg); padding:6px 12px; border-radius:999px; box-shadow: var(--neu-raised-sm);"><span class="material-symbols-rounded" style="font-size:14px; color:#4b5563;">ios_share</span>Bagikan</div>
+              <div onclick="event.stopPropagation(); bagikanRekap(this.querySelector('.material-symbols-rounded'))" class="cursor-pointer transition" role="button" aria-label="Bagikan rekap" style="display:flex; align-items:center; gap:6px; font-size:13px; font-weight:500; color:#4b5563; background:var(--neu-bg); padding:6px 12px; border-radius:999px; box-shadow: var(--neu-raised-sm);"><span class="material-symbols-rounded" style="font-size:14px; color:#4b5563;">ios_share</span>Bagikan</div>
             </div>
             <div style="display:grid; grid-template-columns:1fr 46px 46px 50px 16px; align-items:center; padding:2px 10px 0; font-size:14px; font-weight:600; text-align:center;">
               <div style="text-align:left; padding:8px 0 8px 6px; color:#475569;">Kelas</div>
@@ -2943,7 +2947,7 @@ let historyTabAktif = false;
               <span class="material-symbols-rounded text-[14.5px]" style="color:#1E40AF;">bar_chart</span>
               <span style="font-size:15px; font-weight:600; color:#1E293B;">Distribusi Kesejahteraan</span>
             </div>
-            <span style="font-size:13px; font-weight:600; color:#4b5563; background:var(--neu-bg); padding:5px 10px; border-radius:999px; box-shadow: var(--neu-raised-sm);">Desil 1&ndash;10</span>
+            <span style="font-size:13px; font-weight:500; color:#4b5563; background:var(--neu-bg); padding:5px 10px; border-radius:999px; box-shadow: var(--neu-raised-sm);">Desil 1&ndash;10</span>
           </div>
           ${Object.keys(desil).map((label,i,arr) => {
             const persenBar = Math.round((desil[label] / totalSemuaDesil) * 100);
@@ -3139,7 +3143,7 @@ let historyTabAktif = false;
                 <span class="material-symbols-rounded text-[14.5px]" style="color:#1E40AF;">groups</span>
                 <span style="font-size:15px; font-weight:600; color:#1E293B;">Daftar Siswa</span>
               </div>
-              <span style="font-size:14px; font-weight:600; color:#4b5563; background:var(--neu-bg); padding:5px 10px; border-radius:999px; box-shadow: var(--neu-raised-sm);">${hasil.length} siswa</span>
+              <span style="font-size:14px; font-weight:500; color:#4b5563; background:var(--neu-bg); padding:5px 10px; border-radius:999px; box-shadow: var(--neu-raised-sm);">${hasil.length} siswa</span>
             </div>
             ${hasil.map((r,i) => {
               let statusR = String(r[14]).trim();
@@ -4184,7 +4188,7 @@ function filterSiswa() {
     document.getElementById("list-siswa").innerHTML = `
       <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:var(--neu-bg); border:none; box-shadow: var(--neu-raised-md);">
         <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">keyboard</span>
-        <p class="text-sm text-gray-600 font-medium">Ketik minimal 3 huruf Nama siswa</p>
+        <p class="text-sm text-gray-600 font-normal">Ketik minimal 3 huruf Nama siswa</p>
       </div>
     `;
     return;
@@ -4196,7 +4200,7 @@ function filterSiswa() {
     document.getElementById("list-siswa").innerHTML = `
       <div class="rounded-3xl overflow-hidden flex flex-col items-center justify-center text-center pt-14 pb-14 px-6" style="background:var(--neu-bg); border:none; box-shadow: var(--neu-raised-md);">
         <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2"> </span>
-        <p class="text-sm text-gray-600 font-medium">Ketik ${sisa} huruf lagi</p>
+        <p class="text-sm text-gray-600 font-normal">Ketik ${sisa} huruf lagi</p>
       </div>
     `;
     return;
@@ -4249,7 +4253,7 @@ hasil.sort((a, b) => {
     document.getElementById("list-siswa").innerHTML = `
       <div class="flex flex-col items-center justify-center text-center pt-14 px-6">
         <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">person_off</span>
-        <p class="text-sm text-gray-600 font-medium">Siswa tidak ditemukan</p>
+        <p class="text-sm text-gray-600 font-normal">Siswa tidak ditemukan</p>
       </div>
     `;
     return;
@@ -4636,7 +4640,7 @@ function renderListPegawai(tipe){
     el.innerHTML = `
       <div class="flex flex-col items-center justify-center text-center pt-14 px-6">
         <span class="material-symbols-rounded text-[40px] text-gray-300 mb-2">${tipe === 'guru' ? 'school' : 'badge'}</span>
-        <p class="text-sm text-gray-600 font-medium">Belum ada data ${tipe === 'guru' ? 'guru' : 'tenaga kependidikan'}</p>
+        <p class="text-sm text-gray-600 font-normal">Belum ada data ${tipe === 'guru' ? 'guru' : 'tenaga kependidikan'}</p>
       </div>
     `;
     return;
@@ -4668,7 +4672,7 @@ function renderListPegawai(tipe){
    kartuRingkasanGuru = `
 <div class="neu-card" style="padding:16px; margin-bottom:16px; display:flex; align-items:center; gap:12px;">
   <div style="width:42px;height:42px;border-radius:12px;background:#F2A65A22;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span class="material-symbols-rounded text-[20px]" style="color:#c07729;">badge</span></div>
-  <div><p style="font-size:13px; font-weight:600; color:#475569; margin:0; text-transform:uppercase; letter-spacing:.02em;">Total Tendik</p><p style="font-size:20px; font-weight:600; color:#1E293B; margin:2px 0 0; line-height:1;">${sumber.length}</p><p style="font-size:12px; color:#6b7280; margin:3px 0 0;">${jenisJabatanUnik} jenis jabatan berbeda</p></div>
+  <div><p style="font-size:13px; font-weight:500; color:#475569; margin:0; text-transform:uppercase; letter-spacing:.02em;">Total Tendik</p><p style="font-size:20px; font-weight:600; color:#1E293B; margin:2px 0 0; line-height:1;">${sumber.length}</p><p style="font-size:12px; color:#6b7280; margin:3px 0 0;">${jenisJabatanUnik} jenis jabatan berbeda</p></div>
 </div>`;
  }
 
