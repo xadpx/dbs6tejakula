@@ -1552,6 +1552,9 @@ input::placeholder{color:#64748B !important;opacity:1}
 .akun-aksi{display:flex;gap:8px;flex-shrink:0}
 .akun-btn{width:40px;height:40px;border-radius:50%;background:#ECEEFD;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#475569}
 .akun-btn .material-symbols-rounded{font-size:20px}
+.dl-btn{width:40px;height:40px;margin:-8px -8px -8px 4px;border:none;background:transparent;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#475569;cursor:pointer;flex-shrink:0}
+.dl-btn:active{background:#ECEEFD}
+.dl-btn .material-symbols-rounded{font-size:22px}
 </style>
 </head>
 <body class="text-base">
@@ -2373,6 +2376,7 @@ z-[9999]">
   window.FB = {
     masukDenganGoogle: (idToken) => signInWithCredential(auth, GoogleAuthProvider.credential(idToken)),
     keluar: () => signOut(auth),
+    ambilIdToken: () => auth.currentUser ? auth.currentUser.getIdToken() : Promise.reject(new Error('Belum login')),
     pantauAuth: (callback) => onAuthStateChanged(auth, callback),
     bacaDok: async (koleksi, id) => {
       const snap = await getDoc(doc(db, koleksi, id));
@@ -2591,6 +2595,9 @@ z-[9999]">
       const copyBtn = opsi.copyId
         ? `<span id="${opsi.copyId}" class="material-symbols-rounded text-[14.5px] text-gray-400 cursor-pointer hover:text-blue-600 transition sm:text-[16px]" style="margin-left:8px;flex-shrink:0;" onclick="event.stopPropagation(); salinTeks('${String(value).replace(/'/g,"\\'")}', '${opsi.copyId}', '${(opsi.copyLabel||label).replace(/'/g,"\\'")}')">content_copy</span>`
         : '';
+      const dlBtn = opsi.dlArgs
+        ? `<button type="button" class="dl-btn" aria-label="Unduh dokumen ${label}" title="Unduh dokumen" onclick="unduhDokumenPegawai(${opsi.dlArgs}, this)"><span class="material-symbols-rounded">download</span></button>`
+        : '';
       const isLast = opsi.last ? '' : 'background-image:linear-gradient(#ECF0F3, #ECF0F3); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;';
       return `
 <div class="flex items-center justify-between" style="padding:12px 20px; ${isLast}">
@@ -2598,6 +2605,7 @@ z-[9999]">
   <div style="display:flex; align-items:center; min-width:0;">
     <span class="text-gray-900 font-medium sm:text-[16px]" style="font-size:15px; text-align:right;">${value}</span>
     ${copyBtn}
+    ${dlBtn}
   </div>
 </div>`;
     }
@@ -4583,6 +4591,70 @@ style="${i === sumber.length - 1 ? '' : 'background-image:linear-gradient(#ECF0F
   pasangMarqueeList(el);
 }
 
+// ===== Unduh dokumen guru (file di Supabase Storage) =====
+const SUPABASE_URL = 'https://qtlvldhzbnsuzkxonmau.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_QBEO1J5gY470xQ3M-egsjQ_nG4TgJGV';
+const SUPABASE_FUNGSI = SUPABASE_URL + '/functions/v1/ambil-dokumen';
+
+// Nama folder di Supabase kalau BERBEDA dari nama di sheet (huruf besar/kecil tidak berpengaruh).
+// Nama yang sama persis tidak perlu ditulis di sini.
+const FOLDER_DOKUMEN = {
+  'Ni Luh Maliastri': 'Luh Maliastri',
+  'Ni Made Sukrami': 'Made Sukrami'
+};
+function folderDokumen(nama){
+  const n = String(nama || '').trim();
+  const peta = {};
+  Object.keys(FOLDER_DOKUMEN).forEach(k => { peta[k.trim().toLowerCase()] = FOLDER_DOKUMEN[k]; });
+  return peta[n.toLowerCase()] || n;
+}
+// Tombol unduh hanya untuk guru yang login (peran guru) dan hanya di detail guru.
+function dlArgsPegawai(jenis, tipe, idx){
+  const guru = !!(window.guruAktif && String(window.guruAktif.peran || '').toLowerCase() === 'guru');
+  return (guru && tipe === 'guru') ? `'${jenis}',${idx}` : '';
+}
+const _namaDokumen = { nik: 'KTP', nuptk: 'NUPTK', npwp: 'NPWP', rekening: 'Rekening' };
+async function unduhDokumenPegawai(jenis, idx, tombol){
+  const r = dataGuru[idx];
+  if(!r) return;
+  if(tombol && tombol.dataset.sibuk === '1') return;
+  const ikon = tombol ? tombol.querySelector('.material-symbols-rounded') : null;
+  const setIkon = t => { if(ikon) ikon.textContent = t; };
+  if(tombol) tombol.dataset.sibuk = '1';
+  setIkon('hourglass_top');
+  try{
+    const fb = await tungguFirebase();
+    const idToken = await fb.ambilIdToken();
+    const email = String((window.guruAktif && window.guruAktif.email) || '').toLowerCase();
+    const resp = await fetch(SUPABASE_FUNGSI, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
+      body: JSON.stringify({ idToken: idToken, email: email, folder: folderDokumen(r[1]), jenis: jenis })
+    });
+    const hasil = await resp.json().catch(() => ({}));
+    if(resp.status === 404){ showToast('Dokumen ' + _namaDokumen[jenis] + ' belum tersedia', 2500); return; }
+    if(!resp.ok || !hasil.url) throw new Error(hasil.error || ('Status ' + resp.status));
+    const berkas = await fetch(hasil.url);
+    if(!berkas.ok) throw new Error('Berkas tidak dapat diunduh');
+    const blob = await berkas.blob();
+    const a = document.createElement('a');
+    const href = URL.createObjectURL(blob);
+    a.href = href;
+    a.download = _namaDokumen[jenis] + ' - ' + String(r[1]).replace(/[\\/:*?"<>|]/g, '') + '.jpg';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(href), 4000);
+    showToast('Mengunduh ' + _namaDokumen[jenis], 1800);
+  }catch(err){
+    console.error('Gagal unduh dokumen:', err);
+    showToast('Gagal mengunduh. Coba lagi.', 2500);
+  }finally{
+    setIkon('download');
+    if(tombol) tombol.dataset.sibuk = '0';
+  }
+}
+
 function bukaDriveGuru(link){
   if(!link){
     showToast('Link Drive belum tersedia untuk orang ini', 2500);
@@ -4636,10 +4708,10 @@ function renderDetailPegawaiContent(tipe, idx){
   ${barisDetailHTML('Tempat Lahir', r[4] || '-')}
   ${barisDetailHTML('Tanggal Lahir', formatTanggalUntukTampilan(r[5]))}
   ${barisDetailHTML('NIP', r[6] || '-', { copyId: 'copyNipIcon' })}
-  ${barisDetailHTML('NIK', r[7] || '-', { copyId: 'copyNikIcon' })}
-  ${barisDetailHTML('NUPTK', r[8] || '-', { copyId: 'copyNuptkIcon' })}
-  ${barisDetailHTML('NPWP', r[9] || '-', { copyId: 'copyNpwpIcon' })}
-  ${barisDetailHTML('No. Rekening', 'Berkas', { last: true })}
+  ${barisDetailHTML('NIK', r[7] || '-', { copyId: 'copyNikIcon', dlArgs: dlArgsPegawai('nik', tipe, idx) })}
+  ${barisDetailHTML('NUPTK', r[8] || '-', { copyId: 'copyNuptkIcon', dlArgs: dlArgsPegawai('nuptk', tipe, idx) })}
+  ${barisDetailHTML('NPWP', r[9] || '-', { copyId: 'copyNpwpIcon', dlArgs: dlArgsPegawai('npwp', tipe, idx) })}
+  ${barisDetailHTML('No. Rekening', 'Berkas', { last: true, dlArgs: dlArgsPegawai('rekening', tipe, idx) })}
 </div>
 
 </div>
