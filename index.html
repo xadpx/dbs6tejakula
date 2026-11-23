@@ -2207,6 +2207,15 @@ Unduh Data
     </div>
   </div>
 
+  <div id="sheetSimpanFoto" class="hidden" onclick="if(event.target===this)tutupSheetSimpanFoto()" style="position:fixed; inset:0; z-index:90; background:rgba(15,23,42,.45);">
+    <div role="dialog" aria-modal="true" aria-labelledby="sfJudul" style="position:absolute; left:50%; bottom:0; transform:translateX(-50%); width:100%; max-width:480px; box-sizing:border-box; background:#FFFFFF; border-radius:24px 24px 0 0; padding:22px 20px calc(16px + env(safe-area-inset-bottom, 0px));">
+      <p id="sfJudul" style="font-size:18px; font-weight:600; color:#1E293B; margin:0;">Simpan ke Foto</p>
+      <p style="font-size:14px; color:#475569; margin:8px 0 20px; line-height:1.5;">Ketuk tombol di bawah, lalu pilih <span style="font-weight:600; color:#1E293B;">Simpan Gambar</span> agar berkasnya masuk ke aplikasi Foto.</p>
+      <button type="button" onclick="simpanKeFoto()" style="width:100%; height:48px; border:0; border-radius:14px; background:#1F2A55; color:#FFFFFF; font:600 15px Inter,sans-serif; cursor:pointer;">Simpan ke Foto</button>
+      <button type="button" onclick="simpanKeBerkas()" style="width:100%; height:48px; border:0; background:transparent; color:#475569; font:500 14px Inter,sans-serif; margin-top:4px; cursor:pointer;">Simpan sebagai berkas</button>
+    </div>
+  </div>
+
   <div id="modal"
 class="hidden detail-fullpage-overlay fixed inset-0 z-[60]">
     <div id="modalBox" class="detail-fullpage-box relative" style="background:var(--neu-bg); display:flex; flex-direction:column; overflow:hidden;">
@@ -4682,6 +4691,61 @@ function bagianDokumenHTML(tipe, idx){
 </div>`;
 }
 const _namaDokumen = { nik: 'KTP', nuptk: 'NUPTK', npwp: 'NPWP', rekening: 'Rekening' };
+// ===== Simpan dokumen: iPhone/iPad -> menu Bagikan (Simpan Gambar ke Foto); lainnya -> unduhan biasa =====
+function perangkatIOS(){
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+}
+function jenisBerkasDokumen(blob, url){
+  let tipe = String(blob.type || '').toLowerCase();
+  if(!/^(image\/|application\/pdf)/.test(tipe)){
+    const m = String(url || '').split('?')[0].match(/\.(jpe?g|png|webp|pdf)$/i);
+    const e = m ? m[1].toLowerCase() : 'jpg';
+    tipe = e === 'png' ? 'image/png' : e === 'webp' ? 'image/webp' : e === 'pdf' ? 'application/pdf' : 'image/jpeg';
+  }
+  const ext = tipe === 'image/jpeg' ? 'jpg' : tipe.split('/')[1];
+  return { tipe: tipe, ext: ext };
+}
+function unduhBerkasBiasa(berkas){
+  const href = URL.createObjectURL(berkas);
+  const a = document.createElement('a');
+  a.href = href;
+  a.download = berkas.name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(href), 4000);
+}
+let _berkasSimpanFoto = null;
+function tampilkanSheetSimpanFoto(berkas, label){
+  _berkasSimpanFoto = berkas;
+  const j = document.getElementById('sfJudul');
+  if(j) j.textContent = 'Simpan ' + label + ' ke Foto';
+  const ov = document.getElementById('sheetSimpanFoto');
+  if(ov) ov.classList.remove('hidden');
+}
+function tutupSheetSimpanFoto(){
+  const ov = document.getElementById('sheetSimpanFoto');
+  if(ov) ov.classList.add('hidden');
+  _berkasSimpanFoto = null;
+}
+async function simpanKeFoto(){
+  const f = _berkasSimpanFoto;
+  if(!f) return;
+  try{
+    await navigator.share({ files: [f] });
+    tutupSheetSimpanFoto();
+  }catch(err){
+    if(err && err.name === 'AbortError') return;
+    console.error('Gagal membuka menu simpan:', err);
+    showToast('Menu simpan tidak bisa dibuka. Coba "Simpan sebagai berkas".', 3000);
+  }
+}
+function simpanKeBerkas(){
+  const f = _berkasSimpanFoto;
+  if(!f) return;
+  unduhBerkasBiasa(f);
+  tutupSheetSimpanFoto();
+}
 async function unduhDokumenPegawai(jenis, idx, tombol){
   const r = dataGuru[idx];
   if(!r) return;
@@ -4704,14 +4768,17 @@ async function unduhDokumenPegawai(jenis, idx, tombol){
     const berkas = await fetch(hasil.url);
     if(!berkas.ok) throw new Error('Berkas tidak dapat diunduh');
     const blob = await berkas.blob();
-    const a = document.createElement('a');
-    const href = URL.createObjectURL(blob);
-    a.href = href;
-    a.download = _namaDokumen[jenis] + ' - ' + String(r[1]).replace(/[\\/:*?"<>|]/g, '') + '.jpg';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(href), 4000);
+    const info = jenisBerkasDokumen(blob, hasil.url);
+    const namaBersih = String(r[1]).replace(/[\\/:*?"<>|]/g, '');
+    const file = new File([blob], _namaDokumen[jenis] + ' - ' + namaBersih + '.' + info.ext, { type: info.tipe });
+    if(perangkatIOS() && info.tipe.indexOf('image/') === 0 && navigator.canShare && navigator.canShare({ files: [file] })){
+      // iPhone/iPad: browser tidak boleh menulis ke Foto langsung. Menu Bagikan harus dibuka dari ketukan
+      // pengguna, jadi tampilkan tombol "Simpan ke Foto" setelah berkas siap.
+      tampilkanSheetSimpanFoto(file, _namaDokumen[jenis]);
+      return;
+    }
+    // Android & desktop: unduhan biasa, dengan tipe gambar yang benar supaya terdaftar di Galeri.
+    unduhBerkasBiasa(file);
     showToast('Mengunduh ' + _namaDokumen[jenis], 1800);
   }catch(err){
     console.error('Gagal unduh dokumen:', err);
