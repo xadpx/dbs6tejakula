@@ -5,7 +5,7 @@
   <meta name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <meta name="color-scheme" content="light only">
-  <meta name="theme-color" content="#F2F3FC">
+  <meta name="theme-color" content="#F1F4FB">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -34,14 +34,14 @@
       --color-bg-card:    #EEF1F6;
       --color-bg-card-solid: #EEF1F6;
 
-      --color-primary:      #5047E2;
-      --color-primary-deep: #4338CA;
-      --color-primary-soft: rgba(80,71,226,.14);
+      --color-primary:      #1E40AF;
+      --color-primary-deep: #1E40AF;
+      --color-primary-soft: rgba(30,64,175,.14);
 
       --color-accent-blue:    #8ECDF7;
       --color-accent-blue-deep: #4A90D9;
-      --color-accent-purple:  #B7A6F5;
-      --color-accent-purple-deep: #5047E2;
+      --color-accent-purple:  #93A8E0;
+      --color-accent-purple-deep: #1E40AF;
       --color-accent-green:   #7FD8A4;
       --color-accent-orange:  #F6C667;
       --color-accent-pink:    #F7A8A8;
@@ -60,7 +60,7 @@
       --glass-highlight:  rgba(255,255,255,.85);
       --glass-shadow-col: 20,20,43;
 
-      --color-nav-active-bg: #5047E2;
+      --color-nav-active-bg: #1E40AF;
       --color-nav-inactive:  #6B6E8F;
 
       /* Spacing */
@@ -80,7 +80,7 @@
       --shadow-card: 0 10px 30px rgba(20,20,43,.06);
       --shadow-fab:  0 6px 16px rgba(20,20,43,.1);
       --shadow-nav:  0 -2px 16px rgba(20,20,43,.06);
-      --shadow-hero: 0 16px 34px rgba(80,71,226,.28);
+      --shadow-hero: 0 16px 34px rgba(30,64,175,.28);
 
       /* Font */
       --font-family: 'Inter', 'Sora', sans-serif;
@@ -167,9 +167,9 @@
       user-select:none;
     }
     .kategori-chip:has(.kategori:checked){
-      background:#ECEEFD;
-      color:#5047E2;
-      border-color:#DEE0F9;
+      background:#E9EFFB;
+      color:#1E40AF;
+      border-color:#DCE6F8;
     }
     .kategori-chip .chip-check{
       display:inline-flex;
@@ -188,8 +188,8 @@
       transition:.15s;
     }
     .kategori-chip:has(.kategori:checked) .chip-check{
-      background:#5047E2;
-      border-color:#5047E2;
+      background:#1E40AF;
+      border-color:#1E40AF;
       color:#fff;
     }
     .kategori-list{
@@ -508,7 +508,7 @@
       box-shadow: var(--neu-raised-sm);
     }
     .neu-search-icon .material-symbols-rounded{
-      color: #5047E2 !important;
+      color: #1E40AF !important;
     }
     .neu-dropdown-inset{
       background: #EEF1F6;
@@ -639,7 +639,7 @@
       z-index: 1;
       width: 70%; max-width: 30px;
       border-radius: 20px;
-      background: linear-gradient(180deg,#F0B8CE 0%,#C89EDD 45%,#5047E2 100%);
+      background: linear-gradient(180deg,#F0B8CE 0%,#6B86D0 45%,#1E40AF 100%);
       transition: height .6s cubic-bezier(.34,1.15,.64,1), width .2s ease;
       overflow: visible;
     }
@@ -724,7 +724,7 @@
     }
     .icon-badge-purple {
       width: 30px; height: 30px; border-radius: 10px;
-      background: linear-gradient(160deg,#B7A6F5,#5047E2);
+      background: linear-gradient(160deg,#93A8E0,#1E40AF);
       display: flex; align-items: center; justify-content: center; color: #fff;
     }
     .chart-glass-wrap {
@@ -801,7 +801,7 @@
     .center-label .cl-name { display:block; font-size: 13px; font-weight: 500; color: var(--color-text-secondary); order: 1; }
     .center-label .cl-pct { display:block; font-size: 19px; font-weight: 600; color: var(--color-text-primary); margin-top:3px; order: 2; }
     .legend-chip-neu.legend-chip-selected {
-      box-shadow: 0 0 0 2px rgba(80,71,226,.35), var(--neu-raised-sm);
+      box-shadow: 0 0 0 2px rgba(30,64,175,.35), var(--neu-raised-sm);
       transform: translateY(-1px);
     }
     .legend-chip-neu.legend-chip-pressed {
@@ -875,7 +875,7 @@
     }
 
     #modalStickyHeader.header-gradient-mode {
-      background: #5047E2;
+      background: #1E40AF;
     }
     #modalStickyHeader.header-gradient-mode #modalDragHandleBar {
       background: #FFFFFF;
@@ -1008,8 +1008,8 @@
       --sub: #64748B;
       --card: #EEF1F6;
       --card-border: #ECEDF0;
-      --grad1: linear-gradient(135deg, #8B7EE8 0%, #5047E2 100%);
-      --grad2: linear-gradient(90deg, #7B6EE0 0%, #5047E2 100%);
+      --grad1: linear-gradient(135deg, #4A6AC8 0%, #1E40AF 100%);
+      --grad2: linear-gradient(90deg, #3B5FCC 0%, #1E40AF 100%);
       /* Dua warna kunci neumorphism: highlight (terang, arah kiri-atas)
          dan shadow (gelap, arah kanan-bawah), keduanya diturunkan dari
          base color #EEF1F6 supaya elemen kelihatan "timbul" dari
@@ -1149,7 +1149,7 @@
     .stat-mini-pink{   background:linear-gradient(160deg,#FBB6C0,#F4808F); box-shadow:none; }
     .stat-mini-blue{   background:linear-gradient(160deg,#9BD1F7,#5FA8ED); box-shadow:none; }
     .stat-mini-yellow{ background:linear-gradient(160deg,#FBDE9B,#F0BB55); box-shadow:none; }
-    .stat-mini-purple{ background:linear-gradient(160deg,#CBB8F7,#7B6CEB); box-shadow:none; }
+    .stat-mini-purple{ background:linear-gradient(160deg,#93A8E0,#1E40AF); box-shadow:none; }
 
     /* ===== Komponen tambahan yang belum neumorphic — diseragamkan di sini ===== */
     .kategori-chip{
@@ -1161,12 +1161,12 @@
     }
     .kategori-chip:has(.kategori:checked){
       background: var(--neu-bg) !important;
-      color: #5047E2 !important;
+      color: #1E40AF !important;
       box-shadow: var(--neu-pressed-sm) !important;
     }
     .kategori-chip:has(.kategori:checked) .chip-check{
-      background:#5047E2 !important;
-      border-color:#5047E2 !important;
+      background:#1E40AF !important;
+      border-color:#1E40AF !important;
       color:#fff !important;
     }
     .neu-mini-pill{
@@ -1264,12 +1264,12 @@
     color:#1B2347 !important;
   }
   .kategori-chip:has(.kategori:checked){
-    background:linear-gradient(145deg,rgba(80,71,226,.26),rgba(31,42,85,.20)) !important;
-    border:1px solid rgba(31,42,85,.35) !important;
-    color:#161F45 !important;
+    background:linear-gradient(145deg,rgba(30,64,175,.26),rgba(30,64,175,.20)) !important;
+    border:1px solid rgba(30,64,175,.35) !important;
+    color:#1E3A8A !important;
     box-shadow:none;
   }
-  .kategori-chip:has(.kategori:checked) .chip-check{background:#1F2A55 !important;border-color:#1F2A55 !important;color:#fff !important}
+  .kategori-chip:has(.kategori:checked) .chip-check{background:#1E40AF !important;border-color:#1E40AF !important;color:#fff !important}
 
   /* ===== Card Grafik Data: glass seperti card lain ===== */
   .chart-card-carousel{
@@ -1295,41 +1295,42 @@
 </style>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style id="tema-flat">
-  /* ===== TEMA FLAT MURNI — aksen indigo (acuan: grafik rombel) =====
+  /* ===== TEMA FLAT MURNI — aksen Royal Cobalt #1E40AF =====
      Aturan: hanya warna solid; tanpa gradasi, blur/kaca, bayangan, transparansi.
-     Biru navy HANYA untuk menu bawah dan tombol unduh. Bobot font maksimum 600. */
+     Aksen: #1E40AF. Bobot font maksimum 600. */
   :root{
     --font-family:'Inter','Plus Jakarta Sans',sans-serif;
-    --f-page:#E7E9F7;       /* di luar kolom aplikasi (layar lebar) */
-    --f-bg:#F2F3FC;         /* latar aplikasi */
+    --f-page:#E5EBF7;       /* di luar kolom aplikasi (layar lebar) */
+    --f-bg:#F1F4FB;         /* latar aplikasi */
     --f-card:#FFFFFF;
-    --f-fill:#F5F6FE;       /* isi di dalam kartu (baris, chip legenda) */
-    --f-ctl:#ECEEFD;        /* kontrol: kolom cari, chip, tombol ikon, trek grafik */
-    --f-ctl-press:#DEE0F9;
-    --f-line:#DEE0F9;
-    --f-accent:#5047E2; --f-accent-deep:#4338CA;
-    --f-bar:#A297F5; --f-bar-sel:#7B6CEB;
+    --f-fill:#F5F8FE;       /* isi di dalam kartu (baris, chip legenda) */
+    --f-ctl:#E9EFFB;        /* kontrol: kolom cari, chip, tombol ikon, trek grafik */
+    --f-ctl-press:#DCE6F8;
+    --f-line:#DCE6F8;
+    --f-accent:#1E40AF; --f-accent-deep:#1E40AF;
+    --f-bar:#A3AEC0; --f-bar-sel:#1E40AF;
     --f-ink:#1E293B; --f-sub:#475569;
-    --f-navy:#1F2A55; --f-navy-deep:#161F45;   /* khusus menu bawah & tombol unduh */
-    --c-laki:#C75A32; --c-laki-teks:#AE4A25; --c-laki-bg:#FBEEE9;
-    --c-perempuan:#6457E0; --c-perempuan-bg:#EFEDFC;   /* warna jenis kelamin: ubah di sini saja */
+    --f-navy:#1E40AF; --f-navy-deep:#1E3A8A;   /* khusus menu bawah & tombol unduh */
+    --c-laki:#1E40AF; --c-laki-teks:#1E40AF; --c-laki-bg:#E9EFFB;
+    --c-perempuan:#D97706; --c-perempuan-bg:#FEF3E2;   /* warna jenis kelamin: ubah di sini saja */
 
     /* token lama dipetakan ke flat, jadi semua pemakaian var(--neu-*) ikut berubah */
     --neu-bg:#FFFFFF;
     --neu-dark:transparent; --neu-dark-soft:transparent; --neu-light:transparent;
     --neu-raised-sm:none; --neu-raised-md:none; --neu-raised-lg:none;
     --neu-pressed-sm:none; --neu-pressed-md:none;
-    --grad1:#5047E2; --grad2:#5047E2;
+    --grad1:#1E40AF; --grad2:#1E40AF;
     --ink:#1E293B; --sub:#475569; --card:#FFFFFF; --card-border:transparent;
-    --color-primary:#5047E2; --color-primary-deep:#4338CA; --color-primary-soft:#ECEEFD;
-    --color-nav-active-bg:#1F2A55; --color-nav-inactive:#64748B;
+    --color-primary:#1E40AF; --color-primary-deep:#1E40AF; --color-primary-soft:#E9EFFB;
+    --color-nav-active-bg:#1E40AF; --color-nav-inactive:#64748B;
     --color-text-primary:#1E293B; --color-text-secondary:#475569;
     --color-border:transparent; --glass-border:transparent;
-    --color-bg-app-1:#F2F3FC; --color-bg-app-2:#F2F3FC; --color-bg-app-3:#F2F3FC;
+    --color-bg-app-1:#F1F4FB; --color-bg-app-2:#F1F4FB; --color-bg-app-3:#F1F4FB;
     --color-bg-card:#FFFFFF; --color-bg-card-solid:#FFFFFF;
     --blur-glass:none; --blur-glass-sm:none; --blur-nav:none; --blur-hero:none; --blur-chip:none;
     --shadow-card:none; --shadow-fab:none; --shadow-nav:none; --shadow-hero:none;
   }
+  .text-blue-600,.hover\:text-blue-600:hover{color:#1E40AF !important}
   html{background:var(--f-page)}
   body{background:var(--f-page) !important;color:var(--f-ink)}
   #app-scroll{box-shadow:none !important;background:var(--f-bg);border:none !important}
@@ -1404,8 +1405,8 @@
     box-shadow:none !important;-webkit-backdrop-filter:none !important;backdrop-filter:none !important;
     border-radius:20px !important;
   }
-  .hero-eyebrow{color:#DEE0F9}
-  .hero-sub{color:#DEE0F9}
+  .hero-eyebrow{color:#DCE6F8}
+  .hero-sub{color:#DCE6F8}
   .hero-watermark{opacity:.12}
 
   /* ---- chip kategori ---- */
@@ -1456,6 +1457,29 @@
   #rombelSummary .rs-p{font-size:14px;font-weight:600;color:var(--c-perempuan)}
   #rombelSummary .rs-sep{width:1.5px;height:18px;background:#CDD5E0}
 
+  /* ---- palet grafik rombel: slate netral + Royal Cobalt untuk yang terpilih ---- */
+  .pillbar-bar-wrap,.chart-card-carousel .pillbar-bar-wrap{
+    background:#F1F5F9 !important;border:2px solid transparent !important;
+    transition:background .2s ease,border-color .2s ease;
+  }
+  .pillbar-col.sel .pillbar-bar-wrap{background:#FFFFFF !important;border-color:#1E40AF !important}
+  .pillbar-bar{background:#A3AEC0 !important;transition:background .2s ease}
+  .pillbar-col.sel .pillbar-bar{background:#1E40AF !important}
+  .pillbar-val{font-weight:700;color:#FFFFFF}
+  .pillbar-name{color:#64748B;font-weight:600}
+  .pillbar-col.sel .pillbar-name{color:#1E40AF;font-weight:700}
+  .pillbar-hint-tooltip,.swipe-hint-grafik{background:#1E40AF !important}
+  .pillbar-hint-tooltip::after{background:#1E40AF !important}
+  #rombelSummary{
+    border-top:none;margin:14px 0 2px;padding:12px 16px;gap:10px;
+    background:#F8FAFC;border:1px solid #E2E8F0;border-radius:14px;
+  }
+  #rombelSummary .rs-dot{width:13px;height:13px;border-radius:3px;background:#1E40AF}
+  #rombelSummary .rs-nama{font-weight:700;color:#0F172A}
+  #rombelSummary .rs-l{font-weight:700;color:#1E40AF}
+  #rombelSummary .rs-p{font-weight:700;color:#C2410C}
+  #rombelSummary .rs-sep{width:2px;background:#CBD5E1;border-radius:2px}
+
   /* ---- grafik donat & legenda ---- */
   .neu-ring-wrap,.chart-glass-wrap,.ring-center-raised{background:transparent !important;border:none !important;box-shadow:none !important}
   .center-label.show{background:#FFFFFF !important;border:none !important;box-shadow:none !important}
@@ -1463,11 +1487,11 @@
   .legend-chip-neu,.chart-card-carousel .legend-chip-neu{background:var(--f-fill) !important;border:none !important;box-shadow:none !important}
   .legend-chip-neu.legend-chip-selected{background:var(--f-ctl-press) !important;box-shadow:none !important;transform:none}
   .legend-chip-neu.legend-chip-pressed{transform:scale(.97);background:var(--f-ctl) !important;box-shadow:none !important}
-  .dot-grafik{background:#C9CDE8}
+  .dot-grafik{background:#C8D3EA}
   .dot-grafik.active{background:var(--f-accent)}
   .skeleton{background:#E9EBF8}
-  .skeleton-shimmer{background:#E4E6F6;animation:denyutTeks 1.8s ease-in-out infinite}
-  .skeleton-circle{background:#E4E6F6;animation:denyutTeks 1.8s ease-in-out infinite}
+  .skeleton-shimmer{background:#E3E9F6;animation:denyutTeks 1.8s ease-in-out infinite}
+  .skeleton-circle{background:#E3E9F6;animation:denyutTeks 1.8s ease-in-out infinite}
 
   /* ---- lencana & kartu mini ---- */
   .icon-badge-teal{background:#3AA8D8}
@@ -1479,7 +1503,7 @@
   .stat-mini-icon{background:#FFFFFF33}
 
   /* ---- toggle ---- */
-  .toggle-track{background:#C9CDE8 !important;box-shadow:none !important}
+  .toggle-track{background:#C8D3EA !important;box-shadow:none !important}
   .toggle-track.on{background:var(--f-accent) !important;box-shadow:none !important}
   .toggle-knob-neu,.toggle-knob-neu.on{background:#FFFFFF !important;box-shadow:none !important}
 
@@ -1550,14 +1574,14 @@ input::placeholder{color:#64748B !important;opacity:1}
 .akun-lbl{font-size:13px;color:#475569}
 .akun-val{font-size:15px;font-weight:500;color:#1E293B;word-break:break-all;margin-top:2px}
 .akun-aksi{display:flex;gap:8px;flex-shrink:0}
-.akun-btn{width:40px;height:40px;border-radius:50%;background:#ECEEFD;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#475569}
+.akun-btn{width:40px;height:40px;border-radius:50%;background:#E9EFFB;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#475569}
 .akun-btn .material-symbols-rounded{font-size:20px}
 .dok-judul{font-size:12px;font-weight:600;letter-spacing:.04em;color:#475569;padding:18px 20px 8px}
 .dok-card{background:#fff;margin:0 12px 8px;border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(15,23,42,.04)}
 .dok-row{display:flex;align-items:center;justify-content:space-between;padding:0 16px;min-height:48px;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.dok-row:active{background:#F5F6FE}
+.dok-row:active{background:#F5F8FE}
 .dok-nama{font-size:15px;font-weight:500;color:#1E293B}
-.dok-badge{display:inline-flex;align-items:center;gap:3px;background:#ECEEFD;color:#3B3F9E;font-size:12px;font-weight:600;line-height:1;padding:5px 9px 5px 7px;border-radius:999px}
+.dok-badge{display:inline-flex;align-items:center;gap:3px;background:#E9EFFB;color:#3B3F9E;font-size:12px;font-weight:600;line-height:1;padding:5px 9px 5px 7px;border-radius:999px}
 .dok-badge .material-symbols-rounded{font-size:14px}
 .dok-spin{display:none;width:12px;height:12px;margin:0 1px;border:2px solid #C3C7F0;border-top-color:#3B3F9E;border-radius:50%;box-sizing:border-box;animation:dokSpin .7s linear infinite}
 .dok-badge.memuat .material-symbols-rounded{display:none}
@@ -1568,7 +1592,7 @@ input::placeholder{color:#64748B !important;opacity:1}
 .akun-judul:first-child{margin-top:4px}
 #sheetAkunOverlay{touch-action:none;overscroll-behavior:none;position:fixed;inset:0;z-index:70;background:rgba(15,23,42,0);transition:background .22s ease}
 #sheetAkunOverlay.show{background:rgba(15,23,42,.45)}
-#sheetAkun{touch-action:pan-y;position:absolute;left:50%;bottom:0;width:100%;max-width:480px;max-height:85vh;overflow-y:auto;overflow-x:hidden;background:#F3F4FC;border-radius:24px 24px 0 0;padding:8px 16px calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,100%);transition:transform .25s cubic-bezier(.2,.8,.2,1);box-sizing:border-box;overscroll-behavior:contain}
+#sheetAkun{touch-action:pan-y;position:absolute;left:50%;bottom:0;width:100%;max-width:480px;max-height:85vh;overflow-y:auto;overflow-x:hidden;background:#F2F5FC;border-radius:24px 24px 0 0;padding:8px 16px calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,100%);transition:transform .25s cubic-bezier(.2,.8,.2,1);box-sizing:border-box;overscroll-behavior:contain}
 #sheetAkunOverlay.show #sheetAkun{transform:translate(-50%,0)}
 .sheet-handle{width:40px;height:4px;border-radius:999px;background:#CBD0E6;margin:4px auto 6px}
 .sheet-head{display:flex;align-items:center;justify-content:space-between;padding:4px 4px 4px}
@@ -1579,7 +1603,7 @@ input::placeholder{color:#64748B !important;opacity:1}
 #avatarGuruBtn{position:relative}
 #avatarGuruBtn.bisa-diketuk{cursor:pointer;-webkit-tap-highlight-color:transparent}
 #avatarGuruBtn.bisa-diketuk:active{transform:scale(.95)}
-.avatar-badge{position:absolute;right:-3px;bottom:-3px;width:18px;height:18px;border-radius:50%;background:#4F46E5;color:#fff;border:2px solid #F3F4FC;display:none;align-items:center;justify-content:center}
+.avatar-badge{position:absolute;right:-3px;bottom:-3px;width:18px;height:18px;border-radius:50%;background:#4F46E5;color:#fff;border:2px solid #F2F5FC;display:none;align-items:center;justify-content:center}
 .avatar-badge .material-symbols-rounded{font-size:11px;color:#fff}
 #avatarGuruBtn.bisa-diketuk .avatar-badge{display:flex}
 </style>
@@ -1668,7 +1692,7 @@ input::placeholder{color:#64748B !important;opacity:1}
 
   <div class="flex items-center justify-between">
     <div class="flex items-center" style="min-width:0; gap:10px;">
-      <div id="avatarGuruBtn" class="flex items-center justify-center" style="width:46px;height:46px;border-radius:50%;flex-shrink:0;background:#ECEEFD;box-shadow:none;padding:3px;">
+      <div id="avatarGuruBtn" class="flex items-center justify-center" style="width:46px;height:46px;border-radius:50%;flex-shrink:0;background:#E9EFFB;box-shadow:none;padding:3px;">
         <span class="avatar-badge"><span class="material-symbols-rounded">key</span></span>
         <div id="avatarGuruWrap" class="flex items-center justify-center" style="width:100%;height:100%;border-radius:50%;overflow:hidden;flex-shrink:0;">
           <img id="avatarGuruImg" src="" class="hidden" style="width:100%;height:100%;object-fit:cover;">
@@ -1813,7 +1837,7 @@ input::placeholder{color:#64748B !important;opacity:1}
       <p id="subStatusAnakBeranda" style="font-size:13px; color:#475569; font-weight:500; margin:5px 0 0;"></p>
     </div>
     <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
-      <div id="pctStatusAnakBeranda" style="font-size:20px; font-weight:600; color:#7B6CEB;">&ndash;</div>
+      <div id="pctStatusAnakBeranda" style="font-size:20px; font-weight:600; color:#1E40AF;">&ndash;</div>
       <span class="material-symbols-rounded" style="font-size:20px; color:#B7BACC;">chevron_right</span>
     </div>
   </div>
@@ -1821,7 +1845,7 @@ input::placeholder{color:#64748B !important;opacity:1}
     <div class="chart-card-carousel" id="cardDataRombel" style="width:100%; margin-top:0; margin-bottom:16px;">
       <div class="flex items-center justify-between mb-0.5">
         <div class="flex items-center gap-1.5">
-          <div style="width:24px;height:24px;border-radius:8px;background:#5047E2;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:none;">
+          <div style="width:24px;height:24px;border-radius:8px;background:#1E40AF;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:none;">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
           </div>
           <p class="font-semibold text-[16px] text-gray-800 m-0">Data per Rombel</p>
@@ -1974,14 +1998,14 @@ class="hidden premium-popup-overlay fixed inset-0 bg-black/40 backdrop-blur-sm f
       <div id="dataTabTrack" data-no-ripple class="flex items-center mb-4" style="background: var(--neu-bg);border:none;border-radius:9999px;padding:3px;gap:0;box-shadow: var(--neu-pressed-sm);">
         <button id="tabDataGuru" onclick="switchDataTab('guru')"
           class="flex-1 flex items-center justify-center gap-1 text-[14px] font-medium py-1.5 px-2 rounded-full transition-all duration-200"
-          style="background:#5047E2;color:#FFFFFF;border:none;box-shadow:none;">
+          style="background:#1E40AF;color:#FFFFFF;border:none;box-shadow:none;">
           <span class="material-symbols-rounded text-[13px]">school</span>
           Guru
         </button>
         <div id="divGuruTendik" style="width:1px;height:14px;background:#C3CAD4;flex-shrink:0;opacity:0;"></div>
         <button id="tabDataTendik" onclick="switchDataTab('tendik')"
           class="flex-1 flex items-center justify-center gap-1 text-[14px] font-medium py-1.5 px-2 rounded-full transition-all duration-200"
-          style="background:transparent;color:#4F5878;border:1px solid transparent;box-shadow:none;">
+          style="background:transparent;color:#64748B;border:1px solid transparent;box-shadow:none;">
           <span class="material-symbols-rounded text-[13px]">badge</span>
           Tendik
         </button>
@@ -2238,7 +2262,7 @@ Unduh Data
     <div role="dialog" aria-modal="true" aria-labelledby="sfJudul" style="position:absolute; left:50%; bottom:0; transform:translateX(-50%); width:100%; max-width:480px; box-sizing:border-box; background:#FFFFFF; border-radius:24px 24px 0 0; padding:22px 20px calc(16px + env(safe-area-inset-bottom, 0px));">
       <p id="sfJudul" style="font-size:18px; font-weight:600; color:#1E293B; margin:0;">Simpan ke Foto</p>
       <p style="font-size:14px; color:#475569; margin:8px 0 20px; line-height:1.5;">Ketuk tombol di bawah, lalu pilih <span style="font-weight:600; color:#1E293B;">Simpan Gambar</span> agar berkasnya masuk ke aplikasi Foto.</p>
-      <button type="button" onclick="simpanKeFoto()" style="width:100%; height:48px; border:0; border-radius:14px; background:#1F2A55; color:#FFFFFF; font:600 15px Inter,sans-serif; cursor:pointer;">Simpan ke Foto</button>
+      <button type="button" onclick="simpanKeFoto()" style="width:100%; height:48px; border:0; border-radius:14px; background:#1E40AF; color:#FFFFFF; font:600 15px Inter,sans-serif; cursor:pointer;">Simpan ke Foto</button>
       <button type="button" onclick="simpanKeBerkas()" style="width:100%; height:48px; border:0; background:transparent; color:#475569; font:500 14px Inter,sans-serif; margin-top:4px; cursor:pointer;">Simpan sebagai berkas</button>
     </div>
   </div>
@@ -2530,7 +2554,7 @@ z-[9999]">
     }
     const PALET_AVATAR = [
       ['#8ECDF7','#3AA8D8'],
-      ['#A297F5','#5047E2'],
+      ['#A3AEC0','#1E40AF'],
       ['#F0B8CE','#B9548A'],
       ['#BFE3D0','#4A9B6E'],
       ['#F6C99A','#C97A2E']
@@ -2667,8 +2691,8 @@ let historyTabAktif = false;
         tendik: { btn: document.getElementById('tabDataTendik'),panel: document.getElementById('panelDataTendik') }
       };
 
-      const aktif       = 'background:#5047E2;color:#FFFFFF;border:none;box-shadow:none;';
-      const nonaktif    = 'background:transparent;color:#4F5878;border:1px solid transparent;box-shadow:none;';
+      const aktif       = 'background:#1E40AF;color:#FFFFFF;border:none;box-shadow:none;';
+      const nonaktif    = 'background:transparent;color:#64748B;border:1px solid transparent;box-shadow:none;';
 
       const aktifStyle = { guru: aktif, tendik: aktif };
 
@@ -2849,8 +2873,8 @@ let historyTabAktif = false;
       document.getElementById('detail-content').innerHTML = `<div class="text-[15px] w-full max-w-4xl mx-auto">${isi}</div>`;
     }
 
-    const WARNA_DESIL = { "Desil 1":"#5047E2", "Desil 2":"#A9A0F0", "Desil 3":"#4ECDC4", "Desil 4":"#F2545B", "Desil 5":"#F7A8AC", "Desil 6-10":"#5047E2" };
-    const WARNA_STATUS_ANAK = { "Tidak Ada":"#5047E2", "Yatim":"#A9A0F0", "Piatu":"#4ECDC4", "Yatim Piatu":"#F2545B" };
+    const WARNA_DESIL = { "Desil 1":"#1E40AF", "Desil 2":"#7C93D6", "Desil 3":"#4ECDC4", "Desil 4":"#F2545B", "Desil 5":"#F7A8AC", "Desil 6-10":"#1E40AF" };
+    const WARNA_STATUS_ANAK = { "Tidak Ada":"#1E40AF", "Yatim":"#7C93D6", "Piatu":"#4ECDC4", "Yatim Piatu":"#F2545B" };
 
     function bukaKategoriKesejahteraanDariBeranda(){
       window.modalStack = [];
@@ -2916,7 +2940,7 @@ let historyTabAktif = false;
         <div class="neu-card-flat" style="padding:4px;">
           <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; background-image:linear-gradient(#ECF0F3, #ECF0F3); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;">
             <div style="display:flex; align-items:center; gap:8px;">
-              <span class="material-symbols-rounded text-[14.5px]" style="color:#5047E2;">bar_chart</span>
+              <span class="material-symbols-rounded text-[14.5px]" style="color:#1E40AF;">bar_chart</span>
               <span style="font-size:15px; font-weight:600; color:#1E293B;">Distribusi Kesejahteraan</span>
             </div>
             <span style="font-size:13px; font-weight:600; color:#4b5563; background:var(--neu-bg); padding:5px 10px; border-radius:999px; box-shadow: var(--neu-raised-sm);">Desil 1&ndash;10</span>
@@ -3017,8 +3041,8 @@ let historyTabAktif = false;
               class="flex items-center justify-between px-4 py-3 cursor-pointer active:bg-gray-50 transition ripple-effect"
               style="${i === labels.length - 1 ? '' : 'background-image:linear-gradient(#ECF0F3, #ECF0F3); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;'}">
               <div class="flex items-center gap-3">
-                <div style="width:32px;height:32px;border-radius:12px;background:${(WARNA_STATUS_ANAK[label] || '#9871F5')}1A;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                  <span style="color:${WARNA_STATUS_ANAK[label] || '#9871F5'};"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></span>
+                <div style="width:32px;height:32px;border-radius:12px;background:${(WARNA_STATUS_ANAK[label] || '#4A6AC8')}1A;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <span style="color:${WARNA_STATUS_ANAK[label] || '#4A6AC8'};"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></span>
                 </div>
                 <span class="text-[15px] font-medium text-gray-900">${label}</span>
               </div>
@@ -3074,7 +3098,7 @@ let historyTabAktif = false;
           kumulatifStatus += pct;
           return `${WARNA_STATUS_ANAK[label2]} ${awal}% ${kumulatifStatus}%`;
         }).join(', ');
-        const gradasiKategori = { "Yatim":["#D4CDFA","#A9A0F0"], "Piatu":["#A6E8E0","#4ECDC4"], "Yatim Piatu":["#F7A8AC","#F2545B"] };
+        const gradasiKategori = { "Yatim":["#C7D4F5","#7C93D6"], "Piatu":["#A6E8E0","#4ECDC4"], "Yatim Piatu":["#F7A8AC","#F2545B"] };
 
         kartuRingkasanStatus = `
           <div class="neu-card tint-purple" style="padding:18px; margin-bottom:12px;">
@@ -3112,7 +3136,7 @@ let historyTabAktif = false;
           <div class="neu-card-flat" style="padding:4px;">
             <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 16px; background-image:linear-gradient(#ECF0F3, #ECF0F3); background-position:bottom; background-repeat:no-repeat; background-size:100% 1px;">
               <div style="display:flex; align-items:center; gap:8px;">
-                <span class="material-symbols-rounded text-[14.5px]" style="color:#5047E2;">groups</span>
+                <span class="material-symbols-rounded text-[14.5px]" style="color:#1E40AF;">groups</span>
                 <span style="font-size:15px; font-weight:600; color:#1E293B;">Daftar Siswa</span>
               </div>
               <span style="font-size:14px; font-weight:600; color:#4b5563; background:var(--neu-bg); padding:5px 10px; border-radius:999px; box-shadow: var(--neu-raised-sm);">${hasil.length} siswa</span>
@@ -3120,7 +3144,7 @@ let historyTabAktif = false;
             ${hasil.map((r,i) => {
               let statusR = String(r[14]).trim();
               if(statusR === "") statusR = "Tidak Ada";
-              const warnaStatusR = WARNA_STATUS_ANAK[statusR] || '#9871F5';
+              const warnaStatusR = WARNA_STATUS_ANAK[statusR] || '#4A6AC8';
               return `
               <div
                 onpointerdown="buatRipple(event)"
@@ -3632,7 +3656,7 @@ function mulaiMuatData(){
         while(empat.length < 4) empat.push(0);
         elBarTendikBeranda.innerHTML = empat.map((v, i) => {
           const tinggiPct = v > 0 ? Math.max(15, Math.round((v / maxJabatan) * 100)) : 6;
-          const warnaBar = i < 2 ? '#5047E2' : '#F0EEE9';
+          const warnaBar = i < 2 ? '#1E40AF' : '#F0EEE9';
           return `<div style="flex:1; height:${tinggiPct}%; background:${warnaBar}; border-radius:2px;"></div>`;
         }).join('');
       }
@@ -4505,7 +4529,7 @@ function renderAvatarStackGuru(data){
   });
 
   if(sisa > 0){
-    html += `<div style="width:28px; height:28px; border-radius:50%; border:2px solid #fff; background:#5047E2; display:flex; align-items:center; justify-content:center;"><span class="material-symbols-rounded" style="font-size:13.5px; color:#fff; font-weight:600;">add</span></div>`;
+    html += `<div style="width:28px; height:28px; border-radius:50%; border:2px solid #fff; background:#1E40AF; display:flex; align-items:center; justify-content:center;"><span class="material-symbols-rounded" style="font-size:13.5px; color:#fff; font-weight:600;">add</span></div>`;
   }
 
   el.innerHTML = html;
@@ -5662,14 +5686,14 @@ function buatChart(){
 function unduhKesejahteraanGambar(){
   const desil = { "Desil 1":0,"Desil 2":0,"Desil 3":0,"Desil 4":0,"Desil 5":0,"Desil 6-10":0 };
   d.forEach(r=>{ let x = String(r[13]).trim(); if(desil.hasOwnProperty(x)) desil[x]++; });
-  const warna = ["#11C8F5","#CFC9FF","#FFD6CC","#FFE59A","#C9F6E6","#B9C2F0"];
+  const warna = ["#11C8F5","#C7D4F5","#FFD6CC","#FFE59A","#C9F6E6","#BFCDF0"];
   unduhChartSebagaiGambar("centerLabelKesejahteraan", window.chartKesejahteraanInstance, "Kesejahteraan Siswa", Object.keys(desil), Object.values(desil), warna, "Siswa", "Kesejahteraan_Siswa.jpg");
 }
 
 function unduhStatusAnakGambar(){
   let status = {};
   d.forEach(r=>{ let s = String(r[14]).trim(); if(s=="") s="Tidak Ada"; status[s]=(status[s]||0)+1; });
-  const warna = ["#11C8F5","#FFD6CC","#FFE59A","#C9F6E6","#CFC9FF"];
+  const warna = ["#11C8F5","#FFD6CC","#FFE59A","#C9F6E6","#C7D4F5"];
   unduhChartSebagaiGambar("centerLabelStatusAnak", window.chartStatusAnakInstance, "Status Anak", Object.keys(status), Object.values(status), warna, "Siswa", "Status_Anak.jpg");
 }
 
