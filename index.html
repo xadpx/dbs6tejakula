@@ -1782,8 +1782,8 @@ input::placeholder{color:#64748B !important;opacity:1}
           <span style="font-size:13px; font-weight:400; color:#BFD3FB;">siswa</span>
         </p>
       </div>
-      <div style="position:relative; flex:0 0 auto; width:36px; height:36px; border-radius:12px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.22); display:flex; align-items:center; justify-content:center;">
-        <span class="material-symbols-rounded" style="font-size:20px; color:#FFFFFF;">chevron_right</span>
+      <div style="position:relative; flex:0 0 auto; width:28px; height:28px; border-radius:50%; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.22); display:flex; align-items:center; justify-content:center;">
+        <span class="material-symbols-rounded" style="font-size:18px; color:#FFFFFF;">chevron_right</span>
       </div>
     </div>
     <!-- Metrik presisi -->
@@ -6673,14 +6673,7 @@ function toggleSemuaData(){
     c.disabled = semua;
 
     if(semua){
-
       c.checked = false;
-      c.parentElement.classList.add("opacity-50");
-
-    }else{
-
-      c.parentElement.classList.remove("opacity-50");
-
     }
 
   });
@@ -7274,6 +7267,13 @@ function tutupPopupPremium(overlayId, boxId, callback){
 })();
 </script>
 <!-- ===== TOUR PERTAMA LOGIN (spotlight, wajib diikuti) ===== -->
+<style id="perbaikan-ui-3">
+/* Kolom cari Siswa: border biru sejak awal (sebelum diketik) */
+.neu-search{border:1.5px solid #1E40AF !important}
+/* Kategori unduh: redup otomatis selama checkbox-nya nonaktif (saat "Semua Data" dicentang).
+   Murni CSS mengikuti status disabled, jadi selalu sinkron di setiap klik. */
+.kategori-chip:has(.kategori:disabled){opacity:.5 !important;cursor:not-allowed}
+</style>
 <style id="tourCss">
 #tourOverlay{position:fixed;inset:0;z-index:9000;touch-action:none;overscroll-behavior:contain;font-family:'Inter',sans-serif}
 #tourOverlay.hidden{display:none}
