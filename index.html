@@ -1557,6 +1557,11 @@ input::placeholder{color:#64748B !important;opacity:1}
 .dok-nama{font-size:15px;font-weight:500;color:#1E293B}
 .dok-badge{display:inline-flex;align-items:center;gap:3px;background:#ECEEFD;color:#3B3F9E;font-size:12px;font-weight:600;line-height:1;padding:5px 9px 5px 7px;border-radius:999px}
 .dok-badge .material-symbols-rounded{font-size:14px}
+.dok-spin{display:none;width:12px;height:12px;margin:0 1px;border:2px solid #C3C7F0;border-top-color:#3B3F9E;border-radius:50%;box-sizing:border-box;animation:dokSpin .7s linear infinite}
+.dok-badge.memuat .material-symbols-rounded{display:none}
+.dok-badge.memuat .dok-spin{display:inline-block}
+.dok-row[aria-busy="true"]{cursor:progress}
+@keyframes dokSpin{to{transform:rotate(360deg)}}
 .akun-judul{font-size:14px;font-weight:600;color:#1E293B;margin:16px 4px 8px}
 .akun-judul:first-child{margin-top:4px}
 #sheetAkunOverlay{touch-action:none;overscroll-behavior:none;position:fixed;inset:0;z-index:70;background:rgba(15,23,42,0);transition:background .22s ease}
@@ -4667,7 +4672,7 @@ function bagianDokumenHTML(tipe, idx){
        onclick="unduhDokumenPegawai('${d[0]}',${idx},this)"
        style="${i === daftar.length - 1 ? '' : 'border-bottom:1px solid #ECF0F3;'}">
     <span class="dok-nama">${d[1]}</span>
-    <span class="dok-badge"><span class="material-symbols-rounded">download</span>Unduh</span>
+    <span class="dok-badge"><span class="material-symbols-rounded">download</span><span class="dok-spin"></span>Unduh</span>
   </div>`).join('');
   return `
 <div class="dok-judul">DOKUMEN</div>
@@ -4679,10 +4684,9 @@ async function unduhDokumenPegawai(jenis, idx, tombol){
   const r = dataGuru[idx];
   if(!r) return;
   if(tombol && tombol.dataset.sibuk === '1') return;
-  const ikon = tombol ? tombol.querySelector('.material-symbols-rounded') : null;
-  const setIkon = t => { if(ikon) ikon.textContent = t; };
-  if(tombol) tombol.dataset.sibuk = '1';
-  setIkon('hourglass_top');
+  const badge = tombol ? tombol.querySelector('.dok-badge') : null;
+  if(tombol){ tombol.dataset.sibuk = '1'; tombol.setAttribute('aria-busy', 'true'); }
+  if(badge) badge.classList.add('memuat');
   try{
     const fb = await tungguFirebase();
     const idToken = await fb.ambilIdToken();
@@ -4711,8 +4715,8 @@ async function unduhDokumenPegawai(jenis, idx, tombol){
     console.error('Gagal unduh dokumen:', err);
     showToast('Gagal mengunduh. Coba lagi.', 2500);
   }finally{
-    setIkon('download');
-    if(tombol) tombol.dataset.sibuk = '0';
+    if(badge) badge.classList.remove('memuat');
+    if(tombol){ tombol.dataset.sibuk = '0'; tombol.removeAttribute('aria-busy'); }
   }
 }
 
