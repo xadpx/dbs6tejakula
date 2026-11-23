@@ -1704,32 +1704,36 @@ input::placeholder{color:#64748B !important;opacity:1}
 
   <p style="position:relative; font-size:13px; font-weight:500; color:#A6A399; margin:0 0 10px; letter-spacing:.05em; text-transform:uppercase;">Ringkasan data</p>
 
-  <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" style="background:var(--neu-bg); border-radius:20px; padding:13px 16px; box-shadow: var(--neu-raised-md); margin-bottom:12px;">
-    <div style="display:flex; align-items:center; justify-content:space-between;">
+  <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" role="button" aria-label="Lihat rincian total siswa" style="background:var(--neu-bg); border-radius:20px; padding:18px 0 4px; box-shadow: var(--neu-raised-md); margin-bottom:12px; -webkit-tap-highlight-color:transparent;">
+    <div style="padding:0 18px; display:flex; align-items:flex-start; justify-content:space-between;">
       <div>
-        <p style="font-size:17px; font-weight:600; color:#1E293B; margin:0;">Total Siswa</p>
-        <p style="margin:3px 0 0; display:flex; align-items:baseline; gap:8px; min-height:30px;">
-          <span id="tot" class="hidden tabular-nums" style="font-size:36px; font-weight:600; color:#1E293B; line-height:1;">0</span>
-          <span id="totSpin" class="spinner-ring-gray" style="width:20px;height:20px;"></span>
+        <p style="font-size:14px; font-weight:500; color:#475569; margin:0;">Total siswa</p>
+        <p style="margin:6px 0 0; display:flex; align-items:center; min-height:40px;">
+          <span id="tot" class="hidden tabular-nums" style="font-size:40px; font-weight:700; color:#1E293B; line-height:1;">0</span>
+          <span id="totSpin" class="spinner-ring-gray" style="width:22px;height:22px;"></span>
         </p>
       </div>
-      <p style="font-size:12px; color:#5047E2; font-weight:500; margin:0; display:flex; align-items:center; gap:2px; flex-shrink:0; background:var(--neu-bg); padding:2px 7px; border-radius:999px; box-shadow:3px 3px 7px var(--neu-dark), -3px -3px 7px var(--neu-light);">
-        Lihat rincian<span class="material-symbols-rounded" style="font-size:10px;">arrow_forward</span>
-      </p>
+      <span class="material-symbols-rounded" style="font-size:22px; color:#475569; margin-top:-1px;">chevron_right</span>
     </div>
 
-    <p style="font-size:13px; color:#475569; font-weight:500; margin:9px 0 6px; display:flex; align-items:center; gap:5px;">
-      <span class="material-symbols-rounded" style="font-size:14px;">apartment</span>
-      <span id="totRombelBerandaKtx" class="tabular-nums">&ndash;</span> kelas &middot; rata-rata <span id="rataSiswaKelasBerandaKtx" class="tabular-nums">&ndash;</span> siswa/kelas
-    </p>
-
-    <div style="display:flex; height:9px; border-radius:999px; overflow:hidden; margin-top:5px; background:rgba(163,177,198,.2);">
+    <div style="display:flex; height:10px; border-radius:999px; overflow:hidden; margin:16px 18px 0; background:rgba(163,177,198,.2);">
       <div id="barLPL" style="width:0%; background:#F0997B; transition:width .8s ease;"></div>
       <div id="barLPP" style="width:0%; background:#AFA9EC; transition:width .8s ease;"></div>
     </div>
-    <div style="display:flex; justify-content:space-between; margin-top:5px;">
-      <span style="font-size:13px; color:#712B13; font-weight:600;">Laki-laki <span id="pctL">&ndash;</span></span>
-      <span style="font-size:13px; color:#3C3489; font-weight:600;">Perempuan <span id="pctP">&ndash;</span></span>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; margin-top:14px; border-top:1px solid #ECEDF0;">
+      <div style="padding:12px 0 12px 18px;">
+        <p id="pctL" class="tabular-nums" style="font-size:17px; font-weight:600; color:#712B13; margin:0; line-height:1.2;">&ndash;</p>
+        <p style="font-size:13px; color:#475569; margin:2px 0 0;">Laki-laki</p>
+      </div>
+      <div style="padding:12px 0; text-align:center; border-left:1px solid #ECEDF0; border-right:1px solid #ECEDF0;">
+        <p id="pctP" class="tabular-nums" style="font-size:17px; font-weight:600; color:#3C3489; margin:0; line-height:1.2;">&ndash;</p>
+        <p style="font-size:13px; color:#475569; margin:2px 0 0;">Perempuan</p>
+      </div>
+      <div style="padding:12px 18px 12px 0; text-align:right;">
+        <p id="totRombelBerandaKtx" class="tabular-nums" style="font-size:17px; font-weight:600; color:#1E293B; margin:0; line-height:1.2;">&ndash;</p>
+        <p style="font-size:13px; color:#475569; margin:2px 0 0;">Kelas</p>
+      </div>
     </div>
   </div>
 
@@ -3626,8 +3630,8 @@ function mulaiMuatData(){
       const pctPerempuan = 100 - pctLaki;
       const elPctL = document.getElementById('pctL');
       const elPctP = document.getElementById('pctP');
-      if(elPctL) elPctL.textContent = `${totalLaki} siswa`;
-      if(elPctP) elPctP.textContent = `${totalPerempuan} siswa`;
+      if(elPctL) elPctL.textContent = totalLaki;
+      if(elPctP) elPctP.textContent = totalPerempuan;
       const elBarL = document.getElementById('barLPL');
       const elBarP = document.getElementById('barLPP');
       if(elBarL) elBarL.style.width = pctLaki + '%';
