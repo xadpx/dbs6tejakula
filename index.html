@@ -1704,31 +1704,58 @@ input::placeholder{color:#64748B !important;opacity:1}
 
   <div style="position:relative;">
 
-  <p style="position:relative; font-size:13px; font-weight:500; color:#A6A399; margin:0 0 10px; letter-spacing:.05em; text-transform:uppercase;">Ringkasan data</p>
+  <div style="display:flex; align-items:center; justify-content:space-between; margin:0 0 10px;">
+    <p style="font-size:13px; font-weight:600; color:#64748B; margin:0; letter-spacing:.05em; text-transform:uppercase;">Ringkasan data</p>
+    <span id="semesterLabelBeranda" style="font-size:13px; font-weight:600; color:#64748B;">Semester Ganjil</span>
+  </div>
 
-  <div onclick="bukaDataRombelDariBeranda()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();bukaDataRombelDariBeranda();}" class="cursor-pointer" role="button" tabindex="0" aria-label="Lihat rincian total siswa" style="display:flex; border-radius:20px; overflow:hidden; background:var(--neu-bg); box-shadow:var(--neu-raised-md); margin-bottom:12px; -webkit-tap-highlight-color:transparent;">
-    <div style="flex:0 0 auto; min-width:140px; box-sizing:border-box; background:#DAD7F7; padding:18px; color:#2B2780;">
-      <p style="font-size:13px; font-weight:500; color:#4338CA; margin:0;">Total siswa</p>
-      <p style="margin:8px 0 0; display:flex; align-items:center; min-height:48px;">
-        <span id="tot" class="hidden tabular-nums" style="font-size:48px; font-weight:600; letter-spacing:-.02em; color:#2B2780; line-height:1;">0</span>
-        <span id="totSpin" class="spinner-ring-gray" style="width:22px; height:22px; background:conic-gradient(from 0deg, transparent 0%, #5047E2 100%);"></span>
-      </p>
-      <p style="font-size:13px; color:#4338CA; margin:14px 0 0; line-height:1.45;"><span id="totRombelBerandaKtx" class="tabular-nums">&ndash;</span> kelas<br>rata-rata <span id="rataSiswaKelasBerandaKtx" class="tabular-nums">&ndash;</span></p>
-    </div>
-    <div style="flex:1; min-width:0; padding:18px; display:flex; flex-direction:column; justify-content:center;">
-      <div style="margin-bottom:18px;">
-        <div style="display:flex; align-items:center; justify-content:space-between;">
-          <span style="display:flex; align-items:center; font-size:13px; color:#475569;"><span style="width:8px; height:8px; border-radius:50%; background:var(--c-laki); margin-right:6px;"></span>Laki-laki</span>
-          <span id="pctL" class="tabular-nums" style="font-size:16px; font-weight:600; color:#1E293B;">&ndash;</span>
-        </div>
-        <div style="height:4px; border-radius:999px; background:#ECEEFD; margin-top:8px;"><div id="barLPL" style="width:0%; height:4px; border-radius:999px; background:var(--c-laki); transition:width .8s ease;"></div></div>
+  <div onclick="bukaDataRombelDariBeranda()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();bukaDataRombelDariBeranda();}" class="cursor-pointer" role="button" tabindex="0" aria-label="Lihat rincian total siswa" style="border-radius:22px; overflow:hidden; background:#FFFFFF; border:1px solid #E2E8F0; margin-bottom:12px; -webkit-tap-highlight-color:transparent;">
+    <!-- Header Royal Cobalt -->
+    <div style="position:relative; background:#1E40AF; padding:18px 22px 20px; display:flex; align-items:center; justify-content:space-between; overflow:hidden;">
+      <div aria-hidden="true" style="position:absolute; inset:0; background:rgba(255,255,255,.06); clip-path:polygon(78% 0, 100% 0, 100% 100%, 84% 100%); pointer-events:none;"></div>
+      <div style="position:relative; min-width:0;">
+        <p style="font-size:14px; font-weight:700; color:#BFD3FB; margin:0; letter-spacing:.06em; text-transform:uppercase;">Total siswa terdaftar</p>
+        <p style="margin:6px 0 0; display:flex; align-items:baseline; flex-wrap:wrap; gap:0 10px; min-height:52px;">
+          <span id="tot" class="hidden tabular-nums" style="font-size:52px; font-weight:800; letter-spacing:-.03em; color:#FFFFFF; line-height:1;">0</span>
+          <span id="totSpin" class="spinner-ring-gray" style="width:24px; height:24px; align-self:center; background:conic-gradient(from 0deg, transparent 0%, #FFFFFF 100%);"></span>
+          <span style="font-size:15px; font-weight:500; color:#BFD3FB;">siswa &middot; &Oslash; <span id="rataSiswaKelasBerandaKtx" class="tabular-nums">&ndash;</span> / kelas</span>
+        </p>
       </div>
-      <div>
+      <div style="position:relative; flex:0 0 auto; width:49px; height:46px; border-radius:13px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.22); display:flex; align-items:center; justify-content:center;">
+        <span class="material-symbols-rounded" style="font-size:24px; color:#FFFFFF;">chevron_right</span>
+      </div>
+    </div>
+    <!-- Metrik presisi -->
+    <div style="background:#FFFFFF; padding:15px; display:flex; gap:10px;">
+      <div style="flex:1; min-width:0; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:14px; padding:12px 14px;">
         <div style="display:flex; align-items:center; justify-content:space-between;">
-          <span style="display:flex; align-items:center; font-size:13px; color:#475569;"><span style="width:8px; height:8px; border-radius:50%; background:var(--c-perempuan); margin-right:6px;"></span>Perempuan</span>
-          <span id="pctP" class="tabular-nums" style="font-size:16px; font-weight:600; color:#1E293B;">&ndash;</span>
+          <span style="font-size:14px; font-weight:500; color:#64748B;">Laki-laki</span>
+          <span style="width:10px; height:10px; border-radius:50%; background:#1E40AF; flex-shrink:0;"></span>
         </div>
-        <div style="height:4px; border-radius:999px; background:#ECEEFD; margin-top:8px;"><div id="barLPP" style="width:0%; height:4px; border-radius:999px; background:var(--c-perempuan); transition:width .8s ease;"></div></div>
+        <div style="display:flex; align-items:baseline; justify-content:space-between; margin-top:12px;">
+          <span id="pctL" class="tabular-nums" style="font-size:26px; font-weight:800; color:#0F172A; line-height:1;">&ndash;</span>
+          <span id="pctLTxt" class="tabular-nums" style="font-size:13px; font-weight:700; color:#1E40AF;">&ndash;</span>
+        </div>
+      </div>
+      <div style="flex:1; min-width:0; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:14px; padding:12px 14px;">
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <span style="font-size:14px; font-weight:500; color:#64748B;">Perempuan</span>
+          <span style="width:10px; height:10px; border-radius:50%; background:#D97706; flex-shrink:0;"></span>
+        </div>
+        <div style="display:flex; align-items:baseline; justify-content:space-between; margin-top:12px;">
+          <span id="pctP" class="tabular-nums" style="font-size:26px; font-weight:800; color:#0F172A; line-height:1;">&ndash;</span>
+          <span id="pctPTxt" class="tabular-nums" style="font-size:13px; font-weight:700; color:#B45309;">&ndash;</span>
+        </div>
+      </div>
+      <div style="flex:1; min-width:0; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:14px; padding:12px 14px;">
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <span style="font-size:14px; font-weight:500; color:#64748B;">Rombel</span>
+          <span style="width:10px; height:10px; border-radius:50%; background:#334155; flex-shrink:0;"></span>
+        </div>
+        <div style="display:flex; align-items:baseline; justify-content:space-between; margin-top:12px;">
+          <span id="totRombelBerandaKtx" class="tabular-nums" style="font-size:26px; font-weight:800; color:#0F172A; line-height:1;">&ndash;</span>
+          <span style="font-size:13px; font-weight:700; color:#64748B;">Kelas</span>
+        </div>
       </div>
     </div>
   </div>
@@ -3639,6 +3666,12 @@ function mulaiMuatData(){
       const elPctP = document.getElementById('pctP');
       if(elPctL) elPctL.textContent = totalLaki;
       if(elPctP) elPctP.textContent = totalPerempuan;
+      const elPctLTxt = document.getElementById('pctLTxt');
+      const elPctPTxt = document.getElementById('pctPTxt');
+      if(elPctLTxt) elPctLTxt.textContent = pctLaki + '%';
+      if(elPctPTxt) elPctPTxt.textContent = pctPerempuan + '%';
+      const elSemester = document.getElementById('semesterLabelBeranda');
+      if(elSemester) elSemester.textContent = 'Semester ' + ((new Date().getMonth() + 1) >= 7 ? 'Ganjil' : 'Genap');
       const elBarL = document.getElementById('barLPL');
       const elBarP = document.getElementById('barLPP');
       if(elBarL) elBarL.style.width = pctLaki + '%';
