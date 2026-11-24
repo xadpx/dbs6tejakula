@@ -6688,6 +6688,43 @@ document.addEventListener("change", function(e){
   if(e.target && e.target.classList && e.target.classList.contains("kategori")) syncKategoriUnduh();
 });
 
+// ---- Tap chip kategori: ditangani lewat pointer events, bukan "click" bawaan label ----
+// Di HP, event click bisa hilang/terlambat (pencegah double-tap, reset zoom, swipe halaman),
+// sehingga chip kadang tidak merespons. pointerup tidak terpengaruh hal itu.
+(function(){
+  let mulai = null;
+  function chipDari(el){
+    const chip = el && el.closest ? el.closest('#p-download .kategori-chip') : null;
+    return chip;
+  }
+  function toggleChip(chip){
+    const input = chip.querySelector('.kategori');
+    if(!input || input.disabled) return;
+    input.checked = !input.checked;
+    syncKategoriUnduh();
+  }
+  document.addEventListener('pointerdown', function(e){
+    const chip = chipDari(e.target);
+    mulai = chip ? {chip, x:e.clientX, y:e.clientY, id:e.pointerId} : null;
+  }, true);
+  document.addEventListener('pointerup', function(e){
+    if(!mulai || mulai.id !== e.pointerId) return;
+    const m = mulai; mulai = null;
+    const chip = chipDari(document.elementFromPoint(e.clientX, e.clientY));
+    if(chip !== m.chip) return;
+    if(Math.hypot(e.clientX - m.x, e.clientY - m.y) > 12) return; // geser/scroll, bukan tap
+    toggleChip(chip);
+  }, true);
+  document.addEventListener('pointercancel', function(){ mulai = null; }, true);
+  // click bawaan label dibatalkan supaya tidak toggle dua kali; keyboard (detail===0) tetap jalan
+  document.addEventListener('click', function(e){
+    const chip = chipDari(e.target);
+    if(!chip) return;
+    e.preventDefault();
+    if(e.detail === 0) toggleChip(chip);
+  }, true);
+})();
+
 // Cegah pinch-zoom pakai 2 jari
 document.addEventListener('touchstart', function(e){
   if(e.touches.length > 1){
@@ -6739,7 +6776,7 @@ document.addEventListener('touchend', function(e){
   // (mis. search bar), karena keyboard mobile yang sedang muncul akan
   // bentrok dengan perubahan viewport ini dan membuat halaman terasa freeze.
   const target = e.target;
-  const sedangDiInput = target && target.closest && target.closest('input, textarea, [contenteditable="true"]');
+  const sedangDiInput = target && target.closest && target.closest('input, textarea, label, [contenteditable="true"]');
   if(sedangDiInput) return;
 
   setTimeout(resetZoomPaksa, 60);
