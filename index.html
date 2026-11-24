@@ -6688,15 +6688,15 @@ document.addEventListener("change", function(e){
   if(e.target && e.target.classList && e.target.classList.contains("kategori")) syncKategoriUnduh();
 });
 
-// ---- Tap chip kategori: ditangani lewat pointer events, bukan "click" bawaan label ----
-// Di HP, event click bisa hilang/terlambat (pencegah double-tap, reset zoom, swipe halaman),
-// sehingga chip kadang tidak merespons. pointerup tidak terpengaruh hal itu.
+// ---- Tap chip kategori ----
+// Satu gestur = satu toggle. Toggle dijalankan oleh pointerup (utama); bila browser HP
+// membatalkan sentuhan (pointercancel) atau hanya mengirim click, itu dipakai sebagai cadangan.
+// click yang menyusul gestur yang sudah ditangani diabaikan, tapi gestur BARU
+// (pointerdown baru) selalu diproses, jadi tap cepat berulang tidak pernah hilang.
 (function(){
   let mulai = null;
-  function chipDari(el){
-    const chip = el && el.closest ? el.closest('#p-download .kategori-chip') : null;
-    return chip;
-  }
+  let sudahDitangani = false;
+  const chipDari = el => (el && el.closest) ? el.closest('#p-download .kategori-chip') : null;
   function toggleChip(chip){
     const input = chip.querySelector('.kategori');
     if(!input || input.disabled) return;
@@ -6705,25 +6705,34 @@ document.addEventListener("change", function(e){
   }
   document.addEventListener('pointerdown', function(e){
     const chip = chipDari(e.target);
+    sudahDitangani = false;
     mulai = chip ? {chip, x:e.clientX, y:e.clientY, id:e.pointerId} : null;
   }, true);
-  document.addEventListener('pointerup', function(e){
+  document.addEventListener('pointermove', function(e){
+    if(mulai && mulai.id === e.pointerId){ mulai.lx = e.clientX; mulai.ly = e.clientY; }
+  }, true);
+  function selesai(e, akhirX, akhirY){
     if(!mulai || mulai.id !== e.pointerId) return;
     const m = mulai; mulai = null;
-    const chip = chipDari(document.elementFromPoint(e.clientX, e.clientY));
-    if(chip !== m.chip) return;
-    if(Math.hypot(e.clientX - m.x, e.clientY - m.y) > 12) return; // geser/scroll, bukan tap
-    toggleChip(chip);
+    if(akhirX !== undefined && Math.hypot(akhirX - m.x, akhirY - m.y) > 12) return; // geser/scroll
+    sudahDitangani = true;
+    toggleChip(m.chip);
+  }
+  document.addEventListener('pointerup', function(e){ selesai(e, e.clientX, e.clientY); }, true);
+  document.addEventListener('pointercancel', function(e){
+    // jari sedikit bergeser lalu browser membatalkan: tetap dianggap tap
+    selesai(e, mulai && mulai.lx, mulai && mulai.ly);
   }, true);
-  document.addEventListener('pointercancel', function(){ mulai = null; }, true);
-  // click bawaan label dibatalkan supaya tidak toggle dua kali; keyboard (detail===0) tetap jalan
   document.addEventListener('click', function(e){
     const chip = chipDari(e.target);
     if(!chip) return;
-    e.preventDefault();
-    if(e.detail === 0) toggleChip(chip);
+    e.preventDefault();               // cegah toggle ganda bawaan label
+    if(sudahDitangani){ sudahDitangani = false; return; }
+    toggleChip(chip);                 // cadangan: click tanpa pointerup / keyboard
   }, true);
 })();
+
+
 
 // Cegah pinch-zoom pakai 2 jari
 document.addEventListener('touchstart', function(e){
