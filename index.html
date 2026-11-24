@@ -3436,8 +3436,8 @@ let historyTabAktif = false;
           area.innerHTML = daftar.map((x, i) => `
             <div class="akun-judul">${escHtml(x.label || ('Akun ' + (i + 1)))}</div>
             <div class="neu-card" style="padding:6px 16px !important;">
-              <div class="akun-baris"><div style="min-width:0;"><div class="akun-lbl">Email</div><div class="akun-val">${escHtml(x.gmail || '-')}</div></div>
-                <div class="akun-aksi"><button class="akun-btn" aria-label="Salin email" onclick="salinAkunSaya(${i}, 'gmail')"><span id="copyEmailAkun${i}" class="material-symbols-rounded">content_copy</span></button></div></div>
+              <div class="akun-baris"><div style="min-width:0;"><div class="akun-lbl">Email / Username</div><div class="akun-val">${escHtml(x.gmail || '-')}</div></div>
+                <div class="akun-aksi"><button class="akun-btn" aria-label="Salin email atau username" onclick="salinAkunSaya(${i}, 'gmail')"><span id="copyEmailAkun${i}" class="material-symbols-rounded">content_copy</span></button></div></div>
               <div class="akun-baris"><div style="min-width:0;"><div class="akun-lbl">Password</div><div class="akun-val" id="akunPwTeks${i}">••••••••••</div></div>
                 <div class="akun-aksi">
                   <button class="akun-btn" aria-label="Tampilkan password" onclick="togglePasswordAkun(${i})"><span id="akunPwIkon${i}" class="material-symbols-rounded">visibility</span></button>
