@@ -2800,8 +2800,9 @@ let historyTabAktif = false;
         document.querySelectorAll('#p-download .kategori').forEach(c=>{
           c.checked = false;
           c.disabled = false;
-          c.parentElement.classList.remove('opacity-50');
+          c.parentElement.classList.remove('opacity-50','kategori-off');
         });
+        if(typeof syncKategoriUnduh === 'function') syncKategoriUnduh();
       }
     }
 
@@ -6663,22 +6664,29 @@ function updateKelasAkhir(){
 
 }
 function toggleSemuaData(){
-
-  const semua = document.getElementById("semuaData").checked;
-
-  document.querySelectorAll(".kategori").forEach(c=>{
-
-    if(c.id==="semuaData") return;
-
-    c.disabled = semua;
-
-    if(semua){
-      c.checked = false;
-    }
-
-  });
-
+  syncKategoriUnduh();
 }
+
+// Satu fungsi tunggal yang menyamakan tampilan & status semua chip kategori
+// dengan status "Semua Data". Dipanggil setiap ada perubahan.
+function syncKategoriUnduh(){
+  const semuaEl = document.getElementById("semuaData");
+  if(!semuaEl) return;
+  const semua = semuaEl.checked;
+  document.querySelectorAll("#p-download .kategori").forEach(c=>{
+    const chip = c.closest(".kategori-chip");
+    if(c.id === "semuaData"){
+      if(chip) chip.classList.remove("kategori-off");
+      return;
+    }
+    if(semua) c.checked = false;
+    c.disabled = semua;
+    if(chip) chip.classList.toggle("kategori-off", semua);
+  });
+}
+document.addEventListener("change", function(e){
+  if(e.target && e.target.classList && e.target.classList.contains("kategori")) syncKategoriUnduh();
+});
 
 // Cegah pinch-zoom pakai 2 jari
 document.addEventListener('touchstart', function(e){
@@ -6697,7 +6705,8 @@ document.addEventListener('touchmove', function(e){
 let lastTouchEnd = 0;
 document.addEventListener('touchend', function(e){
   const now = Date.now();
-  if(now - lastTouchEnd <= 300){
+  const interaktif = e.target && e.target.closest && e.target.closest('label, button, a, input, select, textarea, [onclick]');
+  if(!interaktif && now - lastTouchEnd <= 300){
     e.preventDefault();
   }
   lastTouchEnd = now;
@@ -7272,7 +7281,8 @@ function tutupPopupPremium(overlayId, boxId, callback){
 .neu-search{border:1.5px solid #1E40AF !important}
 /* Kategori unduh: redup otomatis selama checkbox-nya nonaktif (saat "Semua Data" dicentang).
    Murni CSS mengikuti status disabled, jadi selalu sinkron di setiap klik. */
-.kategori-chip:has(.kategori:disabled){opacity:.5 !important;cursor:not-allowed}
+.kategori-chip.kategori-off,.kategori-chip:has(.kategori:disabled){opacity:.5 !important;cursor:not-allowed;pointer-events:auto}
+.kategori-chip{touch-action:manipulation}
 </style>
 <style id="tourCss">
 #tourOverlay{position:fixed;inset:0;z-index:9000;touch-action:none;overscroll-behavior:contain;font-family:'Inter',sans-serif}
