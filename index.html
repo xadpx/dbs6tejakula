@@ -3418,7 +3418,7 @@ let historyTabAktif = false;
       area.innerHTML = '<div class="flex flex-col items-center justify-center text-center pt-14"><span class="spinner-ring-gray" style="width:26px;height:26px;margin-bottom:10px;"></span><p class="teks-berdenyut text-[14px] font-medium m-0" style="color:#475569;">Memuat data...</p></div>';
       const email = String(window.guruAktif.email || '').toLowerCase();
       tungguFirebase()
-        .then(fb => fb.bacaDok('akunLogin', email))
+        .then(fb => fb.bacaDok('akunSaya', email))
         .then(akun => {
           let daftar = [];
           try{ daftar = JSON.parse((akun && akun.daftarAkun) || '[]'); }catch(e){ daftar = []; }
