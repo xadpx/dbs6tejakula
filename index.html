@@ -13,16 +13,17 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="SDN 6 Tejakula">
   <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
     /* ===== DESIGN TOKENS — GLASSMORPHISM (tema netral abu-abu) ===== */
     :root {
@@ -1293,7 +1294,6 @@
     box-shadow:none;
   }
 </style>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style id="tema-flat">
   /* ===== TEMA FLAT MURNI — aksen Royal Cobalt #1E40AF =====
      Aturan: hanya warna solid; tanpa gradasi, blur/kaca, bayangan, transparansi.
@@ -2544,11 +2544,26 @@ z-[9999]">
       return _fbPromise;
     }
 
+    // ---- Cache lokal data siswa/guru/tendik (agar aplikasi langsung tampil) ----
+    // Cache dipakai hanya bila ada sesi login, dihapus saat logout, dan selalu
+    // diverifikasi ulang ke Firestore di latar belakang.
+    const KUNCI_CACHE_DATA = 'cacheData:';
+    function bacaCacheLokal(nama){
+      try{ const t = localStorage.getItem(KUNCI_CACHE_DATA + nama); return t ? JSON.parse(t) : null; }catch(e){ return null; }
+    }
+    function simpanCacheLokal(nama, dok){
+      try{ localStorage.setItem(KUNCI_CACHE_DATA + nama, JSON.stringify({ json: dok.json, updatedAt: dok.updatedAt || '' })); }catch(e){}
+    }
+    function hapusCacheLokal(){
+      try{ ['siswa','guru','tendik'].forEach(n => localStorage.removeItem(KUNCI_CACHE_DATA + n)); }catch(e){}
+    }
+
     const _cacheDok = {};
     function bacaDokData(nama){
       if(!_cacheDok[nama]){
         _cacheDok[nama] = tungguFirebase()
           .then(fb => fb.bacaDok('data', nama))
+          .then(dok => { if(dok && typeof dok.json === 'string') simpanCacheLokal(nama, dok); return dok; })
           .catch(err => { delete _cacheDok[nama]; throw err; });
       }
       return _cacheDok[nama];
@@ -2567,15 +2582,35 @@ z-[9999]">
     }
 
     function ambilDataGabungan(){
-      return Promise.all([bacaDokData('siswa'), bacaDokData('guru'), bacaDokData('tendik')])
-        .then(([siswa, guru, tendik]) => {
-          const ada = x => x && typeof x.json === 'string';
-          if(!ada(siswa) || !ada(guru) || !ada(tendik)){
-            return { siswa: [], guru: [], tendik: [], error: 'Data belum tersedia di database. Jalankan sinkronisasi dari Google Sheets.' };
-          }
-          return { siswa: JSON.parse(siswa.json), guru: JSON.parse(guru.json), tendik: JSON.parse(tendik.json), error: null };
-        })
-        .catch(tanganiErrorFirebase);
+      const ada = x => x && typeof x.json === 'string';
+      const susun = ([siswa, guru, tendik]) => {
+        if(!ada(siswa) || !ada(guru) || !ada(tendik)){
+          return { siswa: [], guru: [], tendik: [], error: 'Data belum tersedia di database. Jalankan sinkronisasi dari Google Sheets.' };
+        }
+        return { siswa: JSON.parse(siswa.json), guru: JSON.parse(guru.json), tendik: JSON.parse(tendik.json), error: null };
+      };
+      // Ambil salinan cache SEBELUM unduhan baru menimpanya
+      const cache = ['siswa', 'guru', 'tendik'].map(bacaCacheLokal);
+      let adaSesi = false;
+      try{ adaSesi = !!localStorage.getItem('guruLogin'); }catch(e){}
+      const segar = Promise.all([bacaDokData('siswa'), bacaDokData('guru'), bacaDokData('tendik')]);
+
+      if(adaSesi && cache.every(ada)){
+        try{
+          const dariCache = susun(cache);   // tampil langsung dari cache
+          segar.then(baru => {
+            const beda = baru.some((b, i) => ada(b) && b.json !== cache[i].json);
+            if(beda) showToast('Ada pembaruan data. Tutup lalu buka lagi aplikasi untuk melihatnya.', 5000);
+          }).catch(err => {
+            if(err && err.code === 'permission-denied') aksesDicabut();
+            else console.warn('Pembaruan data latar belakang gagal:', err);
+          });
+          return Promise.resolve(dariCache);
+        }catch(e){
+          hapusCacheLokal();                // cache rusak: abaikan, pakai unduhan
+        }
+      }
+      return segar.then(susun).catch(tanganiErrorFirebase);
     }
 
     function ambilDataSheet(nama){
@@ -3639,6 +3674,7 @@ let historyTabAktif = false;
           return true;
         }catch(err){
           localStorage.removeItem('guruLogin');
+          hapusCacheLokal();
         }
       }
       document.getElementById('p-login').classList.remove('hidden');
@@ -3711,6 +3747,7 @@ let historyTabAktif = false;
 
     function logoutGuru(){
       localStorage.removeItem('guruLogin');
+      hapusCacheLokal();
       window.guruAktif = null;
       if(window.google && google.accounts && google.accounts.id){
         google.accounts.id.disableAutoSelect();
@@ -6304,7 +6341,32 @@ function closeModalKategoriVisual(){
 function closeModalKategori(){
   history.back();
 }
+// Pustaka Excel dimuat hanya saat dibutuhkan (tidak menahan tampilan awal)
+let _promXLSX = null;
+function muatXLSX(){
+  if(window.XLSX) return Promise.resolve();
+  if(!_promXLSX){
+    _promXLSX = new Promise((res, rej) => {
+      const el = document.createElement('script');
+      el.src = 'https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js';
+      el.onload = () => res();
+      el.onerror = () => { _promXLSX = null; el.remove(); rej(new Error('Gagal memuat pustaka Excel')); };
+      document.head.appendChild(el);
+    });
+  }
+  return _promXLSX;
+}
+// Siapkan di latar belakang setelah halaman tenang, supaya klik pertama tetap cepat
+window.addEventListener('load', () => {
+  setTimeout(() => { (window.requestIdleCallback || (f => setTimeout(f, 500)))(() => { muatXLSX().catch(() => {}); }); }, 6000);
+});
 function downloadCSV(){
+  if(window.XLSX){ return downloadCSVSetelahXLSX(); }
+  showToast('Menyiapkan unduhan...', 1500);
+  muatXLSX().then(downloadCSVSetelahXLSX)
+    .catch(() => showToast('Gagal memuat pustaka Excel. Periksa koneksi lalu coba lagi.', 3500));
+}
+function downloadCSVSetelahXLSX(){
 
   const btn = document.getElementById("btnUnduh");
 
