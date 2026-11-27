@@ -1588,6 +1588,8 @@ input::placeholder{color:#64748B !important;opacity:1}
 .akun-aksi{display:flex;gap:8px;flex-shrink:0}
 .akun-btn{width:40px;height:40px;border-radius:50%;background:#E9EFFB;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#475569}
 .akun-btn .material-symbols-rounded{font-size:20px}
+#previewDokumen:not(.hidden){display:flex}
+#previewDokumen.hidden{display:none}
 .dok-judul{font-size:12px;font-weight:500;letter-spacing:.04em;color:#475569;padding:18px 20px 8px}
 .dok-card{background:#fff;margin:0 12px 8px;border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(15,23,42,.04)}
 .dok-row{display:flex;align-items:center;justify-content:space-between;padding:0 16px;min-height:48px;cursor:pointer;-webkit-tap-highlight-color:transparent}
@@ -2352,7 +2354,7 @@ Unduh Data
     </div>
   </div>
 
-  <div id="previewDokumen" class="hidden" role="dialog" aria-modal="true" aria-labelledby="pdJudul" style="position:fixed; inset:0; z-index:95; background:rgba(15,23,42,.92); display:flex; flex-direction:column;">
+  <div id="previewDokumen" class="hidden" role="dialog" aria-modal="true" aria-labelledby="pdJudul" style="position:fixed; inset:0; z-index:95; background:rgba(15,23,42,.92); flex-direction:column;">
     <div style="flex-shrink:0; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:calc(10px + env(safe-area-inset-top, 0px)) 8px 10px 20px;">
       <p id="pdJudul" style="margin:0; font:600 16px Inter,sans-serif; color:#FFFFFF; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Pratinjau</p>
       <button type="button" aria-label="Tutup pratinjau" onclick="tutupPreviewDokumen()" style="width:44px; height:44px; border:0; background:transparent; color:#FFFFFF; cursor:pointer; display:flex; align-items:center; justify-content:center;"><span class="material-symbols-rounded">close</span></button>
