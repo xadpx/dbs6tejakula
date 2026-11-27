@@ -2352,6 +2352,18 @@ Unduh Data
     </div>
   </div>
 
+  <div id="previewDokumen" class="hidden" role="dialog" aria-modal="true" aria-labelledby="pdJudul" style="position:fixed; inset:0; z-index:95; background:rgba(15,23,42,.92); display:flex; flex-direction:column;">
+    <div style="flex-shrink:0; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:calc(10px + env(safe-area-inset-top, 0px)) 8px 10px 20px;">
+      <p id="pdJudul" style="margin:0; font:600 16px Inter,sans-serif; color:#FFFFFF; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Pratinjau</p>
+      <button type="button" aria-label="Tutup pratinjau" onclick="tutupPreviewDokumen()" style="width:44px; height:44px; border:0; background:transparent; color:#FFFFFF; cursor:pointer; display:flex; align-items:center; justify-content:center;"><span class="material-symbols-rounded">close</span></button>
+    </div>
+    <div id="pdIsi" onclick="if(event.target===this)tutupPreviewDokumen()" style="flex:1; min-height:0; display:flex; align-items:center; justify-content:center; padding:0 16px; overflow:auto;"></div>
+    <div style="flex-shrink:0; display:flex; gap:10px; padding:12px 20px calc(16px + env(safe-area-inset-bottom, 0px)); max-width:480px; width:100%; box-sizing:border-box; margin:0 auto;">
+      <button type="button" onclick="simpanFotoPreview()" style="flex:1; height:48px; border:0; border-radius:14px; background:#FFFFFF; color:#1E293B; font:600 15px Inter,sans-serif; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;"><span class="material-symbols-rounded" style="font-size:20px;">download</span>Simpan Foto</button>
+      <button type="button" onclick="bagikanPreview()" style="flex:1; height:48px; border:0; border-radius:14px; background:#1E40AF; color:#FFFFFF; font:600 15px Inter,sans-serif; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;"><span class="material-symbols-rounded" style="font-size:20px;">share</span>Bagikan</button>
+    </div>
+  </div>
+
   <div id="modal"
 class="hidden detail-fullpage-overlay fixed inset-0 z-[60]">
     <div id="modalBox" class="detail-fullpage-box relative" style="background:var(--neu-bg); display:flex; flex-direction:column; overflow:hidden;">
@@ -4967,8 +4979,8 @@ const SUPABASE_FUNGSI = SUPABASE_URL + '/functions/v1/ambil-dokumen';
 // Nama folder di Supabase kalau BERBEDA dari nama di sheet (huruf besar/kecil tidak berpengaruh).
 // Nama yang sama persis tidak perlu ditulis di sini.
 const FOLDER_DOKUMEN = {
-  'Ni Luh Maliastri': 'Ni Luh Maliastri',
-  'Ni Made Sukrami': 'Ni Made Sukrami'
+  'Ni Luh Maliastri': 'Luh Maliastri',
+  'Ni Made Sukrami': 'Made Sukrami'
 };
 function folderDokumen(nama){
   const n = String(nama || '').trim();
@@ -5027,6 +5039,64 @@ function unduhBerkasBiasa(berkas){
   a.remove();
   setTimeout(() => URL.revokeObjectURL(href), 4000);
 }
+// ===== Pratinjau dokumen: foto bisa ditekan lama untuk menu Simpan bawaan perangkat =====
+let _berkasPreview = null, _urlPreview = null;
+function tampilkanPreviewDokumen(berkas, label){
+  tutupPreviewDokumen();
+  _berkasPreview = berkas;
+  _urlPreview = URL.createObjectURL(berkas);
+  document.getElementById('pdJudul').textContent = label;
+  const isi = document.getElementById('pdIsi');
+  isi.innerHTML = '';
+  if(berkas.type.indexOf('image/') === 0){
+    const img = document.createElement('img');
+    img.src = _urlPreview;
+    img.alt = label;
+    img.style.cssText = 'max-width:100%; max-height:100%; object-fit:contain; border-radius:8px; ';
+    isi.appendChild(img);
+  }else{
+    const f = document.createElement('iframe');
+    f.src = _urlPreview;
+    f.title = label;
+    f.style.cssText = 'width:100%; height:100%; border:0; border-radius:8px; background:#fff;';
+    isi.appendChild(f);
+  }
+  document.getElementById('previewDokumen').classList.remove('hidden');
+}
+function tutupPreviewDokumen(){
+  const ov = document.getElementById('previewDokumen');
+  if(ov) ov.classList.add('hidden');
+  const isi = document.getElementById('pdIsi');
+  if(isi) isi.innerHTML = '';
+  if(_urlPreview){ URL.revokeObjectURL(_urlPreview); _urlPreview = null; }
+  _berkasPreview = null;
+}
+async function simpanFotoPreview(){
+  const f = _berkasPreview;
+  if(!f) return;
+  // iPhone/iPad: satu-satunya jalan ke aplikasi Foto adalah menu Bagikan -> "Simpan Gambar".
+  if(perangkatIOS() && f.type.indexOf('image/') === 0 && navigator.canShare && navigator.canShare({ files: [f] })){
+    try{ await navigator.share({ files: [f] }); }
+    catch(err){ if(!(err && err.name === 'AbortError')) unduhBerkasBiasa(f); }
+    return;
+  }
+  unduhBerkasBiasa(f);
+  showToast('Foto disimpan', 1800);
+}
+async function bagikanPreview(){
+  const f = _berkasPreview;
+  if(!f) return;
+  if(!(navigator.share && navigator.canShare && navigator.canShare({ files: [f] }))){
+    showToast('Perangkat ini belum mendukung Bagikan. Gunakan Simpan Foto.', 3000);
+    return;
+  }
+  try{ await navigator.share({ files: [f], title: f.name }); }
+  catch(err){
+    if(err && err.name === 'AbortError') return;
+    console.error('Gagal membagikan:', err);
+    showToast('Gagal membuka menu Bagikan', 2500);
+  }
+}
 let _berkasSimpanFoto = null;
 function tampilkanSheetSimpanFoto(berkas, label){
   _berkasSimpanFoto = berkas;
@@ -5083,15 +5153,7 @@ async function unduhDokumenPegawai(jenis, idx, tombol){
     const info = jenisBerkasDokumen(blob, hasil.url);
     const namaBersih = String(r[1]).replace(/[\\/:*?"<>|]/g, '');
     const file = new File([blob], _namaDokumen[jenis] + ' - ' + namaBersih + '.' + info.ext, { type: info.tipe });
-    if(perangkatIOS() && info.tipe.indexOf('image/') === 0 && navigator.canShare && navigator.canShare({ files: [file] })){
-      // iPhone/iPad: browser tidak boleh menulis ke Foto langsung. Menu Bagikan harus dibuka dari ketukan
-      // pengguna, jadi tampilkan tombol "Simpan ke Foto" setelah berkas siap.
-      tampilkanSheetSimpanFoto(file, _namaDokumen[jenis]);
-      return;
-    }
-    // Android & desktop: unduhan biasa, dengan tipe gambar yang benar supaya terdaftar di Galeri.
-    unduhBerkasBiasa(file);
-    showToast('Mengunduh ' + _namaDokumen[jenis], 1800);
+    tampilkanPreviewDokumen(file, _namaDokumen[jenis] + ' \u2014 ' + namaBersih);
   }catch(err){
     console.error('Gagal unduh dokumen:', err);
     showToast('Gagal mengunduh. Coba lagi.', 2500);
