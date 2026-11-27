@@ -1604,6 +1604,19 @@ input::placeholder{color:#64748B !important;opacity:1}
 .dok-badge.memuat .dok-spin{display:inline-block}
 .dok-row[aria-busy="true"]{cursor:progress}
 @keyframes dokSpin{to{transform:rotate(360deg)}}
+ .akun-tabs{flex:0 0 auto;display:flex;gap:4px;background:#E9EFFB;border-radius:999px;padding:4px;margin:2px 0 10px}
+.akun-tabs.hidden{display:none}
+.akun-tab{flex:1;height:36px;border:0;border-radius:999px;background:transparent;font:500 14px Inter,sans-serif;color:#475569;cursor:pointer}
+.akun-tab.aktif{background:#fff;color:#1E40AF;font-weight:600;box-shadow:0 1px 2px rgba(15,23,42,.08)}
+.akun-cari{width:100%;box-sizing:border-box;height:44px;border:1px solid #DCE3F0;border-radius:14px;background:#fff;padding:0 14px;font:400 15px Inter,sans-serif;color:#1E293B;margin:0 0 10px;outline:none}
+.akun-grup{background:#fff;border-radius:16px;margin:0 0 8px;padding:0 16px;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+.akun-grup summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:52px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.akun-grup summary::-webkit-details-marker{display:none}
+.akun-grup .gnama{font-size:15px;font-weight:500;color:#1E293B}
+.akun-grup .gsub{display:block;font-size:12.5px;color:#64748B;margin-top:1px}
+.akun-grup .akun-chev{color:#64748B;transition:transform .2s ease}
+.akun-grup[open] .akun-chev{transform:rotate(180deg)}
+.akun-sublabel{font-size:12px;font-weight:600;color:#475569;letter-spacing:.03em;margin:10px 0 0}
 .akun-judul{font-size:14px;font-weight:600;color:#1E293B;margin:16px 4px 8px}
 .akun-judul:first-child{margin-top:4px}
 #sheetAkunOverlay{touch-action:none;overscroll-behavior:none;position:fixed;inset:0;z-index:70;background:rgba(15,23,42,0);transition:background .22s ease}
@@ -2338,8 +2351,12 @@ Unduh Data
     <div id="sheetAkun" role="dialog" aria-modal="true" aria-label="Akun Saya">
       <div class="sheet-handle"></div>
       <div class="sheet-head">
-        <div class="sheet-judul"><span class="material-symbols-rounded">key</span>Akun Saya</div>
+        <div class="sheet-judul"><span class="material-symbols-rounded">key</span><span id="akunJudulTeks">Akun Saya</span></div>
         <button type="button" class="sheet-tutup" aria-label="Tutup" onclick="tutupSheetAkun()"><span class="material-symbols-rounded">close</span></button>
+      </div>
+      <div id="akunTab" class="akun-tabs hidden" role="tablist">
+        <button type="button" class="akun-tab" data-tab="semua" role="tab" onclick="tampilTabAkun('semua')">Semua Guru</button>
+        <button type="button" class="akun-tab" data-tab="saya" role="tab" onclick="tampilTabAkun('saya')">Akun Saya</button>
       </div>
       <div id="akunKonten"></div>
     </div>
@@ -2512,7 +2529,7 @@ z-[9999]">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
   import { getAuth, GoogleAuthProvider, signInWithCredential, onAuthStateChanged, signOut }
     from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
-  import { getFirestore, doc, getDoc }
+  import { getFirestore, doc, getDoc, getDocs, collection }
     from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -2536,6 +2553,10 @@ z-[9999]">
     bacaDok: async (koleksi, id) => {
       const snap = await getDoc(doc(db, koleksi, id));
       return snap.exists() ? snap.data() : null;
+    },
+    bacaSemuaDok: async (koleksi) => {
+      const snap = await getDocs(collection(db, koleksi));
+      return snap.docs.map(d => ({ id: d.id, data: d.data() }));
     }
   };
   window.dispatchEvent(new Event('fb-ready'));
@@ -3427,10 +3448,15 @@ let historyTabAktif = false;
     }
     setInterval(perbaruiTanggalWaktuBeranda, 30000);
 
+    function peranAktif(){ return String((window.guruAktif && window.guruAktif.peran) || '').trim().toLowerCase(); }
+    function adalahAdmin(){ return peranAktif() === 'admin'; }
+    // Guru dan admin sama-sama boleh membuka akun sendiri & mengunduh dokumen guru.
+    function bolehLihatAkunDokumen(){ const p = peranAktif(); return p === 'guru' || p === 'admin'; }
+
     function terapkanPeran(){
       const btn = document.getElementById('avatarGuruBtn');
       if(!btn) return;
-      const guru = !!(window.guruAktif && String(window.guruAktif.peran || '').toLowerCase() === 'guru');
+      const guru = bolehLihatAkunDokumen();
       btn.classList.toggle('bisa-diketuk', guru);
       if(guru){
         btn.setAttribute('role', 'button');
@@ -3446,14 +3472,25 @@ let historyTabAktif = false;
 
     let _sheetAkunTerbuka = false;
     function bukaSheetAkun(){
-      if(!(window.guruAktif && String(window.guruAktif.peran || '').toLowerCase() === 'guru')) return;
+      if(!bolehLihatAkunDokumen()) return;
       if(_sheetAkunTerbuka) return;
       const ov = document.getElementById('sheetAkunOverlay');
       if(!ov) return;
       _sheetAkunTerbuka = true;
       kunciScroll(true);
       history.pushState({ sheetAkun: true }, '');
-      muatAkunSaya();
+      const tabEl = document.getElementById('akunTab');
+      const judulEl = document.getElementById('akunJudulTeks');
+      if(adalahAdmin()){
+        if(tabEl) tabEl.classList.remove('hidden');
+        if(judulEl) judulEl.textContent = 'Akun';
+        tampilTabAkun('semua');
+      }else{
+        if(tabEl) tabEl.classList.add('hidden');
+        if(judulEl) judulEl.textContent = 'Akun Saya';
+        _tabAkunAktif = 'saya';
+        muatAkunSaya();
+      }
       ov.classList.remove('hidden');
       requestAnimationFrame(() => requestAnimationFrame(() => ov.classList.add('show')));
     }
@@ -3468,6 +3505,8 @@ let historyTabAktif = false;
       const ov = document.getElementById('sheetAkunOverlay');
       sembunyikanPasswordAkun();
       _daftarAkunSaya = [];
+      _akunSemua = null;
+      bersihkanTimerGuru();
       if(!ov) return;
       ov.classList.remove('show');
       setTimeout(() => { if(!_sheetAkunTerbuka) ov.classList.add('hidden'); }, 260);
@@ -3487,6 +3526,7 @@ let historyTabAktif = false;
       tungguFirebase()
         .then(fb => fb.bacaDok('akunSaya', email))
         .then(akun => {
+          if(_tabAkunAktif !== 'saya' || !_sheetAkunTerbuka) return;
           let daftar = [];
           try{ daftar = JSON.parse((akun && akun.daftarAkun) || '[]'); }catch(e){ daftar = []; }
           if(!Array.isArray(daftar)) daftar = [];
@@ -3496,7 +3536,7 @@ let historyTabAktif = false;
           }
           daftar = daftar.filter(x => x && (x.gmail || x.password));
           if(daftar.length === 0){
-            area.innerHTML = '<div class="neu-card" style="text-align:center;"><p style="font-size:15px;color:#475569;margin:0;">Data akun belum diisi. Silakan hubungi admin sekolah.</p></div>';
+            area.innerHTML = '<div class="neu-card" style="text-align:center;"><p style="font-size:15px;color:#475569;margin:0;">' + (adalahAdmin() ? 'Anda belum memiliki data akun sendiri.' : 'Data akun belum diisi. Silakan hubungi admin sekolah.') + '</p></div>';
             return;
           }
           _daftarAkunSaya = daftar;
@@ -3518,6 +3558,120 @@ let historyTabAktif = false;
           area.innerHTML = '<div class="neu-card" style="text-align:center;"><p style="font-size:15px;color:#475569;margin:0;">Data akun tidak dapat dimuat. Coba lagi nanti.</p></div>';
         });
     }
+    // ===== Admin: tab & daftar akun semua guru =====
+    let _tabAkunAktif = 'saya', _akunSemua = null;
+    const _timerPwGuru = {};
+    function bersihkanTimerGuru(){ Object.keys(_timerPwGuru).forEach(k => clearTimeout(_timerPwGuru[k])); }
+    function tampilTabAkun(tab){
+      if(!adalahAdmin()) tab = 'saya';
+      _tabAkunAktif = tab;
+      document.querySelectorAll('#akunTab .akun-tab').forEach(b => {
+        const aktif = b.dataset.tab === tab;
+        b.classList.toggle('aktif', aktif);
+        b.setAttribute('aria-selected', aktif ? 'true' : 'false');
+      });
+      bersihkanTimerGuru();
+      if(tab === 'saya') muatAkunSaya(); else muatSemuaAkunGuru();
+    }
+    async function muatSemuaAkunGuru(){
+      const area = document.getElementById('akunKonten');
+      if(!area || !adalahAdmin()) return;
+      if(_akunSemua){ renderSemuaAkunGuru(); return; }
+      area.innerHTML = '<div class="flex flex-col items-center justify-center text-center pt-14"><span class="spinner-ring-gray" style="width:26px;height:26px;margin-bottom:10px;"></span><p class="teks-berdenyut text-[14px] font-medium m-0" style="color:#475569;">Memuat data...</p></div>';
+      try{
+        const fb = await tungguFirebase();
+        const hasil = await Promise.all([fb.bacaSemuaDok('akunLogin'), fb.bacaSemuaDok('akunSaya')]);
+        const peta = {};
+        hasil[1].forEach(d => { peta[String(d.id).toLowerCase()] = d.data || {}; });
+        _akunSemua = hasil[0]
+          .filter(d => String((d.data && d.data.peran) || '').trim().toLowerCase() === 'guru')
+          .map(d => {
+            const email = String(d.id).toLowerCase();
+            const a = peta[email] || {};
+            let daftar = [];
+            try{ daftar = JSON.parse(a.daftarAkun || '[]'); }catch(e){ daftar = []; }
+            if(!Array.isArray(daftar)) daftar = [];
+            if(daftar.length === 0 && (a.gmail || a.password)) daftar = [{ label: a.namaAkun || 'Akun', gmail: a.gmail || '', password: a.password || '' }];
+            daftar = daftar.filter(x => x && (x.gmail || x.password));
+            return { email: email, nama: (d.data && d.data.nama) || email, daftar: daftar };
+          })
+          .sort((x, y) => String(x.nama).localeCompare(String(y.nama), 'id'));
+        if(_tabAkunAktif !== 'semua' || !_sheetAkunTerbuka) return;
+        renderSemuaAkunGuru();
+      }catch(err){
+        console.error('Gagal memuat semua akun guru:', err);
+        if(_tabAkunAktif !== 'semua' || !_sheetAkunTerbuka) return;
+        area.innerHTML = '<div class="neu-card" style="text-align:center;"><p style="font-size:15px;color:#475569;margin:0;">Data akun guru tidak dapat dimuat. Pastikan akun ini berperan admin, lalu coba lagi.</p></div>';
+      }
+    }
+    function renderSemuaAkunGuru(){
+      const area = document.getElementById('akunKonten');
+      if(!area || !_akunSemua) return;
+      if(_akunSemua.length === 0){
+        area.innerHTML = '<div class="neu-card" style="text-align:center;"><p style="font-size:15px;color:#475569;margin:0;">Belum ada data guru.</p></div>';
+        return;
+      }
+      area.innerHTML = '<input id="akunCari" class="akun-cari" type="search" placeholder="Cari nama guru" aria-label="Cari nama guru" oninput="isiDaftarAkunGuru()"><div id="akunSemuaList"></div>' +
+        '<p style="font-size:13px;color:#475569;margin:12px 4px 0;line-height:1.5;">Data ini rahasia. Jangan dibagikan atau difoto.</p>';
+      isiDaftarAkunGuru();
+    }
+    function isiDaftarAkunGuru(){
+      const box = document.getElementById('akunSemuaList');
+      if(!box || !_akunSemua) return;
+      bersihkanTimerGuru();
+      const cari = document.getElementById('akunCari');
+      const q = String((cari && cari.value) || '').trim().toLowerCase();
+      const cocok = _akunSemua.map((g, gi) => ({ g: g, gi: gi })).filter(x => !q || String(x.g.nama).toLowerCase().indexOf(q) !== -1);
+      if(cocok.length === 0){
+        box.innerHTML = '<p style="font-size:14px;color:#475569;text-align:center;margin:20px 0;">Guru tidak ditemukan.</p>';
+        return;
+      }
+      box.innerHTML = cocok.map(x => {
+        const g = x.g, gi = x.gi;
+        const sub = g.daftar.length ? (g.daftar.length + ' akun') : 'Belum ada data akun';
+        const isi = g.daftar.length === 0 ? '<p style="font-size:14px;color:#64748B;margin:0 0 14px;">Belum ada data akun.</p>' : g.daftar.map((a, i) => `
+          <div class="akun-sublabel">${escHtml(a.label || ('Akun ' + (i + 1)))}</div>
+          <div class="akun-baris"><div style="min-width:0;"><div class="akun-lbl">Email / Username</div><div class="akun-val">${escHtml(a.gmail || '-')}</div></div>
+            <div class="akun-aksi"><button class="akun-btn" aria-label="Salin email atau username" onclick="salinAkunGuru(${gi},${i},'gmail')"><span id="gEmailIkon${gi}_${i}" class="material-symbols-rounded">content_copy</span></button></div></div>
+          <div class="akun-baris"><div style="min-width:0;"><div class="akun-lbl">Password</div><div class="akun-val" id="gPwTeks${gi}_${i}">\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022</div></div>
+            <div class="akun-aksi">
+              <button class="akun-btn" aria-label="Tampilkan password" onclick="togglePasswordGuru(${gi},${i})"><span id="gPwLihat${gi}_${i}" class="material-symbols-rounded">visibility</span></button>
+              <button class="akun-btn" aria-label="Salin password" onclick="salinAkunGuru(${gi},${i},'password')"><span id="gPwIkon${gi}_${i}" class="material-symbols-rounded">content_copy</span></button>
+            </div></div>`).join('');
+        return `<details class="akun-grup"><summary><span><span class="gnama">${escHtml(g.nama)}</span><span class="gsub">${sub}</span></span><span class="material-symbols-rounded akun-chev">expand_more</span></summary>${isi}</details>`;
+      }).join('');
+    }
+    function salinAkunGuru(gi, i, jenis){
+      const g = _akunSemua && _akunSemua[gi];
+      const a = g && g.daftar[i];
+      if(!a) return;
+      if(jenis === 'password') salinTeks(a.password || '', 'gPwIkon' + gi + '_' + i, 'Password');
+      else salinTeks(a.gmail || '', 'gEmailIkon' + gi + '_' + i, 'Email');
+    }
+    function sembunyikanPasswordGuru(gi, i){
+      const key = gi + '_' + i;
+      clearTimeout(_timerPwGuru[key]);
+      const t = document.getElementById('gPwTeks' + key);
+      const k = document.getElementById('gPwLihat' + key);
+      if(t) t.textContent = '\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022';
+      if(k) k.textContent = 'visibility';
+    }
+    function togglePasswordGuru(gi, i){
+      const key = gi + '_' + i;
+      const t = document.getElementById('gPwTeks' + key);
+      const k = document.getElementById('gPwLihat' + key);
+      const a = _akunSemua && _akunSemua[gi] && _akunSemua[gi].daftar[i];
+      if(!t || !k || !a) return;
+      if(k.textContent === 'visibility'){
+        t.textContent = a.password || '-';
+        k.textContent = 'visibility_off';
+        clearTimeout(_timerPwGuru[key]);
+        _timerPwGuru[key] = setTimeout(() => sembunyikanPasswordGuru(gi, i), 15000);
+      }else{
+        sembunyikanPasswordGuru(gi, i);
+      }
+    }
+
     function salinAkunSaya(i, jenis){
       const x = _daftarAkunSaya[i];
       if(!x) return;
@@ -4981,8 +5135,8 @@ const SUPABASE_FUNGSI = SUPABASE_URL + '/functions/v1/ambil-dokumen';
 // Nama folder di Supabase kalau BERBEDA dari nama di sheet (huruf besar/kecil tidak berpengaruh).
 // Nama yang sama persis tidak perlu ditulis di sini.
 const FOLDER_DOKUMEN = {
-  'Ni Luh Maliastri': 'Ni Luh Maliastri',
-  'Ni Made Sukrami': 'Ni Made Sukrami'
+  'Ni Luh Maliastri': 'Luh Maliastri',
+  'Ni Made Sukrami': 'Made Sukrami'
 };
 function folderDokumen(nama){
   const n = String(nama || '').trim();
@@ -4992,7 +5146,7 @@ function folderDokumen(nama){
 }
 // Tombol unduh hanya untuk guru yang login (peran guru) dan hanya di detail guru.
 function bolehUnduhDokumen(tipe){
-  const guru = !!(window.guruAktif && String(window.guruAktif.peran || '').toLowerCase() === 'guru');
+  const guru = bolehLihatAkunDokumen();
   return guru && tipe === 'guru';
 }
 function bagianDokumenHTML(tipe, idx){
@@ -5008,7 +5162,7 @@ function bagianDokumenHTML(tipe, idx){
   const gabungan = `
   <div class="dok-row dok-semua" role="button" tabindex="0" aria-label="Unduh semua dokumen sebagai satu berkas Word"
        onclick="unduhDokumenGabungan(${idx},this)">
-    <span><span class="dok-nama">Semua dokumen</span><span class="dok-sub">Satu berkas Word, bisa diedit</span></span>
+    <span><span class="dok-nama">Semua dokumen</span><span class="dok-sub">Satu berkas Word, bisa disunting</span></span>
     <span class="dok-badge"><span class="material-symbols-rounded">download</span><span class="dok-spin"></span>Unduh</span>
   </div>`;
   return `
