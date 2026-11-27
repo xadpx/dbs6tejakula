@@ -1658,20 +1658,18 @@ input::placeholder{color:#64748B !important;opacity:1}
 .pillbar-col.sel .pillbar-bar{background:#1E40AF !important}
 </style>
 <style id="revisi-nav-bawah">
-/* ===== Menu bawah: pil putih, ikon garis + label; menu aktif berupa pil berwarna ===== */
-:root{--nav-aktif:#1E40AF}
-.neu-nav-flat{background:#FFFFFF !important;border:none !important;box-shadow:0 4px 20px rgba(15,23,42,.10) !important;padding:6px !important;gap:2px !important;justify-content:space-between !important}
-#bottomNav .nav-btn{flex:0 1 auto !important;flex-direction:row !important;gap:6px;min-height:48px;padding:0 10px !important;border-radius:9999px;white-space:nowrap;background:transparent !important}
-#bottomNav .nav-btn.nav-active{background:transparent !important;box-shadow:none !important}
+/* ===== Menu bawah: bar menempel di dasar layar (sticky), ikon di atas label ===== */
+:root{--nav-aktif:#1E40AF;--nav-aktif-bg:#E9EFFB}
+#bottomNav{padding:0 !important}
+#bottomNav.nav-hidden{transform:translate(-50%,0) !important;opacity:1 !important}
+#bottomNavBlur{display:none !important}
+#bottomNav .neu-nav-flat{display:grid !important;grid-template-columns:repeat(4,1fr);gap:4px !important;align-items:stretch !important;padding:6px 8px calc(8px + env(safe-area-inset-bottom,0px)) !important;border-radius:16px 16px 0 0 !important;border:none !important;border-top:1px solid #E2E8F0 !important;background:#FFFFFF !important;box-shadow:none !important}
+#bottomNav .nav-btn{flex-direction:column !important;gap:4px;min-height:56px;padding:6px 4px !important;border-radius:12px;white-space:nowrap;background:transparent !important;box-shadow:none !important}
+#bottomNav .nav-btn.nav-active{background:var(--nav-aktif-bg) !important}
 #bottomNav .nav-btn.nav-active .nav-icon-wrap,#bottomNav .nav-btn.nav-active .nav-icon-wrap .nav-svg{color:var(--nav-aktif) !important}
 .nav-svg{flex-shrink:0;display:block}
-.nav-label{display:inline !important;font-size:13px;font-weight:500;letter-spacing:0;color:#475569}
+.nav-label{display:block !important;font-size:12px;font-weight:500;letter-spacing:0;color:#475569}
 #bottomNav .nav-btn.nav-active .nav-label{color:var(--nav-aktif) !important;font-weight:600}
-/* layar sempit: label hanya di menu aktif supaya semua menu tetap muat */
-@media (max-width:389px){
-  #bottomNav .nav-btn.nav-inactive .nav-label{display:none !important}
-  #bottomNav .nav-btn.nav-inactive{padding:0 14px !important}
-}
 </style>
 </head>
 <body class="text-base">
