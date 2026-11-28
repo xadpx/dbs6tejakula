@@ -1807,80 +1807,16 @@ input::placeholder{color:#64748B !important;opacity:1}
 
   <div style="position:relative;">
 
-  <div style="display:flex; align-items:center; justify-content:space-between; margin:0 0 10px;">
-    <p style="font-size:13px; font-weight:500; color:#64748B; margin:0; letter-spacing:.05em; text-transform:uppercase;">Ringkasan data</p>
-  </div>
-
-  <div onclick="bukaDataRombelDariBeranda()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();bukaDataRombelDariBeranda();}" class="cursor-pointer" role="button" tabindex="0" aria-label="Lihat rincian total siswa" style="border-radius:22px; overflow:hidden; background:#FFFFFF; border:1px solid #E2E8F0; margin-bottom:10px; -webkit-tap-highlight-color:transparent;">
-    <!-- Header Royal Cobalt -->
-    <div style="position:relative; background:#1E40AF; padding:12px 18px 12px; display:flex; align-items:center; justify-content:space-between; overflow:hidden;">
-      <div aria-hidden="true" style="position:absolute; inset:0; background:rgba(255,255,255,.06); clip-path:polygon(78% 0, 100% 0, 100% 100%, 84% 100%); pointer-events:none;"></div>
-      <div style="position:relative; min-width:0;">
-        <p style="font-size:13px; font-weight:500; color:#BFD3FB; margin:0; letter-spacing:.05em; text-transform:uppercase;">Total siswa terdaftar</p>
-        <p style="margin:6px 0 0; display:flex; align-items:baseline; flex-wrap:wrap; gap:0 10px; min-height:30px;">
-          <span id="tot" class="hidden tabular-nums" style="font-size:30px; font-weight:600; letter-spacing:-.02em; color:#FFFFFF; line-height:1;">0</span>
-          <span id="totSpin" class="spinner-ring-gray" style="width:20px; height:20px; align-self:center; background:conic-gradient(from 0deg, transparent 0%, #FFFFFF 100%);"></span>
-          <span style="font-size:13px; font-weight:400; color:#BFD3FB;">siswa</span>
-        </p>
+  <div style="background:#FFFFFF;border:1px solid #E2E8F0;border-radius:18px;overflow:hidden;margin-bottom:10px;">
+    <div style="height:76px;background:#E9EFFB;display:flex;align-items:center;justify-content:center;"><span class="material-symbols-rounded" style="font-size:54px;color:#1E40AF;font-variation-settings:'FILL' 1;">groups_2</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;">
+      <div style="min-width:0;">
+        <p style="margin:0;font-size:22px;font-weight:600;color:#0F172A;line-height:1.15;display:flex;align-items:baseline;gap:6px;"><span id="tot" class="hidden tabular-nums">0</span><span id="totSpin" class="spinner-ring-gray" style="width:18px;height:18px;align-self:center;background:conic-gradient(from 0deg, transparent 0%, #1E40AF 100%);"></span><span style="font-size:14px;font-weight:500;color:#64748B;">siswa</span></p>
+        <p style="margin:3px 0 0;font-size:12px;color:#64748B;line-height:1.3;"><span id="pctL" class="tabular-nums">&ndash;</span> laki-laki &middot; <span id="pctP" class="tabular-nums">&ndash;</span> perempuan<span class="hidden"><span id="pctLTxt"></span><span id="pctPTxt"></span></span></p>
       </div>
-      <div style="position:relative; flex:0 0 auto; width:28px; height:28px; border-radius:50%; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.22); display:flex; align-items:center; justify-content:center;">
-        <span class="material-symbols-rounded" style="font-size:18px; color:#FFFFFF;">chevron_right</span>
-      </div>
-    </div>
-    <!-- Metrik presisi -->
-    <div style="background:#FFFFFF; padding:8px 10px 10px; display:flex; gap:8px;">
-      <div style="flex:1 1 auto; min-width:0; box-sizing:border-box; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:14px; padding:8px 10px 9px;">
-        <div style="display:flex; align-items:center; justify-content:space-between; gap:6px;">
-          <span style="font-size:13px; font-weight:400; color:#64748B; white-space:nowrap;">Laki-laki</span>
-          <span style="width:8px; height:8px; border-radius:50%; background:#1E40AF; flex-shrink:0;"></span>
-        </div>
-        <div style="display:flex; align-items:baseline; justify-content:flex-start; gap:6px; margin-top:5px;">
-          <span id="pctL" class="tabular-nums" style="font-size:20px; font-weight:600; color:#0F172A; line-height:1;">&ndash;</span>
-          <span id="pctLTxt" class="tabular-nums" style="font-size:11px; font-weight:500; color:#1E40AF;">&ndash;</span>
-        </div>
-      </div>
-      <div style="flex:1 1 auto; min-width:0; box-sizing:border-box; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:14px; padding:8px 10px 9px;">
-        <div style="display:flex; align-items:center; justify-content:space-between; gap:6px;">
-          <span style="font-size:13px; font-weight:400; color:#64748B; white-space:nowrap;">Perempuan</span>
-          <span style="width:8px; height:8px; border-radius:50%; background:#D97706; flex-shrink:0;"></span>
-        </div>
-        <div style="display:flex; align-items:baseline; justify-content:flex-start; gap:6px; margin-top:5px;">
-          <span id="pctP" class="tabular-nums" style="font-size:20px; font-weight:600; color:#0F172A; line-height:1;">&ndash;</span>
-          <span id="pctPTxt" class="tabular-nums" style="font-size:11px; font-weight:500; color:#B45309;">&ndash;</span>
-        </div>
-      </div>
-      
+      <button type="button" onclick="nav('siswa')" style="flex:0 0 auto;background:#1E40AF;color:#FFFFFF;border:0;border-radius:12px;padding:10px 14px;font:600 13px Inter,sans-serif;white-space:nowrap;cursor:pointer;">Lihat siswa &rsaquo;</button>
     </div>
   </div>
-
-
-
-
-    <div class="chart-card-carousel" id="cardDataRombel" style="width:100%; margin-top:0; margin-bottom:12px;">
-      <div class="flex items-center justify-between mb-0.5">
-        <div class="flex items-center gap-1.5">
-          <div style="width:24px;height:24px;border-radius:8px;background:#1E40AF;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:none;">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
-          </div>
-          <p class="font-semibold text-[16px] text-gray-800 m-0">Data per Rombel</p>
-        </div>
-        <div id="btnCopyRekap" onclick="event.stopPropagation(); bagikanRekap()" class="fab-copy cursor-pointer transition" style="width:26px;height:26px;">
-          <span id="copyRekapIcon" class="material-symbols-rounded" style="font-size:13px;">ios_share</span>
-        </div>
-      </div>
-      <p class="text-[12px] text-gray-600 m-0 mb-2" id="subtitleRombel"><span class="skeleton-shimmer" style="display:inline-block;width:90px;height:9px;border-radius:5px;vertical-align:middle;"></span></p>
-      <div id="pillbars" class="pil-wrap" data-no-ripple><span class="skeleton-shimmer" style="display:inline-block;width:72px;height:26px;border-radius:999px;"></span><span class="skeleton-shimmer" style="display:inline-block;width:72px;height:26px;border-radius:999px;"></span><span class="skeleton-shimmer" style="display:inline-block;width:72px;height:26px;border-radius:999px;"></span><span class="skeleton-shimmer" style="display:inline-block;width:72px;height:26px;border-radius:999px;"></span></div>
-      <div id="tabelRombelSpin" class="flex justify-center py-6">
-        <p class="teks-berdenyut text-[14px] text-gray-600 font-normal m-0">Memuat data...</p>
-      </div>
-      <div id="rombelSummary" class="hidden">
-        <span class="rs-dot"></span>
-        <span class="rs-nama" id="rsNama"></span>
-        <span class="rs-l">L: <span id="rsL"></span></span>
-        <span class="rs-sep"></span>
-        <span class="rs-p">P: <span id="rsP"></span></span>
-      </div>
-    </div>
   <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));background:#FFFFFF;border:1px solid #E2E8F0;border-radius:18px;padding:11px 0;margin-bottom:10px;">
     <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" role="button" tabindex="0" style="display:flex;align-items:center;justify-content:center;gap:8px;min-width:0;">
       <span class="material-symbols-rounded" style="font-size:20px;color:#64748B;">grid_view</span>
@@ -1896,42 +1832,61 @@ input::placeholder{color:#64748B !important;opacity:1}
     </div>
   </div>
 
+  <div style="display:flex;align-items:center;justify-content:space-between;margin:12px 2px 8px;"><p style="margin:0;font-size:15px;font-weight:600;color:#1E293B;">Pintasan</p></div>
+  <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:12px;">
+    <div onclick="bukaKategoriKesejahteraanDariBeranda()" class="cursor-pointer" role="button" tabindex="0" style="background:#FFFFFF;border:1px solid #E2E8F0;border-radius:18px;padding:12px;min-height:96px;display:flex;flex-direction:column;justify-content:space-between;gap:8px;min-width:0;background:#1E40AF;border-color:#1E40AF;">
+      <div style="display:flex;align-items:center;justify-content:space-between;"><div style="position:relative;width:38px;height:38px;flex-shrink:0;">
+        <svg width="38" height="38" viewBox="0 0 52 52" fill="none" stroke-width="5" aria-hidden="true"><circle cx="26" cy="26" r="22" stroke="rgba(255,255,255,.3)"/><circle class="donut-ring-fill" cx="26" cy="26" r="22" stroke="#FFFFFF" stroke-linecap="round" stroke-opacity="0" stroke-dasharray="0 138.2" transform="rotate(-90 26 26)" style="transition:stroke-dasharray .6s ease;"/></svg>
+        <div id="pctKesejahteraanBeranda" class="tabular-nums" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#FFFFFF;">&ndash;</div>
+      </div><span class="material-symbols-rounded" style="font-size:20px;color:#DCE6F8;">chevron_right</span></div>
+      <div style="min-width:0;"><p style="margin:0;font-size:15px;font-weight:600;color:#FFFFFF;line-height:1.2;">Kesejahteraan</p><p id="subKesejahteraanBeranda" style="margin:2px 0 0;font-size:12.5px;color:#DCE6F8;line-height:1.3;"></p></div>
+    </div>
+    <div onclick="bukaKategoriStatusAnakDariBeranda()" class="cursor-pointer" role="button" tabindex="0" style="background:#FFFFFF;border:1px solid #E2E8F0;border-radius:18px;padding:12px;min-height:96px;display:flex;flex-direction:column;justify-content:space-between;gap:8px;min-width:0;">
+      <div style="display:flex;align-items:center;justify-content:space-between;"><div style="position:relative;width:38px;height:38px;flex-shrink:0;">
+        <svg width="38" height="38" viewBox="0 0 52 52" fill="none" stroke-width="5" aria-hidden="true"><circle cx="26" cy="26" r="22" stroke="#E9EFFB"/><circle class="donut-ring-fill" cx="26" cy="26" r="22" stroke="#1E40AF" stroke-linecap="round" stroke-opacity="0" stroke-dasharray="0 138.2" transform="rotate(-90 26 26)" style="transition:stroke-dasharray .6s ease;"/></svg>
+        <div id="pctStatusAnakBeranda" class="tabular-nums" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#1E293B;">&ndash;</div>
+      </div><span class="material-symbols-rounded" style="font-size:20px;color:#94A3B8;">chevron_right</span></div>
+      <div style="min-width:0;"><p style="margin:0;font-size:15px;font-weight:600;color:#1E293B;line-height:1.2;">Status anak</p><p id="subStatusAnakBeranda" style="margin:2px 0 0;font-size:12.5px;color:#475569;line-height:1.3;"></p></div>
+    </div>
+    <div onclick="bukaDataRombelDariBeranda()" class="cursor-pointer" role="button" tabindex="0" style="background:#FFFFFF;border:1px solid #E2E8F0;border-radius:18px;padding:12px;min-height:96px;display:flex;flex-direction:column;justify-content:space-between;gap:8px;min-width:0;">
+      <div style="display:flex;align-items:center;justify-content:space-between;"><div style="width:38px;height:38px;border-radius:12px;background:#E9EFFB;color:#1E40AF;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span class="material-symbols-rounded" style="font-size:21px;">bar_chart</span></div><span class="material-symbols-rounded" style="font-size:20px;color:#94A3B8;">chevron_right</span></div>
+      <div style="min-width:0;"><p style="margin:0;font-size:15px;font-weight:600;color:#1E293B;line-height:1.2;">Data per rombel</p><p id="subtitleRombel" style="margin:2px 0 0;font-size:12.5px;color:#475569;line-height:1.3;">&ndash;</p></div>
+    </div>
+    <div onclick="nav('download')" class="cursor-pointer" role="button" tabindex="0" style="background:#FFFFFF;border:1px solid #E2E8F0;border-radius:18px;padding:12px;min-height:96px;display:flex;flex-direction:column;justify-content:space-between;gap:8px;min-width:0;">
+      <div style="display:flex;align-items:center;justify-content:space-between;"><div style="width:38px;height:38px;border-radius:12px;background:#E9EFFB;color:#1E40AF;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span class="material-symbols-rounded" style="font-size:21px;">table_view</span></div><span class="material-symbols-rounded" style="font-size:20px;color:#94A3B8;">chevron_right</span></div>
+      <div style="min-width:0;"><p style="margin:0;font-size:15px;font-weight:600;color:#1E293B;line-height:1.2;">Rekap Excel</p><p  style="margin:2px 0 0;font-size:12.5px;color:#475569;line-height:1.3;">Unduh per kelas</p></div>
+    </div>
+  </div>
 
-  <!-- Ring donut lama disimpan tersembunyi untuk kompatibilitas JS -->
   <div style="display:none;">
     <svg><circle id="ringSiswaP"/><circle id="ringSiswaLP"/></svg>
-  </div>
-
-  <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:12px;">
-  <div onclick="bukaKategoriKesejahteraanDariBeranda()" class="cursor-pointer" style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:18px; padding:12px; display:flex; flex-direction:column; align-items:flex-start; gap:8px; min-width:0;">
-    <div style="position:relative; width:52px; height:52px; flex-shrink:0;">
-      <svg width="52" height="52" viewBox="0 0 52 52" fill="none" stroke-width="5" aria-hidden="true">
-        <circle cx="26" cy="26" r="22" stroke="#E9EFFB"/>
-        <circle class="donut-ring-fill" cx="26" cy="26" r="22" stroke="#1E40AF" stroke-linecap="round" stroke-opacity="0" stroke-dasharray="0 138.2" transform="rotate(-90 26 26)" style="transition:stroke-dasharray .6s ease;"/>
-      </svg>
-      <div id="pctKesejahteraanBeranda" class="tabular-nums" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; color:#1E293B;">&ndash;</div>
+    <div class="chart-card-carousel" id="cardDataRombel" style="width:100%; margin-top:0; margin-bottom:12px;">
+      <div class="flex items-center justify-between mb-0.5">
+        <div class="flex items-center gap-1.5">
+          <div style="width:24px;height:24px;border-radius:8px;background:#1E40AF;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:none;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+          </div>
+          <p class="font-semibold text-[16px] text-gray-800 m-0">Data per Rombel</p>
+        </div>
+        <div id="btnCopyRekap" onclick="event.stopPropagation(); bagikanRekap()" class="fab-copy cursor-pointer transition" style="width:26px;height:26px;">
+          <span id="copyRekapIcon" class="material-symbols-rounded" style="font-size:13px;">ios_share</span>
+        </div>
+      </div>
+      <p class="text-[12px] text-gray-600 m-0 mb-2" ><span class="skeleton-shimmer" style="display:inline-block;width:90px;height:9px;border-radius:5px;vertical-align:middle;"></span></p>
+      <div id="pillbars" class="pil-wrap" data-no-ripple><span class="skeleton-shimmer" style="display:inline-block;width:72px;height:26px;border-radius:999px;"></span><span class="skeleton-shimmer" style="display:inline-block;width:72px;height:26px;border-radius:999px;"></span><span class="skeleton-shimmer" style="display:inline-block;width:72px;height:26px;border-radius:999px;"></span><span class="skeleton-shimmer" style="display:inline-block;width:72px;height:26px;border-radius:999px;"></span></div>
+      <div id="tabelRombelSpin" class="flex justify-center py-6">
+        <p class="teks-berdenyut text-[14px] text-gray-600 font-normal m-0">Memuat data...</p>
+      </div>
+      <div id="rombelSummary" class="hidden">
+        <span class="rs-dot"></span>
+        <span class="rs-nama" id="rsNama"></span>
+        <span class="rs-l">L: <span id="rsL"></span></span>
+        <span class="rs-sep"></span>
+        <span class="rs-p">P: <span id="rsP"></span></span>
+      </div>
     </div>
-    <div style="min-width:0; flex:1;">
-      <p style="font-size:15px; font-weight:600; color:#1E293B; margin:0;">Kesejahteraan</p>
-      <p id="subKesejahteraanBeranda" style="font-size:13px; color:#475569; font-weight:400; margin:2px 0 0; line-height:1.3;"></p>
-    </div>
+  
   </div>
-
-  <div onclick="bukaKategoriStatusAnakDariBeranda()" class="cursor-pointer" style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:18px; padding:12px; display:flex; flex-direction:column; align-items:flex-start; gap:8px; min-width:0;">
-    <div style="position:relative; width:52px; height:52px; flex-shrink:0;">
-      <svg width="52" height="52" viewBox="0 0 52 52" fill="none" stroke-width="5" aria-hidden="true">
-        <circle cx="26" cy="26" r="22" stroke="#E9EFFB"/>
-        <circle class="donut-ring-fill" cx="26" cy="26" r="22" stroke="#1E40AF" stroke-linecap="round" stroke-opacity="0" stroke-dasharray="0 138.2" transform="rotate(-90 26 26)" style="transition:stroke-dasharray .6s ease;"/>
-      </svg>
-      <div id="pctStatusAnakBeranda" class="tabular-nums" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; color:#1E293B;">&ndash;</div>
-    </div>
-    <div style="min-width:0; flex:1;">
-      <p style="font-size:15px; font-weight:600; color:#1E293B; margin:0;">Status Anak</p>
-      <p id="subStatusAnakBeranda" style="font-size:13px; color:#475569; font-weight:400; margin:2px 0 0; line-height:1.3;"></p>
-    </div>
-  </div>
-  </div>
-
 
   <!-- Kept hidden for JS compatibility (data masih dihitung, tapi tidak lagi ditampilkan visual di sini) -->
   <div style="display:none;">
