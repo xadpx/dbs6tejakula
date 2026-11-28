@@ -1869,14 +1869,7 @@ input::placeholder{color:#64748B !important;opacity:1}
         </div>
       </div>
       <p class="text-[12px] text-gray-600 m-0 mb-2" id="subtitleRombel"><span class="skeleton-shimmer" style="display:inline-block;width:90px;height:9px;border-radius:5px;vertical-align:middle;"></span></p>
-      <div id="pillbars" class="pillbar-row" data-no-ripple>
-        <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:70%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
-        <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:85%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
-        <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:100%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
-        <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:60%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
-        <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:75%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
-        <div class="pillbar-col"><div class="pillbar-bar-wrap"><div class="skeleton-shimmer" style="width:26px;height:90%;border-radius:20px;"></div></div><span class="skeleton-shimmer" style="width:36px;height:9px;border-radius:5px;display:block;"></span></div>
-      </div>
+      <div id="pillbars" class="pil-wrap" data-no-ripple><span class="skeleton-shimmer" style="display:inline-block;width:72px;height:26px;border-radius:999px;"></span><span class="skeleton-shimmer" style="display:inline-block;width:72px;height:26px;border-radius:999px;"></span><span class="skeleton-shimmer" style="display:inline-block;width:72px;height:26px;border-radius:999px;"></span><span class="skeleton-shimmer" style="display:inline-block;width:72px;height:26px;border-radius:999px;"></span></div>
       <div id="tabelRombelSpin" class="flex justify-center py-6">
         <p class="teks-berdenyut text-[14px] text-gray-600 font-normal m-0">Memuat data...</p>
       </div>
@@ -4140,25 +4133,9 @@ const elLblMin = document.getElementById('lblRombelMin');
 if(elLblMax) elLblMax.textContent = `Terbanyak: ${rMax.kelas} \u00b7 ${rMax.L + rMax.P} siswa`;
 if(elLblMin) elLblMin.textContent = `Tersedikit: ${rMin.kelas} \u00b7 ${rMin.L + rMin.P} siswa`;
 
-document.getElementById('pillbars').innerHTML = window.rombelData.map((r, i) => {
-  const total = r.L + r.P;
-  const hPct = Math.max(10, Math.round(total / maxTotalRombel * 100));
-  const isHi = i === idxPuncakRombel;
-
-  // Semua bar & angka pakai warna yang sama; kelas puncak (terbanyak)
-  // tetap ditandai lewat bubble+dot di atas bar, bukan lewat warna.
-  const isiAtas = `<div class="pillbar-val">${total}</div>`;
-
-  return `
-<div class="pillbar-col" onclick="pilihRombel(${i})">
-  ${isiAtas}
-  <div class="pillbar-bar-wrap">
-    <div class="pillbar-ripple-wrap"></div>
-    <div class="pillbar-bar" style="height:${hPct}%"></div>
-  </div>
-  <span class="pillbar-name">${r.kelas}</span>
-</div>`;
-}).join('') + '<div class="pillbar-hint-tooltip" id="pillbarHintTooltip">Tap untuk lihat detail kelas</div>';
+document.getElementById('pillbars').innerHTML = window.rombelData.map((r, i) =>
+  `<div class="pil-rombel" role="button" tabindex="0" onclick="pilihRombel(${i})">${r.kelas} \u00b7 ${r.L + r.P}</div>`
+).join('');
 pilihRombel(idxPuncakRombel);
 
       document.getElementById('tabelRombelSpin').classList.add('hidden');
@@ -4237,7 +4214,7 @@ function isiDonutBeranda(elPct, pct){
 function pilihRombel(i){
   const r = (window.rombelData || [])[i];
   if(!r) return;
-  document.querySelectorAll('#pillbars .pillbar-col').forEach(function(el, k){ el.classList.toggle('sel', k === i); });
+  document.querySelectorAll('#pillbars .pil-rombel').forEach(function(el, k){ el.classList.toggle('sel', k === i); });
   document.getElementById('rsNama').textContent = r.kelas + ' (' + (r.L + r.P) + ' siswa)';
   document.getElementById('rsL').textContent = r.L;
   document.getElementById('rsP').textContent = r.P;
@@ -7716,6 +7693,12 @@ function tutupPopupPremium(overlayId, boxId, callback){
 #p-home .mb-4{margin-bottom:10px !important}
 #cardDataRombel{padding:12px 14px !important;margin-bottom:10px !important}
 html,body{background:#F8FAFC !important}
+#cardDataRombel .pil-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+#cardDataRombel .pil-rombel{font-size:12.5px;font-weight:500;padding:6px 11px;border-radius:999px;background:#F1F5F9;color:#334155;border:1px solid transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#cardDataRombel .pil-rombel.sel{background:#E9EFFB;color:#1E40AF;border-color:#DCE6F8;font-weight:600}
+#cardDataRombel #rombelSummary{margin:10px 2px 0 !important;padding-top:8px !important}
+#cardDataRombel #tabelRombelSpin{padding:4px 0 !important}
+.pillbar-hint-tooltip{display:none !important}
 </style>
 </body>
 </html>
