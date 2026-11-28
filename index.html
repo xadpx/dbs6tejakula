@@ -5312,7 +5312,7 @@ async function unduhDokumenPegawai(jenis, idx, tombol){
     tampilkanPreviewDokumen(file, _namaDokumen[jenis] + ' \u2014 ' + namaBersih);
   }catch(err){
     console.error('Gagal unduh dokumen:', err);
-    showToast('Gagal mengunduh. Coba lagi.', 2500);
+    showToast('Gagal: ' + (err && err.message ? err.message : err), 4000);
   }finally{
     if(badge) badge.classList.remove('memuat');
     if(tombol){ tombol.dataset.sibuk = '0'; tombol.removeAttribute('aria-busy'); }
@@ -5461,7 +5461,7 @@ async function unduhDokumenGabungan(idx, tombol){
     showToast(hilang.length ? ('Diunduh. Belum ada: ' + hilang.join(', ')) : 'Mengunduh dokumen gabungan', hilang.length ? 3200 : 1800);
   }catch(err){
     console.error('Gagal membuat dokumen gabungan:', err);
-    showToast('Gagal membuat dokumen. Coba lagi.', 2500);
+    showToast('Gagal: ' + (err && err.message ? err.message : err), 4000);
   }finally{
     if(badge) badge.classList.remove('memuat');
     if(tombol){ tombol.dataset.sibuk = '0'; tombol.removeAttribute('aria-busy'); }
